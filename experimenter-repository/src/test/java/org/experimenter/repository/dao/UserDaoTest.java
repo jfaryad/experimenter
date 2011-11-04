@@ -1,0 +1,35 @@
+package org.experimenter.repository.dao;
+
+import static org.junit.Assert.assertNotNull;
+
+import org.experimenter.repository.model.User;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.transaction.TransactionConfiguration;
+import org.springframework.transaction.annotation.Transactional;
+
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = { "classpath:applicationContextTest.xml" })
+@Transactional
+@TransactionConfiguration(defaultRollback = true)
+public class UserDaoTest {
+
+    @Autowired
+    private UserDao userDao;
+
+    @Test
+    public void insertUser() {
+        User user = new User();
+        user.setName("Josef");
+        user.setSurname("Novak");
+        user.setLogin("pepa");
+        user.setPassword("pepa123");
+        user.setEmail("pepa@novak.cz");
+        userDao.insert(user);
+        assertNotNull("userId is null after insert", user.getUserId());
+    }
+
+}

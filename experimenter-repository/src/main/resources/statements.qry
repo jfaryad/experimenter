@@ -1,0 +1,10 @@
+GET_USER_BY_ID(CRUD)=
+  select USER_ID @userId, NAME @name, SURNAME @surname, LOGIN @login, PASSWORD @password, EMAIL @email
+  from user u
+  {= where USER_ID = :integer^int^notnull}
+;
+
+INSERT_ITEM(CRUD)=
+  insert into user (NAME, SURNAME, LOGIN, PASSWORD, EMAIL)
+  {= values (:name, :surname, :login, :password, :email) }
+;
