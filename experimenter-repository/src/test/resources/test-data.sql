@@ -3,7 +3,7 @@
 -- Test Data
 -- ---
 
- INSERT INTO USER (name,surname,login,password,email) VALUES ('Jakub','Faryad','jakub','heslo','jfaryad@gmail.com');
+-- INSERT INTO USER (name,surname,login,password,email) VALUES ('Jakub','Faryad','jakub','heslo','jfaryad@gmail.com');
 -- INSERT INTO COMPUTER (computer_id,address,description) VALUES
 -- ('','','');
 -- INSERT INTO CONNECTION (connection_id,name,login,password,description,computer_id,port,farm_id) VALUES

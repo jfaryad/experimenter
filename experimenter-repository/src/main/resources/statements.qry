@@ -1,10 +1,12 @@
+SEQ_USER(OPT,HSQLDB)=call next value for SEQ_USER;
+
 GET_USER_BY_ID(CRUD)=
   select USER_ID @userId, NAME @name, SURNAME @surname, LOGIN @login, PASSWORD @password, EMAIL @email
   from user u
   {= where USER_ID = :integer^int^notnull}
 ;
 
-INSERT_ITEM(CRUD)=
-  insert into user (NAME, SURNAME, LOGIN, PASSWORD, EMAIL)
-  {= values (:name, :surname, :login, :password, :email) }
+INSERT_USER(CRUD)=
+  insert into user (USER_ID, NAME, SURNAME, LOGIN, PASSWORD, EMAIL)
+  {= values (:userId^int^seq=SEQ_USER, :name, :surname, :login, :password, :email) }
 ;

@@ -76,9 +76,11 @@ public class User implements Serializable {
         this.userGroups = userGroups;
     }
 
-    public String toDebugString() {
-        return "User[name: " + name + ", surname: " + surname + ", login: " + login + ", password: " + password
-                + ", email: " + email + ", userGroups.size: " + ((userGroups != null) ? userGroups.size() : null) + "]";
+    @Override
+    public String toString() {
+        return "User[userId: " + userId + ", name: " + name + ", surname: " + surname + ", login: " + login
+                + ", password: " + password + ", email: " + email + ", userGroups.size: "
+                + ((userGroups != null) ? userGroups.size() : null) + "]";
     }
 
 }
