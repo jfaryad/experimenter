@@ -11,60 +11,70 @@ import java.util.List;
  */
 public class ConnectionFarm implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    private Integer connectionFarmId;
-    private String name;
-    private String description;
-    private UserGroup userGroup;
-    private List<Connection> connections;
-    private List<Experiment> experiments;
+	private static final long serialVersionUID = 1L;
+	private Integer connectionFarmId;
+	private String name;
+	private String description;
+	private UserGroup userGroup;
+	private List<Connection> connections;
+	private List<Experiment> experiments;
 
-    public Integer getConnectionFarmId() {
-        return connectionFarmId;
-    }
+	public Integer getConnectionFarmId() {
+		return connectionFarmId;
+	}
 
-    public void setConnectionFarmId(Integer connectionFarmId) {
-        this.connectionFarmId = connectionFarmId;
-    }
+	public void setConnectionFarmId(Integer connectionFarmId) {
+		this.connectionFarmId = connectionFarmId;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public String getDescription() {
-        return description;
-    }
+	public String getDescription() {
+		return description;
+	}
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
+	public void setDescription(String description) {
+		this.description = description;
+	}
 
-    public UserGroup getUserGroup() {
-        return userGroup;
-    }
+	public UserGroup getUserGroup() {
+		return userGroup;
+	}
 
-    public void setUserGroup(UserGroup userGroup) {
-        this.userGroup = userGroup;
-    }
+	public void setUserGroup(UserGroup userGroup) {
+		this.userGroup = userGroup;
+	}
 
-    public List<Connection> getConnections() {
-        return connections;
-    }
+	public List<Connection> getConnections() {
+		return connections;
+	}
 
-    public void setConnections(List<Connection> connections) {
-        this.connections = connections;
-    }
+	public void setConnections(List<Connection> connections) {
+		this.connections = connections;
+	}
 
-    public List<Experiment> getExperiments() {
-        return experiments;
-    }
+	public List<Experiment> getExperiments() {
+		return experiments;
+	}
 
-    public void setExperiments(List<Experiment> experiments) {
-        this.experiments = experiments;
-    }
+	public void setExperiments(List<Experiment> experiments) {
+		this.experiments = experiments;
+	}
+
+	@Override
+	public String toString() {
+		return "ConnectionFarm[connectionFarmId: " + connectionFarmId
+				+ ", name: " + name + ", description: " + description
+				+ ", userGroup: " + userGroup + ", connections.size: "
+				+ ((connections != null) ? connections.size() : null)
+				+ ", experiments.size: "
+				+ ((experiments != null) ? experiments.size() : null) + "]";
+	}
 
 }

@@ -11,60 +11,68 @@ import java.util.List;
  */
 public class Program implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    private Integer programId;
-    private String name;
-    private String description;
-    private String command;
-    private Project project;
-    private List<Application> applications;
+	private static final long serialVersionUID = 1L;
+	private Integer programId;
+	private String name;
+	private String description;
+	private String command;
+	private Project project;
+	private List<Application> applications;
 
-    public Integer getProgramId() {
-        return programId;
-    }
+	public Integer getProgramId() {
+		return programId;
+	}
 
-    public void setProgramId(Integer programId) {
-        this.programId = programId;
-    }
+	public void setProgramId(Integer programId) {
+		this.programId = programId;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public String getDescription() {
-        return description;
-    }
+	public String getDescription() {
+		return description;
+	}
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
+	public void setDescription(String description) {
+		this.description = description;
+	}
 
-    public String getCommand() {
-        return command;
-    }
+	public String getCommand() {
+		return command;
+	}
 
-    public void setCommand(String command) {
-        this.command = command;
-    }
+	public void setCommand(String command) {
+		this.command = command;
+	}
 
-    public Project getProject() {
-        return project;
-    }
+	public Project getProject() {
+		return project;
+	}
 
-    public void setProject(Project project) {
-        this.project = project;
-    }
+	public void setProject(Project project) {
+		this.project = project;
+	}
 
-    public List<Application> getApplications() {
-        return applications;
-    }
+	public List<Application> getApplications() {
+		return applications;
+	}
 
-    public void setApplications(List<Application> applications) {
-        this.applications = applications;
-    }
+	public void setApplications(List<Application> applications) {
+		this.applications = applications;
+	}
+
+	@Override
+	public String toString() {
+		return "Program[programId: " + programId + ", name: " + name
+				+ ", description: " + description + ", command: " + command
+				+ ", project: " + project + ", applications.size: "
+				+ ((applications != null) ? applications.size() : null) + "]";
+	}
 
 }

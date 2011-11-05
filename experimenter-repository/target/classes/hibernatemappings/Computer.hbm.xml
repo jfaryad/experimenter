@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Nov 3, 2011 11:11:24 PM by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="org.experimenter.repository.model.Computer" table="COMPUTER">
+        <id name="computerId" type="java.lang.Integer">
+            <column name="COMPUTER_ID" />
+            <generator class="identity" />
+        </id>
+        <property name="address" type="java.lang.String">
+            <column name="ADDRESS" />
+        </property>
+        <property name="description" type="java.lang.String">
+            <column name="DESCRIPTION" />
+        </property>
+        <list name="connections" inverse="false" table="CONNECTION" lazy="true">
+            <key>
+                <column name="COMPUTER_ID" />
+            </key>
+            <list-index></list-index>
+            <one-to-many class="org.experimenter.repository.model.Connection" />
+        </list>
+    </class>
+</hibernate-mapping>

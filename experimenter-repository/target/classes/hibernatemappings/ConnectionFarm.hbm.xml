@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Nov 3, 2011 11:11:24 PM by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="org.experimenter.repository.model.ConnectionFarm" table="FARM">
+        <id name="connectionFarmId" type="java.lang.Integer">
+            <column name="FARM_ID" />
+            <generator class="identity" />
+        </id>
+        <property name="name" type="java.lang.String" not-null="true">
+            <column name="NAME" />
+        </property>
+        <property name="description" type="java.lang.String">
+            <column name="DESCRIPTION" />
+        </property>
+        <many-to-one name="userGroup" class="org.experimenter.repository.model.UserGroup" fetch="join">
+            <column name="USERGROUP_ID" />
+        </many-to-one>
+        <list name="connections" inverse="false" table="CONNECTION" lazy="true" cascade="all">
+            <key>
+                <column name="FARM_ID" />
+            </key>
+            <list-index></list-index>
+            <one-to-many class="org.experimenter.repository.model.Connection" />
+        </list>
+        <!-- <list name="experiments" inverse="false" table="EXPERIMENT" lazy="true">
+            <key>
+                <column name="FARM_ID" />
+            </key>
+            <list-index></list-index>
+            <many-to-many class="org.experimenter.repository.model.Experiment" >
+            	<column name="EXPERIMENT_ID"></column>
+            </many-to-many>
+        </list> -->
+    </class>
+</hibernate-mapping>

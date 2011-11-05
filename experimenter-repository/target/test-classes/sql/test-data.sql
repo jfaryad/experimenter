@@ -3,7 +3,9 @@
 -- Test Data
 -- ---
 
--- INSERT INTO USER (name,surname,login,password,email) VALUES ('Jakub','Faryad','jakub','heslo','jfaryad@gmail.com');
+INSERT INTO USER (user_id, name,surname,login,password,email) VALUES (1, 'Tester','Exists','tester1','heslo','tester1@experimenter.org');
+INSERT INTO USER (user_id, name,surname,login,password,email) VALUES (2, 'Tester','Delete','tester1','heslo','tester2@experimenter.org');
+
 -- INSERT INTO COMPUTER (computer_id,address,description) VALUES
 -- ('','','');
 -- INSERT INTO CONNECTION (connection_id,name,login,password,description,computer_id,port,farm_id) VALUES
