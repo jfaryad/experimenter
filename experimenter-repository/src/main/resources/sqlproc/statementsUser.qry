@@ -1,0 +1,35 @@
+SEQ_USER(OPT,HSQLDB)=call next value for SEQ_USER;
+
+GET_USER_BY_ID(CRUD)=
+  select user_id @userId, name @name, surname @surname, login @login, password @password, email @email
+  from user u
+  {= where user_id = :integer^int^notnull}
+;
+
+GET_USER_BY_CRITERIA(QRY)=
+  select user_id @userId, name @name, surname @surname, login @login, password @password, email @email
+  from user u
+  {= where 
+  	{& user_id = :userId}
+  	{& UPPER(u.name) like :+name}
+  	{& UPPER(u.surname) like :+surname}
+  	{& UPPER(u.login) like :+login}
+  	{& UPPER(u.email) like :+email}
+  }
+;
+
+INSERT_USER(CRUD)=
+  insert into user (user_id, name, surname, login, password, email)
+  {= values (:userId^int^seq=SEQ_USER, :name, :surname, :login, :password, :email) }
+;
+
+DELETE_USER_BY_ID(CRUD)=
+  delete from user u
+  {= where user_id = :integer^int^notnull}
+;
+
+UPDATE_USER(CRUD)=
+  update user 
+  {=set name=:name, surname=:surname, login=:login, password=:password, email=:email}
+  {= where user_id = :userId^int^notnull}
+;

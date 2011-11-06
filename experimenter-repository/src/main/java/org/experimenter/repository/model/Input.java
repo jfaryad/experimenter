@@ -1,7 +1,6 @@
 package org.experimenter.repository.model;
 
 import java.io.Serializable;
-import java.sql.Blob;
 import java.util.List;
 
 /**
@@ -15,7 +14,7 @@ public class Input implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private Integer inputId;
 	private String name;
-	private Blob data;
+	private String data;
 	private ProblemType problem;
 	private List<InputSet> inputSets;
 
@@ -35,11 +34,11 @@ public class Input implements Serializable {
 		this.name = name;
 	}
 
-	public Blob getData() {
+	public String getData() {
 		return data;
 	}
 
-	public void setData(Blob data) {
+	public void setData(String data) {
 		this.data = data;
 	}
 

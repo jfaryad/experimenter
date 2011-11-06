@@ -1,7 +1,6 @@
 package org.experimenter.repository.model;
 
 import java.io.Serializable;
-import java.sql.Blob;
 import java.util.List;
 
 /**
@@ -15,7 +14,7 @@ public class Application implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private Integer applicationId;
 	private String version;
-	private Blob executable;
+	private String executable;
 	private Program program;
 	private List<Experiment> experiments;
 
@@ -35,11 +34,11 @@ public class Application implements Serializable {
 		this.version = version;
 	}
 
-	public Blob getExecutable() {
+	public String getExecutable() {
 		return executable;
 	}
 
-	public void setExecutable(Blob executable) {
+	public void setExecutable(String executable) {
 		this.executable = executable;
 	}
 

@@ -1,0 +1,33 @@
+SEQ_EXPERIMENT(OPT,HSQLDB)=call next value for SEQ_EXPERIMENT;
+
+GET_EXPERIMENT_BY_ID(CRUD)=
+  select experiment_id @experimentId, name @name, description @description
+  from experiment e
+  {= where experiment_id = :integer^int^notnull}
+;
+
+GET_EXPERIMENT_BY_CRITERIA(QRY)=
+  select experiment_id @experimentId, name @name, description @description
+  from experiment e
+  {= where 
+  	{& experiment_id = :experimentId}
+  	{& UPPER(e.name) like :+name}
+  	{& UPPER(e.description) like :+description}
+  }
+;
+
+INSERT_EXPERIMENT(CRUD)=
+  insert into experiment (experiment_id, name, description, login, password, email)
+  {= values (:experimentId^int^seq=SEQ_EXPERIMENT, :name, :description) }
+;
+
+DELETE_EXPERIMENT_BY_ID(CRUD)=
+  delete from experiment e
+  {= where experiment_id = :integer^int^notnull}
+;
+
+UPDATE_EXPERIMENT(CRUD)=
+  update experiment 
+  {=set name=:name, description=:description}
+  {= where experiment_id = :experimentId^int^notnull}
+;
