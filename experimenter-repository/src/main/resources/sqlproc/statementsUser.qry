@@ -10,7 +10,6 @@ GET_USER_BY_CRITERIA(QRY)=
   select user_id @userId, name @name, surname @surname, login @login, password @password, email @email
   from user u
   {= where 
-  	{& user_id = :userId}
   	{& UPPER(u.name) like :+name}
   	{& UPPER(u.surname) like :+surname}
   	{& UPPER(u.login) like :+login}

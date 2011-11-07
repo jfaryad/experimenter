@@ -1,48 +1,60 @@
 package org.experimenter.repository.form;
 
+import org.sqlproc.engine.SqlOrder;
+
 public class CriteriaForm<T> {
 
-	private T model;
-	int first;
-	int count;
-	int order;
+    private T model;
+    int first;
+    int count;
+    SqlOrder order;
 
-	public T getModel() {
-		return model;
-	}
+    public CriteriaForm() {
 
-	public void setModel(T model) {
-		this.model = model;
-	}
+    }
 
-	public int getFirst() {
-		return first;
-	}
+    public CriteriaForm(T model) {
+        this.model = model;
+    }
 
-	public void setFirst(int first) {
-		this.first = first;
-	}
+    public T getModel() {
+        return model;
+    }
 
-	public int getCount() {
-		return count;
-	}
+    public void setModel(T model) {
+        this.model = model;
+    }
 
-	public void setCount(int count) {
-		this.count = count;
-	}
+    public int getFirst() {
+        return first;
+    }
 
-	public int getOrder() {
-		return order;
-	}
+    public void setFirst(int first) {
+        this.first = first;
+    }
 
-	public void setOrder(int order) {
-		this.order = order;
-	}
+    public int getCount() {
+        return count;
+    }
 
-	@Override
-	public String toString() {
-		return "ItemForm [" + model + ", first=" + first + ", count=" + count
-				+ ", order=" + order + "]";
-	}
+    public void setCount(int count) {
+        this.count = count;
+    }
+
+    public SqlOrder getOrder() {
+        if (order == null)
+            return SqlOrder.getOrder();
+        else
+            return order;
+    }
+
+    public void setOrder(SqlOrder order) {
+        this.order = order;
+    }
+
+    @Override
+    public String toString() {
+        return "CriteriaForm [" + model + ", first=" + first + ", count=" + count + ", order=" + order + "]";
+    }
 
 }

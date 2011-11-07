@@ -1,109 +1,92 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
-	xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:tx="http://www.springframework.org/schema/tx" xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
                       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
                       http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-3.0.xsd
 	                  http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 
-	<context:annotation-config />
+    <context:annotation-config />
 
-	<bean id="placeholderConfig"
-		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-	</bean>
+    <bean id="placeholderConfig" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+    </bean>
 
-	<jdbc:embedded-database id="dataSource">
-		<jdbc:script location="classpath:sql/schema.sql" />
-		<jdbc:script location="classpath:sql/test-data.sql" />
-	</jdbc:embedded-database>
+    <jdbc:embedded-database id="dataSource">
+        <jdbc:script location="classpath:sql/schema.sql" />
+        <jdbc:script location="classpath:sql/test-data.sql" />
+    </jdbc:embedded-database>
 
-	<bean id="transactionManager"
-		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-		<property name="dataSource" ref="dataSource" />
-	</bean>
-	<tx:annotation-driven transaction-manager="transactionManager" />
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource" />
+    </bean>
+    <tx:annotation-driven transaction-manager="transactionManager" />
 
-	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
-		<property name="dataSource" ref="dataSource" />
-	</bean>
+    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+        <property name="dataSource" ref="dataSource" />
+    </bean>
 
-	<bean id="sqlFactory" class="org.sqlproc.engine.jdbc.JdbcEngineFactory"
-		init-method="init">
-		<property name="metaFilesNames">
-			<list>
-				<value>sqlproc/statementsUser.qry</value>
-				<value>sqlproc/statementsUserGroup.qry</value>
-				<value>sqlproc/statementsApplication.qry</value>
-				<value>sqlproc/statementsComputer.qry</value>
-				<value>sqlproc/statementsConnection.qry</value>
-				<value>sqlproc/statementsConnectionFarm.qry</value>
-				<value>sqlproc/statementsExperiment.qry</value>
-				<value>sqlproc/statementsInput.qry</value>
-				<value>sqlproc/statementsInputSet.qry</value>
-				<value>sqlproc/statementsProblemType.qry</value>
-				<value>sqlproc/statementsProgram.qry</value>
-				<value>sqlproc/statementsProject.qry</value>
-			</list>
-		</property>
-		<property name="filter" value="HSQLDB" />
-	</bean>
+    <bean id="sqlFactory" class="org.sqlproc.engine.jdbc.JdbcEngineFactory" init-method="init">
+        <property name="metaFilesNames">
+            <list>
+                <value>sqlproc/statementsUser.qry</value>
+                <value>sqlproc/statementsUserGroup.qry</value>
+                <value>sqlproc/statementsApplication.qry</value>
+                <value>sqlproc/statementsComputer.qry</value>
+                <value>sqlproc/statementsConnection.qry</value>
+                <value>sqlproc/statementsConnectionFarm.qry</value>
+                <value>sqlproc/statementsExperiment.qry</value>
+                <value>sqlproc/statementsInput.qry</value>
+                <value>sqlproc/statementsInputSet.qry</value>
+                <value>sqlproc/statementsProblemType.qry</value>
+                <value>sqlproc/statementsProgram.qry</value>
+                <value>sqlproc/statementsProject.qry</value>
+            </list>
+        </property>
+        <property name="filter" value="HSQLDB" />
+    </bean>
 
-	<!-- ========= DAO ========= -->
+    <!-- ========= DAO ========= -->
 
-	<bean id="dao" autowire="byType" abstract="true">
-		<property name="jdbcTemplate" ref="jdbcTemplate" />
-		<property name="sqlFactory" ref="sqlFactory" />
-	</bean>
+    <bean id="dao" autowire="byType" abstract="true">
+        <property name="jdbcTemplate" ref="jdbcTemplate" />
+        <property name="sqlFactory" ref="sqlFactory" />
+    </bean>
 
-	<bean id="userDao" class="org.experimenter.repository.dao.impl.UserDaoImpl"
-		parent="dao">
-		<property name="tableName" value="USER" />
-	</bean>
-	<bean id="userGroupDao" class="org.experimenter.repository.dao.impl.UserGroupDaoImpl"
-		parent="dao">
-		<property name="tableName" value="USERGROUP" />
-	</bean>
-	<bean id="applicationDao" class="org.experimenter.repository.dao.impl.ApplicationDaoImpl"
-		parent="dao">
-		<property name="tableName" value="APPLICATION" />
-	</bean>
-	<bean id="computerDao" class="org.experimenter.repository.dao.impl.ComputerDaoImpl"
-		parent="dao">
-		<property name="tableName" value="COMPUTER" />
-	</bean>
-	<bean id="connectionDao" class="org.experimenter.repository.dao.impl.ConnectionDaoImpl"
-		parent="dao">
-		<property name="tableName" value="CONNECTION" />
-	</bean>
-	<bean id="connectionFarmDao"
-		class="org.experimenter.repository.dao.impl.ConnectionFarmDaoImpl"
-		parent="dao">
-		<property name="tableName" value="FARM" />
-	</bean>
-	<bean id="experimentDao" class="org.experimenter.repository.dao.impl.ExperimentDaoImpl"
-		parent="dao">
-		<property name="tableName" value="EXPERIMENT" />
-	</bean>
-	<bean id="inputDao" class="org.experimenter.repository.dao.impl.InputDaoImpl"
-		parent="dao">
-		<property name="tableName" value="INPUT" />
-	</bean>
-	<bean id="inputSetDao" class="org.experimenter.repository.dao.impl.InputSetDaoImpl"
-		parent="dao">
-		<property name="tableName" value="INPUT_SET" />
-	</bean>
-	<bean id="problemTypeDao" class="org.experimenter.repository.dao.impl.ProblemTypeDaoImpl"
-		parent="dao">
-		<property name="tableName" value="PROBLEM" />
-	</bean>
-	<bean id="programDao" class="org.experimenter.repository.dao.impl.ProgramDaoImpl"
-		parent="dao">
-		<property name="tableName" value="PROGRAM" />
-	</bean>
-	<bean id="projectDao" class="org.experimenter.repository.dao.impl.ProjectDaoImpl"
-		parent="dao">
-		<property name="tableName" value="PROJECT" />
-	</bean>
+    <bean id="userDao" class="org.experimenter.repository.dao.impl.UserDaoImpl" parent="dao">
+        <property name="tableName" value="USER" />
+    </bean>
+    <bean id="userGroupDao" class="org.experimenter.repository.dao.impl.UserGroupDaoImpl" parent="dao">
+        <property name="tableName" value="USERGROUP" />
+    </bean>
+    <bean id="applicationDao" class="org.experimenter.repository.dao.impl.ApplicationDaoImpl" parent="dao">
+        <property name="tableName" value="APPLICATION" />
+    </bean>
+    <bean id="computerDao" class="org.experimenter.repository.dao.impl.ComputerDaoImpl" parent="dao">
+        <property name="tableName" value="COMPUTER" />
+    </bean>
+    <bean id="connectionDao" class="org.experimenter.repository.dao.impl.ConnectionDaoImpl" parent="dao">
+        <property name="tableName" value="CONNECTION" />
+    </bean>
+    <bean id="connectionFarmDao" class="org.experimenter.repository.dao.impl.ConnectionFarmDaoImpl" parent="dao">
+        <property name="tableName" value="FARM" />
+    </bean>
+    <bean id="experimentDao" class="org.experimenter.repository.dao.impl.ExperimentDaoImpl" parent="dao">
+        <property name="tableName" value="EXPERIMENT" />
+    </bean>
+    <bean id="inputDao" class="org.experimenter.repository.dao.impl.InputDaoImpl" parent="dao">
+        <property name="tableName" value="INPUT" />
+    </bean>
+    <bean id="inputSetDao" class="org.experimenter.repository.dao.impl.InputSetDaoImpl" parent="dao">
+        <property name="tableName" value="INPUT_SET" />
+    </bean>
+    <bean id="problemTypeDao" class="org.experimenter.repository.dao.impl.ProblemTypeDaoImpl" parent="dao">
+        <property name="tableName" value="PROBLEM" />
+    </bean>
+    <bean id="programDao" class="org.experimenter.repository.dao.impl.ProgramDaoImpl" parent="dao">
+        <property name="tableName" value="PROGRAM" />
+    </bean>
+    <bean id="projectDao" class="org.experimenter.repository.dao.impl.ProjectDaoImpl" parent="dao">
+        <property name="tableName" value="PROJECT" />
+    </bean>
 </beans>

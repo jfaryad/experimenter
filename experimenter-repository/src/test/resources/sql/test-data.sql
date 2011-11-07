@@ -3,8 +3,9 @@
 -- Test Data
 -- ---
 
-INSERT INTO USER (user_id, name,surname,login,password,email) VALUES (1, 'Tester','Exists','tester1','heslo','tester1@experimenter.org');
-INSERT INTO USER (user_id, name,surname,login,password,email) VALUES (2, 'Tester','Delete','tester1','heslo','tester2@experimenter.org');
+INSERT INTO USER (user_id, name,surname,login,password,email) VALUES (1, 'Tester1','Exists','tester1','heslo','tester1@experimenter.org');
+INSERT INTO USER (user_id, name,surname,login,password,email) VALUES (2, 'Tester2','Delete','tester2','heslo','tester2@experimenter.org');
+INSERT INTO USER (user_id, name,surname,login,password,email) VALUES (3, 'Tester3','Update','tester3','heslo','tester3@experimenter.org');
 
 INSERT INTO USERGROUP (usergroup_id,name) VALUES (1,'students');
 INSERT INTO USERGROUP (usergroup_id,name) VALUES (2,'teachers');

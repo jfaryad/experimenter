@@ -86,9 +86,9 @@ CREATE TABLE USERGROUP (
 DROP TABLE IF EXISTS USER_USERGROUP;
 		
 CREATE TABLE USER_USERGROUP (
-  user_usergroup_id INTEGER NOT NULL PRIMARY KEY,
   user_id INTEGER NOT NULL,
   usergroup_id INTEGER NOT NULL,
+  PRIMARY KEY (user_id, usergroup_id),
 );
 
 -- ---
@@ -199,9 +199,9 @@ CREATE TABLE PROJECT (
 DROP TABLE IF EXISTS EXPERIMENT_INPUT_SET;
 		
 CREATE TABLE EXPERIMENT_INPUT_SET (
-  experiment_input_set_id INTEGER NOT NULL PRIMARY KEY,
   input_set_id INTEGER NOT NULL,
   experiment_id INTEGER NOT NULL,
+  PRIMARY KEY(input_set_id, experiment_id),
 );
 
 -- ---
@@ -212,9 +212,9 @@ CREATE TABLE EXPERIMENT_INPUT_SET (
 DROP TABLE IF EXISTS PROJECT_INPUT_SET;
 		
 CREATE TABLE PROJECT_INPUT_SET (
-  project_input_id INTEGER NOT NULL PRIMARY KEY,
   input_set_id INTEGER NOT NULL,
   project_id INTEGER NOT NULL,
+  PRIMARY KEY(input_set_id, project_id),
 );
 
 -- ---
@@ -239,9 +239,9 @@ CREATE TABLE INPUT_SET (
 DROP TABLE IF EXISTS INPUT_INPUT_SET;
 		
 CREATE TABLE INPUT_INPUT_SET (
-  input_input_set_id INTEGER NOT NULL PRIMARY KEY,
   input_id INTEGER NOT NULL,
   input_set_id INTEGER NOT NULL,
+  PRIMARY KEY(input_id, input_set_id),
 );
 
 -- ---
@@ -252,9 +252,9 @@ CREATE TABLE INPUT_INPUT_SET (
 DROP TABLE IF EXISTS EXPERIMENT_FARM;
 		
 CREATE TABLE EXPERIMENT_FARM (
-  experiment_farm_id INTEGER NOT NULL PRIMARY KEY,
   experiment_id INTEGER NOT NULL,
   farm_id INTEGER NOT NULL,
+  PRIMARY KEY(experiment_id, farm_id)
 );
 
 -- ---
