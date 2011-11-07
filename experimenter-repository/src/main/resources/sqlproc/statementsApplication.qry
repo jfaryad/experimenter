@@ -1,13 +1,13 @@
 SEQ_APPLICATION(OPT,HSQLDB)=call next value for SEQ_APPLICATION;
 
 GET_APPLICATION_BY_ID(CRUD)=
-  select application_id @applicationId, version @version, executable @executable
+  select application_id @applicationId, version @version, executable @executable, program_id @program.programId^int^id
   from application a
   {= where application_id = :integer^int^notnull}
 ;
 
 GET_APPLICATION_BY_CRITERIA(QRY)=
-  select application_id @applicationId, version @version, executable @executable
+  select application_id @applicationId, version @version, executable @executable, program_id @program.programId^int^id
   from application a
   {= where 
   	{& application_id = :applicationId}
@@ -17,8 +17,8 @@ GET_APPLICATION_BY_CRITERIA(QRY)=
 ;
 
 INSERT_APPLICATION(CRUD)=
-  insert into application (application_id, version, executable, login, password, email)
-  {= values (:applicationId^int^seq=SEQ_APPLICATION, :version, :executable) }
+  insert into application (application_id, version, executable, program_id)
+  {= values (:applicationId^int^seq=SEQ_APPLICATION, :version, :executable, :program.programId) }
 ;
 
 DELETE_APPLICATION_BY_ID(CRUD)=

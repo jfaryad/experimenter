@@ -17,7 +17,7 @@ GET_COMPUTER_BY_CRITERIA(QRY)=
 ;
 
 INSERT_COMPUTER(CRUD)=
-  insert into computer (computer_id, address, description, login, password, email)
+  insert into computer (computer_id, address, description)
   {= values (:computerId^int^seq=SEQ_COMPUTER, :address, :description) }
 ;
 

@@ -1,13 +1,13 @@
 SEQ_INPUT_SET(OPT,HSQLDB)=call next value for SEQ_INPUT_SET;
 
 GET_INPUT_SET_BY_ID(CRUD)=
-  select input_set_id @inputSetId, name @name, description @description
+  select input_set_id @inputSetId, name @name, description @description, problem_id @problem.problemId^int^id
   from input_set i
   {= where input_set_id = :integer^int^notnull}
 ;
 
 GET_INPUT_SET_BY_CRITERIA(QRY)=
-  select input_set_id @inputSetId, name @name, description @description
+  select input_set_id @inputSetId, name @name, description @description, problem_id @problem.problemId^int^id
   from input_set i
   {= where 
   	{& input_set_id = :inputSetId}
@@ -17,8 +17,8 @@ GET_INPUT_SET_BY_CRITERIA(QRY)=
 ;
 
 INSERT_INPUT_SET(CRUD)=
-  insert into input_set (input_set_id, name, description, login, password, email)
-  {= values (:inputSetId^int^seq=SEQ_INPUT_SET, :name, :description) }
+  insert into input_set (input_set_id, name, description, problem_id)
+  {= values (:inputSetId^int^seq=SEQ_INPUT_SET, :name, :description, :problem.problemId) }
 ;
 
 DELETE_INPUT_SET_BY_ID(CRUD)=

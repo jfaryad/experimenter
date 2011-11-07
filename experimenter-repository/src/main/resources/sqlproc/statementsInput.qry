@@ -1,14 +1,14 @@
 SEQ_INPUT(OPT,HSQLDB)=call next value for SEQ_INPUT;
 
 GET_INPUT_BY_ID(CRUD)=
-  select input_id @inputId, name @name, data @data
+  select input_id @inputId, name @name, data @data, problem_id @problem.problemId^int^id
   from input i
   {= where input_id = :integer^int^notnull}
 ;
 
 GET_INPUT_BY_CRITERIA(QRY)=
-  select input_id @inputId, name @name, data @data
-  from input 
+  select input_id @inputId, name @name, data @data, problem_id @problem.problemId^int^id
+  from input i
   {= where 
   	{& input_id = :inputId}
   	{& UPPER(i.name) like :+name}
@@ -17,8 +17,8 @@ GET_INPUT_BY_CRITERIA(QRY)=
 ;
 
 INSERT_INPUT(CRUD)=
-  insert into input (input_id, name, data, login, password, email)
-  {= values (:inputId^int^seq=SEQ_INPUT, :name, :data) }
+  insert into input (input_id, name, data, problem_id)
+  {= values (:inputId^int^seq=SEQ_INPUT, :name, :data, :problem.problemId) }
 ;
 
 DELETE_INPUT_BY_ID(CRUD)=
