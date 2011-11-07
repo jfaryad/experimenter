@@ -17,7 +17,7 @@ GET_PROBLEM_BY_CRITERIA(QRY)=
 ;
 
 INSERT_PROBLEM(CRUD)=
-  insert into problem (problem_id, name, description, login, password, email)
+  insert into problem (problem_id, name, description)
   {= values (:problemId^int^seq=SEQ_PROBLEM, :name, :description) }
 ;
 

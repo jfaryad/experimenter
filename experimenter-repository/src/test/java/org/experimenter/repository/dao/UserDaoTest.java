@@ -4,6 +4,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
+import java.util.List;
+
 import org.experimenter.repository.form.CriteriaForm;
 import org.experimenter.repository.model.User;
 import org.junit.Test;
@@ -33,12 +35,24 @@ public class UserDaoTest {
         user.setEmail("pepa@novak.cz");
         userDao.insert(user);
         assertNotNull("userId is null after insert", user.getUserId());
+        user = userDao.findById(user.getUserId());
+        assertEquals("Josef", user.getName());
+        assertEquals("Novak", user.getSurname());
+        assertEquals("pepa", user.getLogin());
+        assertEquals("pepa123", user.getPassword());
+        assertEquals("pepa@novak.cz", user.getEmail());
     }
 
     @Test
     public void findUserById() {
         Integer id = 1;
-        assertNotNull("user not found", userDao.findById(id));
+        User user = userDao.findById(id);
+        assertNotNull("user not found", user);
+        assertEquals("Tester1", user.getName());
+        assertEquals("Exists", user.getSurname());
+        assertEquals("tester1", user.getLogin());
+        assertEquals("heslo", user.getPassword());
+        assertEquals("tester1@experimenter.org", user.getEmail());
     }
 
     @Test
@@ -63,10 +77,18 @@ public class UserDaoTest {
 
     @Test
     public void findUserByCriteria() {
-        User user = new User();
-        user.setEmail("tester1@experimenter.org");
-        CriteriaForm<User> criteria = new CriteriaForm<User>(user);
-        assertNotNull("user not found", userDao.findByCriteria(criteria));
+        User model = new User();
+        model.setEmail("tester1@experimenter.org");
+        CriteriaForm<User> criteria = new CriteriaForm<User>(model);
+        List<User> users = userDao.findByCriteria(criteria);
+        assertEquals("wrong number of users found", 1, users.size());
+        User user = users.get(0);
+        assertNotNull("user not found", user);
+        assertEquals("Tester1", user.getName());
+        assertEquals("Exists", user.getSurname());
+        assertEquals("tester1", user.getLogin());
+        assertEquals("heslo", user.getPassword());
+        assertEquals("tester1@experimenter.org", user.getEmail());
     }
 
 }

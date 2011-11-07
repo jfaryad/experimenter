@@ -1,9 +1,9 @@
 SEQ_USERGROUP(OPT,HSQLDB)=call next value for SEQ_USERGROUP;
 
 GET_USERGROUP_BY_ID(CRUD)=
-  select USER_ID @userGroupId, NAME @name
+  select usergroup_id @userGroupId, name @name
   from usergroup u
-  {= where USERGROUP_ID = :integer^int^notnull}
+  {= where usergroup_id = :integer^int^notnull}
 ;
 
 GET_USERGROUP_BY_CRITERIA(QRY)=

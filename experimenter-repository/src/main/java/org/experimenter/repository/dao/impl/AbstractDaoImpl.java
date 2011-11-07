@@ -39,7 +39,7 @@ public abstract class AbstractDaoImpl<T> implements BaseDao<T> {
         String engineName = "GET_" + getTableName() + "_BY_CRITERIA";
         List<T> items = getQueryEngine(engineName).query(session, getModelClass(), criteria.getModel(), null,
                 criteria.getOrder(), 0, criteria.getFirst(), criteria.getCount());
-        logger.debug(">> findByCriteria: number of found entries:" + items.size());
+        logger.debug("<< findByCriteria: number of found entries:" + items.size());
         return items;
     }
 

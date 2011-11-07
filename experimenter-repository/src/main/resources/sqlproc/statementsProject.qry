@@ -1,13 +1,13 @@
 SEQ_PROJECT(OPT,HSQLDB)=call next value for SEQ_PROJECT;
 
 GET_PROJECT_BY_ID(CRUD)=
-  select project_id @projectId, name @name, description @description
+  select project_id @projectId, name @name, description @description, usergroup_id @userGroup.userGroupId^int^id, problem_id @problem.problemId^int^id
   from project p
   {= where project_id = :integer^int^notnull}
 ;
 
 GET_PROJECT_BY_CRITERIA(QRY)=
-  select project_id @projectId, name @name, description @description
+  select project_id @projectId, name @name, description @description, usergroup_id @userGroup.userGroupId^int^id, problem_id @problem.problemId^int^id
   from project p
   {= where 
   	{& project_id = :projectId}
@@ -17,8 +17,8 @@ GET_PROJECT_BY_CRITERIA(QRY)=
 ;
 
 INSERT_PROJECT(CRUD)=
-  insert into project (project_id, name, description, login, password, email)
-  {= values (:projectId^int^seq=SEQ_PROJECT, :name, :description) }
+  insert into project (project_id, name, description, usergroup_id, problem_id)
+  {= values (:projectId^int^seq=SEQ_PROJECT, :name, :description, :userGroup.userGroupId, :problem.problemId) }
 ;
 
 DELETE_PROJECT_BY_ID(CRUD)=
