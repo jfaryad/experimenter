@@ -23,14 +23,14 @@ import org.springframework.transaction.annotation.Transactional;
 public class ProblemTypeDaoTest {
 
     @Autowired
-    private ProblemTypeDao problemDao;
+    private ProblemTypeDao problemTypeDao;
 
     @Test
     public void insertProblemType() {
         ProblemType problem = new ProblemType();
         problem.setName("3-sat");
         problem.setDescription("k-sat for 3 literals");
-        problemDao.insert(problem);
+        problemTypeDao.insert(problem);
         assertNotNull("problemId is null after insert", problem.getProblemId());
         assertEquals("3-sat", problem.getName());
         assertEquals("k-sat for 3 literals", problem.getDescription());
@@ -39,7 +39,7 @@ public class ProblemTypeDaoTest {
     @Test
     public void findProblemTypeById() {
         Integer id = 1;
-        ProblemType problem = problemDao.findById(id);
+        ProblemType problem = problemTypeDao.findById(id);
         assertNotNull("problem not found", problem);
         assertEquals("3-SAT", problem.getName());
         assertEquals("you know what it means", problem.getDescription());
@@ -48,19 +48,19 @@ public class ProblemTypeDaoTest {
     @Test
     public void deleteProblemType() {
         Integer id = 3;
-        problemDao.deleteById(id);
-        assertNull("problem was not deleted", problemDao.findById(id));
+        problemTypeDao.deleteById(id);
+        assertNull("problem was not deleted", problemTypeDao.findById(id));
     }
 
     @Test
     public void updateProblemType() {
         Integer id = 2;
-        ProblemType problem = problemDao.findById(id);
+        ProblemType problem = problemTypeDao.findById(id);
         assertNotNull("problem was not found before update", problem);
         assertEquals("4-SAT", problem.getName());
         problem.setName("newProblem");
-        problemDao.update(problem);
-        problem = problemDao.findById(id);
+        problemTypeDao.update(problem);
+        problem = problemTypeDao.findById(id);
         assertNotNull("problem was not found after update", problem);
         assertEquals("newProblem", problem.getName());
     }
@@ -70,7 +70,7 @@ public class ProblemTypeDaoTest {
         ProblemType model = new ProblemType();
         model.setName("3-SAT");
         CriteriaForm<ProblemType> criteria = new CriteriaForm<ProblemType>(model);
-        List<ProblemType> problems = problemDao.findByCriteria(criteria);
+        List<ProblemType> problems = problemTypeDao.findByCriteria(criteria);
         assertEquals("wrong number of problems found", 1, problems.size());
         ProblemType problem = problems.get(0);
         assertNotNull("problem not found", problem);
