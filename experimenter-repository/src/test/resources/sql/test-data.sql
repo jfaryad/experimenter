@@ -18,9 +18,11 @@ INSERT INTO COMPUTER (computer_id,address,description) VALUES (3,'u-pl22','compu
 
 INSERT INTO FARM (farm_id,name,description,usergroup_id) VALUES (1,'testFarm1','farm to test find',1);
 INSERT INTO FARM (farm_id,name,description,usergroup_id) VALUES (2,'testFarm2','farm to test delete',1);
+INSERT INTO FARM (farm_id,name,description,usergroup_id) VALUES (3,'testFarm3','farm to test update',3);
 
 INSERT INTO CONNECTION (connection_id,name,login,password,description,computer_id,port,farm_id) VALUES (1,'myConn1exists','test','test123','my test connection 1',1,221,1);
 INSERT INTO CONNECTION (connection_id,name,login,password,description,computer_id,port,farm_id) VALUES (2,'myConn2delete','comp','comp123','my test connection 2',3,221,1);
+INSERT INTO CONNECTION (connection_id,name,login,password,description,computer_id,port,farm_id) VALUES (3,'myConn3update','upd','upd123','my test connection 3',1,221,1);
 
 -- INSERT INTO USER_USERGROUP (USER_USERGROUP_id,user_id,usergroup_id) VALUES
 -- ('','','');
@@ -47,6 +49,7 @@ INSERT INTO INPUT (input_id,name,data,problem_id) VALUES (3,'testInput3','data3'
 
 INSERT INTO EXPERIMENT (experiment_id,name,description,project_id,application_id) VALUES (1,'experiment1','experiment to test find',1,1);
 INSERT INTO EXPERIMENT (experiment_id,name,description,project_id,application_id) VALUES (2,'experiment2','experiment to test delete',1,3);
+INSERT INTO EXPERIMENT (experiment_id,name,description,project_id,application_id) VALUES (3,'experiment3','experiment to test update',1,3);
 
 -- INSERT INTO EXPERIMENT_INPUT_SET (experiment_input_set_id,input_set_id,experiment_id) VALUES
 -- ('','','');

@@ -1,13 +1,13 @@
 SEQ_CONNECTION(OPT,HSQLDB)=call next value for SEQ_CONNECTION;
 
 GET_CONNECTION_BY_ID(CRUD)=
-  select connection_id @connectionId, name @name, description @description, login @login, password @password, port @port
+  select connection_id @connectionId, name @name, description @description, login @login, password @password, port @port, computer_id @computer.computerId^int^id, farm_id @connectionFarm.connectionFarmId^int^id
   from connection c
   {= where connection_id = :integer^int^notnull}
 ;
 
 GET_CONNECTION_BY_CRITERIA(QRY)=
-  select connection_id @connectionId, name @name, description @description, login @login, password @password, port @port
+  select connection_id @connectionId, name @name, description @description, login @login, password @password, port @port, computer_id @computer.computerId^int^id, farm_id @connectionFarm.connectionFarmId^int^id
   from connection c
   {= where 
   	{& connection_id = :connectionId}
@@ -19,8 +19,8 @@ GET_CONNECTION_BY_CRITERIA(QRY)=
 ;
 
 INSERT_CONNECTION(CRUD)=
-  insert into connection (connection_id, name, description, login, password, port)
-  {= values (:connectionId^int^seq=SEQ_CONNECTION, :name, :description, :login, :password, :port) }
+  insert into connection (connection_id, name, description, login, password, port, computer_id, farm_id)
+  {= values (:connectionId^int^seq=SEQ_CONNECTION, :name, :description, :login, :password, :port, :computer.computerId, :connectionFarm.connectionFarmId) }
 ;
 
 DELETE_CONNECTION_BY_ID(CRUD)=
