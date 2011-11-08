@@ -15,19 +15,18 @@ import org.springframework.transaction.annotation.Transactional;
 @ContextConfiguration(locations = { "classpath:repositoryContextTest.xml" })
 @Transactional
 @TransactionConfiguration(defaultRollback = true)
-public class ExperimentDaoTest {
+public class ExperimentDaoTest extends AbstractTest {
 
-	@Autowired
-	private ExperimentDao experimentDao;
+    @Autowired
+    private ExperimentDao experimentDao;
 
-	@Test
-	public void insertExperiment() {
-		Experiment experiment = new Experiment();
-		experiment.setName("exp1");
-		experiment.setDescription("exp1 - sat");
-		experimentDao.insert(experiment);
-		assertNotNull("experimentId is null after insert",
-				experiment.getExperimentId());
-	}
+    @Test
+    public void insertExperiment() {
+        Experiment experiment = new Experiment();
+        experiment.setName("exp1");
+        experiment.setDescription("exp1 - sat");
+        experimentDao.insert(experiment);
+        assertNotNull("experimentId is null after insert", experiment.getExperimentId());
+    }
 
 }

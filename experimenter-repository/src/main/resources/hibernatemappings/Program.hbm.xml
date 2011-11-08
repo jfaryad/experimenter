@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Nov 3, 2011 11:11:24 PM by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="org.experimenter.repository.model.Program" table="PROGRAM">
+        <id name="programId" type="java.lang.Integer">
+            <column name="PROGRAM_ID" />
+            <generator class="identity" />
+        </id>
+        <property name="name" type="java.lang.String">
+            <column name="NAME" />
+        </property>
+        <property name="description" type="java.lang.String">
+            <column name="DESCRIPTION" />
+        </property>
+        <property name="command" type="java.lang.String">
+            <column name="COMMAND" />
+        </property>
+        <many-to-one name="project" class="org.experimenter.repository.model.Project" fetch="join">
+            <column name="PROJECT_ID" />
+        </many-to-one>
+        <set name="applications" inverse="false" table="APPLICATION" lazy="true">
+            <key>
+                <column name="PROGRAM_ID" />
+            </key>
+            <one-to-many class="org.experimenter.repository.model.Application" />
+        </set>
+    </class>
+</hibernate-mapping>

@@ -1,7 +1,7 @@
 package org.experimenter.repository.model;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.Set;
 
 /**
  * Entity for database table USER.
@@ -11,77 +11,84 @@ import java.util.List;
  */
 public class User implements Serializable {
 
-	private static final long serialVersionUID = 1L;
-	private Integer userId;
-	private String name;
-	private String surname;
-	private String login;
-	private String password;
-	private String email;
-	private List<UserGroup> userGroups;
+    private static final long serialVersionUID = 1L;
+    private Integer userId;
+    private String name;
+    private String surname;
+    private String login;
+    private String password;
+    private String email;
+    private Set<UserGroup> userGroups;
 
-	public Integer getUserId() {
-		return userId;
-	}
+    public User() {
 
-	public void setUserId(Integer userId) {
-		this.userId = userId;
-	}
+    }
 
-	public String getName() {
-		return name;
-	}
+    public User(Integer userId) {
+        this.userId = userId;
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    }
 
-	public String getSurname() {
-		return surname;
-	}
+    public Integer getUserId() {
+        return userId;
+    }
 
-	public void setSurname(String surname) {
-		this.surname = surname;
-	}
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
 
-	public String getLogin() {
-		return login;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setLogin(String login) {
-		this.login = login;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public String getPassword() {
-		return password;
-	}
+    public String getSurname() {
+        return surname;
+    }
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
 
-	public String getEmail() {
-		return email;
-	}
+    public String getLogin() {
+        return login;
+    }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    public void setLogin(String login) {
+        this.login = login;
+    }
 
-	public List<UserGroup> getUserGroups() {
-		return userGroups;
-	}
+    public String getPassword() {
+        return password;
+    }
 
-	public void setUserGroups(List<UserGroup> userGroups) {
-		this.userGroups = userGroups;
-	}
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
-	@Override
-	public String toString() {
-		return "User[userId: " + userId + ", name: " + name + ", surname: "
-				+ surname + ", login: " + login + ", password: " + password
-				+ ", email: " + email + ", userGroups.size: "
-				+ ((userGroups != null) ? userGroups.size() : null) + "]";
-	}
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public Set<UserGroup> getUserGroups() {
+        return userGroups;
+    }
+
+    public void setUserGroups(Set<UserGroup> userGroups) {
+        this.userGroups = userGroups;
+    }
+
+    @Override
+    public String toString() {
+        return "User[userId: " + userId + ", name: " + name + ", surname: " + surname + ", login: " + login
+                + ", password: " + password + ", email: " + email + "]";
+    }
 
 }

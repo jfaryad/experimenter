@@ -22,8 +22,7 @@ INSERT INTO FARM (farm_id,name,description,usergroup_id) VALUES (2,'testFarm2','
 INSERT INTO CONNECTION (connection_id,name,login,password,description,computer_id,port,farm_id) VALUES (1,'myConn1exists','test','test123','my test connection 1',1,221,1);
 INSERT INTO CONNECTION (connection_id,name,login,password,description,computer_id,port,farm_id) VALUES (2,'myConn2delete','comp','comp123','my test connection 2',3,221,1);
 
--- INSERT INTO USER_USERGROUP (USER_USERGROUP_id,user_id,usergroup_id) VALUES
--- ('','','');
+INSERT INTO USER_USERGROUP (user_id,usergroup_id) VALUES (1,1);
 
 INSERT INTO PROBLEM (problem_id,name,description) VALUES (1,'3-SAT','you know what it means');
 INSERT INTO PROBLEM (problem_id,name,description) VALUES (2,'4-SAT','yeah, right...');

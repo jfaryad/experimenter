@@ -20,6 +20,7 @@
         <version.sql-processor>1.6.2</version.sql-processor>
         <version.commons-dbcp>1.4</version.commons-dbcp>
         <version.cglib>2.2</version.cglib>
+        <version.hibernate>3.6.8.Final</version.hibernate>
     </properties>
 
     <build>
@@ -182,6 +183,18 @@
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-ext</artifactId>
             <version>${version.slf4j}</version>
+        </dependency>
+
+        <!-- Hibernate -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>${version.hibernate}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-entitymanager</artifactId>
+            <version>${version.hibernate}</version>
         </dependency>
 
         <!-- TESTY -->

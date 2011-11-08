@@ -20,7 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 @ContextConfiguration(locations = { "classpath:repositoryContextTest.xml" })
 @Transactional
 @TransactionConfiguration(defaultRollback = true)
-public class UserGroupDaoTest {
+public class UserGroupDaoTest extends AbstractTest {
 
     @Autowired
     private UserGroupDao userGroupDao;
@@ -47,6 +47,7 @@ public class UserGroupDaoTest {
     public void deleteUserGroup() {
         Integer id = 4;
         userGroupDao.deleteById(id);
+        flush();
         assertNull("userGroup was not deleted", userGroupDao.findById(id));
     }
 

@@ -15,22 +15,21 @@ import org.springframework.transaction.annotation.Transactional;
 @ContextConfiguration(locations = { "classpath:repositoryContextTest.xml" })
 @Transactional
 @TransactionConfiguration(defaultRollback = true)
-public class ConnectionDaoTest {
+public class ConnectionDaoTest extends AbstractTest {
 
-	@Autowired
-	private ConnectionDao connectionDao;
+    @Autowired
+    private ConnectionDao connectionDao;
 
-	@Test
-	public void insertConnection() {
-		Connection connection = new Connection();
-		connection.setName("lab1");
-		connection.setDescription("lab1");
-		connection.setLogin("pepa");
-		connection.setPassword("pepa123");
-		connection.setPort((short) 221);
-		connectionDao.insert(connection);
-		assertNotNull("connectionId is null after insert",
-				connection.getConnectionId());
-	}
+    @Test
+    public void insertConnection() {
+        Connection connection = new Connection();
+        connection.setName("lab1");
+        connection.setDescription("lab1");
+        connection.setLogin("pepa");
+        connection.setPassword("pepa123");
+        connection.setPort((short) 221);
+        connectionDao.insert(connection);
+        assertNotNull("connectionId is null after insert", connection.getConnectionId());
+    }
 
 }

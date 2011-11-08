@@ -17,40 +17,15 @@
         <jdbc:script location="classpath:sql/test-data.sql" />
     </jdbc:embedded-database>
 
-    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-        <property name="dataSource" ref="dataSource" />
+    <bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory" />
     </bean>
     <tx:annotation-driven transaction-manager="transactionManager" />
-
-    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
-        <property name="dataSource" ref="dataSource" />
-    </bean>
-
-    <bean id="sqlFactory" class="org.sqlproc.engine.jdbc.JdbcEngineFactory" init-method="init">
-        <property name="metaFilesNames">
-            <list>
-                <value>sqlproc/statementsUser.qry</value>
-                <value>sqlproc/statementsUserGroup.qry</value>
-                <value>sqlproc/statementsApplication.qry</value>
-                <value>sqlproc/statementsComputer.qry</value>
-                <value>sqlproc/statementsConnection.qry</value>
-                <value>sqlproc/statementsConnectionFarm.qry</value>
-                <value>sqlproc/statementsExperiment.qry</value>
-                <value>sqlproc/statementsInput.qry</value>
-                <value>sqlproc/statementsInputSet.qry</value>
-                <value>sqlproc/statementsProblemType.qry</value>
-                <value>sqlproc/statementsProgram.qry</value>
-                <value>sqlproc/statementsProject.qry</value>
-            </list>
-        </property>
-        <property name="filter" value="HSQLDB" />
-    </bean>
 
     <!-- ========= DAO ========= -->
 
     <bean id="dao" autowire="byType" abstract="true">
-        <property name="jdbcTemplate" ref="jdbcTemplate" />
-        <property name="sqlFactory" ref="sqlFactory" />
+        <property name="sessionFactory" ref="sessionFactory" />
     </bean>
 
     <bean id="userDao" class="org.experimenter.repository.dao.impl.UserDaoImpl" parent="dao">
@@ -88,5 +63,34 @@
     </bean>
     <bean id="projectDao" class="org.experimenter.repository.dao.impl.ProjectDaoImpl" parent="dao">
         <property name="tableName" value="PROJECT" />
+    </bean>
+
+    <!-- Hibernate session management -->
+
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"></property>
+        <property name="mappingResources">
+            <list>
+                <value>hibernatemappings/User.hbm.xml</value>
+                <value>hibernatemappings/UserGroup.hbm.xml</value>
+                <value>hibernatemappings/ConnectionFarm.hbm.xml</value>
+                <value>hibernatemappings/Connection.hbm.xml</value>
+                <value>hibernatemappings/Computer.hbm.xml</value>
+                <value>hibernatemappings/Project.hbm.xml</value>
+                <value>hibernatemappings/Program.hbm.xml</value>
+                <value>hibernatemappings/Application.hbm.xml</value>
+                <value>hibernatemappings/Experiment.hbm.xml</value>
+                <value>hibernatemappings/ProblemType.hbm.xml</value>
+                <value>hibernatemappings/Input.hbm.xml</value>
+                <value>hibernatemappings/InputSet.hbm.xml</value>
+            </list>
+        </property>
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect"> org.hibernate.dialect.HSQLDialect </prop>
+                <prop key="hibernate.show_sql">true</prop>
+                <prop key="hibernate.connection.release_mode"> on_close </prop>
+            </props>
+        </property>
     </bean>
 </beans>

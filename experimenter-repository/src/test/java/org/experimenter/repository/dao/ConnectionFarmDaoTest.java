@@ -15,18 +15,18 @@ import org.springframework.transaction.annotation.Transactional;
 @ContextConfiguration(locations = { "classpath:repositoryContextTest.xml" })
 @Transactional
 @TransactionConfiguration(defaultRollback = true)
-public class ConnectionFarmDaoTest {
+public class ConnectionFarmDaoTest extends AbstractTest {
 
-	@Autowired
-	private ConnectionFarmDao farmDao;
+    @Autowired
+    private ConnectionFarmDao farmDao;
 
-	@Test
-	public void insertConnectionFarm() {
-		ConnectionFarm farm = new ConnectionFarm();
-		farm.setName("farm1");
-		farm.setDescription("farm1");
-		farmDao.insert(farm);
-		assertNotNull("farmId is null after insert", farm.getConnectionFarmId());
-	}
+    @Test
+    public void insertConnectionFarm() {
+        ConnectionFarm farm = new ConnectionFarm();
+        farm.setName("farm1");
+        farm.setDescription("farm1");
+        farmDao.insert(farm);
+        assertNotNull("farmId is null after insert", farm.getConnectionFarmId());
+    }
 
 }

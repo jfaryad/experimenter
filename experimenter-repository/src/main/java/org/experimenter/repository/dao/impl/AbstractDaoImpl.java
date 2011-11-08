@@ -1,44 +1,45 @@
 package org.experimenter.repository.dao.impl;
 
+import java.io.Serializable;
 import java.util.List;
 
 import org.experimenter.repository.dao.BaseDao;
 import org.experimenter.repository.form.CriteriaForm;
-import org.experimenter.repository.form.SimpleForm;
+import org.hibernate.ObjectNotFoundException;
+import org.hibernate.SessionFactory;
+import org.hibernate.classic.Session;
+import org.hibernate.criterion.Example;
+import org.hibernate.criterion.MatchMode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Required;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.sqlproc.engine.SqlCrudEngine;
-import org.sqlproc.engine.SqlEngineFactory;
-import org.sqlproc.engine.SqlQueryEngine;
-import org.sqlproc.engine.SqlSession;
-import org.sqlproc.engine.spring.SpringSimpleSession;
 
-public abstract class AbstractDaoImpl<T> implements BaseDao<T> {
+public abstract class AbstractDaoImpl<T extends Serializable> implements BaseDao<T> {
     protected final Logger logger = LoggerFactory.getLogger(getClass());
 
-    protected JdbcTemplate jdbcTemplate;
-    protected SqlEngineFactory sqlFactory;
+    protected SessionFactory sessionFactory;
     protected String tableName;
 
+    @SuppressWarnings("unchecked")
     @Override
     public T findById(Integer id) {
         logger.debug(">> findById: " + id);
-        SqlSession session = getSqlSession();
-        String engineName = "GET_" + getTableName() + "_BY_ID";
-        T item = getCrudEngine(engineName).get(session, getModelClass(), new SimpleForm(id));
-        logger.debug("<< findById: " + item);
-        return item;
+        try {
+            T item = (T) getSession().load(getModelClass(), id);
+            logger.debug("<< findById: " + item);
+            return item;
+        } catch (ObjectNotFoundException ex) {
+            logger.debug("!! findById: entry not found");
+            return null;
+        }
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public List<T> findByCriteria(CriteriaForm<T> criteria) {
         logger.debug(">> findByCriteria: " + criteria);
-        SqlSession session = getSqlSession();
-        String engineName = "GET_" + getTableName() + "_BY_CRITERIA";
-        List<T> items = getQueryEngine(engineName).query(session, getModelClass(), criteria.getModel(), null,
-                criteria.getOrder(), 0, criteria.getFirst(), criteria.getCount());
+        List<T> items = getSession().createCriteria(getModelClass())
+                .add(Example.create(criteria.getModel()).enableLike(MatchMode.EXACT)).list();
         logger.debug("<< findByCriteria: number of found entries:" + items.size());
         return items;
     }
@@ -46,52 +47,32 @@ public abstract class AbstractDaoImpl<T> implements BaseDao<T> {
     @Override
     public void insert(T item) {
         logger.debug(">> insert: " + item);
-        SqlSession session = getSqlSession();
-        String engineName = "INSERT_" + getTableName();
-        getCrudEngine(engineName).insert(session, item);
+        getSession().save(item);
         logger.debug("<< insert: " + item);
     }
 
     @Override
     public void deleteById(Integer id) {
         logger.debug(">> deleteById: " + id);
-        SqlSession session = getSqlSession();
-        String engineName = "DELETE_" + getTableName() + "_BY_ID";
-        int deletedRows = getCrudEngine(engineName).delete(session, new SimpleForm(id));
-        logger.debug("<< deleteById: number of rows deleted: " + deletedRows);
+        T item = findById(id);
+        getSession().delete(item);
+        logger.debug("<< deleteById");
         return;
     }
 
     @Override
     public void update(T item) {
         logger.debug("update: " + item);
-        SqlSession session = getSqlSession();
-        String engineName = "UPDATE_" + getTableName();
-        int updatedRows = getCrudEngine(engineName).update(session, item);
-        logger.debug("update: number of rows updated: " + updatedRows);
+        getSession().update(item);
+        logger.debug("update: " + item);
         return;
     }
 
     @Override
     public abstract Class<T> getModelClass();
 
-    protected SqlSession getSqlSession() {
-        SqlSession session = new SpringSimpleSession(jdbcTemplate);
-        return session;
-    }
-
-    public SqlCrudEngine getCrudEngine(String name) {
-        SqlCrudEngine queryEngine = sqlFactory.getCrudEngine(name);
-        if (queryEngine == null)
-            throw new RuntimeException("Missing SqlQueryEngine " + name);
-        return queryEngine;
-    }
-
-    public SqlQueryEngine getQueryEngine(String name) {
-        SqlQueryEngine queryEngine = sqlFactory.getQueryEngine(name);
-        if (queryEngine == null)
-            throw new RuntimeException("Missing SqlQueryEngine " + name);
-        return queryEngine;
+    protected Session getSession() {
+        return this.sessionFactory.getCurrentSession();
     }
 
     @Required
@@ -104,12 +85,7 @@ public abstract class AbstractDaoImpl<T> implements BaseDao<T> {
     }
 
     @Required
-    public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
-    }
-
-    @Required
-    public void setSqlFactory(SqlEngineFactory sqlFactory) {
-        this.sqlFactory = sqlFactory;
+    public void setSessionFactory(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
     }
 }

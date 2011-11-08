@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Nov 3, 2011 11:11:24 PM by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="org.experimenter.repository.model.User" table="USER">
+        <id name="userId" type="java.lang.Integer">
+            <column name="USER_ID" />
+            <generator class="identity" />
+        </id>
+        <property name="name" type="java.lang.String" not-null="true">
+            <column name="NAME" />
+        </property>
+        <property name="surname" type="java.lang.String" not-null="true">
+            <column name="SURNAME" />
+        </property>
+        <property name="login" type="java.lang.String" not-null="true">
+            <column name="LOGIN" />
+        </property>
+        <property name="password" type="java.lang.String" not-null="true">
+            <column name="PASSWORD" />
+        </property>
+        <property name="email" type="java.lang.String">
+            <column name="EMAIL" />
+        </property>
+        <set name="userGroups" inverse="false" table="USER_USERGROUP" fetch="select" lazy="true">
+            <key column="USER_ID" />
+            <many-to-many entity-name="org.experimenter.repository.model.UserGroup">
+                <column name="USERGROUP_ID"/>
+            </many-to-many>
+        </set>
+    </class>
+</hibernate-mapping>

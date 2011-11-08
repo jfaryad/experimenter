@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Nov 3, 2011 11:11:24 PM by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="org.experimenter.repository.model.Connection" table="CONNECTION">
+        <id name="connectionId" type="java.lang.Integer">
+            <column name="CONNECTION_ID" />
+            <generator class="identity" />
+        </id>
+        <property name="name" type="java.lang.String">
+            <column name="NAME" />
+        </property>
+        <property name="login" type="java.lang.String">
+            <column name="LOGIN" />
+        </property>
+        <property name="password" type="java.lang.String">
+            <column name="PASSWORD" />
+        </property>
+        <property name="description" type="java.lang.String">
+            <column name="DESCRIPTION" />
+        </property>
+        <property name="port" type="java.lang.Short">
+            <column name="PORT" />
+        </property>
+        <many-to-one name="computer" class="org.experimenter.repository.model.Computer" fetch="join">
+            <column name="COMPUTER_ID" />
+        </many-to-one>
+        <many-to-one name="connectionFarm" class="org.experimenter.repository.model.ConnectionFarm" fetch="join">
+            <column name="FARM_ID" />
+        </many-to-one>
+    </class>
+</hibernate-mapping>

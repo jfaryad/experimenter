@@ -22,7 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 @ContextConfiguration(locations = { "classpath:repositoryContextTest.xml" })
 @Transactional
 @TransactionConfiguration(defaultRollback = true)
-public class ProjectDaoTest {
+public class ProjectDaoTest extends AbstractTest {
 
     @Autowired
     private ProjectDao projectDao;
@@ -62,6 +62,7 @@ public class ProjectDaoTest {
     public void deleteProject() {
         Integer id = 2;
         projectDao.deleteById(id);
+        flush();
         assertNull("project was not deleted", projectDao.findById(id));
     }
 

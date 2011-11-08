@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Nov 3, 2011 11:11:24 PM by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="org.experimenter.repository.model.InputSet" table="INPUT_SET">
+        <id name="inputSetId" type="java.lang.Integer">
+            <column name="INPUT_SET_ID" />
+            <generator class="identity" />
+        </id>
+        <property name="name" type="java.lang.String">
+            <column name="NAME" />
+        </property>
+        <property name="description" type="java.lang.String">
+            <column name="DESCRIPTION" />
+        </property>
+        <many-to-one name="problem" class="org.experimenter.repository.model.ProblemType" fetch="join">
+            <column name="PROBLEM_ID" />
+        </many-to-one>
+        <set name="inputs" inverse="false" table="INPUT_INPUT_SET" lazy="true" cascade="all">
+            <key>
+                <column name="INPUT_SET_ID" />
+            </key>
+            <many-to-many class="org.experimenter.repository.model.Input">
+                <column name="INPUT_ID"></column>
+            </many-to-many>
+        </set>
+        <set name="experiments" inverse="true" table="EXPERIMENT_INPUT_SET" lazy="true">
+            <key>
+                <column name="INPUT_SET_ID" />
+            </key>
+            <many-to-many class="org.experimenter.repository.model.Experiment">
+                <column name="EXPERIMENT_ID"></column>
+            </many-to-many>
+        </set>
+        <set name="projects" inverse="true" table="PROJECT_INPUT_SET" lazy="true">
+            <key>
+                <column name="INPUT_SET_ID" />
+            </key>
+            <many-to-many class="org.experimenter.repository.model.Project">
+                <column name="PROJECT_ID"></column>
+            </many-to-many>
+        </set>
+    </class>
+</hibernate-mapping>

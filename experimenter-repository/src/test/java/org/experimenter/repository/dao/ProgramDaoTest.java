@@ -21,7 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 @ContextConfiguration(locations = { "classpath:repositoryContextTest.xml" })
 @Transactional
 @TransactionConfiguration(defaultRollback = true)
-public class ProgramDaoTest {
+public class ProgramDaoTest extends AbstractTest {
 
     @Autowired
     private ProgramDao programDao;

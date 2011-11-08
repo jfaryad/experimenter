@@ -1,65 +1,60 @@
 package org.experimenter.repository.model;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.Set;
 
 public class UserGroup implements Serializable {
 
-	private static final long serialVersionUID = 1L;
-	private Integer userGroupId;
-	private String name;
-	private List<User> users;
-	private List<ConnectionFarm> connectionFarms;
-	private List<Project> projects;
+    private static final long serialVersionUID = 1L;
+    private Integer userGroupId;
+    private String name;
+    private Set<User> users;
+    private Set<ConnectionFarm> connectionFarms;
+    private Set<Project> projects;
 
-	public Integer getUserGroupId() {
-		return userGroupId;
-	}
+    public Integer getUserGroupId() {
+        return userGroupId;
+    }
 
-	public void setUserGroupId(Integer userGroupId) {
-		this.userGroupId = userGroupId;
-	}
+    public void setUserGroupId(Integer userGroupId) {
+        this.userGroupId = userGroupId;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public List<User> getUsers() {
-		return users;
-	}
+    public Set<User> getUsers() {
+        return users;
+    }
 
-	public void setUsers(List<User> users) {
-		this.users = users;
-	}
+    public void setUsers(Set<User> users) {
+        this.users = users;
+    }
 
-	public List<ConnectionFarm> getConnectionFarms() {
-		return connectionFarms;
-	}
+    public Set<ConnectionFarm> getConnectionFarms() {
+        return connectionFarms;
+    }
 
-	public void setConnectionFarms(List<ConnectionFarm> connectionFarms) {
-		this.connectionFarms = connectionFarms;
-	}
+    public void setConnectionFarms(Set<ConnectionFarm> connectionFarms) {
+        this.connectionFarms = connectionFarms;
+    }
 
-	public List<Project> getProjects() {
-		return projects;
-	}
+    public Set<Project> getProjects() {
+        return projects;
+    }
 
-	public void setProjects(List<Project> projects) {
-		this.projects = projects;
-	}
+    public void setProjects(Set<Project> projects) {
+        this.projects = projects;
+    }
 
-	@Override
-	public String toString() {
-		return "UserGroup[userGroupId: " + userGroupId + ", name: " + name
-				+ ", users.size: " + ((users != null) ? users.size() : null)
-				+ ", connectionFarms.size: "
-				+ ((connectionFarms != null) ? connectionFarms.size() : null)
-				+ ", projects.size: "
-				+ ((projects != null) ? projects.size() : null) + "]";
-	}
+    @Override
+    public String toString() {
+        return "UserGroup[userGroupId: " + userGroupId + ", name: " + name + "]";
+    }
 
 }

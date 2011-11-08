@@ -1,7 +1,7 @@
 package org.experimenter.repository.model;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.Set;
 
 /**
  * Entity for database table APPLICXATION
@@ -11,59 +11,57 @@ import java.util.List;
  */
 public class Application implements Serializable {
 
-	private static final long serialVersionUID = 1L;
-	private Integer applicationId;
-	private String version;
-	private String executable;
-	private Program program;
-	private List<Experiment> experiments;
+    private static final long serialVersionUID = 1L;
+    private Integer applicationId;
+    private String version;
+    private String executable;
+    private Program program;
+    private Set<Experiment> experiments;
 
-	public Integer getApplicationId() {
-		return applicationId;
-	}
+    public Integer getApplicationId() {
+        return applicationId;
+    }
 
-	public void setApplicationId(Integer applicationId) {
-		this.applicationId = applicationId;
-	}
+    public void setApplicationId(Integer applicationId) {
+        this.applicationId = applicationId;
+    }
 
-	public String getVersion() {
-		return version;
-	}
+    public String getVersion() {
+        return version;
+    }
 
-	public void setVersion(String version) {
-		this.version = version;
-	}
+    public void setVersion(String version) {
+        this.version = version;
+    }
 
-	public String getExecutable() {
-		return executable;
-	}
+    public String getExecutable() {
+        return executable;
+    }
 
-	public void setExecutable(String executable) {
-		this.executable = executable;
-	}
+    public void setExecutable(String executable) {
+        this.executable = executable;
+    }
 
-	public Program getProgram() {
-		return program;
-	}
+    public Program getProgram() {
+        return program;
+    }
 
-	public void setProgram(Program program) {
-		this.program = program;
-	}
+    public void setProgram(Program program) {
+        this.program = program;
+    }
 
-	public List<Experiment> getExperiments() {
-		return experiments;
-	}
+    public Set<Experiment> getExperiments() {
+        return experiments;
+    }
 
-	public void setExperiments(List<Experiment> experiments) {
-		this.experiments = experiments;
-	}
+    public void setExperiments(Set<Experiment> experiments) {
+        this.experiments = experiments;
+    }
 
-	@Override
-	public String toString() {
-		return "Application[applicationId: " + applicationId + ", version: "
-				+ version + ", executable: " + executable + ", program: "
-				+ program + ", experiments.size: "
-				+ ((experiments != null) ? experiments.size() : null) + "]";
-	}
+    @Override
+    public String toString() {
+        return "Application[applicationId: " + applicationId + ", version: " + version + ", executable: " + executable
+                + ", program: " + program + "]";
+    }
 
 }

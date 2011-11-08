@@ -20,7 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 @ContextConfiguration(locations = { "classpath:repositoryContextTest.xml" })
 @Transactional
 @TransactionConfiguration(defaultRollback = true)
-public class UserDaoTest {
+public class UserDaoTest extends AbstractTest {
 
     @Autowired
     private UserDao userDao;
@@ -59,6 +59,7 @@ public class UserDaoTest {
     public void deleteUser() {
         Integer id = 2;
         userDao.deleteById(id);
+        flush();
         assertNull("user was not deleted", userDao.findById(id));
     }
 
