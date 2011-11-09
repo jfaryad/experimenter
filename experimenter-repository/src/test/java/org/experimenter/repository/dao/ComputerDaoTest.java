@@ -6,7 +6,7 @@ import static org.junit.Assert.assertNull;
 
 import java.util.List;
 
-import org.experimenter.repository.form.CriteriaForm;
+import org.experimenter.repository.form.ModelCriteria;
 import org.experimenter.repository.model.Computer;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -70,7 +70,7 @@ public class ComputerDaoTest extends AbstractTest {
     public void findComputerByCriteria() {
         Computer model = new Computer();
         model.setAddress("u-pl20");
-        CriteriaForm<Computer> criteria = new CriteriaForm<Computer>(model);
+        ModelCriteria<Computer> criteria = new ModelCriteria<Computer>(model);
         List<Computer> computers = computerDao.findByCriteria(criteria);
         assertEquals("wrong number of computers found", 1, computers.size());
         Computer computer = computers.get(0);

@@ -6,7 +6,7 @@ import static org.junit.Assert.assertNull;
 
 import java.util.List;
 
-import org.experimenter.repository.form.CriteriaForm;
+import org.experimenter.repository.form.ModelCriteria;
 import org.experimenter.repository.model.ProblemType;
 import org.experimenter.repository.model.Project;
 import org.experimenter.repository.model.UserGroup;
@@ -27,15 +27,19 @@ public class ProjectDaoTest extends AbstractTest {
     @Autowired
     private ProjectDao projectDao;
 
+    @Autowired
+    private ProblemTypeDao problemTypeDao;
+
+    @Autowired
+    private UserGroupDao userGroupDao;
+
     @Test
     public void insertProject() {
         Project project = new Project();
         project.setName("testProject");
         project.setDescription("project for testing");
-        UserGroup group = new UserGroup();
-        group.setUserGroupId(1);
-        ProblemType problem = new ProblemType();
-        problem.setProblemId(1);
+        UserGroup group = userGroupDao.findById(1);
+        ProblemType problem = problemTypeDao.findById(1);
         project.setUserGroup(group);
         project.setProblem(problem);
         projectDao.insert(project);
@@ -83,7 +87,7 @@ public class ProjectDaoTest extends AbstractTest {
     public void findProjectByCriteria() {
         Project model = new Project();
         model.setName("testProject1");
-        CriteriaForm<Project> criteria = new CriteriaForm<Project>(model);
+        ModelCriteria<Project> criteria = new ModelCriteria<Project>(model);
         List<Project> projects = projectDao.findByCriteria(criteria);
         assertEquals("wrong number of projects found", 1, projects.size());
         Project project = projects.get(0);

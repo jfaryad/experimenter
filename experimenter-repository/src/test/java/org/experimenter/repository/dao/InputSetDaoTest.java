@@ -6,7 +6,7 @@ import static org.junit.Assert.assertNull;
 
 import java.util.List;
 
-import org.experimenter.repository.form.CriteriaForm;
+import org.experimenter.repository.form.ModelCriteria;
 import org.experimenter.repository.model.InputSet;
 import org.experimenter.repository.model.ProblemType;
 import org.junit.Test;
@@ -75,7 +75,7 @@ public class InputSetDaoTest extends AbstractTest {
     public void findInputSetByCriteria() {
         InputSet model = new InputSet();
         model.setName("testInputSet1");
-        CriteriaForm<InputSet> criteria = new CriteriaForm<InputSet>(model);
+        ModelCriteria<InputSet> criteria = new ModelCriteria<InputSet>(model);
         List<InputSet> inputSets = inputSetDao.findByCriteria(criteria);
         assertEquals("wrong number of inputSets found", 1, inputSets.size());
         InputSet inputSet = inputSets.get(0);

@@ -6,7 +6,7 @@ import static org.junit.Assert.assertNull;
 
 import java.util.List;
 
-import org.experimenter.repository.form.CriteriaForm;
+import org.experimenter.repository.form.ModelCriteria;
 import org.experimenter.repository.model.ConnectionFarm;
 import org.experimenter.repository.model.UserGroup;
 import org.junit.Test;
@@ -75,7 +75,7 @@ public class ConnectionFarmDaoTest extends AbstractTest {
     public void findConnectionFarmByCriteria() {
         ConnectionFarm model = new ConnectionFarm();
         model.setName("testFarm1");
-        CriteriaForm<ConnectionFarm> criteria = new CriteriaForm<ConnectionFarm>(model);
+        ModelCriteria<ConnectionFarm> criteria = new ModelCriteria<ConnectionFarm>(model);
         List<ConnectionFarm> connectionFarms = connectionFarmDao.findByCriteria(criteria);
         assertEquals("wrong number of connectionFarms found", 1, connectionFarms.size());
         ConnectionFarm connectionFarm = connectionFarms.get(0);

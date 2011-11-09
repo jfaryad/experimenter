@@ -6,7 +6,7 @@ import static org.junit.Assert.assertNull;
 
 import java.util.List;
 
-import org.experimenter.repository.form.CriteriaForm;
+import org.experimenter.repository.form.ModelCriteria;
 import org.experimenter.repository.model.ProblemType;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -69,7 +69,7 @@ public class ProblemTypeDaoTest extends AbstractTest {
     public void findProblemTypeByCriteria() {
         ProblemType model = new ProblemType();
         model.setName("3-SAT");
-        CriteriaForm<ProblemType> criteria = new CriteriaForm<ProblemType>(model);
+        ModelCriteria<ProblemType> criteria = new ModelCriteria<ProblemType>(model);
         List<ProblemType> problems = problemTypeDao.findByCriteria(criteria);
         assertEquals("wrong number of problems found", 1, problems.size());
         ProblemType problem = problems.get(0);

@@ -6,7 +6,7 @@ import static org.junit.Assert.assertNull;
 
 import java.util.List;
 
-import org.experimenter.repository.form.CriteriaForm;
+import org.experimenter.repository.form.ModelCriteria;
 import org.experimenter.repository.model.Computer;
 import org.experimenter.repository.model.Connection;
 import org.experimenter.repository.model.ConnectionFarm;
@@ -90,7 +90,7 @@ public class ConnectionDaoTest extends AbstractTest {
     public void findConnectionByCriteria() {
         Connection model = new Connection();
         model.setLogin("test");
-        CriteriaForm<Connection> criteria = new CriteriaForm<Connection>(model);
+        ModelCriteria<Connection> criteria = new ModelCriteria<Connection>(model);
         List<Connection> connections = connectionDao.findByCriteria(criteria);
         assertEquals("wrong number of connections found", 1, connections.size());
         Connection connection = connections.get(0);

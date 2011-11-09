@@ -2,7 +2,7 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <!-- Generated Nov 3, 2011 11:11:24 PM by Hibernate Tools 3.4.0.CR1 -->
-<hibernate-mapping>
+<hibernate-mapping auto-import="true" package="org.experimenter.repository.model">
     <class name="org.experimenter.repository.model.UserGroup" table="USERGROUP" lazy="true">
         <id name="userGroupId" type="java.lang.Integer">
             <column name="USERGROUP_ID" />
@@ -11,25 +11,23 @@
         <property name="name" type="java.lang.String" not-null="true">
             <column name="NAME" />
         </property>
-        <set name="users" inverse="true" table="USER_USERGROUP"  fetch="select" lazy="true" cascade="all">
-            <key>
-                <column name="USERGROUP_ID" />
-            </key>
-            <many-to-many entity-name="org.experimenter.repository.model.User">
-                <column name="USER_ID" not-null="true" />
+        <set name="users" inverse="true" table="USER_USERGROUP"  fetch="select" lazy="true">
+            <key column="USERGROUP_ID" />
+            <many-to-many class="User">
+                <column name="USER_ID" />
             </many-to-many>
         </set>
-        <set name="connectionFarms" inverse="true" table="FARM"  fetch="select" lazy="true" cascade="all">
+        <set name="connectionFarms" table="FARM"  inverse="true" fetch="select" lazy="true" cascade="delete">
             <key>
-                <column name="USERGROUP_ID" />
+                <column name="USERGROUP_ID" not-null="true" />
             </key>
-            <one-to-many class="org.experimenter.repository.model.ConnectionFarm" />
+            <one-to-many class="ConnectionFarm" />
         </set>
-        <set name="projects" inverse="true" table="PROJECT"  fetch="select" lazy="true" cascade="all">
+        <set name="projects" table="PROJECT"  inverse="true" fetch="select" lazy="true" cascade="delete">
             <key>
-                <column name="USERGROUP_ID" />
+                <column name="USERGROUP_ID" not-null="true" />
             </key>
-            <one-to-many class="org.experimenter.repository.model.Project" />
+            <one-to-many class="Project" />
         </set>
     </class>
 </hibernate-mapping>

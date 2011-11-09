@@ -6,7 +6,7 @@ import static org.junit.Assert.assertNull;
 
 import java.util.List;
 
-import org.experimenter.repository.form.CriteriaForm;
+import org.experimenter.repository.form.ModelCriteria;
 import org.experimenter.repository.model.Program;
 import org.experimenter.repository.model.Project;
 import org.junit.Test;
@@ -78,7 +78,7 @@ public class ProgramDaoTest extends AbstractTest {
     public void findProgramByCriteria() {
         Program model = new Program();
         model.setCommand("solver1.sh run");
-        CriteriaForm<Program> criteria = new CriteriaForm<Program>(model);
+        ModelCriteria<Program> criteria = new ModelCriteria<Program>(model);
         List<Program> programs = programDao.findByCriteria(criteria);
         assertEquals("wrong number of programs found", 1, programs.size());
         Program program = programs.get(0);

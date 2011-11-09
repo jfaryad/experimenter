@@ -18,7 +18,7 @@ public class Logging {
      */
     public static void logTraceDebugModel(Logger logger, String msg, Model obj) {
         if (logger.isTraceEnabled())
-            logger.trace(msg + obj.toDebugString());
+            logger.trace(msg + ((obj != null) ? obj.toDebugString() : null));
         else if (logger.isDebugEnabled())
             logger.debug(msg + obj);
     }

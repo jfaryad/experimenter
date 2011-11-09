@@ -86,14 +86,14 @@ public class Project implements Model {
 
     @Override
     public String toString() {
-        return "Proj[ectprojectId: " + projectId + ", name: " + name + ", description: " + description + ", userGroup"
-                + userGroup + ", problem: " + problem + "]";
+        return "Proj[ectprojectId: " + projectId + ", name: " + name + ", description: " + description
+                + ", userGroup: " + userGroup + ", problem: " + problem + "]";
     }
 
     @Override
     public String toDebugString() {
-        return "Proj[ectprojectId: " + projectId + ", name: " + name + ", description: " + description + ", userGroup"
-                + userGroup + ", problem: " + problem + ", programs.size: "
+        return "Proj[ectprojectId: " + projectId + ", name: " + name + ", description: " + description
+                + ", userGroup: " + userGroup + ", problem: " + problem + ", programs.size: "
                 + ((programs != null) ? programs.size() : null) + ", experiments.size: "
                 + ((experiments != null) ? experiments.size() : null) + ", inputSets.size: "
                 + ((inputSets != null) ? inputSets.size() : null) + "]";

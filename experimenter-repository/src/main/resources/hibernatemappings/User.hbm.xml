@@ -2,8 +2,8 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <!-- Generated Nov 3, 2011 11:11:24 PM by Hibernate Tools 3.4.0.CR1 -->
-<hibernate-mapping>
-    <class name="org.experimenter.repository.model.User" table="USER">
+<hibernate-mapping auto-import="true" package="org.experimenter.repository.model">
+    <class name="org.experimenter.repository.model.User" table="USER" lazy="true">
         <id name="userId" type="java.lang.Integer">
             <column name="USER_ID" />
             <generator class="identity" />
@@ -25,7 +25,7 @@
         </property>
         <set name="userGroups" inverse="false" table="USER_USERGROUP" fetch="select" lazy="true">
             <key column="USER_ID" />
-            <many-to-many entity-name="org.experimenter.repository.model.UserGroup">
+            <many-to-many class="UserGroup">
                 <column name="USERGROUP_ID"/>
             </many-to-many>
         </set>

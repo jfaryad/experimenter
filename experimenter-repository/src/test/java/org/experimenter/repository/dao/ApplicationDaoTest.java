@@ -6,7 +6,7 @@ import static org.junit.Assert.assertNull;
 
 import java.util.List;
 
-import org.experimenter.repository.form.CriteriaForm;
+import org.experimenter.repository.form.ModelCriteria;
 import org.experimenter.repository.model.Application;
 import org.experimenter.repository.model.Program;
 import org.junit.Test;
@@ -75,7 +75,7 @@ public class ApplicationDaoTest extends AbstractTest {
     public void findApplicationByCriteria() {
         Application model = new Application();
         model.setVersion("1.3");
-        CriteriaForm<Application> criteria = new CriteriaForm<Application>(model);
+        ModelCriteria<Application> criteria = new ModelCriteria<Application>(model);
         List<Application> applications = applicationDao.findByCriteria(criteria);
         assertEquals("wrong number of applications found", 1, applications.size());
         Application application = applications.get(0);

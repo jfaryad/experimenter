@@ -6,7 +6,7 @@ import static org.junit.Assert.assertNull;
 
 import java.util.List;
 
-import org.experimenter.repository.form.CriteriaForm;
+import org.experimenter.repository.form.ModelCriteria;
 import org.experimenter.repository.model.Application;
 import org.experimenter.repository.model.Experiment;
 import org.experimenter.repository.model.Project;
@@ -81,7 +81,7 @@ public class ExperimentDaoTest extends AbstractTest {
     public void findExperimentByCriteria() {
         Experiment model = new Experiment();
         model.setName("experiment1");
-        CriteriaForm<Experiment> criteria = new CriteriaForm<Experiment>(model);
+        ModelCriteria<Experiment> criteria = new ModelCriteria<Experiment>(model);
         List<Experiment> experiments = experimentDao.findByCriteria(criteria);
         assertEquals("wrong number of experiments found", 1, experiments.size());
         Experiment experiment = experiments.get(0);

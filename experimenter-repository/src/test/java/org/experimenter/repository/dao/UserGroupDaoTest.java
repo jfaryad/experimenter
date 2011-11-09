@@ -6,7 +6,7 @@ import static org.junit.Assert.assertNull;
 
 import java.util.List;
 
-import org.experimenter.repository.form.CriteriaForm;
+import org.experimenter.repository.form.ModelCriteria;
 import org.experimenter.repository.model.UserGroup;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -24,6 +24,15 @@ public class UserGroupDaoTest extends AbstractTest {
 
     @Autowired
     private UserGroupDao userGroupDao;
+
+    @Autowired
+    private UserDao userDao;
+
+    @Autowired
+    private ProjectDao projectDao;
+
+    @Autowired
+    private ConnectionFarmDao connectionFarmDao;
 
     @Test
     public void insertUserGroup() {
@@ -46,9 +55,12 @@ public class UserGroupDaoTest extends AbstractTest {
     @Test
     public void deleteUserGroup() {
         Integer id = 4;
+        userGroupDao.findById(id);
         userGroupDao.deleteById(id);
         flush();
         assertNull("userGroup was not deleted", userGroupDao.findById(id));
+        assertNull("associated farm was not deleted with userGroup", connectionFarmDao.findById(4));
+        assertNull("associated project was not deleted with userGroup", projectDao.findById(4));
     }
 
     @Test
@@ -68,7 +80,7 @@ public class UserGroupDaoTest extends AbstractTest {
     public void findUserGroupByCriteria() {
         UserGroup model = new UserGroup();
         model.setName("students");
-        CriteriaForm<UserGroup> criteria = new CriteriaForm<UserGroup>(model);
+        ModelCriteria<UserGroup> criteria = new ModelCriteria<UserGroup>(model);
         List<UserGroup> userGroups = userGroupDao.findByCriteria(criteria);
         assertEquals("wrong number of userGroups found", 1, userGroups.size());
         UserGroup userGroup = userGroups.get(0);

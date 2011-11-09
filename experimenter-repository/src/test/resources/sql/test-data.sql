@@ -11,6 +11,8 @@ INSERT INTO USERGROUP (usergroup_id,name) VALUES (1,'students');
 INSERT INTO USERGROUP (usergroup_id,name) VALUES (2,'teachers');
 INSERT INTO USERGROUP (usergroup_id,name) VALUES (3,'public');
 INSERT INTO USERGROUP (usergroup_id,name) VALUES (4,'delete-group');
+INSERT INTO USERGROUP (usergroup_id,name) VALUES (5,'insert user test');
+INSERT INTO USERGROUP (usergroup_id,name) VALUES (6,'delete user test');
 
 INSERT INTO COMPUTER (computer_id,address,description) VALUES (1,'u-pl20','computer u-pl20, test exists');
 INSERT INTO COMPUTER (computer_id,address,description) VALUES (2,'u-pl21','computer u-pl21, test delete');
@@ -19,12 +21,15 @@ INSERT INTO COMPUTER (computer_id,address,description) VALUES (3,'u-pl22','compu
 INSERT INTO FARM (farm_id,name,description,usergroup_id) VALUES (1,'testFarm1','farm to test find',1);
 INSERT INTO FARM (farm_id,name,description,usergroup_id) VALUES (2,'testFarm2','farm to test delete',1);
 INSERT INTO FARM (farm_id,name,description,usergroup_id) VALUES (3,'testFarm3','farm to test update',3);
+INSERT INTO FARM (farm_id,name,description,usergroup_id) VALUES (4,'testFarm4','farm to test delete userGroup',4);
 
 INSERT INTO CONNECTION (connection_id,name,login,password,description,computer_id,port,farm_id) VALUES (1,'myConn1exists','test','test123','my test connection 1',1,221,1);
 INSERT INTO CONNECTION (connection_id,name,login,password,description,computer_id,port,farm_id) VALUES (2,'myConn2delete','comp','comp123','my test connection 2',3,221,1);
 INSERT INTO CONNECTION (connection_id,name,login,password,description,computer_id,port,farm_id) VALUES (3,'myConn3update','upd','upd123','my test connection 3',1,221,1);
 
 INSERT INTO USER_USERGROUP (user_id,usergroup_id) VALUES (1,1);
+INSERT INTO USER_USERGROUP (user_id,usergroup_id) VALUES (3,2);
+INSERT INTO USER_USERGROUP (user_id,usergroup_id) VALUES (2,6);
 
 INSERT INTO PROBLEM (problem_id,name,description) VALUES (1,'3-SAT','you know what it means');
 INSERT INTO PROBLEM (problem_id,name,description) VALUES (2,'4-SAT','yeah, right...');
@@ -33,10 +38,14 @@ INSERT INTO PROBLEM (problem_id,name,description) VALUES (3,'testDelete','i will
 INSERT INTO PROJECT (project_id,name,description,problem_id,usergroup_id) VALUES (1,'testProject1','first project',1,1);
 INSERT INTO PROJECT (project_id,name,description,problem_id,usergroup_id) VALUES (2,'testProject2','project to test delete',2,2);
 INSERT INTO PROJECT (project_id,name,description,problem_id,usergroup_id) VALUES (3,'testProject3','project to test update',1,1);
+INSERT INTO PROJECT (project_id,name,description,problem_id,usergroup_id) VALUES (4,'testProject4','project to test delete usergroup',1,4);
+INSERT INTO PROJECT (project_id,name,description,problem_id,usergroup_id) VALUES (5,'testProject5','another project to test delete usergroup',1,4);
+
 
 INSERT INTO PROGRAM (program_id,name,description,command,project_id) VALUES (1, 'solver1','program to test find','solver1.sh run',1);
 INSERT INTO PROGRAM (program_id,name,description,command,project_id) VALUES (2, 'solver2','program to test delete','solver2.sh run',1);
 INSERT INTO PROGRAM (program_id,name,description,command,project_id) VALUES (3, 'solver3','program to test update','solver3.sh run',1);
+INSERT INTO PROGRAM (program_id,name,description,command,project_id) VALUES (4, 'solver4','program to test delete project','solver4.sh run',2);
 
 INSERT INTO APPLICATION (application_id,version,executable,program_id) VALUES (1,'1.3','solver1_1.3.sh run','1');
 INSERT INTO APPLICATION (application_id,version,executable,program_id) VALUES (2,'1.4','solver1_1.4.sh run','1');

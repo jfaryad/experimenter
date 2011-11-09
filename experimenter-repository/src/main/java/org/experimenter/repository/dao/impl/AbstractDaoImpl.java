@@ -3,10 +3,9 @@ package org.experimenter.repository.dao.impl;
 import java.util.List;
 
 import org.experimenter.repository.dao.BaseDao;
-import org.experimenter.repository.form.CriteriaForm;
+import org.experimenter.repository.form.ModelCriteria;
 import org.experimenter.repository.model.Model;
 import org.experimenter.repository.util.Logging;
-import org.hibernate.ObjectNotFoundException;
 import org.hibernate.SessionFactory;
 import org.hibernate.classic.Session;
 import org.hibernate.criterion.Example;
@@ -25,19 +24,14 @@ public abstract class AbstractDaoImpl<T extends Model> implements BaseDao<T> {
     @Override
     public T findById(Integer id) {
         Logging.logTraceDebug(logger, ">> findById: ", id);
-        try {
-            T item = (T) getSession().load(getModelClass(), id);
-            Logging.logTraceDebugModel(logger, "<< findById: ", item);
-            return item;
-        } catch (ObjectNotFoundException ex) {
-            Logging.logTraceDebug(logger, "!! findById: entry not found");
-            return null;
-        }
+        T item = (T) getSession().get(getModelClass(), id);
+        Logging.logTraceDebugModel(logger, "<< findById: ", item);
+        return item;
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    public List<T> findByCriteria(CriteriaForm<T> criteria) {
+    public List<T> findByCriteria(ModelCriteria<T> criteria) {
         Logging.logTraceDebug(logger, ">> findByCriteria: ", criteria);
         List<T> items = getSession().createCriteria(getModelClass())
                 .add(Example.create(criteria.getModel()).enableLike(MatchMode.EXACT)).list();
@@ -52,12 +46,21 @@ public abstract class AbstractDaoImpl<T extends Model> implements BaseDao<T> {
         Logging.logTraceDebugModel(logger, "<< insert: ", item);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public void deleteById(Integer id) {
         Logging.logTraceDebug(logger, ">> deleteById: ", id);
-        T item = findById(id);
-        getSession().delete(item);
+        T item = (T) getSession().load(getModelClass(), id);
+        delete(item);
         Logging.logTraceDebug(logger, "<< deleteById");
+        return;
+    }
+
+    @Override
+    public void delete(T item) {
+        Logging.logTraceDebugModel(logger, ">> delete: ", item);
+        getSession().delete(item);
+        Logging.logTraceDebug(logger, "<< delete");
         return;
     }
 

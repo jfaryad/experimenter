@@ -1,5 +1,6 @@
 package org.experimenter.repository.model;
 
+import java.util.HashSet;
 import java.util.Set;
 
 public class UserGroup implements Model {
@@ -28,6 +29,8 @@ public class UserGroup implements Model {
     }
 
     public Set<User> getUsers() {
+        if (users == null)
+            return new HashSet<User>();
         return users;
     }
 
@@ -36,6 +39,8 @@ public class UserGroup implements Model {
     }
 
     public Set<ConnectionFarm> getConnectionFarms() {
+        if (connectionFarms == null)
+            return new HashSet<ConnectionFarm>();
         return connectionFarms;
     }
 
@@ -44,6 +49,8 @@ public class UserGroup implements Model {
     }
 
     public Set<Project> getProjects() {
+        if (projects == null)
+            return new HashSet<Project>();
         return projects;
     }
 

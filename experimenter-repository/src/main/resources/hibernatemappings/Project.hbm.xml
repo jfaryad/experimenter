@@ -2,8 +2,8 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <!-- Generated Nov 3, 2011 11:11:24 PM by Hibernate Tools 3.4.0.CR1 -->
-<hibernate-mapping>
-    <class name="org.experimenter.repository.model.Project" table="PROJECT">
+<hibernate-mapping auto-import="true" package="org.experimenter.repository.model">
+    <class name="org.experimenter.repository.model.Project" table="PROJECT" lazy="true">
         <id name="projectId" type="java.lang.Integer">
             <column name="PROJECT_ID" />
             <generator class="identity" />
@@ -14,30 +14,24 @@
         <property name="description" type="java.lang.String">
             <column name="DESCRIPTION" />
         </property>
-        <many-to-one name="userGroup" class="org.experimenter.repository.model.UserGroup" fetch="join" lazy="false" not-null="true">
-            <column name="USERGROUP_ID" />
+        <many-to-one name="userGroup" class="UserGroup" fetch="join" lazy="false">
+            <column name="USERGROUP_ID" not-null="true" />
         </many-to-one>
-        <many-to-one name="problem" class="org.experimenter.repository.model.ProblemType" fetch="join" lazy="false" not-null="true">
-            <column name="PROBLEM_ID" />
+        <many-to-one name="problem" class="ProblemType" fetch="join" lazy="false">
+            <column name="PROBLEM_ID" not-null="true" />
         </many-to-one>
-        <set name="experiments" inverse="false" table="EXPERIMENT"  fetch="select" lazy="true" cascade="delete">
-            <key>
-                <column name="PROJECT_ID" />
-            </key>
-            <one-to-many class="org.experimenter.repository.model.Experiment" />
+        <set name="experiments" inverse="true" table="EXPERIMENT" fetch="select" lazy="true" cascade="delete">
+            <key column="PROJECT_ID" not-null="true" />
+            <one-to-many class="Experiment" />
         </set>
-        <set name="programs" inverse="false" table="PROGRAM"  fetch="select" lazy="true">
-            <key>
-                <column name="PROJECT_ID" />
-            </key>
-            <one-to-many class="org.experimenter.repository.model.Program" />
+        <set name="programs" inverse="true" table="PROGRAM" fetch="select" lazy="true" cascade="delete">
+            <key column="PROJECT_ID" not-null="true" />
+            <one-to-many class="Program" />
         </set>
-        <set name="inputSets" inverse="false" table="PROJECT_INPUT_SET"  fetch="select" lazy="true">
-            <key>
-                <column name="PROJECT_ID" />
-            </key>
-            <many-to-many class="org.experimenter.repository.model.InputSet">
-                <column name="INPUT_SET_ID"></column>
+        <set name="inputSets" inverse="false" table="PROJECT_INPUT_SET" fetch="select" lazy="true">
+            <key column="PROJECT_ID" not-null="true" />
+            <many-to-many class="InputSet">
+                <column name="INPUT_SET_ID" not-null="true" />
             </many-to-many>
         </set>
     </class>

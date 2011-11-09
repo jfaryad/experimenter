@@ -6,7 +6,7 @@ import static org.junit.Assert.assertNull;
 
 import java.util.List;
 
-import org.experimenter.repository.form.CriteriaForm;
+import org.experimenter.repository.form.ModelCriteria;
 import org.experimenter.repository.model.User;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -25,6 +25,9 @@ public class UserDaoTest extends AbstractTest {
     @Autowired
     private UserDao userDao;
 
+    @Autowired
+    private UserGroupDao userGroupDao;
+
     @Test
     public void insertUser() {
         User user = new User();
@@ -33,6 +36,7 @@ public class UserDaoTest extends AbstractTest {
         user.setLogin("pepa");
         user.setPassword("pepa123");
         user.setEmail("pepa@novak.cz");
+        user.getUserGroups().add(userGroupDao.findById(5));
         userDao.insert(user);
         assertNotNull("userId is null after insert", user.getUserId());
         user = userDao.findById(user.getUserId());
@@ -41,6 +45,8 @@ public class UserDaoTest extends AbstractTest {
         assertEquals("pepa", user.getLogin());
         assertEquals("pepa123", user.getPassword());
         assertEquals("pepa@novak.cz", user.getEmail());
+        assertEquals(1, user.getUserGroups().size());
+        assertEquals(1, userGroupDao.findById(5).getUsers().size());
     }
 
     @Test
@@ -61,6 +67,7 @@ public class UserDaoTest extends AbstractTest {
         userDao.deleteById(id);
         flush();
         assertNull("user was not deleted", userDao.findById(id));
+        assertEquals(0, userGroupDao.findById(6).getUsers().size());
     }
 
     @Test
@@ -80,7 +87,7 @@ public class UserDaoTest extends AbstractTest {
     public void findUserByCriteria() {
         User model = new User();
         model.setEmail("tester1@experimenter.org");
-        CriteriaForm<User> criteria = new CriteriaForm<User>(model);
+        ModelCriteria<User> criteria = new ModelCriteria<User>(model);
         List<User> users = userDao.findByCriteria(criteria);
         assertEquals("wrong number of users found", 1, users.size());
         User user = users.get(0);
