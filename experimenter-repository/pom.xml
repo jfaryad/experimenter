@@ -17,7 +17,6 @@
         <version.log4j>1.2.15</version.log4j>
         <version.slf4j>1.6.1</version.slf4j>
         <version.spring>3.0.5.RELEASE</version.spring>
-        <version.sql-processor>1.6.2</version.sql-processor>
         <version.commons-dbcp>1.4</version.commons-dbcp>
         <version.cglib>2.2</version.cglib>
         <version.hibernate>3.6.8.Final</version.hibernate>
@@ -126,23 +125,6 @@
             <groupId>cglib</groupId>
             <artifactId>cglib-nodep</artifactId>
             <version>${version.cglib}</version>
-        </dependency>
-
-        <!-- SQL Processor -->
-        <dependency>
-            <groupId>org.sqlproc</groupId>
-            <artifactId>sql-processor</artifactId>
-            <version>${version.sql-processor}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.sqlproc</groupId>
-            <artifactId>sql-processor-spring</artifactId>
-            <version>${version.sql-processor}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.hsqldb</groupId>
-            <artifactId>hsqldb</artifactId>
-            <version>2.2.4</version>
         </dependency>
 
         <!-- LOG -->
