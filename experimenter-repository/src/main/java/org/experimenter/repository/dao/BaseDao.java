@@ -1,11 +1,11 @@
 package org.experimenter.repository.dao;
 
-import java.io.Serializable;
 import java.util.List;
 
 import org.experimenter.repository.form.CriteriaForm;
+import org.experimenter.repository.model.Model;
 
-public interface BaseDao<T extends Serializable> {
+public interface BaseDao<T extends Model> {
 
     public T findById(Integer id);
 

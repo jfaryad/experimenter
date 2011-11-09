@@ -1,6 +1,5 @@
 package org.experimenter.repository.model;
 
-import java.io.Serializable;
 import java.util.Set;
 
 /**
@@ -9,7 +8,7 @@ import java.util.Set;
  * @author Jakub Faryad (jfaryad@gmail.com)
  * 
  */
-public class Application implements Serializable {
+public class Application implements Model {
 
     private static final long serialVersionUID = 1L;
     private Integer applicationId;
@@ -62,6 +61,13 @@ public class Application implements Serializable {
     public String toString() {
         return "Application[applicationId: " + applicationId + ", version: " + version + ", executable: " + executable
                 + ", program: " + program + "]";
+    }
+
+    @Override
+    public String toDebugString() {
+        return "Application[applicationId: " + applicationId + ", version: " + version + ", executable: " + executable
+                + ", program: " + program + ", experiments.size: "
+                + ((experiments != null) ? experiments.size() : null) + "]";
     }
 
 }

@@ -1,9 +1,8 @@
 package org.experimenter.repository.model;
 
-import java.io.Serializable;
 import java.util.Set;
 
-public class UserGroup implements Serializable {
+public class UserGroup implements Model {
 
     private static final long serialVersionUID = 1L;
     private Integer userGroupId;
@@ -55,6 +54,14 @@ public class UserGroup implements Serializable {
     @Override
     public String toString() {
         return "UserGroup[userGroupId: " + userGroupId + ", name: " + name + "]";
+    }
+
+    @Override
+    public String toDebugString() {
+        return "UserGroup[userGroupId: " + userGroupId + ", name: " + name + ", users.size: "
+                + ((users != null) ? users.size() : null) + ", connectionFarms.size: "
+                + ((connectionFarms != null) ? connectionFarms.size() : null) + ", projects.size: "
+                + ((projects != null) ? projects.size() : null) + "]";
     }
 
 }

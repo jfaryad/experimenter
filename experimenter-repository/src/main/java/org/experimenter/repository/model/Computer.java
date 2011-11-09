@@ -1,6 +1,5 @@
 package org.experimenter.repository.model;
 
-import java.io.Serializable;
 import java.util.Set;
 
 /**
@@ -9,7 +8,7 @@ import java.util.Set;
  * @author Jakub Faryad (jfaryad@gmail.com)
  * 
  */
-public class Computer implements Serializable {
+public class Computer implements Model {
 
     private static final long serialVersionUID = 1L;
     private Integer computerId;
@@ -52,5 +51,11 @@ public class Computer implements Serializable {
     @Override
     public String toString() {
         return "Computer[computerId: " + computerId + ", address: " + address + ", description: " + description + "]";
+    }
+
+    @Override
+    public String toDebugString() {
+        return "Computer[computerId: " + computerId + ", address: " + address + ", description: " + description
+                + ", connections.size: " + ((connections != null) ? connections.size() : null) + "]";
     }
 }

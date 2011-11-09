@@ -1,6 +1,5 @@
 package org.experimenter.repository.model;
 
-import java.io.Serializable;
 import java.util.Set;
 
 /**
@@ -9,7 +8,7 @@ import java.util.Set;
  * @author Jakub Faryad (jfaryad@gmail.com)
  * 
  */
-public class Project implements Serializable {
+public class Project implements Model {
 
     private static final long serialVersionUID = 1L;
     private Integer projectId;
@@ -89,6 +88,15 @@ public class Project implements Serializable {
     public String toString() {
         return "Proj[ectprojectId: " + projectId + ", name: " + name + ", description: " + description + ", userGroup"
                 + userGroup + ", problem: " + problem + "]";
+    }
+
+    @Override
+    public String toDebugString() {
+        return "Proj[ectprojectId: " + projectId + ", name: " + name + ", description: " + description + ", userGroup"
+                + userGroup + ", problem: " + problem + ", programs.size: "
+                + ((programs != null) ? programs.size() : null) + ", experiments.size: "
+                + ((experiments != null) ? experiments.size() : null) + ", inputSets.size: "
+                + ((inputSets != null) ? inputSets.size() : null) + "]";
     }
 
 }

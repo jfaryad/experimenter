@@ -1,10 +1,11 @@
 package org.experimenter.repository.dao.impl;
 
-import java.io.Serializable;
 import java.util.List;
 
 import org.experimenter.repository.dao.BaseDao;
 import org.experimenter.repository.form.CriteriaForm;
+import org.experimenter.repository.model.Model;
+import org.experimenter.repository.util.Logging;
 import org.hibernate.ObjectNotFoundException;
 import org.hibernate.SessionFactory;
 import org.hibernate.classic.Session;
@@ -14,7 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Required;
 
-public abstract class AbstractDaoImpl<T extends Serializable> implements BaseDao<T> {
+public abstract class AbstractDaoImpl<T extends Model> implements BaseDao<T> {
     protected final Logger logger = LoggerFactory.getLogger(getClass());
 
     protected SessionFactory sessionFactory;
@@ -23,13 +24,13 @@ public abstract class AbstractDaoImpl<T extends Serializable> implements BaseDao
     @SuppressWarnings("unchecked")
     @Override
     public T findById(Integer id) {
-        logger.debug(">> findById: " + id);
+        Logging.logTraceDebug(logger, ">> findById: ", id);
         try {
             T item = (T) getSession().load(getModelClass(), id);
-            logger.debug("<< findById: " + item);
+            Logging.logTraceDebugModel(logger, "<< findById: ", item);
             return item;
         } catch (ObjectNotFoundException ex) {
-            logger.debug("!! findById: entry not found");
+            Logging.logTraceDebug(logger, "!! findById: entry not found");
             return null;
         }
     }
@@ -37,34 +38,34 @@ public abstract class AbstractDaoImpl<T extends Serializable> implements BaseDao
     @SuppressWarnings("unchecked")
     @Override
     public List<T> findByCriteria(CriteriaForm<T> criteria) {
-        logger.debug(">> findByCriteria: " + criteria);
+        Logging.logTraceDebug(logger, ">> findByCriteria: ", criteria);
         List<T> items = getSession().createCriteria(getModelClass())
                 .add(Example.create(criteria.getModel()).enableLike(MatchMode.EXACT)).list();
-        logger.debug("<< findByCriteria: number of found entries:" + items.size());
+        Logging.logTraceDebug(logger, "<< findByCriteria: number of found entries:", items.size());
         return items;
     }
 
     @Override
     public void insert(T item) {
-        logger.debug(">> insert: " + item);
+        Logging.logTraceDebugModel(logger, ">> insert: ", item);
         getSession().save(item);
-        logger.debug("<< insert: " + item);
+        Logging.logTraceDebugModel(logger, "<< insert: ", item);
     }
 
     @Override
     public void deleteById(Integer id) {
-        logger.debug(">> deleteById: " + id);
+        Logging.logTraceDebug(logger, ">> deleteById: ", id);
         T item = findById(id);
         getSession().delete(item);
-        logger.debug("<< deleteById");
+        Logging.logTraceDebug(logger, "<< deleteById");
         return;
     }
 
     @Override
     public void update(T item) {
-        logger.debug("update: " + item);
+        Logging.logTraceDebugModel(logger, "update: ", item);
         getSession().update(item);
-        logger.debug("update: " + item);
+        Logging.logTraceDebugModel(logger, "update: ", item);
         return;
     }
 
