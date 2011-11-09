@@ -1,13 +1,13 @@
 SEQ_FARM(OPT,HSQLDB)=call next value for SEQ_FARM;
 
 GET_FARM_BY_ID(CRUD)=
-  select farm_id @connectionFarmId, name @name, description @description
+  select farm_id @connectionFarmId, name @name, description @description, usergroup_id @userGroup.userGroupId
   from farm f
   {= where farm_id = :integer^int^notnull}
 ;
 
 GET_FARM_BY_CRITERIA(QRY)=
-  select farm_id @connectionFarmId, name @name, description @description
+  select farm_id @connectionFarmId, name @name, description @description, usergroup_id @userGroup.userGroupId
   from farm f
   {= where 
   	{& farm_id = :connectionFarmId}
@@ -17,8 +17,8 @@ GET_FARM_BY_CRITERIA(QRY)=
 ;
 
 INSERT_FARM(CRUD)=
-  insert into farm (farm_id, name, description, login, password, email)
-  {= values (:connectionFarmId^int^seq=SEQ_FARM, :name, :description) }
+  insert into farm (farm_id, name, description, usergroup_id)
+  {= values (:connectionFarmId^int^seq=SEQ_FARM, :name, :description, :userGroup.userGroupId) }
 ;
 
 DELETE_FARM_BY_ID(CRUD)=
