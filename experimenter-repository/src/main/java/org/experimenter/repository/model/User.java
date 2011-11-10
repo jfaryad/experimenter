@@ -1,6 +1,5 @@
 package org.experimenter.repository.model;
 
-import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -78,8 +77,6 @@ public class User implements Model {
     }
 
     public Set<UserGroup> getUserGroups() {
-        if (userGroups == null)
-            return new HashSet<UserGroup>();
         return userGroups;
     }
 

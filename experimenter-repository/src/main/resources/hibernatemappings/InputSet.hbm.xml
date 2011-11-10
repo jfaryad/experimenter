@@ -2,7 +2,7 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <!-- Generated Nov 3, 2011 11:11:24 PM by Hibernate Tools 3.4.0.CR1 -->
-<hibernate-mapping>
+<hibernate-mapping auto-import="true" package="org.experimenter.repository.model">
     <class name="org.experimenter.repository.model.InputSet" table="INPUT_SET">
         <id name="inputSetId" type="java.lang.Integer">
             <column name="INPUT_SET_ID" />

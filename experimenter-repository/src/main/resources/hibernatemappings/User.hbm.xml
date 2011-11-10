@@ -3,7 +3,7 @@
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <!-- Generated Nov 3, 2011 11:11:24 PM by Hibernate Tools 3.4.0.CR1 -->
 <hibernate-mapping auto-import="true" package="org.experimenter.repository.model">
-    <class name="org.experimenter.repository.model.User" table="USER" lazy="true">
+    <class name="User" table="USER" lazy="true">
         <id name="userId" type="java.lang.Integer">
             <column name="USER_ID" />
             <generator class="identity" />
@@ -23,11 +23,9 @@
         <property name="email" type="java.lang.String">
             <column name="EMAIL" />
         </property>
-        <set name="userGroups" inverse="false" table="USER_USERGROUP" fetch="select" lazy="true">
+        <set name="userGroups" inverse="false" table="USER_USERGROUP" fetch="select" lazy="false" cascade="save-update">
             <key column="USER_ID" />
-            <many-to-many class="UserGroup">
-                <column name="USERGROUP_ID"/>
-            </many-to-many>
+            <many-to-many column="USERGROUP_ID" class="UserGroup" />
         </set>
     </class>
 </hibernate-mapping>

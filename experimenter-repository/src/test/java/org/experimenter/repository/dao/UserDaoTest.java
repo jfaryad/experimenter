@@ -8,6 +8,7 @@ import java.util.List;
 
 import org.experimenter.repository.form.ModelCriteria;
 import org.experimenter.repository.model.User;
+import org.experimenter.repository.model.UserGroup;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,8 +37,12 @@ public class UserDaoTest extends AbstractTest {
         user.setLogin("pepa");
         user.setPassword("pepa123");
         user.setEmail("pepa@novak.cz");
-        user.getUserGroups().add(userGroupDao.findById(5));
+        UserGroup group = userGroupDao.findById(5);
+
+        user.getUserGroups().add(group);
         userDao.insert(user);
+        // serDao.update(user);
+        group.getUsers().add(user);
         assertNotNull("userId is null after insert", user.getUserId());
         user = userDao.findById(user.getUserId());
         assertEquals("Josef", user.getName());
