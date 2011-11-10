@@ -1,16 +1,36 @@
 SEQ_PROGRAM(OPT,HSQLDB)=call next value for SEQ_PROGRAM;
 
 GET_PROGRAM_BY_ID(CRUD)=
-  select program_id @programId, name @name, description @description, command @command, project_id @project.projectId^int^id
+  select 
+  	p.program_id @programId, p.name @name, p.description @description, p.command @command,
+	proj.project_id @project.projectId^int^id, proj.name @project.name, proj.description @project.description, 
+  	ug.usergroup_id @project.userGroup.userGroupId^int^id, ug.name @project.userGroup.name,
+  	prob.problem_id @project.problem.problemId^int^id, prob.name @project.problem.name, prob.description @project.problem.description
   from program p
-  {= where program_id = :integer^int^notnull}
+  inner join project proj 
+  	on p.project_id = proj.project_id 
+  inner join user_group ug 
+  	on proj.user_group_id = ug.user_group_id 
+  inner join problem prob
+  	on proj.problem_id = prob.problem_id
+  {= where p.program_id = :integer^int^notnull}
 ;
 
 GET_PROGRAM_BY_CRITERIA(QRY)=
-  select program_id @programId, name @name, description @description, command @command, project_id @project.projectId^int^id
+  select 
+  	p.program_id @programId, p.name @name, p.description @description, p.command @command,
+	proj.project_id @project.projectId^int^id, proj.name @project.name, proj.description @project.description, 
+  	ug.usergroup_id @project.userGroup.userGroupId^int^id, ug.name @project.userGroup.name,
+  	prob.problem_id @project.problem.problemId^int^id, prob.name @project.problem.name, prob.description @project.problem.description
   from program p
+  inner join project proj 
+  	on p.project_id = proj.project_id 
+  inner join user_group ug 
+  	on proj.user_group_id = ug.user_group_id 
+  inner join problem prob
+  	on proj.problem_id = prob.problem_id
   {= where 
-  	{& program_id = :programId}
+  	{& p.program_id = :programId}
   	{& UPPER(p.name) like :+name}
   	{& UPPER(p.description) like :+description}
   	{& UPPER(p.command) like :+command}

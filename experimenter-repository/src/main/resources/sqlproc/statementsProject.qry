@@ -1,16 +1,30 @@
 SEQ_PROJECT(OPT,HSQLDB)=call next value for SEQ_PROJECT;
 
 GET_PROJECT_BY_ID(CRUD)=
-  select project_id @projectId, name @name, description @description, usergroup_id @userGroup.userGroupId^int^id, problem_id @problem.problemId^int^id
-  from project p
+  select 
+  	p.project_id @projectId, p.name @name, p.description @description, 
+  	ug.usergroup_id @userGroup.userGroupId^int^id, ug.name @userGroup.name,
+  	prob.problem_id @problem.problemId^int^id, prob.name @problem.name, prob.description @problem.description
+  from project p 
+  inner join user_group ug 
+  	on p.user_group_id = ug.user_group_id 
+  inner join problem prob
+  	on p.problem_id = prob.problem_id
   {= where project_id = :integer^int^notnull}
 ;
 
 GET_PROJECT_BY_CRITERIA(QRY)=
-  select project_id @projectId, name @name, description @description, usergroup_id @userGroup.userGroupId^int^id, problem_id @problem.problemId^int^id
-  from project p
+  select 
+  	p.project_id @projectId, p.name @name, p.description @description, 
+  	ug.usergroup_id @userGroup.userGroupId^int^id, ug.name @userGroup.name
+  	prob.problem_id @problem.problemId^int^id, prob.name @problem.name, prob.description @problem.description
+  from project p 
+  inner join user_group ug 
+  	on p.user_group_id = ug.user_group_id 
+  inner join problem prob
+  	on p.problem_id = prob.ug.problem_id
   {= where 
-  	{& project_id = :projectId}
+  	{& p.project_id = :projectId}
   	{& UPPER(p.name) like :+name}
   	{& UPPER(p.description) like :+description}
   }

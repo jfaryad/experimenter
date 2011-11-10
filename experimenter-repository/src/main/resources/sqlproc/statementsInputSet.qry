@@ -1,16 +1,24 @@
 SEQ_INPUT_SET(OPT,HSQLDB)=call next value for SEQ_INPUT_SET;
 
 GET_INPUT_SET_BY_ID(CRUD)=
-  select input_set_id @inputSetId, name @name, description @description, problem_id @problem.problemId^int^id
+  select 
+  	i.input_set_id @inputSetId, i.name @name, i.description @description, 
+	prob.problem_id @problem.problemId^int^id, prob.name @problem.name, prob.description @problem.description
   from input_set i
-  {= where input_set_id = :integer^int^notnull}
+  inner join problem prob
+  	on i.problem_id = prob.problem_id
+  {= where i.input_set_id = :integer^int^notnull}
 ;
 
 GET_INPUT_SET_BY_CRITERIA(QRY)=
-  select input_set_id @inputSetId, name @name, description @description, problem_id @problem.problemId^int^id
+  select 
+  	i.input_set_id @inputSetId, i.name @name, i.description @description, 
+	prob.problem_id @problem.problemId^int^id, prob.name @problem.name, prob.description @problem.description
   from input_set i
+  inner join problem prob
+  	on i.problem_id = prob.problem_id
   {= where 
-  	{& input_set_id = :inputSetId}
+  	{& i.input_set_id = :inputSetId}
   	{& UPPER(i.name) like :+name}
   	{& UPPER(i.description) like :+description}
   }
