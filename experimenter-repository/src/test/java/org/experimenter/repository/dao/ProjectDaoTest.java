@@ -10,6 +10,7 @@ import org.experimenter.repository.form.CriteriaForm;
 import org.experimenter.repository.model.ProblemType;
 import org.experimenter.repository.model.Project;
 import org.experimenter.repository.model.UserGroup;
+import org.experimenter.repository.util.DaoTestHelper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,18 +45,16 @@ public class ProjectDaoTest {
         assertEquals("testProject", project.getName());
         assertEquals("project for testing", project.getDescription());
         assertEquals(1, project.getUserGroup().getUserGroupId().intValue());
+        assertEquals("students", project.getUserGroup().getName());
         assertEquals(1, project.getProblem().getProblemId().intValue());
+        assertEquals("3-SAT", project.getProblem().getName());
     }
 
     @Test
     public void findProjectById() {
         Integer id = 1;
         Project project = projectDao.findById(id);
-        assertNotNull("project not found", project);
-        assertEquals("testProject1", project.getName());
-        assertEquals("first project", project.getDescription());
-        assertEquals(1, project.getUserGroup().getUserGroupId().intValue());
-        assertEquals(1, project.getProblem().getProblemId().intValue());
+        DaoTestHelper.checkProject1(project);
     }
 
     @Test
@@ -86,11 +85,7 @@ public class ProjectDaoTest {
         List<Project> projects = projectDao.findByCriteria(criteria);
         assertEquals("wrong number of projects found", 1, projects.size());
         Project project = projects.get(0);
-        assertNotNull("project not found", project);
-        assertEquals("testProject1", project.getName());
-        assertEquals("first project", project.getDescription());
-        assertEquals(1, project.getUserGroup().getUserGroupId().intValue());
-        assertEquals(1, project.getProblem().getProblemId().intValue());
+        DaoTestHelper.checkProject1(project);
     }
 
 }

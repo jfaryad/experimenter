@@ -1,0 +1,64 @@
+ADD_USER_TO_USERGROUP(CRUD)=
+  insert into user_usergroup (user_id, usergroup_id)
+  {= values (:id1, :id2) }
+;
+
+ADD_INPUT_TO_INPUT_SET(CRUD)=
+  insert into input_input_set (input_id, input_set_id)
+  {= values (:id1, :id2) }
+;
+
+ADD_INPUT_SET_TO_EXPERIMENT(CRUD)=
+  insert into experiment_input_set (input_set_id, experiment_id)
+  {= values (:id1, :id2) }
+;
+
+ADD_INPUT_SET_TO_PROJECT(CRUD)=
+  insert into project_input_set (input_set_id, project_id)
+  {= values (:id1, :id2) }
+;
+
+ADD_FARM_TO_EXPERIMENT(CRUD)=
+  insert into experiment_farm (farm_id, experiment_id)
+  {= values (:id1, :id2) }
+;
+
+REMOVE_USER_FROM_USERGROUP(CRUD)=
+  delete from user_usergroup
+  {= where 
+  	{& user_id = :id1}
+  	{& usergroup_id = :id2}
+  }
+;
+
+REMOVE_INPUT_FROM_INPUT_SET(CRUD)=
+  delete from input_input_set
+  {= where 
+  	{& input_id = :id1}
+  	{& input_set_id = :id2}
+  }
+;
+
+REMOVE_INPUT_SET_FROM_EXPERIMENT(CRUD)=
+  delete from experiment_input_set
+  {= where 
+  	{& input_set_id = :id1}
+  	{& experiment_id = :id2}
+  }
+;
+
+REMOVE_INPUT_SET_FROM_PROJECT(CRUD)=
+  delete from project_input_set
+  {= where 
+  	{& input_set_id = :id1}
+  	{& project_id = :id2}
+  }
+;
+
+REMOVE_FARM_FROM_EXPERIMENT(CRUD)=
+  delete from experiment_farm
+  {= where 
+  	{& farm_id = :id1}
+  	{& experiment_id = :id2}
+  }
+;

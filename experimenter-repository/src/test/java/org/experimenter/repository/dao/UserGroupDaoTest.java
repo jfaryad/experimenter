@@ -8,6 +8,7 @@ import java.util.List;
 
 import org.experimenter.repository.form.CriteriaForm;
 import org.experimenter.repository.model.UserGroup;
+import org.experimenter.repository.util.DaoTestHelper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,8 +40,7 @@ public class UserGroupDaoTest {
     public void findUserGroupById() {
         Integer id = 1;
         UserGroup userGroup = userGroupDao.findById(id);
-        assertNotNull("userGroup not found", userGroup);
-        assertEquals("students", userGroup.getName());
+        DaoTestHelper.checkUserGroup1(userGroup);
     }
 
     @Test
@@ -71,8 +71,7 @@ public class UserGroupDaoTest {
         List<UserGroup> userGroups = userGroupDao.findByCriteria(criteria);
         assertEquals("wrong number of userGroups found", 1, userGroups.size());
         UserGroup userGroup = userGroups.get(0);
-        assertNotNull("userGroup not found", userGroup);
-        assertEquals("students", userGroup.getName());
+        DaoTestHelper.checkUserGroup1(userGroup);
     }
 
 }

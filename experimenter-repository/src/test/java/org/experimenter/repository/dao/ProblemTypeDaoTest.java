@@ -8,6 +8,7 @@ import java.util.List;
 
 import org.experimenter.repository.form.CriteriaForm;
 import org.experimenter.repository.model.ProblemType;
+import org.experimenter.repository.util.DaoTestHelper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,9 +41,7 @@ public class ProblemTypeDaoTest {
     public void findProblemTypeById() {
         Integer id = 1;
         ProblemType problem = problemTypeDao.findById(id);
-        assertNotNull("problem not found", problem);
-        assertEquals("3-SAT", problem.getName());
-        assertEquals("you know what it means", problem.getDescription());
+        DaoTestHelper.checkProblem1(problem);
     }
 
     @Test
@@ -73,9 +72,7 @@ public class ProblemTypeDaoTest {
         List<ProblemType> problems = problemTypeDao.findByCriteria(criteria);
         assertEquals("wrong number of problems found", 1, problems.size());
         ProblemType problem = problems.get(0);
-        assertNotNull("problem not found", problem);
-        assertEquals("3-SAT", problem.getName());
-        assertEquals("you know what it means", problem.getDescription());
+        DaoTestHelper.checkProblem1(problem);
     }
 
 }

@@ -8,6 +8,7 @@ import java.util.List;
 
 import org.experimenter.repository.form.CriteriaForm;
 import org.experimenter.repository.model.Computer;
+import org.experimenter.repository.util.DaoTestHelper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,9 +42,7 @@ public class ComputerDaoTest {
     public void findComputerById() {
         Integer id = 1;
         Computer computer = computerDao.findById(id);
-        assertNotNull("computer not found", computer);
-        assertEquals("u-pl20", computer.getAddress());
-        assertEquals("computer u-pl20, test exists", computer.getDescription());
+        DaoTestHelper.checkComputer1(computer);
     }
 
     @Test
@@ -74,9 +73,7 @@ public class ComputerDaoTest {
         List<Computer> computers = computerDao.findByCriteria(criteria);
         assertEquals("wrong number of computers found", 1, computers.size());
         Computer computer = computers.get(0);
-        assertNotNull("computer not found", computer);
-        assertEquals("u-pl20", computer.getAddress());
-        assertEquals("computer u-pl20, test exists", computer.getDescription());
+        DaoTestHelper.checkComputer1(computer);
     }
 
 }

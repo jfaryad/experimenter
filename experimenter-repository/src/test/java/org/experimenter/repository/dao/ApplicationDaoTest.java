@@ -9,6 +9,7 @@ import java.util.List;
 import org.experimenter.repository.form.CriteriaForm;
 import org.experimenter.repository.model.Application;
 import org.experimenter.repository.model.Program;
+import org.experimenter.repository.util.DaoTestHelper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,10 +46,7 @@ public class ApplicationDaoTest {
     public void findApplicationById() {
         Integer id = 1;
         Application application = applicationDao.findById(id);
-        assertNotNull("application not found", application);
-        assertEquals("1.3", application.getVersion());
-        assertEquals("solver1_1.3.sh run", application.getExecutable());
-        assertEquals(1, application.getProgram().getProgramId().intValue());
+        DaoTestHelper.checkApplication1(application);
     }
 
     @Test
@@ -79,10 +77,7 @@ public class ApplicationDaoTest {
         List<Application> applications = applicationDao.findByCriteria(criteria);
         assertEquals("wrong number of applications found", 1, applications.size());
         Application application = applications.get(0);
-        assertNotNull("application not found", application);
-        assertEquals("1.3", application.getVersion());
-        assertEquals("solver1_1.3.sh run", application.getExecutable());
-        assertEquals(1, application.getProgram().getProgramId().intValue());
+        DaoTestHelper.checkApplication1(application);
     }
 
 }

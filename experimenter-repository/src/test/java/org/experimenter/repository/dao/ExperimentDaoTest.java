@@ -10,6 +10,7 @@ import org.experimenter.repository.form.CriteriaForm;
 import org.experimenter.repository.model.Application;
 import org.experimenter.repository.model.Experiment;
 import org.experimenter.repository.model.Project;
+import org.experimenter.repository.util.DaoTestHelper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,11 +51,7 @@ public class ExperimentDaoTest {
     public void findExperimentById() {
         Integer id = 1;
         Experiment experiment = experimentDao.findById(id);
-        assertNotNull("experiment not found", experiment);
-        assertEquals("experiment1", experiment.getName());
-        assertEquals("experiment to test find", experiment.getDescription());
-        assertEquals(1, experiment.getApplication().getApplicationId().intValue());
-        assertEquals(1, experiment.getApplication().getProgram().getProject().getProjectId().intValue());
+        DaoTestHelper.checkExperiment1(experiment);
     }
 
     @Test
@@ -85,11 +82,7 @@ public class ExperimentDaoTest {
         List<Experiment> experiments = experimentDao.findByCriteria(criteria);
         assertEquals("wrong number of experiments found", 1, experiments.size());
         Experiment experiment = experiments.get(0);
-        assertNotNull("experiment not found", experiment);
-        assertEquals("experiment1", experiment.getName());
-        assertEquals("experiment to test find", experiment.getDescription());
-        assertEquals(1, experiment.getApplication().getApplicationId().intValue());
-        assertEquals(1, experiment.getApplication().getProgram().getProject().getProjectId().intValue());
+        DaoTestHelper.checkExperiment1(experiment);
     }
 
 }

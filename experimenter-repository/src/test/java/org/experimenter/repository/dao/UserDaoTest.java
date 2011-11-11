@@ -8,6 +8,7 @@ import java.util.List;
 
 import org.experimenter.repository.form.CriteriaForm;
 import org.experimenter.repository.model.User;
+import org.experimenter.repository.util.DaoTestHelper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,11 +49,7 @@ public class UserDaoTest {
         Integer id = 1;
         User user = userDao.findById(id);
         assertNotNull("user not found", user);
-        assertEquals("Tester1", user.getName());
-        assertEquals("Exists", user.getSurname());
-        assertEquals("tester1", user.getLogin());
-        assertEquals("heslo", user.getPassword());
-        assertEquals("tester1@experimenter.org", user.getEmail());
+        DaoTestHelper.checkUser1(user);
     }
 
     @Test
@@ -84,11 +81,7 @@ public class UserDaoTest {
         assertEquals("wrong number of users found", 1, users.size());
         User user = users.get(0);
         assertNotNull("user not found", user);
-        assertEquals("Tester1", user.getName());
-        assertEquals("Exists", user.getSurname());
-        assertEquals("tester1", user.getLogin());
-        assertEquals("heslo", user.getPassword());
-        assertEquals("tester1@experimenter.org", user.getEmail());
+        DaoTestHelper.checkUser1(user);
     }
 
 }

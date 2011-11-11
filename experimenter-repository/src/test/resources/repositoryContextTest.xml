@@ -41,6 +41,7 @@
                 <value>sqlproc/statementsProblemType.qry</value>
                 <value>sqlproc/statementsProgram.qry</value>
                 <value>sqlproc/statementsProject.qry</value>
+                <value>sqlproc/statementsJunction.qry</value>
             </list>
         </property>
         <property name="filter" value="HSQLDB" />
@@ -48,7 +49,7 @@
 
     <!-- ========= DAO ========= -->
 
-    <bean id="dao" autowire="byType" abstract="true">
+    <bean id="dao" class="org.experimenter.repository.dao.impl.AbstractDao" abstract="true">
         <property name="jdbcTemplate" ref="jdbcTemplate" />
         <property name="sqlFactory" ref="sqlFactory" />
     </bean>
@@ -89,4 +90,5 @@
     <bean id="projectDao" class="org.experimenter.repository.dao.impl.ProjectDaoImpl" parent="dao">
         <property name="tableName" value="PROJECT" />
     </bean>
+    <bean id="junctionDao" class="org.experimenter.repository.dao.impl.JunctionDaoImpl" parent="dao" />
 </beans>

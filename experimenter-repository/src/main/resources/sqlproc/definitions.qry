@@ -14,6 +14,7 @@ pojo input org.experimenter.repository.model.Input;
 pojo input_set org.experimenter.repository.model.InputSet;
 pojo problem org.experimenter.repository.model.ProblemType;
 pojo simple_form org.experimenter.repository.form.SimpleForm;
+pojo junction_form org.experimenter.repository.form.JunctionForm;
 
 table user USER;
 table usergroup USERGROUP;
@@ -27,6 +28,11 @@ table experiment EXPERIMENT;
 table input INPUT;
 table input_set INPUT_SET;
 table problem PROBLEM;
+table user_usergroup USER_USERGROUP;
+table experiment_input_set EXPERIMENT_INPUT_SET;
+table input_input_set INPUT_INPUT_SET;
+table project_input_set PROJECT_INPUT_SET;
+table experiment_farm EXPERIMENT_FARM;
 
 
 ident INSERT_USER user;
@@ -241,3 +247,34 @@ dbcol GET_EXPERIMENT_BY_CRITERIA experiment prefix e;
 ident DELETE_EXPERIMENT_BY_ID simple_form;
 
 ident UPDATE_EXPERIMENT experiment;
+
+
+ident ADD_USER_TO_USERGROUP junction_form;
+dbcol ADD_USER_TO_USERGROUP user_usergroup;
+
+ident ADD_INPUT_TO_INPUT_SET junction_form;
+dbcol ADD_INPUT_TO_INPUT_SET input_input_set;
+
+ident ADD_INPUT_SET_TO_EXPERIMENT junction_form;
+dbcol ADD_INPUT_SET_TO_EXPERIMENT experiment_input_set;
+
+ident ADD_INPUT_SET_TO_PROJECT junction_form;
+dbcol ADD_INPUT_SET_TO_PROJECT project_input_set;
+
+ident ADD_FARM_TO_EXPERIMENT junction_form;
+dbcol ADD_FARM_TO_EXPERIMENT experiment_farm;
+
+ident REMOVE_USER_FROM_USERGROUP junction_form;
+dbcol REMOVE_USER_FROM_USERGROUP user_usergroup;
+
+ident REMOVE_INPUT_FROM_INPUT_SET junction_form;
+dbcol REMOVE_INPUT_FROM_INPUT_SET input_input_set;
+
+ident REMOVE_INPUT_SET_FROM_EXPERIMENT junction_form;
+dbcol REMOVE_INPUT_SET_FROM_EXPERIMENT experiment_input_set;
+
+ident REMOVE_INPUT_SET_FROM_PROJECT junction_form;
+dbcol REMOVE_INPUT_SET_FROM_PROJECT project_input_set;
+
+ident REMOVE_FARM_FROM_EXPERIMENT junction_form;
+dbcol REMOVE_FARM_FROM_EXPERIMENT experiment_farm;

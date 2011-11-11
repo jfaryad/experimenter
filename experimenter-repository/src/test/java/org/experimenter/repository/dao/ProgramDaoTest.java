@@ -9,6 +9,7 @@ import java.util.List;
 import org.experimenter.repository.form.CriteriaForm;
 import org.experimenter.repository.model.Program;
 import org.experimenter.repository.model.Project;
+import org.experimenter.repository.util.DaoTestHelper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,11 +48,7 @@ public class ProgramDaoTest {
     public void findProgramById() {
         Integer id = 1;
         Program program = programDao.findById(id);
-        assertNotNull("program not found", program);
-        assertEquals("solver1", program.getName());
-        assertEquals("program to test find", program.getDescription());
-        assertEquals("solver1.sh run", program.getCommand());
-        assertEquals(1, program.getProject().getProjectId().intValue());
+        DaoTestHelper.checkProgram1(program);
     }
 
     @Test
@@ -82,11 +79,7 @@ public class ProgramDaoTest {
         List<Program> programs = programDao.findByCriteria(criteria);
         assertEquals("wrong number of programs found", 1, programs.size());
         Program program = programs.get(0);
-        assertNotNull("program not found", program);
-        assertEquals("solver1", program.getName());
-        assertEquals("program to test find", program.getDescription());
-        assertEquals("solver1.sh run", program.getCommand());
-        assertEquals(1, program.getProject().getProjectId().intValue());
+        DaoTestHelper.checkProgram1(program);
     }
 
 }

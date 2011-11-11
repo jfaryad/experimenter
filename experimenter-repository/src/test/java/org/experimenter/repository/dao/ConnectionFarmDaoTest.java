@@ -9,6 +9,7 @@ import java.util.List;
 import org.experimenter.repository.form.CriteriaForm;
 import org.experimenter.repository.model.ConnectionFarm;
 import org.experimenter.repository.model.UserGroup;
+import org.experimenter.repository.util.DaoTestHelper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,10 +46,7 @@ public class ConnectionFarmDaoTest {
     public void findConnectionFarmById() {
         Integer id = 1;
         ConnectionFarm connectionFarm = connectionFarmDao.findById(id);
-        assertNotNull("connectionFarm not found", connectionFarm);
-        assertEquals("testFarm1", connectionFarm.getName());
-        assertEquals("farm to test find", connectionFarm.getDescription());
-        assertEquals(1, connectionFarm.getUserGroup().getUserGroupId().intValue());
+        DaoTestHelper.checkConnectionFarm1(connectionFarm);
     }
 
     @Test
@@ -80,9 +78,7 @@ public class ConnectionFarmDaoTest {
         assertEquals("wrong number of connectionFarms found", 1, connectionFarms.size());
         ConnectionFarm connectionFarm = connectionFarms.get(0);
         assertNotNull("connectionFarm not found", connectionFarm);
-        assertEquals("testFarm1", connectionFarm.getName());
-        assertEquals("farm to test find", connectionFarm.getDescription());
-        assertEquals(1, connectionFarm.getUserGroup().getUserGroupId().intValue());
+        DaoTestHelper.checkConnectionFarm1(connectionFarm);
     }
 
 }

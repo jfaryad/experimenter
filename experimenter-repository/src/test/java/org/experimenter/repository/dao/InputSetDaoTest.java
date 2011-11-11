@@ -9,6 +9,7 @@ import java.util.List;
 import org.experimenter.repository.form.CriteriaForm;
 import org.experimenter.repository.model.InputSet;
 import org.experimenter.repository.model.ProblemType;
+import org.experimenter.repository.util.DaoTestHelper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,10 +46,7 @@ public class InputSetDaoTest {
     public void findInputSetById() {
         Integer id = 1;
         InputSet inputSet = inputSetDao.findById(id);
-        assertNotNull("inputSet not found", inputSet);
-        assertEquals("testInputSet1", inputSet.getName());
-        assertEquals("basic set of inputs", inputSet.getDescription());
-        assertEquals(1, inputSet.getProblem().getProblemId().intValue());
+        DaoTestHelper.checkInputSet1(inputSet);
     }
 
     @Test
@@ -79,10 +77,7 @@ public class InputSetDaoTest {
         List<InputSet> inputSets = inputSetDao.findByCriteria(criteria);
         assertEquals("wrong number of inputSets found", 1, inputSets.size());
         InputSet inputSet = inputSets.get(0);
-        assertNotNull("inputSet not found", inputSet);
-        assertEquals("testInputSet1", inputSet.getName());
-        assertEquals("basic set of inputs", inputSet.getDescription());
-        assertEquals(1, inputSet.getProblem().getProblemId().intValue());
+        DaoTestHelper.checkInputSet1(inputSet);
     }
 
 }

@@ -10,6 +10,7 @@ import org.experimenter.repository.form.CriteriaForm;
 import org.experimenter.repository.model.Computer;
 import org.experimenter.repository.model.Connection;
 import org.experimenter.repository.model.ConnectionFarm;
+import org.experimenter.repository.util.DaoTestHelper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,14 +57,7 @@ public class ConnectionDaoTest {
     public void findConnectionById() {
         Integer id = 1;
         Connection connection = connectionDao.findById(id);
-        assertNotNull("connection not found", connection);
-        assertEquals("myConn1exists", connection.getName());
-        assertEquals("my test connection 1", connection.getDescription());
-        assertEquals("test", connection.getLogin());
-        assertEquals("test123", connection.getPassword());
-        assertEquals(221, connection.getPort().intValue());
-        assertEquals(1, connection.getComputer().getComputerId().intValue());
-        assertEquals(1, connection.getConnectionFarm().getConnectionFarmId().intValue());
+        DaoTestHelper.checkConnection1(connection);
     }
 
     @Test
@@ -94,14 +88,7 @@ public class ConnectionDaoTest {
         List<Connection> connections = connectionDao.findByCriteria(criteria);
         assertEquals("wrong number of connections found", 1, connections.size());
         Connection connection = connections.get(0);
-        assertNotNull("connection not found", connection);
-        assertEquals("myConn1exists", connection.getName());
-        assertEquals("my test connection 1", connection.getDescription());
-        assertEquals("test", connection.getLogin());
-        assertEquals("test123", connection.getPassword());
-        assertEquals(221, connection.getPort().intValue());
-        assertEquals(1, connection.getComputer().getComputerId().intValue());
-        assertEquals(1, connection.getConnectionFarm().getConnectionFarmId().intValue());
+        DaoTestHelper.checkConnection1(connection);
     }
 
 }
