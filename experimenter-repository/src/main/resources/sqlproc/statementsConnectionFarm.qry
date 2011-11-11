@@ -1,16 +1,22 @@
 SEQ_FARM(OPT,HSQLDB)=call next value for SEQ_FARM;
 
 GET_FARM_BY_ID(CRUD)=
-  select farm_id @connectionFarmId, name @name, description @description, usergroup_id @userGroup.userGroupId
+  select f.farm_id @connectionFarmId, f.name @name, f.description @description, 
+  	ug.usergroup_id @userGroup.userGroupId^int^id, ug.name @userGroup.name
   from farm f
-  {= where farm_id = :integer^int^notnull}
+  inner join usergroup ug 
+  	on f.usergroup_id = ug.usergroup_id 
+  {= where f.farm_id = :integer^int^notnull}
 ;
 
 GET_FARM_BY_CRITERIA(QRY)=
-  select farm_id @connectionFarmId, name @name, description @description, usergroup_id @userGroup.userGroupId
+  select f.farm_id @connectionFarmId, f.name @name, f.description @description, 
+  	ug.usergroup_id @userGroup.userGroupId^int^id, ug.name @userGroup.name
   from farm f
+  inner join usergroup ug 
+  	on f.usergroup_id = ug.usergroup_id 
   {= where 
-  	{& farm_id = :connectionFarmId}
+  	{& f.farm_id = :connectionFarmId}
   	{& UPPER(f.name) like :+name}
   	{& UPPER(f.description) like :+description}
   }

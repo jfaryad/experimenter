@@ -6,8 +6,8 @@ GET_PROJECT_BY_ID(CRUD)=
   	ug.usergroup_id @userGroup.userGroupId^int^id, ug.name @userGroup.name,
   	prob.problem_id @problem.problemId^int^id, prob.name @problem.name, prob.description @problem.description
   from project p 
-  inner join user_group ug 
-  	on p.user_group_id = ug.user_group_id 
+  inner join usergroup ug 
+  	on p.usergroup_id = ug.usergroup_id 
   inner join problem prob
   	on p.problem_id = prob.problem_id
   {= where project_id = :integer^int^notnull}
@@ -16,13 +16,13 @@ GET_PROJECT_BY_ID(CRUD)=
 GET_PROJECT_BY_CRITERIA(QRY)=
   select 
   	p.project_id @projectId, p.name @name, p.description @description, 
-  	ug.usergroup_id @userGroup.userGroupId^int^id, ug.name @userGroup.name
+  	ug.usergroup_id @userGroup.userGroupId^int^id, ug.name @userGroup.name,
   	prob.problem_id @problem.problemId^int^id, prob.name @problem.name, prob.description @problem.description
   from project p 
-  inner join user_group ug 
-  	on p.user_group_id = ug.user_group_id 
+  inner join usergroup ug 
+  	on p.usergroup_id = ug.usergroup_id 
   inner join problem prob
-  	on p.problem_id = prob.ug.problem_id
+  	on p.problem_id = prob.problem_id
   {= where 
   	{& p.project_id = :projectId}
   	{& UPPER(p.name) like :+name}

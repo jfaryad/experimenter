@@ -9,8 +9,8 @@ GET_PROGRAM_BY_ID(CRUD)=
   from program p
   inner join project proj 
   	on p.project_id = proj.project_id 
-  inner join user_group ug 
-  	on proj.user_group_id = ug.user_group_id 
+  inner join usergroup ug 
+  	on proj.usergroup_id = ug.usergroup_id 
   inner join problem prob
   	on proj.problem_id = prob.problem_id
   {= where p.program_id = :integer^int^notnull}
@@ -25,8 +25,8 @@ GET_PROGRAM_BY_CRITERIA(QRY)=
   from program p
   inner join project proj 
   	on p.project_id = proj.project_id 
-  inner join user_group ug 
-  	on proj.user_group_id = ug.user_group_id 
+  inner join usergroup ug 
+  	on proj.usergroup_id = ug.usergroup_id 
   inner join problem prob
   	on proj.problem_id = prob.problem_id
   {= where 

@@ -1,16 +1,48 @@
 SEQ_EXPERIMENT(OPT,HSQLDB)=call next value for SEQ_EXPERIMENT;
 
 GET_EXPERIMENT_BY_ID(CRUD)=
-  select experiment_id @experimentId, name @name, description @description, project_id @project.projectId^int^id, application_id @application.applicationId^int^id
+  select 
+  	e.experiment_id @experimentId, e.name @name, e.description @description, 
+  	a.application_id @application.applicationId^int^id, a.version @application.version, a.executable @application.executable, 
+  	p.program_id @application.program.programId^int^id, p.name @application.program.name, p.description @application.program.description, p.command @application.program.command,
+	proj.project_id @application.program.project.projectId^int^id, proj.name @application.program.project.name, proj.description @application.program.project.description, 
+  	ug.usergroup_id @application.program.project.userGroup.userGroupId^int^id, ug.name @application.program.project.userGroup.name,
+  	prob.problem_id @application.program.project.problem.problemId^int^id, prob.name @application.program.project.problem.name, prob.description @application.program.project.problem.description
   from experiment e
-  {= where experiment_id = :integer^int^notnull}
+  inner join application a
+  	on e.application_id = a.application_id
+  inner join program p
+  	on a.program_id = p.program_id
+  inner join project proj 
+  	on p.project_id = proj.project_id 
+  inner join usergroup ug 
+  	on proj.usergroup_id = ug.usergroup_id 
+  inner join problem prob
+  	on proj.problem_id = prob.problem_id  
+  {= where e.experiment_id = :integer^int^notnull}
 ;
 
 GET_EXPERIMENT_BY_CRITERIA(QRY)=
-  select experiment_id @experimentId, name @name, description @description, project_id @project.projectId^int^id, application_id @application.applicationId^int^id
+  select 
+  	e.experiment_id @experimentId, e.name @name, e.description @description, 
+  	a.application_id @application.applicationId^int^id, a.version @application.version, a.executable @application.executable, 
+  	p.program_id @application.program.programId^int^id, p.name @application.program.name, p.description @application.program.description, p.command @application.program.command,
+	proj.project_id @application.program.project.projectId^int^id, proj.name @application.program.project.name, proj.description @application.program.project.description, 
+  	ug.usergroup_id @application.program.project.userGroup.userGroupId^int^id, ug.name @application.program.project.userGroup.name,
+  	prob.problem_id @application.program.project.problem.problemId^int^id, prob.name @application.program.project.problem.name, prob.description @application.program.project.problem.description
   from experiment e
+  inner join application a
+  	on e.application_id = a.application_id
+  inner join program p
+  	on a.program_id = p.program_id
+  inner join project proj 
+  	on p.project_id = proj.project_id 
+  inner join usergroup ug 
+  	on proj.usergroup_id = ug.usergroup_id 
+  inner join problem prob
+  	on proj.problem_id = prob.problem_id  
   {= where 
-  	{& experiment_id = :experimentId}
+  	{& e.experiment_id = :experimentId}
   	{& UPPER(e.name) like :+name}
   	{& UPPER(e.description) like :+description}
   }

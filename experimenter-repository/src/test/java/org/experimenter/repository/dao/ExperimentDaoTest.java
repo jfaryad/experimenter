@@ -54,7 +54,7 @@ public class ExperimentDaoTest {
         assertEquals("experiment1", experiment.getName());
         assertEquals("experiment to test find", experiment.getDescription());
         assertEquals(1, experiment.getApplication().getApplicationId().intValue());
-        assertEquals(1, experiment.getProject().getProjectId().intValue());
+        assertEquals(1, experiment.getApplication().getProgram().getProject().getProjectId().intValue());
     }
 
     @Test
@@ -89,7 +89,7 @@ public class ExperimentDaoTest {
         assertEquals("experiment1", experiment.getName());
         assertEquals("experiment to test find", experiment.getDescription());
         assertEquals(1, experiment.getApplication().getApplicationId().intValue());
-        assertEquals(1, experiment.getProject().getProjectId().intValue());
+        assertEquals(1, experiment.getApplication().getProgram().getProject().getProjectId().intValue());
     }
 
 }

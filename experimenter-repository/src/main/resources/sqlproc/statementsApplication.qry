@@ -2,18 +2,18 @@ SEQ_APPLICATION(OPT,HSQLDB)=call next value for SEQ_APPLICATION;
 
 GET_APPLICATION_BY_ID(CRUD)=
   select 
-  	application_id @applicationId, version @version, executable @executable, 
-  	program_id @program.programId^int^id, p.name @program.name, p.description @program.description, p.command @program.command,
+  	a.application_id @applicationId, a.version @version, a.executable @executable, 
+  	p.program_id @program.programId^int^id, p.name @program.name, p.description @program.description, p.command @program.command,
 	proj.project_id @program.project.projectId^int^id, proj.name @program.project.name, proj.description @program.project.description, 
   	ug.usergroup_id @program.project.userGroup.userGroupId^int^id, ug.name @program.project.userGroup.name,
   	prob.problem_id @program.project.problem.problemId^int^id, prob.name @program.project.problem.name, prob.description @program.project.problem.description
   from application a
-  innner join program p
+  inner join program p
   	on a.program_id = p.program_id
   inner join project proj 
   	on p.project_id = proj.project_id 
-  inner join user_group ug 
-  	on proj.user_group_id = ug.user_group_id 
+  inner join usergroup ug 
+  	on proj.usergroup_id = ug.usergroup_id 
   inner join problem prob
   	on proj.problem_id = prob.problem_id  
   {= where a.application_id = :integer^int^notnull}
@@ -21,18 +21,18 @@ GET_APPLICATION_BY_ID(CRUD)=
 
 GET_APPLICATION_BY_CRITERIA(QRY)=
   select 
-  	application_id @applicationId, version @version, executable @executable, 
-  	program_id @program.programId^int^id, p.name @program.name, p.description @program.description, p.command @program.command,
+  	a.application_id @applicationId, a.version @version, a.executable @executable, 
+  	p.program_id @program.programId^int^id, p.name @program.name, p.description @program.description, p.command @program.command,
 	proj.project_id @program.project.projectId^int^id, proj.name @program.project.name, proj.description @program.project.description, 
   	ug.usergroup_id @program.project.userGroup.userGroupId^int^id, ug.name @program.project.userGroup.name,
   	prob.problem_id @program.project.problem.problemId^int^id, prob.name @program.project.problem.name, prob.description @program.project.problem.description
   from application a
-  innner join program p
+  inner join program p
   	on a.program_id = p.program_id
   inner join project proj 
   	on p.project_id = proj.project_id 
-  inner join user_group ug 
-  	on proj.user_group_id = ug.user_group_id 
+  inner join usergroup ug 
+  	on proj.usergroup_id = ug.usergroup_id 
   inner join problem prob
   	on proj.problem_id = prob.problem_id
   {= where 
