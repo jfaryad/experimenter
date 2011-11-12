@@ -81,15 +81,18 @@ public class DaoServiceImpl implements DaoService {
     @Override
     public void deleteUser(User user) {
         if (user == null || user.getId() == null)
-            throw new IllegalArgumentException("The user to delete must be an existing user persisted in the database.");
+            throw new IllegalArgumentException(
+                    "The user to delete must be an existing entity persisted in the database.");
         junctionDao.removeUserFromUserGroup(user, null);
         userDao.deleteById(user.getId());
     }
 
     @Override
     public void deleteUsers(List<User> users) {
-        // TODO Auto-generated method stub
-
+        if (users == null)
+            throw new IllegalArgumentException("The list of users must not be null.");
+        for (User user : users)
+            deleteUser(user);
     }
 
     @Override
@@ -126,16 +129,20 @@ public class DaoServiceImpl implements DaoService {
     @Override
     public void deleteUserGroup(UserGroup userGroup) {
         if (userGroup == null || userGroup.getId() == null)
-            throw new IllegalArgumentException("The user to delete must be an existing user persisted in the database.");
+            throw new IllegalArgumentException(
+                    "The userGroup to delete must be an existing entity persisted in the database.");
         junctionDao.removeUserFromUserGroup(null, userGroup);
-        // TODO
+        deleteConnectionFarms(findConnectionFarmsByUserGroup(userGroup));
+        deleteProjects(findProjectsByUserGroup(userGroup));
         userDao.deleteById(userGroup.getId());
     }
 
     @Override
     public void deleteUserGroups(List<UserGroup> userGroups) {
-        // TODO Auto-generated method stub
-
+        if (userGroups == null)
+            throw new IllegalArgumentException("The list of userGroups must not be null.");
+        for (UserGroup userGroup : userGroups)
+            deleteUserGroup(userGroup);
     }
 
     @Override
@@ -171,14 +178,19 @@ public class DaoServiceImpl implements DaoService {
 
     @Override
     public void deleteApplication(Application application) {
-        // TODO Auto-generated method stub
-
+        if (application == null || application.getId() == null)
+            throw new IllegalArgumentException(
+                    "The application to delete must be an existing entity persisted in the database.");
+        deleteExperiments(findExperimentsByApplication(application));
+        applicationDao.deleteById(application.getId());
     }
 
     @Override
     public void deleteApplications(List<Application> applications) {
-        // TODO Auto-generated method stub
-
+        if (applications == null)
+            throw new IllegalArgumentException("The list of applications must not be null.");
+        for (Application application : applications)
+            deleteApplication(application);
     }
 
     @Override
@@ -214,14 +226,19 @@ public class DaoServiceImpl implements DaoService {
 
     @Override
     public void deleteComputer(Computer computer) {
-        // TODO Auto-generated method stub
-
+        if (computer == null || computer.getId() == null)
+            throw new IllegalArgumentException(
+                    "The computer to delete must be an existing entity persisted in the database.");
+        deleteConnections(findConnectionsByComputer(computer));
+        computerDao.deleteById(computer.getId());
     }
 
     @Override
     public void deleteComputers(List<Computer> computers) {
-        // TODO Auto-generated method stub
-
+        if (computers == null)
+            throw new IllegalArgumentException("The list of computers must not be null.");
+        for (Computer computer : computers)
+            deleteComputer(computer);
     }
 
     @Override
@@ -257,14 +274,18 @@ public class DaoServiceImpl implements DaoService {
 
     @Override
     public void deleteConnection(Connection connection) {
-        // TODO Auto-generated method stub
-
+        if (connection == null || connection.getId() == null)
+            throw new IllegalArgumentException(
+                    "The connection to delete must be an existing entity persisted in the database.");
+        connectionDao.deleteById(connection.getId());
     }
 
     @Override
     public void deleteConnections(List<Connection> connections) {
-        // TODO Auto-generated method stub
-
+        if (connections == null)
+            throw new IllegalArgumentException("The list of connections must not be null.");
+        for (Connection connection : connections)
+            deleteConnection(connection);
     }
 
     @Override
@@ -301,14 +322,20 @@ public class DaoServiceImpl implements DaoService {
 
     @Override
     public void deleteConnectionFarm(ConnectionFarm connectionFarm) {
-        // TODO Auto-generated method stub
-
+        if (connectionFarm == null || connectionFarm.getId() == null)
+            throw new IllegalArgumentException(
+                    "The connectionFarm to delete must be an existing entity persisted in the database.");
+        junctionDao.removeConnectionFarmFromExperiment(connectionFarm, null);
+        deleteConnections(findConnectionsByConnectionFarm(connectionFarm));
+        connectionFarmDao.deleteById(connectionFarm.getId());
     }
 
     @Override
     public void deleteConnectionFarms(List<ConnectionFarm> connectionFarms) {
-        // TODO Auto-generated method stub
-
+        if (connectionFarms == null)
+            throw new IllegalArgumentException("The list of connectionFarms must not be null.");
+        for (ConnectionFarm connectionFarm : connectionFarms)
+            deleteConnectionFarm(connectionFarm);
     }
 
     @Override
@@ -344,14 +371,20 @@ public class DaoServiceImpl implements DaoService {
 
     @Override
     public void deleteProject(Project project) {
-        // TODO Auto-generated method stub
-
+        if (project == null || project.getId() == null)
+            throw new IllegalArgumentException(
+                    "The project to delete must be an existing entity persisted in the database.");
+        junctionDao.removeInputSetFromProject(null, project);
+        deletePrograms(findProgramsByProject(project));
+        projectDao.deleteById(project.getId());
     }
 
     @Override
     public void deleteProjects(List<Project> projects) {
-        // TODO Auto-generated method stub
-
+        if (projects == null)
+            throw new IllegalArgumentException("The list of projects must not be null.");
+        for (Project project : projects)
+            deleteProject(project);
     }
 
     @Override
@@ -387,14 +420,19 @@ public class DaoServiceImpl implements DaoService {
 
     @Override
     public void deleteProgram(Program program) {
-        // TODO Auto-generated method stub
-
+        if (program == null || program.getId() == null)
+            throw new IllegalArgumentException(
+                    "The program to delete must be an existing entity persisted in the database.");
+        deleteApplications(findApplicationsByProgram(program));
+        programDao.deleteById(program.getId());
     }
 
     @Override
     public void deletePrograms(List<Program> programs) {
-        // TODO Auto-generated method stub
-
+        if (programs == null)
+            throw new IllegalArgumentException("The list of programs must not be null.");
+        for (Program program : programs)
+            deleteProgram(program);
     }
 
     @Override
@@ -430,14 +468,20 @@ public class DaoServiceImpl implements DaoService {
 
     @Override
     public void deleteExperiment(Experiment experiment) {
-        // TODO Auto-generated method stub
-
+        if (experiment == null || experiment.getId() == null)
+            throw new IllegalArgumentException(
+                    "The experiment to delete must be an existing entity persisted in the database.");
+        junctionDao.removeConnectionFarmFromExperiment(null, experiment);
+        junctionDao.removeInputSetFromExperiment(null, experiment);
+        experimentDao.deleteById(experiment.getId());
     }
 
     @Override
     public void deleteExperiments(List<Experiment> experiments) {
-        // TODO Auto-generated method stub
-
+        if (experiments == null)
+            throw new IllegalArgumentException("The list of experiments must not be null.");
+        for (Experiment experiment : experiments)
+            deleteExperiment(experiment);
     }
 
     @Override
@@ -473,14 +517,19 @@ public class DaoServiceImpl implements DaoService {
 
     @Override
     public void deleteInput(Input input) {
-        // TODO Auto-generated method stub
-
+        if (input == null || input.getId() == null)
+            throw new IllegalArgumentException(
+                    "The input to delete must be an existing entity persisted in the database.");
+        junctionDao.removeInputFromInputSet(input, null);
+        inputDao.deleteById(input.getId());
     }
 
     @Override
     public void deleteInputs(List<Input> inputs) {
-        // TODO Auto-generated method stub
-
+        if (inputs == null)
+            throw new IllegalArgumentException("The list of inputs must not be null.");
+        for (Input input : inputs)
+            deleteInput(input);
     }
 
     @Override
@@ -516,14 +565,21 @@ public class DaoServiceImpl implements DaoService {
 
     @Override
     public void deleteInputSet(InputSet inputSet) {
-        // TODO Auto-generated method stub
-
+        if (inputSet == null || inputSet.getId() == null)
+            throw new IllegalArgumentException(
+                    "The inputSet to delete must be an existing entity persisted in the database.");
+        junctionDao.removeInputSetFromProject(inputSet, null);
+        junctionDao.removeInputFromInputSet(null, inputSet);
+        junctionDao.removeInputSetFromExperiment(inputSet, null);
+        inputSetDao.deleteById(inputSet.getId());
     }
 
     @Override
     public void deleteInputSets(List<InputSet> inputSets) {
-        // TODO Auto-generated method stub
-
+        if (inputSets == null)
+            throw new IllegalArgumentException("The list of inputSets must not be null.");
+        for (InputSet inputSet : inputSets)
+            deleteInputSet(inputSet);
     }
 
     @Override
@@ -559,14 +615,21 @@ public class DaoServiceImpl implements DaoService {
 
     @Override
     public void deleteProblemType(ProblemType problemType) {
-        // TODO Auto-generated method stub
-
+        if (problemType == null || problemType.getId() == null)
+            throw new IllegalArgumentException(
+                    "The problemType to delete must be an existing entity persisted in the database.");
+        deleteProjects(findProjectsByProblemType(problemType));
+        deleteInputs(findInputsByProblemType(problemType));
+        deleteInputSets(findInputSetsByProblemType(problemType));
+        problemTypeDao.deleteById(problemType.getId());
     }
 
     @Override
     public void deleteProblemTypes(List<ProblemType> problemTypes) {
-        // TODO Auto-generated method stub
-
+        if (problemTypes == null)
+            throw new IllegalArgumentException("The list of problemTypes must not be null.");
+        for (ProblemType problemType : problemTypes)
+            deleteProblemType(problemType);
     }
 
     @Override
@@ -617,6 +680,146 @@ public class DaoServiceImpl implements DaoService {
     @Override
     public void removeConnectionFarmFromExperiment(ConnectionFarm connectionFarm, Experiment experiment) {
         junctionDao.removeConnectionFarmFromExperiment(connectionFarm, experiment);
+    }
+
+    @Override
+    public List<Project> findProjectsByUserGroup(UserGroup userGroup) {
+        Project project = new Project();
+        project.setUserGroup(userGroup);
+        CriteriaForm<Project> criteria = new CriteriaForm<Project>(project);
+        return projectDao.findByCriteria(criteria);
+    }
+
+    @Override
+    public List<ConnectionFarm> findConnectionFarmsByUserGroup(UserGroup userGroup) {
+        ConnectionFarm connectionFarm = new ConnectionFarm();
+        connectionFarm.setUserGroup(userGroup);
+        CriteriaForm<ConnectionFarm> criteria = new CriteriaForm<ConnectionFarm>(connectionFarm);
+        return connectionFarmDao.findByCriteria(criteria);
+    }
+
+    @Override
+    public List<Connection> findConnectionsByConnectionFarm(ConnectionFarm connectionFarm) {
+        Connection connection = new Connection();
+        connection.setConnectionFarm(connectionFarm);
+        CriteriaForm<Connection> criteria = new CriteriaForm<Connection>(connection);
+        return connectionDao.findByCriteria(criteria);
+    }
+
+    @Override
+    public List<Connection> findConnectionsByComputer(Computer computer) {
+        Connection connection = new Connection();
+        connection.setComputer(computer);
+        CriteriaForm<Connection> criteria = new CriteriaForm<Connection>(connection);
+        return connectionDao.findByCriteria(criteria);
+    }
+
+    @Override
+    public List<Program> findProgramsByProject(Project project) {
+        Program program = new Program();
+        program.setProject(project);
+        CriteriaForm<Program> criteria = new CriteriaForm<Program>(program);
+        return programDao.findByCriteria(criteria);
+    }
+
+    @Override
+    public List<Application> findApplicationsByProgram(Program program) {
+        Application application = new Application();
+        application.setProgram(program);
+        CriteriaForm<Application> criteria = new CriteriaForm<Application>(application);
+        return applicationDao.findByCriteria(criteria);
+    }
+
+    @Override
+    public List<Experiment> findExperimentsByApplication(Application application) {
+        Experiment experiment = new Experiment();
+        experiment.setApplication(application);
+        CriteriaForm<Experiment> criteria = new CriteriaForm<Experiment>(experiment);
+        return experimentDao.findByCriteria(criteria);
+    }
+
+    @Override
+    public List<Project> findProjectsByProblemType(ProblemType problemType) {
+        Project project = new Project();
+        project.setProblem(problemType);
+        CriteriaForm<Project> criteria = new CriteriaForm<Project>(project);
+        return projectDao.findByCriteria(criteria);
+    }
+
+    @Override
+    public List<Input> findInputsByProblemType(ProblemType problemType) {
+        Input input = new Input();
+        input.setProblem(problemType);
+        CriteriaForm<Input> criteria = new CriteriaForm<Input>(input);
+        return inputDao.findByCriteria(criteria);
+    }
+
+    @Override
+    public List<InputSet> findInputSetsByProblemType(ProblemType problemType) {
+        InputSet inputSet = new InputSet();
+        inputSet.setProblem(problemType);
+        CriteriaForm<InputSet> criteria = new CriteriaForm<InputSet>(inputSet);
+        return inputSetDao.findByCriteria(criteria);
+    }
+
+    @Override
+    public List<User> findUsersByUserGroup(UserGroup userGroup) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public List<UserGroup> findUserGroupsByUser(User user) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public List<ConnectionFarm> findConnectionFarmsByExperiment(Experiment experiment) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public List<Experiment> findExperimentsByConnectionFarm(ConnectionFarm connectionFarm) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public List<InputSet> findInputSetsByExperiment(Experiment experiment) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public List<Experiment> findExperimentsByInputSet(InputSet inputSet) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public List<InputSet> findInputSetsByInput(Input input) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public List<Input> findInputsByInputSet(InputSet inputSet) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public List<InputSet> findInputSetsByProject(Project project) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public List<Project> findProjectsByInputSet(InputSet inputSet) {
+        // TODO Auto-generated method stub
+        return null;
     }
 
     @Required

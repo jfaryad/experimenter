@@ -8,13 +8,32 @@ import java.util.List;
  * @author Jakub Faryad (jfaryad@gmail.com)
  * 
  */
-public class Application extends Entity {
+public class Application implements Entity {
 
     private static final long serialVersionUID = 1L;
+    private Integer id;
     private String version;
     private String executable;
     private Program program;
     private List<Experiment> experiments;
+
+    public Application() {
+
+    }
+
+    public Application(Integer id) {
+        this.id = id;
+    }
+
+    @Override
+    public Integer getId() {
+        return id;
+    }
+
+    @Override
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public String getVersion() {
         return version;

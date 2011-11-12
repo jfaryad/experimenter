@@ -1,15 +1,15 @@
 package org.experimenter.repository.entity;
 
-
 /**
  * Entity for database table CONNECTION
  * 
  * @author Jakub Faryad (jfaryad@gmail.com)
  * 
  */
-public class Connection extends Entity {
+public class Connection implements Entity {
 
     private static final long serialVersionUID = 1L;
+    private Integer id;
     private String name;
     private String login;
     private String password;
@@ -17,6 +17,24 @@ public class Connection extends Entity {
     private Short port;
     private Computer computer;
     private ConnectionFarm connectionFarm;
+
+    public Connection() {
+
+    }
+
+    public Connection(Integer id) {
+        this.id = id;
+    }
+
+    @Override
+    public Integer getId() {
+        return id;
+    }
+
+    @Override
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;

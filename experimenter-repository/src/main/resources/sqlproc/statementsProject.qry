@@ -27,6 +27,8 @@ GET_PROJECT_BY_CRITERIA(QRY)=
   	{& p.project_id = :id}
   	{& UPPER(p.name) like :+name}
   	{& UPPER(p.description) like :+description}
+  	{& p.usergroup_id = :userGroup.id}
+  	{& p.problem_id = :problem.id}
   }
 ;
 

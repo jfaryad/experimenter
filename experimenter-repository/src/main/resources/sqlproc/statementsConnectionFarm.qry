@@ -19,6 +19,7 @@ GET_FARM_BY_CRITERIA(QRY)=
   	{& f.farm_id = :id}
   	{& UPPER(f.name) like :+name}
   	{& UPPER(f.description) like :+description}
+  	{& f.usergroup_id = :userGroup.id}
   }
 ;
 

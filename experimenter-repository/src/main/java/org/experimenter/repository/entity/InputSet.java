@@ -8,15 +8,34 @@ import java.util.List;
  * @author Jakub Faryad (jfaryad@gmail.com)
  * 
  */
-public class InputSet extends Entity {
+public class InputSet implements Entity {
 
     private static final long serialVersionUID = 1L;
+    private Integer id;
     private String name;
     private String description;
     private ProblemType problem;
     private List<Input> inputs;
     private List<Experiment> experiments;
     private List<Project> projects;
+
+    public InputSet() {
+
+    }
+
+    public InputSet(Integer id) {
+        this.id = id;
+    }
+
+    @Override
+    public Integer getId() {
+        return id;
+    }
+
+    @Override
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;

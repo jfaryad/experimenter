@@ -8,14 +8,33 @@ import java.util.List;
  * @author Jakub Faryad (jfaryad@gmail.com)
  * 
  */
-public class ConnectionFarm extends Entity {
+public class ConnectionFarm implements Entity {
 
     private static final long serialVersionUID = 1L;
+    private Integer id;
     private String name;
     private String description;
     private UserGroup userGroup;
     private List<Connection> connections;
     private List<Experiment> experiments;
+
+    public ConnectionFarm() {
+
+    }
+
+    public ConnectionFarm(Integer id) {
+        this.id = id;
+    }
+
+    @Override
+    public Integer getId() {
+        return id;
+    }
+
+    @Override
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;

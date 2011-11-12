@@ -9,6 +9,7 @@ import org.experimenter.repository.entity.User;
 import org.experimenter.repository.entity.UserGroup;
 
 public interface JunctionDao {
+
     public void addUserToUserGroup(User user, UserGroup userGroup);
 
     public void addInputToInputSet(Input input, InputSet inputSet);

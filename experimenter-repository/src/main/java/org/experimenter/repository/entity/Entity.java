@@ -2,16 +2,9 @@ package org.experimenter.repository.entity;
 
 import java.io.Serializable;
 
-public class Entity implements Serializable {
+public interface Entity extends Serializable {
 
-    private static final long serialVersionUID = 1L;
-    private Integer id;
+    public Integer getId();
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
+    public void setId(Integer id);
 }

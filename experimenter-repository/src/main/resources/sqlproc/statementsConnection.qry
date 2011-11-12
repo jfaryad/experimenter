@@ -35,6 +35,8 @@ GET_CONNECTION_BY_CRITERIA(QRY)=
   	{& UPPER(c.description) like :+description}
   	{& UPPER(c.login) like :+login}
   	{& c.port = :port}
+  	{& c.farm_id = :connectionFarm.id}
+  	{& c.computer_id = :computer.id}
   }
 ;
 

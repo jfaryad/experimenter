@@ -742,4 +742,45 @@ public interface DaoService {
      *            the experiment to remove from
      */
     public void removeConnectionFarmFromExperiment(ConnectionFarm connectionFarm, Experiment experiment);
+
+    public List<Project> findProjectsByUserGroup(UserGroup userGroup);
+
+    public List<ConnectionFarm> findConnectionFarmsByUserGroup(UserGroup userGroup);
+
+    public List<Connection> findConnectionsByConnectionFarm(ConnectionFarm connectionFarm);
+
+    public List<Connection> findConnectionsByComputer(Computer computer);
+
+    public List<Program> findProgramsByProject(Project project);
+
+    public List<Application> findApplicationsByProgram(Program program);
+
+    public List<Experiment> findExperimentsByApplication(Application application);
+
+    public List<Project> findProjectsByProblemType(ProblemType problemType);
+
+    public List<Input> findInputsByProblemType(ProblemType problemType);
+
+    public List<InputSet> findInputSetsByProblemType(ProblemType problemType);
+
+    public List<User> findUsersByUserGroup(UserGroup userGroup);
+
+    public List<UserGroup> findUserGroupsByUser(User user);
+
+    public List<ConnectionFarm> findConnectionFarmsByExperiment(Experiment experiment);
+
+    public List<Experiment> findExperimentsByConnectionFarm(ConnectionFarm connectionFarm);
+
+    public List<InputSet> findInputSetsByExperiment(Experiment experiment);
+
+    public List<Experiment> findExperimentsByInputSet(InputSet inputSet);
+
+    public List<InputSet> findInputSetsByInput(Input input);
+
+    public List<Input> findInputsByInputSet(InputSet inputSet);
+
+    public List<InputSet> findInputSetsByProject(Project project);
+
+    public List<Project> findProjectsByInputSet(InputSet inputSet);
+
 }

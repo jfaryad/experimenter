@@ -8,9 +8,10 @@ import java.util.List;
  * @author Jakub Faryad (jfaryad@gmail.com)
  * 
  */
-public class Project extends Entity {
+public class Project implements Entity {
 
     private static final long serialVersionUID = 1L;
+    private Integer id;
     private String name;
     private String description;
     private UserGroup userGroup;
@@ -18,6 +19,24 @@ public class Project extends Entity {
     private List<Experiment> experiments;
     private List<Program> programs;
     private List<InputSet> inputSets;
+
+    public Project() {
+
+    }
+
+    public Project(Integer id) {
+        this.id = id;
+    }
+
+    @Override
+    public Integer getId() {
+        return id;
+    }
+
+    @Override
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;

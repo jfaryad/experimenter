@@ -39,6 +39,7 @@ GET_APPLICATION_BY_CRITERIA(QRY)=
   	{& a.application_id = :id}
   	{& a.version = :+version}
   	{& UPPER(a.executable) like :+executable}
+  	{& a.program_id = :program.id}
   }
 ;
 

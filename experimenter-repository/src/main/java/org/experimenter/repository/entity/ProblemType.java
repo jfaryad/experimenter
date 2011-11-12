@@ -8,14 +8,33 @@ import java.util.List;
  * @author Jakub Faryad (jfaryad@gmail.com)
  * 
  */
-public class ProblemType extends Entity {
+public class ProblemType implements Entity {
 
     private static final long serialVersionUID = 1L;
+    private Integer id;
     private String name;
     private String description;
     private List<Project> projects;
     private List<Input> inputs;
     private List<InputSet> inputSets;
+
+    public ProblemType() {
+
+    }
+
+    public ProblemType(Integer id) {
+        this.id = id;
+    }
+
+    @Override
+    public Integer getId() {
+        return id;
+    }
+
+    @Override
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;

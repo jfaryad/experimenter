@@ -34,6 +34,7 @@ GET_PROGRAM_BY_CRITERIA(QRY)=
   	{& UPPER(p.name) like :+name}
   	{& UPPER(p.description) like :+description}
   	{& UPPER(p.command) like :+command}
+  	{& p.project_id = :project.id}
   }
 ;
 

@@ -21,6 +21,7 @@ GET_INPUT_SET_BY_CRITERIA(QRY)=
   	{& i.input_set_id = :id}
   	{& UPPER(i.name) like :+name}
   	{& UPPER(i.description) like :+description}
+  	{& i.problem_id = :problem.id}
   }
 ;
 

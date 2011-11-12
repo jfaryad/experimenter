@@ -2,13 +2,32 @@ package org.experimenter.repository.entity;
 
 import java.util.List;
 
-public class UserGroup extends Entity {
+public class UserGroup implements Entity {
 
     private static final long serialVersionUID = 1L;
+    private Integer id;
     private String name;
     private List<User> users;
     private List<ConnectionFarm> connectionFarms;
     private List<Project> projects;
+
+    public UserGroup() {
+
+    }
+
+    public UserGroup(Integer id) {
+        this.id = id;
+    }
+
+    @Override
+    public Integer getId() {
+        return id;
+    }
+
+    @Override
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;

@@ -8,12 +8,31 @@ import java.util.List;
  * @author Jakub Faryad (jfaryad@gmail.com)
  * 
  */
-public class Computer extends Entity {
+public class Computer implements Entity {
 
     private static final long serialVersionUID = 1L;
+    private Integer id;
     private String address;
     private String description;
     private List<Connection> connections;
+
+    public Computer() {
+
+    }
+
+    public Computer(Integer id) {
+        this.id = id;
+    }
+
+    @Override
+    public Integer getId() {
+        return id;
+    }
+
+    @Override
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public String getAddress() {
         return address;

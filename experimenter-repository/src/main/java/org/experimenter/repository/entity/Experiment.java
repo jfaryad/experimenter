@@ -8,15 +8,34 @@ import java.util.List;
  * @author Jakub Faryad (jfaryad@gmail.com)
  * 
  */
-public class Experiment extends Entity {
+public class Experiment implements Entity {
 
     private static final long serialVersionUID = 1L;
+    private Integer id;
     private String name;
     private String description;
     private Project project;
     private Application application;
     private List<ConnectionFarm> connectionFarms;
     private List<InputSet> inputSets;
+
+    public Experiment() {
+
+    }
+
+    public Experiment(Integer id) {
+        this.id = id;
+    }
+
+    @Override
+    public Integer getId() {
+        return id;
+    }
+
+    @Override
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
