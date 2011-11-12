@@ -3,37 +3,37 @@ package org.experimenter.repository.util;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-import org.experimenter.repository.model.Application;
-import org.experimenter.repository.model.Computer;
-import org.experimenter.repository.model.Connection;
-import org.experimenter.repository.model.ConnectionFarm;
-import org.experimenter.repository.model.Experiment;
-import org.experimenter.repository.model.Input;
-import org.experimenter.repository.model.InputSet;
-import org.experimenter.repository.model.ProblemType;
-import org.experimenter.repository.model.Program;
-import org.experimenter.repository.model.Project;
-import org.experimenter.repository.model.User;
-import org.experimenter.repository.model.UserGroup;
+import org.experimenter.repository.entity.Application;
+import org.experimenter.repository.entity.Computer;
+import org.experimenter.repository.entity.Connection;
+import org.experimenter.repository.entity.ConnectionFarm;
+import org.experimenter.repository.entity.Experiment;
+import org.experimenter.repository.entity.Input;
+import org.experimenter.repository.entity.InputSet;
+import org.experimenter.repository.entity.ProblemType;
+import org.experimenter.repository.entity.Program;
+import org.experimenter.repository.entity.Project;
+import org.experimenter.repository.entity.User;
+import org.experimenter.repository.entity.UserGroup;
 
 public class DaoTestHelper {
 
     public static void checkUserGroup1(UserGroup userGroup) {
         assertNotNull("userGroup not found", userGroup);
-        assertEquals(1, userGroup.getUserGroupId().intValue());
+        assertEquals(1, userGroup.getId().intValue());
         assertEquals("students", userGroup.getName());
     }
 
     public static void checkProblem1(ProblemType problem) {
         assertNotNull("problem not found", problem);
-        assertEquals(1, problem.getProblemId().intValue());
+        assertEquals(1, problem.getId().intValue());
         assertEquals("you know what it means", problem.getDescription());
         assertEquals("3-SAT", problem.getName());
     }
 
     public static void checkProject1(Project project) {
         assertNotNull("project not found", project);
-        assertEquals(1, project.getProjectId().intValue());
+        assertEquals(1, project.getId().intValue());
         assertEquals("testProject1", project.getName());
         assertEquals("first project", project.getDescription());
         checkUserGroup1(project.getUserGroup());
@@ -41,7 +41,7 @@ public class DaoTestHelper {
     }
 
     public static void checkUser1(User user) {
-        assertEquals(1, user.getUserId().intValue());
+        assertEquals(1, user.getId().intValue());
         assertEquals("Tester1", user.getName());
         assertEquals("Exists", user.getSurname());
         assertEquals("tester1", user.getLogin());

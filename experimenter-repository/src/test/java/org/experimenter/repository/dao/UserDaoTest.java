@@ -6,8 +6,8 @@ import static org.junit.Assert.assertNull;
 
 import java.util.List;
 
+import org.experimenter.repository.entity.User;
 import org.experimenter.repository.form.CriteriaForm;
-import org.experimenter.repository.model.User;
 import org.experimenter.repository.util.DaoTestHelper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -35,8 +35,8 @@ public class UserDaoTest {
         user.setPassword("pepa123");
         user.setEmail("pepa@novak.cz");
         userDao.insert(user);
-        assertNotNull("userId is null after insert", user.getUserId());
-        user = userDao.findById(user.getUserId());
+        assertNotNull("userId is null after insert", user.getId());
+        user = userDao.findById(user.getId());
         assertEquals("Josef", user.getName());
         assertEquals("Novak", user.getSurname());
         assertEquals("pepa", user.getLogin());

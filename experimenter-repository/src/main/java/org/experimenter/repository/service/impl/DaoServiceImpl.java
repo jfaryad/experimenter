@@ -15,19 +15,19 @@ import org.experimenter.repository.dao.ProgramDao;
 import org.experimenter.repository.dao.ProjectDao;
 import org.experimenter.repository.dao.UserDao;
 import org.experimenter.repository.dao.UserGroupDao;
+import org.experimenter.repository.entity.Application;
+import org.experimenter.repository.entity.Computer;
+import org.experimenter.repository.entity.Connection;
+import org.experimenter.repository.entity.ConnectionFarm;
+import org.experimenter.repository.entity.Experiment;
+import org.experimenter.repository.entity.Input;
+import org.experimenter.repository.entity.InputSet;
+import org.experimenter.repository.entity.ProblemType;
+import org.experimenter.repository.entity.Program;
+import org.experimenter.repository.entity.Project;
+import org.experimenter.repository.entity.User;
+import org.experimenter.repository.entity.UserGroup;
 import org.experimenter.repository.form.CriteriaForm;
-import org.experimenter.repository.model.Application;
-import org.experimenter.repository.model.Computer;
-import org.experimenter.repository.model.Connection;
-import org.experimenter.repository.model.ConnectionFarm;
-import org.experimenter.repository.model.Experiment;
-import org.experimenter.repository.model.Input;
-import org.experimenter.repository.model.InputSet;
-import org.experimenter.repository.model.ProblemType;
-import org.experimenter.repository.model.Program;
-import org.experimenter.repository.model.Project;
-import org.experimenter.repository.model.User;
-import org.experimenter.repository.model.UserGroup;
 import org.experimenter.repository.service.DaoService;
 import org.springframework.beans.factory.annotation.Required;
 
@@ -51,7 +51,7 @@ public class DaoServiceImpl implements DaoService {
     public void saveUpdateUser(User user) {
         if (user == null)
             throw new IllegalArgumentException("The user to save must not be null.");
-        if (user.getUserId() == null)
+        if (user.getId() == null)
             userDao.insert(user);
         else
             userDao.update(user);
@@ -80,10 +80,10 @@ public class DaoServiceImpl implements DaoService {
 
     @Override
     public void deleteUser(User user) {
-        if (user == null || user.getUserId() == null)
+        if (user == null || user.getId() == null)
             throw new IllegalArgumentException("The user to delete must be an existing user persisted in the database.");
         junctionDao.removeUserFromUserGroup(user, null);
-        userDao.deleteById(user.getUserId());
+        userDao.deleteById(user.getId());
     }
 
     @Override
@@ -96,7 +96,7 @@ public class DaoServiceImpl implements DaoService {
     public void saveUpdateUserGroup(UserGroup userGroup) {
         if (userGroup == null)
             throw new IllegalArgumentException("The userGroup to save must not be null.");
-        if (userGroup.getUserGroupId() == null)
+        if (userGroup.getId() == null)
             userGroupDao.insert(userGroup);
         else
             userGroupDao.update(userGroup);
@@ -125,11 +125,11 @@ public class DaoServiceImpl implements DaoService {
 
     @Override
     public void deleteUserGroup(UserGroup userGroup) {
-        if (userGroup == null || userGroup.getUserGroupId() == null)
+        if (userGroup == null || userGroup.getId() == null)
             throw new IllegalArgumentException("The user to delete must be an existing user persisted in the database.");
         junctionDao.removeUserFromUserGroup(null, userGroup);
         // TODO
-        userDao.deleteById(userGroup.getUserGroupId());
+        userDao.deleteById(userGroup.getId());
     }
 
     @Override
@@ -142,7 +142,7 @@ public class DaoServiceImpl implements DaoService {
     public void saveUpdateApplication(Application application) {
         if (application == null)
             throw new IllegalArgumentException("The application to save must not be null.");
-        if (application.getApplicationId() == null)
+        if (application.getId() == null)
             applicationDao.insert(application);
         else
             applicationDao.update(application);
@@ -185,7 +185,7 @@ public class DaoServiceImpl implements DaoService {
     public void saveUpdateComputer(Computer computer) {
         if (computer == null)
             throw new IllegalArgumentException("The computer to save must not be null.");
-        if (computer.getComputerId() == null)
+        if (computer.getId() == null)
             computerDao.insert(computer);
         else
             computerDao.update(computer);
@@ -228,7 +228,7 @@ public class DaoServiceImpl implements DaoService {
     public void saveUpdateConnection(Connection connection) {
         if (connection == null)
             throw new IllegalArgumentException("The connection to save must not be null.");
-        if (connection.getConnectionId() == null)
+        if (connection.getId() == null)
             connectionDao.insert(connection);
         else
             connectionDao.update(connection);
@@ -271,7 +271,7 @@ public class DaoServiceImpl implements DaoService {
     public void saveUpdateConnectionFarm(ConnectionFarm connectionFarm) {
         if (connectionFarm == null)
             throw new IllegalArgumentException("The connectionFarm to save must not be null.");
-        if (connectionFarm.getConnectionFarmId() == null)
+        if (connectionFarm.getId() == null)
             connectionFarmDao.insert(connectionFarm);
         else
             connectionFarmDao.update(connectionFarm);
@@ -315,7 +315,7 @@ public class DaoServiceImpl implements DaoService {
     public void saveUpdateProject(Project project) {
         if (project == null)
             throw new IllegalArgumentException("The project to save must not be null.");
-        if (project.getProjectId() == null)
+        if (project.getId() == null)
             projectDao.insert(project);
         else
             projectDao.update(project);
@@ -358,7 +358,7 @@ public class DaoServiceImpl implements DaoService {
     public void saveUpdateProgram(Program program) {
         if (program == null)
             throw new IllegalArgumentException("The program to save must not be null.");
-        if (program.getProgramId() == null)
+        if (program.getId() == null)
             programDao.insert(program);
         else
             programDao.update(program);
@@ -401,7 +401,7 @@ public class DaoServiceImpl implements DaoService {
     public void saveUpdateExperiment(Experiment experiment) {
         if (experiment == null)
             throw new IllegalArgumentException("The experiment to save must not be null.");
-        if (experiment.getExperimentId() == null)
+        if (experiment.getId() == null)
             experimentDao.insert(experiment);
         else
             experimentDao.update(experiment);
@@ -444,7 +444,7 @@ public class DaoServiceImpl implements DaoService {
     public void saveUpdateInput(Input input) {
         if (input == null)
             throw new IllegalArgumentException("The input to save must not be null.");
-        if (input.getInputId() == null)
+        if (input.getId() == null)
             inputDao.insert(input);
         else
             inputDao.update(input);
@@ -487,7 +487,7 @@ public class DaoServiceImpl implements DaoService {
     public void saveUpdateInputSet(InputSet inputSet) {
         if (inputSet == null)
             throw new IllegalArgumentException("The inputSet to save must not be null.");
-        if (inputSet.getInputSetId() == null)
+        if (inputSet.getId() == null)
             inputSetDao.insert(inputSet);
         else
             inputSetDao.update(inputSet);
@@ -530,7 +530,7 @@ public class DaoServiceImpl implements DaoService {
     public void saveUpdateProblemType(ProblemType problemType) {
         if (problemType == null)
             throw new IllegalArgumentException("The problemType to save must not be null.");
-        if (problemType.getProblemId() == null)
+        if (problemType.getId() == null)
             problemTypeDao.insert(problemType);
         else
             problemTypeDao.update(problemType);

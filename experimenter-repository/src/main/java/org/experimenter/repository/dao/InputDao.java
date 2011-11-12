@@ -1,6 +1,6 @@
 package org.experimenter.repository.dao;
 
-import org.experimenter.repository.model.Input;
+import org.experimenter.repository.entity.Input;
 
 public interface InputDao extends BaseDao<Input> {
 

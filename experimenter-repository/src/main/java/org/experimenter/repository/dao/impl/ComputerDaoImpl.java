@@ -1,13 +1,19 @@
 package org.experimenter.repository.dao.impl;
 
+import org.experimenter.repository.Constants;
 import org.experimenter.repository.dao.ComputerDao;
-import org.experimenter.repository.model.Computer;
+import org.experimenter.repository.entity.Computer;
 
 public class ComputerDaoImpl extends AbstractBaseDaoImpl<Computer> implements ComputerDao {
 
-	@Override
-	public Class<Computer> getModelClass() {
-		return Computer.class;
-	}
+    @Override
+    public Class<Computer> getEntityClass() {
+        return Computer.class;
+    }
+
+    @Override
+    public String getTableName() {
+        return Constants.COMPUTER;
+    }
 
 }

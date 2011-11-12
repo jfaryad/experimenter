@@ -1,23 +1,23 @@
 SEQ_USERGROUP(OPT,HSQLDB)=call next value for SEQ_USERGROUP;
 
 GET_USERGROUP_BY_ID(CRUD)=
-  select usergroup_id @userGroupId, name @name
+  select usergroup_id @id, name @name
   from usergroup u
   {= where usergroup_id = :integer^int^notnull}
 ;
 
 GET_USERGROUP_BY_CRITERIA(QRY)=
-  select usergroup_id @userGroupId, name @name
+  select usergroup_id @id, name @name
   from usergroup u
   {= where 
-  	{& user_id = :userGroupId}
+  	{& user_id = :id}
   	{& UPPER(u.name) like :+name}
   }
 ;
 
 INSERT_USERGROUP(CRUD)=
   insert into usergroup (usergroup_id, name)
-  {= values (:userGroupId^int^seq=SEQ_USERGROUP, :name) }
+  {= values (:id^int^seq=SEQ_USERGROUP, :name) }
 ;
 
 DELETE_USERGROUP_BY_ID(CRUD)=
@@ -28,5 +28,5 @@ DELETE_USERGROUP_BY_ID(CRUD)=
 UPDATE_USERGROUP(CRUD)=
   update usergroup 
   {=set name=:name}
-  {= where usergroup_id = :userGroupId^int^notnull}
+  {= where usergroup_id = :id^int^notnull}
 ;

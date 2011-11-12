@@ -2,10 +2,10 @@ SEQ_CONNECTION(OPT,HSQLDB)=call next value for SEQ_CONNECTION;
 
 GET_CONNECTION_BY_ID(CRUD)=
   select 
-  	c.connection_id @connectionId, c.name @name, c.description @description, c.login @login, c.password @password, c.port @port, 
-  	comp.computer_id @computer.computerId^int^id, comp.address @computer.address, comp.description @computer.description,
-  	f.farm_id @connectionFarm.connectionFarmId^int^id, f.name @connectionFarm.name, f.description @connectionFarm.description, 
-  	ug.usergroup_id @connectionFarm.userGroup.userGroupId^int^id, ug.name @connectionFarm.userGroup.name
+  	c.connection_id @id, c.name @name, c.description @description, c.login @login, c.password @password, c.port @port, 
+  	comp.computer_id @computer.id^int^id, comp.address @computer.address, comp.description @computer.description,
+  	f.farm_id @connectionFarm.id^int^id, f.name @connectionFarm.name, f.description @connectionFarm.description, 
+  	ug.usergroup_id @connectionFarm.userGroup.id^int^id, ug.name @connectionFarm.userGroup.name
   from connection c
   inner join computer comp
   	on c.computer_id = comp.computer_id
@@ -18,10 +18,10 @@ GET_CONNECTION_BY_ID(CRUD)=
 
 GET_CONNECTION_BY_CRITERIA(QRY)=
   select 
-  	c.connection_id @connectionId, c.name @name, c.description @description, c.login @login, c.password @password, c.port @port, 
-  	comp.computer_id @computer.computerId^int^id, comp.address @computer.address, comp.description @computer.description,
-  	f.farm_id @connectionFarm.connectionFarmId^int^id, f.name @connectionFarm.name, f.description @connectionFarm.description, 
-  	ug.usergroup_id @connectionFarm.userGroup.userGroupId^int^id, ug.name @connectionFarm.userGroup.name
+  	c.connection_id @id, c.name @name, c.description @description, c.login @login, c.password @password, c.port @port, 
+  	comp.computer_id @computer.id^int^id, comp.address @computer.address, comp.description @computer.description,
+  	f.farm_id @connectionFarm.id^int^id, f.name @connectionFarm.name, f.description @connectionFarm.description, 
+  	ug.usergroup_id @connectionFarm.userGroup.id^int^id, ug.name @connectionFarm.userGroup.name
   from connection c
   inner join computer comp
   	on c.computer_id = comp.computer_id
@@ -30,7 +30,7 @@ GET_CONNECTION_BY_CRITERIA(QRY)=
   inner join usergroup ug 
   	on f.usergroup_id = ug.usergroup_id  
   {= where 
-  	{& c.connection_id = :connectionId}
+  	{& c.connection_id = :id}
   	{& UPPER(c.name) like :+name}
   	{& UPPER(c.description) like :+description}
   	{& UPPER(c.login) like :+login}
@@ -40,7 +40,7 @@ GET_CONNECTION_BY_CRITERIA(QRY)=
 
 INSERT_CONNECTION(CRUD)=
   insert into connection (connection_id, name, description, login, password, port, computer_id, farm_id)
-  {= values (:connectionId^int^seq=SEQ_CONNECTION, :name, :description, :login, :password, :port, :computer.computerId, :connectionFarm.connectionFarmId) }
+  {= values (:id^int^seq=SEQ_CONNECTION, :name, :description, :login, :password, :port, :computer.id, :connectionFarm.id) }
 ;
 
 DELETE_CONNECTION_BY_ID(CRUD)=
@@ -51,5 +51,5 @@ DELETE_CONNECTION_BY_ID(CRUD)=
 UPDATE_CONNECTION(CRUD)=
   update connection 
   {=set name=:name, description=:description, login=:login, password=:password, port=:port}
-  {= where connection_id = :connectionId^int^notnull}
+  {= where connection_id = :id^int^notnull}
 ;

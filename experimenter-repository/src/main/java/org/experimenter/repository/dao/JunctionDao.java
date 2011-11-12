@@ -1,12 +1,12 @@
 package org.experimenter.repository.dao;
 
-import org.experimenter.repository.model.ConnectionFarm;
-import org.experimenter.repository.model.Experiment;
-import org.experimenter.repository.model.Input;
-import org.experimenter.repository.model.InputSet;
-import org.experimenter.repository.model.Project;
-import org.experimenter.repository.model.User;
-import org.experimenter.repository.model.UserGroup;
+import org.experimenter.repository.entity.ConnectionFarm;
+import org.experimenter.repository.entity.Experiment;
+import org.experimenter.repository.entity.Input;
+import org.experimenter.repository.entity.InputSet;
+import org.experimenter.repository.entity.Project;
+import org.experimenter.repository.entity.User;
+import org.experimenter.repository.entity.UserGroup;
 
 public interface JunctionDao {
     public void addUserToUserGroup(User user, UserGroup userGroup);

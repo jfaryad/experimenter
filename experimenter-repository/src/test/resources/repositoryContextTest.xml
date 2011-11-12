@@ -54,41 +54,17 @@
         <property name="sqlFactory" ref="sqlFactory" />
     </bean>
 
-    <bean id="userDao" class="org.experimenter.repository.dao.impl.UserDaoImpl" parent="dao">
-        <property name="tableName" value="USER" />
-    </bean>
-    <bean id="userGroupDao" class="org.experimenter.repository.dao.impl.UserGroupDaoImpl" parent="dao">
-        <property name="tableName" value="USERGROUP" />
-    </bean>
-    <bean id="applicationDao" class="org.experimenter.repository.dao.impl.ApplicationDaoImpl" parent="dao">
-        <property name="tableName" value="APPLICATION" />
-    </bean>
-    <bean id="computerDao" class="org.experimenter.repository.dao.impl.ComputerDaoImpl" parent="dao">
-        <property name="tableName" value="COMPUTER" />
-    </bean>
-    <bean id="connectionDao" class="org.experimenter.repository.dao.impl.ConnectionDaoImpl" parent="dao">
-        <property name="tableName" value="CONNECTION" />
-    </bean>
-    <bean id="connectionFarmDao" class="org.experimenter.repository.dao.impl.ConnectionFarmDaoImpl" parent="dao">
-        <property name="tableName" value="FARM" />
-    </bean>
-    <bean id="experimentDao" class="org.experimenter.repository.dao.impl.ExperimentDaoImpl" parent="dao">
-        <property name="tableName" value="EXPERIMENT" />
-    </bean>
-    <bean id="inputDao" class="org.experimenter.repository.dao.impl.InputDaoImpl" parent="dao">
-        <property name="tableName" value="INPUT" />
-    </bean>
-    <bean id="inputSetDao" class="org.experimenter.repository.dao.impl.InputSetDaoImpl" parent="dao">
-        <property name="tableName" value="INPUT_SET" />
-    </bean>
-    <bean id="problemTypeDao" class="org.experimenter.repository.dao.impl.ProblemTypeDaoImpl" parent="dao">
-        <property name="tableName" value="PROBLEM" />
-    </bean>
-    <bean id="programDao" class="org.experimenter.repository.dao.impl.ProgramDaoImpl" parent="dao">
-        <property name="tableName" value="PROGRAM" />
-    </bean>
-    <bean id="projectDao" class="org.experimenter.repository.dao.impl.ProjectDaoImpl" parent="dao">
-        <property name="tableName" value="PROJECT" />
-    </bean>
+    <bean id="userDao" class="org.experimenter.repository.dao.impl.UserDaoImpl" parent="dao" />
+    <bean id="userGroupDao" class="org.experimenter.repository.dao.impl.UserGroupDaoImpl" parent="dao" />
+    <bean id="applicationDao" class="org.experimenter.repository.dao.impl.ApplicationDaoImpl" parent="dao" />
+    <bean id="computerDao" class="org.experimenter.repository.dao.impl.ComputerDaoImpl" parent="dao" />
+    <bean id="connectionDao" class="org.experimenter.repository.dao.impl.ConnectionDaoImpl" parent="dao" />
+    <bean id="connectionFarmDao" class="org.experimenter.repository.dao.impl.ConnectionFarmDaoImpl" parent="dao" />
+    <bean id="experimentDao" class="org.experimenter.repository.dao.impl.ExperimentDaoImpl" parent="dao" />
+    <bean id="inputDao" class="org.experimenter.repository.dao.impl.InputDaoImpl" parent="dao" />
+    <bean id="inputSetDao" class="org.experimenter.repository.dao.impl.InputSetDaoImpl" parent="dao" />
+    <bean id="problemTypeDao" class="org.experimenter.repository.dao.impl.ProblemTypeDaoImpl" parent="dao" />
+    <bean id="programDao" class="org.experimenter.repository.dao.impl.ProgramDaoImpl" parent="dao" />
+    <bean id="projectDao" class="org.experimenter.repository.dao.impl.ProjectDaoImpl" parent="dao" />
     <bean id="junctionDao" class="org.experimenter.repository.dao.impl.JunctionDaoImpl" parent="dao" />
 </beans>

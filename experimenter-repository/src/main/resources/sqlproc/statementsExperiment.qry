@@ -2,12 +2,12 @@ SEQ_EXPERIMENT(OPT,HSQLDB)=call next value for SEQ_EXPERIMENT;
 
 GET_EXPERIMENT_BY_ID(CRUD)=
   select 
-  	e.experiment_id @experimentId, e.name @name, e.description @description, 
-  	a.application_id @application.applicationId^int^id, a.version @application.version, a.executable @application.executable, 
-  	p.program_id @application.program.programId^int^id, p.name @application.program.name, p.description @application.program.description, p.command @application.program.command,
-	proj.project_id @application.program.project.projectId^int^id, proj.name @application.program.project.name, proj.description @application.program.project.description, 
-  	ug.usergroup_id @application.program.project.userGroup.userGroupId^int^id, ug.name @application.program.project.userGroup.name,
-  	prob.problem_id @application.program.project.problem.problemId^int^id, prob.name @application.program.project.problem.name, prob.description @application.program.project.problem.description
+  	e.experiment_id @id, e.name @name, e.description @description, 
+  	a.application_id @application.id^int^id, a.version @application.version, a.executable @application.executable, 
+  	p.program_id @application.program.id^int^id, p.name @application.program.name, p.description @application.program.description, p.command @application.program.command,
+	proj.project_id @application.program.project.id^int^id, proj.name @application.program.project.name, proj.description @application.program.project.description, 
+  	ug.usergroup_id @application.program.project.userGroup.id^int^id, ug.name @application.program.project.userGroup.name,
+  	prob.problem_id @application.program.project.problem.id^int^id, prob.name @application.program.project.problem.name, prob.description @application.program.project.problem.description
   from experiment e
   inner join application a
   	on e.application_id = a.application_id
@@ -24,12 +24,12 @@ GET_EXPERIMENT_BY_ID(CRUD)=
 
 GET_EXPERIMENT_BY_CRITERIA(QRY)=
   select 
-  	e.experiment_id @experimentId, e.name @name, e.description @description, 
-  	a.application_id @application.applicationId^int^id, a.version @application.version, a.executable @application.executable, 
-  	p.program_id @application.program.programId^int^id, p.name @application.program.name, p.description @application.program.description, p.command @application.program.command,
-	proj.project_id @application.program.project.projectId^int^id, proj.name @application.program.project.name, proj.description @application.program.project.description, 
-  	ug.usergroup_id @application.program.project.userGroup.userGroupId^int^id, ug.name @application.program.project.userGroup.name,
-  	prob.problem_id @application.program.project.problem.problemId^int^id, prob.name @application.program.project.problem.name, prob.description @application.program.project.problem.description
+  	e.experiment_id @id, e.name @name, e.description @description, 
+  	a.application_id @application.id^int^id, a.version @application.version, a.executable @application.executable, 
+  	p.program_id @application.program.id^int^id, p.name @application.program.name, p.description @application.program.description, p.command @application.program.command,
+	proj.project_id @application.program.project.id^int^id, proj.name @application.program.project.name, proj.description @application.program.project.description, 
+  	ug.usergroup_id @application.program.project.userGroup.id^int^id, ug.name @application.program.project.userGroup.name,
+  	prob.problem_id @application.program.project.problem.id^int^id, prob.name @application.program.project.problem.name, prob.description @application.program.project.problem.description
   from experiment e
   inner join application a
   	on e.application_id = a.application_id
@@ -42,7 +42,7 @@ GET_EXPERIMENT_BY_CRITERIA(QRY)=
   inner join problem prob
   	on proj.problem_id = prob.problem_id  
   {= where 
-  	{& e.experiment_id = :experimentId}
+  	{& e.experiment_id = :id}
   	{& UPPER(e.name) like :+name}
   	{& UPPER(e.description) like :+description}
   }
@@ -50,7 +50,7 @@ GET_EXPERIMENT_BY_CRITERIA(QRY)=
 
 INSERT_EXPERIMENT(CRUD)=
   insert into experiment (experiment_id, name, description, project_id, application_id)
-  {= values (:experimentId^int^seq=SEQ_EXPERIMENT, :name, :description, :project.projectId, :application.applicationId) }
+  {= values (:id^int^seq=SEQ_EXPERIMENT, :name, :description, :project.id, :application.id) }
 ;
 
 DELETE_EXPERIMENT_BY_ID(CRUD)=
@@ -61,5 +61,5 @@ DELETE_EXPERIMENT_BY_ID(CRUD)=
 UPDATE_EXPERIMENT(CRUD)=
   update experiment 
   {=set name=:name, description=:description}
-  {= where experiment_id = :experimentId^int^notnull}
+  {= where experiment_id = :id^int^notnull}
 ;

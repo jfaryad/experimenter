@@ -1,18 +1,18 @@
 resolve references ON;
 database online OFF;
 
-pojo user org.experimenter.repository.model.User;
-pojo usergroup org.experimenter.repository.model.UserGroup;
-pojo computer org.experimenter.repository.model.Computer;
-pojo connection org.experimenter.repository.model.Connection;
-pojo farm org.experimenter.repository.model.ConnectionFarm;
-pojo project org.experimenter.repository.model.Project;
-pojo program org.experimenter.repository.model.Program;
-pojo application org.experimenter.repository.model.Application;
-pojo experiment org.experimenter.repository.model.Experiment;
-pojo input org.experimenter.repository.model.Input;
-pojo input_set org.experimenter.repository.model.InputSet;
-pojo problem org.experimenter.repository.model.ProblemType;
+pojo user org.experimenter.repository.entity.User;
+pojo usergroup org.experimenter.repository.entity.UserGroup;
+pojo computer org.experimenter.repository.entity.Computer;
+pojo connection org.experimenter.repository.entity.Connection;
+pojo farm org.experimenter.repository.entity.ConnectionFarm;
+pojo project org.experimenter.repository.entity.Project;
+pojo program org.experimenter.repository.entity.Program;
+pojo application org.experimenter.repository.entity.Application;
+pojo experiment org.experimenter.repository.entity.Experiment;
+pojo input org.experimenter.repository.entity.Input;
+pojo input_set org.experimenter.repository.entity.InputSet;
+pojo problem org.experimenter.repository.entity.ProblemType;
 pojo simple_form org.experimenter.repository.form.SimpleForm;
 pojo junction_form org.experimenter.repository.form.JunctionForm;
 

@@ -2,19 +2,19 @@ package org.experimenter.repository.service;
 
 import java.util.List;
 
+import org.experimenter.repository.entity.Application;
+import org.experimenter.repository.entity.Computer;
+import org.experimenter.repository.entity.Connection;
+import org.experimenter.repository.entity.ConnectionFarm;
+import org.experimenter.repository.entity.Experiment;
+import org.experimenter.repository.entity.Input;
+import org.experimenter.repository.entity.InputSet;
+import org.experimenter.repository.entity.ProblemType;
+import org.experimenter.repository.entity.Program;
+import org.experimenter.repository.entity.Project;
+import org.experimenter.repository.entity.User;
+import org.experimenter.repository.entity.UserGroup;
 import org.experimenter.repository.form.CriteriaForm;
-import org.experimenter.repository.model.Application;
-import org.experimenter.repository.model.Computer;
-import org.experimenter.repository.model.Connection;
-import org.experimenter.repository.model.ConnectionFarm;
-import org.experimenter.repository.model.Experiment;
-import org.experimenter.repository.model.Input;
-import org.experimenter.repository.model.InputSet;
-import org.experimenter.repository.model.ProblemType;
-import org.experimenter.repository.model.Program;
-import org.experimenter.repository.model.Project;
-import org.experimenter.repository.model.User;
-import org.experimenter.repository.model.UserGroup;
 
 public interface DaoService {
 

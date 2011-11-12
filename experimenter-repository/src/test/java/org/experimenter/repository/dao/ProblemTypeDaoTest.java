@@ -6,8 +6,8 @@ import static org.junit.Assert.assertNull;
 
 import java.util.List;
 
+import org.experimenter.repository.entity.ProblemType;
 import org.experimenter.repository.form.CriteriaForm;
-import org.experimenter.repository.model.ProblemType;
 import org.experimenter.repository.util.DaoTestHelper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -32,7 +32,7 @@ public class ProblemTypeDaoTest {
         problem.setName("3-sat");
         problem.setDescription("k-sat for 3 literals");
         problemTypeDao.insert(problem);
-        assertNotNull("problemId is null after insert", problem.getProblemId());
+        assertNotNull("problemId is null after insert", problem.getId());
         assertEquals("3-sat", problem.getName());
         assertEquals("k-sat for 3 literals", problem.getDescription());
     }

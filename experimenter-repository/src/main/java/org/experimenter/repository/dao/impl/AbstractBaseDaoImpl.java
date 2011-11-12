@@ -3,21 +3,19 @@ package org.experimenter.repository.dao.impl;
 import java.util.List;
 
 import org.experimenter.repository.dao.BaseDao;
+import org.experimenter.repository.entity.Entity;
 import org.experimenter.repository.form.CriteriaForm;
 import org.experimenter.repository.form.SimpleForm;
-import org.springframework.beans.factory.annotation.Required;
 import org.sqlproc.engine.SqlSession;
 
-public abstract class AbstractBaseDaoImpl<T> extends AbstractDao implements BaseDao<T> {
-
-    protected String tableName;
+public abstract class AbstractBaseDaoImpl<T extends Entity> extends AbstractDao implements BaseDao<T> {
 
     @Override
     public T findById(Integer id) {
         logger.debug(">> findById: " + id);
         SqlSession session = getSqlSession();
         String engineName = "GET_" + getTableName() + "_BY_ID";
-        T item = getCrudEngine(engineName).get(session, getModelClass(), new SimpleForm(id));
+        T item = getCrudEngine(engineName).get(session, getEntityClass(), new SimpleForm(id));
         logger.debug("<< findById: " + item);
         return item;
     }
@@ -27,7 +25,7 @@ public abstract class AbstractBaseDaoImpl<T> extends AbstractDao implements Base
         logger.debug(">> findByCriteria: " + criteria);
         SqlSession session = getSqlSession();
         String engineName = "GET_" + getTableName() + "_BY_CRITERIA";
-        List<T> items = getQueryEngine(engineName).query(session, getModelClass(), criteria.getModel(), null,
+        List<T> items = getQueryEngine(engineName).query(session, getEntityClass(), criteria.getModel(), null,
                 criteria.getOrder(), 0, criteria.getFirst(), criteria.getCount());
         logger.debug("<< findByCriteria: number of found entries:" + items.size());
         return items;
@@ -63,14 +61,7 @@ public abstract class AbstractBaseDaoImpl<T> extends AbstractDao implements Base
     }
 
     @Override
-    public abstract Class<T> getModelClass();
+    public abstract Class<T> getEntityClass();
 
-    @Required
-    public void setTableName(String tableName) {
-        this.tableName = tableName;
-    }
-
-    public String getTableName() {
-        return tableName;
-    }
+    public abstract String getTableName();
 }

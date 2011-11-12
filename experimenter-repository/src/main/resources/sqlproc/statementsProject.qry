@@ -2,9 +2,9 @@ SEQ_PROJECT(OPT,HSQLDB)=call next value for SEQ_PROJECT;
 
 GET_PROJECT_BY_ID(CRUD)=
   select 
-  	p.project_id @projectId, p.name @name, p.description @description, 
-  	ug.usergroup_id @userGroup.userGroupId^int^id, ug.name @userGroup.name,
-  	prob.problem_id @problem.problemId^int^id, prob.name @problem.name, prob.description @problem.description
+  	p.project_id @id, p.name @name, p.description @description, 
+  	ug.usergroup_id @userGroup.id^int^id, ug.name @userGroup.name,
+  	prob.problem_id @problem.id^int^id, prob.name @problem.name, prob.description @problem.description
   from project p 
   inner join usergroup ug 
   	on p.usergroup_id = ug.usergroup_id 
@@ -15,16 +15,16 @@ GET_PROJECT_BY_ID(CRUD)=
 
 GET_PROJECT_BY_CRITERIA(QRY)=
   select 
-  	p.project_id @projectId, p.name @name, p.description @description, 
-  	ug.usergroup_id @userGroup.userGroupId^int^id, ug.name @userGroup.name,
-  	prob.problem_id @problem.problemId^int^id, prob.name @problem.name, prob.description @problem.description
+  	p.project_id @id, p.name @name, p.description @description, 
+  	ug.usergroup_id @userGroup.id^int^id, ug.name @userGroup.name,
+  	prob.problem_id @problem.id^int^id, prob.name @problem.name, prob.description @problem.description
   from project p 
   inner join usergroup ug 
   	on p.usergroup_id = ug.usergroup_id 
   inner join problem prob
   	on p.problem_id = prob.problem_id
   {= where 
-  	{& p.project_id = :projectId}
+  	{& p.project_id = :id}
   	{& UPPER(p.name) like :+name}
   	{& UPPER(p.description) like :+description}
   }
@@ -32,7 +32,7 @@ GET_PROJECT_BY_CRITERIA(QRY)=
 
 INSERT_PROJECT(CRUD)=
   insert into project (project_id, name, description, usergroup_id, problem_id)
-  {= values (:projectId^int^seq=SEQ_PROJECT, :name, :description, :userGroup.userGroupId, :problem.problemId) }
+  {= values (:id^int^seq=SEQ_PROJECT, :name, :description, :userGroup.id, :problem.id) }
 ;
 
 DELETE_PROJECT_BY_ID(CRUD)=
@@ -43,5 +43,5 @@ DELETE_PROJECT_BY_ID(CRUD)=
 UPDATE_PROJECT(CRUD)=
   update project 
   {=set name=:name, description=:description}
-  {= where project_id = :projectId^int^notnull}
+  {= where project_id = :id^int^notnull}
 ;

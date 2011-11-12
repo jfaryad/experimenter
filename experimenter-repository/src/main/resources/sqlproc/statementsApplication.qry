@@ -2,11 +2,11 @@ SEQ_APPLICATION(OPT,HSQLDB)=call next value for SEQ_APPLICATION;
 
 GET_APPLICATION_BY_ID(CRUD)=
   select 
-  	a.application_id @applicationId, a.version @version, a.executable @executable, 
-  	p.program_id @program.programId^int^id, p.name @program.name, p.description @program.description, p.command @program.command,
-	proj.project_id @program.project.projectId^int^id, proj.name @program.project.name, proj.description @program.project.description, 
-  	ug.usergroup_id @program.project.userGroup.userGroupId^int^id, ug.name @program.project.userGroup.name,
-  	prob.problem_id @program.project.problem.problemId^int^id, prob.name @program.project.problem.name, prob.description @program.project.problem.description
+  	a.application_id @id, a.version @version, a.executable @executable,
+  	p.program_id @program.id^int^id, p.name @program.name, p.description @program.description, p.command @program.command,
+	proj.project_id @program.project.id^int^id, proj.name @program.project.name, proj.description @program.project.description, 
+  	ug.usergroup_id @program.project.userGroup.id^int^id, ug.name @program.project.userGroup.name,
+  	prob.problem_id @program.project.problem.id^int^id, prob.name @program.project.problem.name, prob.description @program.project.problem.description
   from application a
   inner join program p
   	on a.program_id = p.program_id
@@ -21,11 +21,11 @@ GET_APPLICATION_BY_ID(CRUD)=
 
 GET_APPLICATION_BY_CRITERIA(QRY)=
   select 
-  	a.application_id @applicationId, a.version @version, a.executable @executable, 
-  	p.program_id @program.programId^int^id, p.name @program.name, p.description @program.description, p.command @program.command,
-	proj.project_id @program.project.projectId^int^id, proj.name @program.project.name, proj.description @program.project.description, 
-  	ug.usergroup_id @program.project.userGroup.userGroupId^int^id, ug.name @program.project.userGroup.name,
-  	prob.problem_id @program.project.problem.problemId^int^id, prob.name @program.project.problem.name, prob.description @program.project.problem.description
+  	a.application_id @id, a.version @version, a.executable @executable, 
+  	p.program_id @program.id^int^id, p.name @program.name, p.description @program.description, p.command @program.command,
+	proj.project_id @program.project.id^int^id, proj.name @program.project.name, proj.description @program.project.description, 
+  	ug.usergroup_id @program.project.userGroup.id^int^id, ug.name @program.project.userGroup.name,
+  	prob.problem_id @program.project.problem.id^int^id, prob.name @program.project.problem.name, prob.description @program.project.problem.description
   from application a
   inner join program p
   	on a.program_id = p.program_id
@@ -36,7 +36,7 @@ GET_APPLICATION_BY_CRITERIA(QRY)=
   inner join problem prob
   	on proj.problem_id = prob.problem_id
   {= where 
-  	{& a.application_id = :applicationId}
+  	{& a.application_id = :id}
   	{& a.version = :+version}
   	{& UPPER(a.executable) like :+executable}
   }
@@ -44,7 +44,7 @@ GET_APPLICATION_BY_CRITERIA(QRY)=
 
 INSERT_APPLICATION(CRUD)=
   insert into application (application_id, version, executable, program_id)
-  {= values (:applicationId^int^seq=SEQ_APPLICATION, :version, :executable, :program.programId) }
+  {= values (:id^int^seq=SEQ_APPLICATION, :version, :executable, :program.id) }
 ;
 
 DELETE_APPLICATION_BY_ID(CRUD)=
@@ -55,5 +55,5 @@ DELETE_APPLICATION_BY_ID(CRUD)=
 UPDATE_APPLICATION(CRUD)=
   update application 
   {=set version=:version, executable=:executable}
-  {= where application_id = :applicationId^int^notnull}
+  {= where application_id = :id^int^notnull}
 ;

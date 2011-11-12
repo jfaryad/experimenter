@@ -6,9 +6,9 @@ import static org.junit.Assert.assertNull;
 
 import java.util.List;
 
+import org.experimenter.repository.entity.ConnectionFarm;
+import org.experimenter.repository.entity.UserGroup;
 import org.experimenter.repository.form.CriteriaForm;
-import org.experimenter.repository.model.ConnectionFarm;
-import org.experimenter.repository.model.UserGroup;
 import org.experimenter.repository.util.DaoTestHelper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -33,13 +33,13 @@ public class ConnectionFarmDaoTest {
         connectionFarm.setName("connectionFarm1");
         connectionFarm.setDescription("connectionFarm1");
         UserGroup group = new UserGroup();
-        group.setUserGroupId(1);
+        group.setId(1);
         connectionFarm.setUserGroup(group);
         connectionFarmDao.insert(connectionFarm);
-        assertNotNull("connectionFarmId is null after insert", connectionFarm.getConnectionFarmId());
+        assertNotNull("connectionFarmId is null after insert", connectionFarm.getId());
         assertEquals("connectionFarm1", connectionFarm.getName());
         assertEquals("connectionFarm1", connectionFarm.getDescription());
-        assertEquals(1, connectionFarm.getUserGroup().getUserGroupId().intValue());
+        assertEquals(1, connectionFarm.getUserGroup().getId().intValue());
     }
 
     @Test

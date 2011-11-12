@@ -6,9 +6,9 @@ import static org.junit.Assert.assertNull;
 
 import java.util.List;
 
+import org.experimenter.repository.entity.Program;
+import org.experimenter.repository.entity.Project;
 import org.experimenter.repository.form.CriteriaForm;
-import org.experimenter.repository.model.Program;
-import org.experimenter.repository.model.Project;
 import org.experimenter.repository.util.DaoTestHelper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -34,14 +34,14 @@ public class ProgramDaoTest {
         program.setDescription("the fastest solver ever");
         program.setCommand("sh solver.sh -i inputData");
         Project project = new Project();
-        project.setProjectId(1);
+        project.setId(1);
         program.setProject(project);
         programDao.insert(program);
-        assertNotNull("programId is null after insert", program.getProgramId());
+        assertNotNull("programId is null after insert", program.getId());
         assertEquals("SuperSolver", program.getName());
         assertEquals("the fastest solver ever", program.getDescription());
         assertEquals("sh solver.sh -i inputData", program.getCommand());
-        assertEquals(1, program.getProject().getProjectId().intValue());
+        assertEquals(1, program.getProject().getId().intValue());
     }
 
     @Test

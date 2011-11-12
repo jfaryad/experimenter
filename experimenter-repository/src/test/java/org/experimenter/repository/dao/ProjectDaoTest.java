@@ -6,10 +6,10 @@ import static org.junit.Assert.assertNull;
 
 import java.util.List;
 
+import org.experimenter.repository.entity.ProblemType;
+import org.experimenter.repository.entity.Project;
+import org.experimenter.repository.entity.UserGroup;
 import org.experimenter.repository.form.CriteriaForm;
-import org.experimenter.repository.model.ProblemType;
-import org.experimenter.repository.model.Project;
-import org.experimenter.repository.model.UserGroup;
 import org.experimenter.repository.util.DaoTestHelper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -34,19 +34,19 @@ public class ProjectDaoTest {
         project.setName("testProject");
         project.setDescription("project for testing");
         UserGroup group = new UserGroup();
-        group.setUserGroupId(1);
+        group.setId(1);
         ProblemType problem = new ProblemType();
-        problem.setProblemId(1);
+        problem.setId(1);
         project.setUserGroup(group);
         project.setProblem(problem);
         projectDao.insert(project);
-        assertNotNull("projectId is null after insert", project.getProjectId());
-        project = projectDao.findById(project.getProjectId());
+        assertNotNull("projectId is null after insert", project.getId());
+        project = projectDao.findById(project.getId());
         assertEquals("testProject", project.getName());
         assertEquals("project for testing", project.getDescription());
-        assertEquals(1, project.getUserGroup().getUserGroupId().intValue());
+        assertEquals(1, project.getUserGroup().getId().intValue());
         assertEquals("students", project.getUserGroup().getName());
-        assertEquals(1, project.getProblem().getProblemId().intValue());
+        assertEquals(1, project.getProblem().getId().intValue());
         assertEquals("3-SAT", project.getProblem().getName());
     }
 

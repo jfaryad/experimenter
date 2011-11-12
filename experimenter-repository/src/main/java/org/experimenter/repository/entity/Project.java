@@ -1,6 +1,5 @@
-package org.experimenter.repository.model;
+package org.experimenter.repository.entity;
 
-import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -9,10 +8,9 @@ import java.util.List;
  * @author Jakub Faryad (jfaryad@gmail.com)
  * 
  */
-public class Project implements Serializable {
+public class Project extends Entity {
 
     private static final long serialVersionUID = 1L;
-    private Integer projectId;
     private String name;
     private String description;
     private UserGroup userGroup;
@@ -20,14 +18,6 @@ public class Project implements Serializable {
     private List<Experiment> experiments;
     private List<Program> programs;
     private List<InputSet> inputSets;
-
-    public Integer getProjectId() {
-        return projectId;
-    }
-
-    public void setProjectId(Integer projectId) {
-        this.projectId = projectId;
-    }
 
     public String getName() {
         return name;
@@ -87,11 +77,8 @@ public class Project implements Serializable {
 
     @Override
     public String toString() {
-        return "Project[projectId: " + projectId + ", name: " + name + ", description: " + description
-                + ", userGroup: " + userGroup + ", problem: " + problem + ", programs.size: "
-                + ((programs != null) ? programs.size() : null) + ", experiments.size: "
-                + ((experiments != null) ? experiments.size() : null) + ", inputSets.size: "
-                + ((inputSets != null) ? inputSets.size() : null) + "]";
+        return "Project[id: " + getId() + ", name: " + name + ", description: " + description + ", userGroup: "
+                + userGroup + ", problem: " + problem + "]";
     }
 
 }

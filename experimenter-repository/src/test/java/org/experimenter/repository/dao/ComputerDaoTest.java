@@ -6,8 +6,8 @@ import static org.junit.Assert.assertNull;
 
 import java.util.List;
 
+import org.experimenter.repository.entity.Computer;
 import org.experimenter.repository.form.CriteriaForm;
-import org.experimenter.repository.model.Computer;
 import org.experimenter.repository.util.DaoTestHelper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -32,8 +32,8 @@ public class ComputerDaoTest {
         computer.setAddress("localhost");
         computer.setDescription("localhost");
         computerDao.insert(computer);
-        assertNotNull("computerId is null after insert", computer.getComputerId());
-        assertNotNull("setId is null after insert", computer.getComputerId());
+        assertNotNull("computerId is null after insert", computer.getId());
+        assertNotNull("setId is null after insert", computer.getId());
         assertEquals("localhost", computer.getAddress());
         assertEquals("localhost", computer.getDescription());
     }

@@ -6,10 +6,10 @@ import static org.junit.Assert.assertNull;
 
 import java.util.List;
 
+import org.experimenter.repository.entity.Computer;
+import org.experimenter.repository.entity.Connection;
+import org.experimenter.repository.entity.ConnectionFarm;
 import org.experimenter.repository.form.CriteriaForm;
-import org.experimenter.repository.model.Computer;
-import org.experimenter.repository.model.Connection;
-import org.experimenter.repository.model.ConnectionFarm;
 import org.experimenter.repository.util.DaoTestHelper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -37,20 +37,20 @@ public class ConnectionDaoTest {
         connection.setPassword("pepa123");
         connection.setPort((short) 221);
         Computer computer = new Computer();
-        computer.setComputerId(1);
+        computer.setId(1);
         connection.setComputer(computer);
         ConnectionFarm connectionFarm = new ConnectionFarm();
-        connectionFarm.setConnectionFarmId(1);
+        connectionFarm.setId(1);
         connection.setConnectionFarm(connectionFarm);
         connectionDao.insert(connection);
-        assertNotNull("connectionId is null after insert", connection.getConnectionId());
+        assertNotNull("connectionId is null after insert", connection.getId());
         assertEquals("lab1", connection.getName());
         assertEquals("lab1", connection.getDescription());
         assertEquals("pepa", connection.getLogin());
         assertEquals("pepa123", connection.getPassword());
         assertEquals(221, connection.getPort().intValue());
-        assertEquals(1, connection.getComputer().getComputerId().intValue());
-        assertEquals(1, connection.getConnectionFarm().getConnectionFarmId().intValue());
+        assertEquals(1, connection.getComputer().getId().intValue());
+        assertEquals(1, connection.getConnectionFarm().getId().intValue());
     }
 
     @Test

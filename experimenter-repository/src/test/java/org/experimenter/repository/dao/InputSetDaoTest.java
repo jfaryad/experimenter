@@ -6,9 +6,9 @@ import static org.junit.Assert.assertNull;
 
 import java.util.List;
 
+import org.experimenter.repository.entity.InputSet;
+import org.experimenter.repository.entity.ProblemType;
 import org.experimenter.repository.form.CriteriaForm;
-import org.experimenter.repository.model.InputSet;
-import org.experimenter.repository.model.ProblemType;
 import org.experimenter.repository.util.DaoTestHelper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -33,13 +33,13 @@ public class InputSetDaoTest {
         inputSet.setName("set1");
         inputSet.setDescription("basic input set");
         ProblemType problem = new ProblemType();
-        problem.setProblemId(1);
+        problem.setId(1);
         inputSet.setProblem(problem);
         inputSetDao.insert(inputSet);
-        assertNotNull("setId is null after insert", inputSet.getInputSetId());
+        assertNotNull("setId is null after insert", inputSet.getId());
         assertEquals("set1", inputSet.getName());
         assertEquals("basic input set", inputSet.getDescription());
-        assertEquals(1, inputSet.getProblem().getProblemId().intValue());
+        assertEquals(1, inputSet.getProblem().getId().intValue());
     }
 
     @Test

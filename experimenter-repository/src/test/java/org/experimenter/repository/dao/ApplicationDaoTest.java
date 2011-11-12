@@ -6,9 +6,9 @@ import static org.junit.Assert.assertNull;
 
 import java.util.List;
 
+import org.experimenter.repository.entity.Application;
+import org.experimenter.repository.entity.Program;
 import org.experimenter.repository.form.CriteriaForm;
-import org.experimenter.repository.model.Application;
-import org.experimenter.repository.model.Program;
 import org.experimenter.repository.util.DaoTestHelper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -33,13 +33,13 @@ public class ApplicationDaoTest {
         application.setVersion("1.2");
         application.setExecutable("run.sh");
         Program program = new Program();
-        program.setProgramId(1);
+        program.setId(1);
         application.setProgram(program);
         applicationDao.insert(application);
-        assertNotNull("applicationId is null after insert", application.getApplicationId());
+        assertNotNull("applicationId is null after insert", application.getId());
         assertEquals("1.2", application.getVersion());
         assertEquals("run.sh", application.getExecutable());
-        assertEquals(1, application.getProgram().getProgramId().intValue());
+        assertEquals(1, application.getProgram().getId().intValue());
     }
 
     @Test

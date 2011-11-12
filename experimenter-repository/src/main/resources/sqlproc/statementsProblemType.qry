@@ -1,16 +1,16 @@
 SEQ_PROBLEM(OPT,HSQLDB)=call next value for SEQ_PROBLEM;
 
 GET_PROBLEM_BY_ID(CRUD)=
-  select problem_id @problemId, name @name, description @description
+  select problem_id @id, name @name, description @description
   from problem p
   {= where problem_id = :integer^int^notnull}
 ;
 
 GET_PROBLEM_BY_CRITERIA(QRY)=
-  select problem_id @problemId, name @name, description @description
+  select problem_id @id, name @name, description @description
   from problem p
   {= where 
-  	{& problem_id = :problemId}
+  	{& problem_id = :id}
   	{& UPPER(p.name) like :+name}
   	{& UPPER(p.description) like :+description}
   }
@@ -18,7 +18,7 @@ GET_PROBLEM_BY_CRITERIA(QRY)=
 
 INSERT_PROBLEM(CRUD)=
   insert into problem (problem_id, name, description)
-  {= values (:problemId^int^seq=SEQ_PROBLEM, :name, :description) }
+  {= values (:id^int^seq=SEQ_PROBLEM, :name, :description) }
 ;
 
 DELETE_PROBLEM_BY_ID(CRUD)=
@@ -29,5 +29,5 @@ DELETE_PROBLEM_BY_ID(CRUD)=
 UPDATE_PROBLEM(CRUD)=
   update problem 
   {=set name=:name, description=:description}
-  {= where problem_id = :problemId^int^notnull}
+  {= where problem_id = :id^int^notnull}
 ;

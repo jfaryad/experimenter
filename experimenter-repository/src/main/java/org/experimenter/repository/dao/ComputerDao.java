@@ -1,6 +1,6 @@
 package org.experimenter.repository.dao;
 
-import org.experimenter.repository.model.Computer;
+import org.experimenter.repository.entity.Computer;
 
 public interface ComputerDao extends BaseDao<Computer> {
 

@@ -6,10 +6,10 @@ import static org.junit.Assert.assertNull;
 
 import java.util.List;
 
+import org.experimenter.repository.entity.Application;
+import org.experimenter.repository.entity.Experiment;
+import org.experimenter.repository.entity.Project;
 import org.experimenter.repository.form.CriteriaForm;
-import org.experimenter.repository.model.Application;
-import org.experimenter.repository.model.Experiment;
-import org.experimenter.repository.model.Project;
 import org.experimenter.repository.util.DaoTestHelper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -34,17 +34,17 @@ public class ExperimentDaoTest {
         experiment.setName("exp1");
         experiment.setDescription("exp1 - sat");
         Project project = new Project();
-        project.setProjectId(1);
+        project.setId(1);
         experiment.setProject(project);
         Application application = new Application();
-        application.setApplicationId(1);
+        application.setId(1);
         experiment.setApplication(application);
         experimentDao.insert(experiment);
-        assertNotNull("experimentId is null after insert", experiment.getExperimentId());
+        assertNotNull("experimentId is null after insert", experiment.getId());
         assertEquals("exp1", experiment.getName());
         assertEquals("exp1 - sat", experiment.getDescription());
-        assertEquals(1, experiment.getApplication().getApplicationId().intValue());
-        assertEquals(1, experiment.getProject().getProjectId().intValue());
+        assertEquals(1, experiment.getApplication().getId().intValue());
+        assertEquals(1, experiment.getProject().getId().intValue());
     }
 
     @Test

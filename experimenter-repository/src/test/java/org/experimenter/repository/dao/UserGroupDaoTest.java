@@ -6,8 +6,8 @@ import static org.junit.Assert.assertNull;
 
 import java.util.List;
 
+import org.experimenter.repository.entity.UserGroup;
 import org.experimenter.repository.form.CriteriaForm;
-import org.experimenter.repository.model.UserGroup;
 import org.experimenter.repository.util.DaoTestHelper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -31,8 +31,8 @@ public class UserGroupDaoTest {
         UserGroup userGroup = new UserGroup();
         userGroup.setName("geeks");
         userGroupDao.insert(userGroup);
-        assertNotNull("userGroupId is null after insert", userGroup.getUserGroupId());
-        userGroup = userGroupDao.findById(userGroup.getUserGroupId());
+        assertNotNull("userGroupId is null after insert", userGroup.getId());
+        userGroup = userGroupDao.findById(userGroup.getId());
         assertEquals("geeks", userGroup.getName());
     }
 
