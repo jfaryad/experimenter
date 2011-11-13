@@ -743,44 +743,184 @@ public interface DaoService {
      */
     public void removeConnectionFarmFromExperiment(ConnectionFarm connectionFarm, Experiment experiment);
 
+    /**
+     * Find all projects belonging to the given userGroup.
+     * 
+     * @param userGroup
+     *            the userGroup to search by
+     * @return a list of projects
+     */
     public List<Project> findProjectsByUserGroup(UserGroup userGroup);
 
+    /**
+     * Find all connectionFarms belonging to the given userGroup.
+     * 
+     * @param userGroup
+     *            the userGroup to search by
+     * @return a list of connectionFarms
+     */
     public List<ConnectionFarm> findConnectionFarmsByUserGroup(UserGroup userGroup);
 
+    /**
+     * Find all connections belonging to the given connectionFarm.
+     * 
+     * @param connectionFarm
+     *            the connectionFarm to search by
+     * @return a list of connections
+     */
     public List<Connection> findConnectionsByConnectionFarm(ConnectionFarm connectionFarm);
 
+    /**
+     * Find all connections belonging to the given computer.
+     * 
+     * @param computer
+     *            the computer to search by
+     * @return a list of connections
+     */
     public List<Connection> findConnectionsByComputer(Computer computer);
 
+    /**
+     * Find all programs belonging to the given project.
+     * 
+     * @param project
+     *            the project to search by
+     * @return a list of programs
+     */
     public List<Program> findProgramsByProject(Project project);
 
+    /**
+     * Find all applications belonging to the given program.
+     * 
+     * @param program
+     *            the program to search by
+     * @return a list of applications
+     */
     public List<Application> findApplicationsByProgram(Program program);
 
+    /**
+     * Find all experiments belonging to the given application.
+     * 
+     * @param application
+     *            the application to search by
+     * @return a list of experiments
+     */
     public List<Experiment> findExperimentsByApplication(Application application);
 
+    /**
+     * Find all projects belonging to the given problemType.
+     * 
+     * @param problemType
+     *            the problemType to search by
+     * @return a list of projects
+     */
     public List<Project> findProjectsByProblemType(ProblemType problemType);
 
+    /**
+     * Find all inputs belonging to the given problemType.
+     * 
+     * @param problemType
+     *            the problemType to search by
+     * @return a list of inputs
+     */
     public List<Input> findInputsByProblemType(ProblemType problemType);
 
+    /**
+     * Find all inputSets belonging to the given problemType.
+     * 
+     * @param problemType
+     *            the problemType to search by
+     * @return a list of inputSets
+     */
     public List<InputSet> findInputSetsByProblemType(ProblemType problemType);
 
+    /**
+     * Find all users belonging to the given userGroup.
+     * 
+     * @param userGroup
+     *            the userGroup to search by
+     * @return a list of users
+     */
     public List<User> findUsersByUserGroup(UserGroup userGroup);
 
+    /**
+     * Find all userGroups the user belongs to.
+     * 
+     * @param user
+     *            the user to search by
+     * @return a list of userGroups
+     */
     public List<UserGroup> findUserGroupsByUser(User user);
 
+    /**
+     * Find all conectionFarms belonging to the given experiment.
+     * 
+     * @param experiment
+     *            the experiment to search by
+     * @return a list of conectionFarms
+     */
     public List<ConnectionFarm> findConnectionFarmsByExperiment(Experiment experiment);
 
+    /**
+     * Find all experiments the connectionFarm belongs to.
+     * 
+     * @param connectionFarm
+     *            the connectionFarm to search by
+     * @return a list of experiments
+     */
     public List<Experiment> findExperimentsByConnectionFarm(ConnectionFarm connectionFarm);
 
+    /**
+     * Find all inputSets belonging to the given experiment.
+     * 
+     * @param experiment
+     *            the experiment to search by
+     * @return a list of inputSets
+     */
     public List<InputSet> findInputSetsByExperiment(Experiment experiment);
 
+    /**
+     * Find all experiments the inputSet belongs to.
+     * 
+     * @param inputSet
+     *            the inputSet to search by
+     * @return a list of experiments
+     */
     public List<Experiment> findExperimentsByInputSet(InputSet inputSet);
 
+    /**
+     * Find all inputSets the input belongs to.
+     * 
+     * @param input
+     *            the input to search by
+     * @return a list of inputSets
+     */
     public List<InputSet> findInputSetsByInput(Input input);
 
+    /**
+     * Find all inputs belonging to the given inputSet.
+     * 
+     * @param inputSet
+     *            the inputSet to search by
+     * @return a list of inputs
+     */
     public List<Input> findInputsByInputSet(InputSet inputSet);
 
+    /**
+     * Find all inputSets belonging to the given project.
+     * 
+     * @param project
+     *            the project to search by
+     * @return a list of inputSets
+     */
     public List<InputSet> findInputSetsByProject(Project project);
 
+    /**
+     * Find all projects the inputSet belongs to.
+     * 
+     * @param inputSet
+     *            the inputSet to search by
+     * @return a list of projects
+     */
     public List<Project> findProjectsByInputSet(InputSet inputSet);
 
 }

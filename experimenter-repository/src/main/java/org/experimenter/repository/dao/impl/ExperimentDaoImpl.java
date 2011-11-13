@@ -1,8 +1,13 @@
 package org.experimenter.repository.dao.impl;
 
+import java.util.List;
+
 import org.experimenter.repository.Constants;
 import org.experimenter.repository.dao.ExperimentDao;
+import org.experimenter.repository.entity.ConnectionFarm;
 import org.experimenter.repository.entity.Experiment;
+import org.experimenter.repository.entity.InputSet;
+import org.sqlproc.engine.SqlSession;
 
 public class ExperimentDaoImpl extends AbstractBaseDaoImpl<Experiment> implements ExperimentDao {
 
@@ -14,6 +19,27 @@ public class ExperimentDaoImpl extends AbstractBaseDaoImpl<Experiment> implement
     @Override
     public String getTableName() {
         return Constants.EXPERIMENT;
+    }
+
+    @Override
+    public List<Experiment> findExperimentsByConnectionFarm(ConnectionFarm connectionFarm) {
+        logger.debug(">> findExperimentsByConnectionFarm: " + connectionFarm);
+        SqlSession session = getSqlSession();
+        String engineName = "FIND_EXPERIMENT_BY_FARM";
+        List<Experiment> experiments = getQueryEngine(engineName).query(session, getEntityClass(),
+                connectionFarm.getId());
+        logger.debug("<< findExperimentsByConnectionFarm: number of experiments found:" + experiments.size());
+        return experiments;
+    }
+
+    @Override
+    public List<Experiment> findExperimentsByInputSet(InputSet inputSet) {
+        logger.debug(">> findExperimentsByInputSet: " + inputSet);
+        SqlSession session = getSqlSession();
+        String engineName = "FIND_EXPERIMENT_BY_INPUT_SET";
+        List<Experiment> experiments = getQueryEngine(engineName).query(session, getEntityClass(), inputSet.getId());
+        logger.debug("<< findExperimentsByInputSet: number of experiments found:" + experiments.size());
+        return experiments;
     }
 
 }
