@@ -82,7 +82,21 @@ public interface ConnectionFarmService {
      */
     public void removeConnectionFarmFromExperiment(ConnectionFarm connectionFarm, Experiment experiment);
 
+    /**
+     * Find all connectionFarms belonging to the given userGroup.
+     * 
+     * @param userGroup
+     *            the userGroup to search by
+     * @return a list of connectionFarms
+     */
     public List<ConnectionFarm> findConnectionFarmsByUserGroup(UserGroup userGroup);
 
+    /**
+     * Find all conectionFarms belonging to the given experiment.
+     * 
+     * @param experiment
+     *            the experiment to search by
+     * @return a list of conectionFarms
+     */
     public List<ConnectionFarm> findConnectionFarmsByExperiment(Experiment experiment);
 }

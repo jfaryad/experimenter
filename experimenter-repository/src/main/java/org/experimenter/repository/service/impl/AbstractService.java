@@ -18,10 +18,11 @@ import org.experimenter.repository.service.ProgramService;
 import org.experimenter.repository.service.ProjectService;
 import org.experimenter.repository.service.UserGroupService;
 import org.experimenter.repository.service.UserService;
+import org.springframework.beans.factory.annotation.Required;
 
-public abstract class AbstractService<T extends Entity> {
+public abstract class AbstractService<T extends Entity, D extends BaseDao<T>> {
 
-    protected BaseDao<T> baseDao;
+    protected D baseDao;
     protected JunctionDao junctionDao;
 
     protected ApplicationService applicationService;
@@ -31,7 +32,7 @@ public abstract class AbstractService<T extends Entity> {
     protected UserService userService;
     protected UserGroupService userGroupService;
     protected ProjectService projectService;
-    protected ProgramService origramService;
+    protected ProgramService programService;
     protected ExperimentService experimentService;
     protected InputService inputService;
     protected InputSetService inputSetService;
@@ -80,5 +81,87 @@ public abstract class AbstractService<T extends Entity> {
     }
 
     protected abstract void deleteDependencies(T entity);
+
+    protected void checkNotNull(Entity entity) {
+        if (entity == null) {
+            throw new IllegalArgumentException("The entity to search by must not be null.");
+        }
+    }
+
+    protected void checkIdNotNull(Entity entity) {
+        if (entity == null || entity.getId() == null) {
+            throw new IllegalArgumentException("The entity to search by or it's id must not be null.");
+        }
+    }
+
+    @Required
+    public void setBaseDao(D baseDao) {
+        this.baseDao = baseDao;
+    }
+
+    @Required
+    public void setJunctionDao(JunctionDao junctionDao) {
+        this.junctionDao = junctionDao;
+    }
+
+    @Required
+    public void setApplicationService(ApplicationService applicationService) {
+        this.applicationService = applicationService;
+    }
+
+    @Required
+    public void setComputerService(ComputerService computerService) {
+        this.computerService = computerService;
+    }
+
+    @Required
+    public void setConnectionService(ConnectionService connectionService) {
+        this.connectionService = connectionService;
+    }
+
+    @Required
+    public void setConnectionFarmService(ConnectionFarmService connectionFarmService) {
+        this.connectionFarmService = connectionFarmService;
+    }
+
+    @Required
+    public void setUserService(UserService userService) {
+        this.userService = userService;
+    }
+
+    @Required
+    public void setUserGroupService(UserGroupService userGroupService) {
+        this.userGroupService = userGroupService;
+    }
+
+    @Required
+    public void setProjectService(ProjectService projectService) {
+        this.projectService = projectService;
+    }
+
+    @Required
+    public void setProgramService(ProgramService programService) {
+        this.programService = programService;
+    }
+
+    @Required
+    public void setExperimentService(ExperimentService experimentService) {
+        this.experimentService = experimentService;
+    }
+
+    @Required
+    public void setInputService(InputService inputService) {
+        this.inputService = inputService;
+    }
+
+    @Required
+    public void setInputSetService(InputSetService inputSetService) {
+        this.inputSetService = inputSetService;
+    }
+
+    @Required
+    public void setProblemTypeService(ProblemTypeService problemTypeService) {
+        this.problemTypeService = problemTypeService;
+    }
 
 }

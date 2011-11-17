@@ -48,6 +48,54 @@ GET_EXPERIMENT_BY_CRITERIA(QRY)=
   }
 ;
 
+FIND_EXPERIMENT_BY_FARM(QRY)=
+  select 
+  	e.experiment_id @id, e.name @name, e.description @description, 
+  	a.application_id @application.id^int^id, a.version @application.version, a.executable @application.executable, 
+  	p.program_id @application.program.id^int^id, p.name @application.program.name, p.description @application.program.description, p.command @application.program.command,
+	proj.project_id @application.program.project.id^int^id, proj.name @application.program.project.name, proj.description @application.program.project.description, 
+  	ug.usergroup_id @application.program.project.userGroup.id^int^id, ug.name @application.program.project.userGroup.name,
+  	prob.problem_id @application.program.project.problem.id^int^id, prob.name @application.program.project.problem.name, prob.description @application.program.project.problem.description
+  from experiment e
+  inner join experiment_farm ef
+  	on e.experiment_id = ef.experiment_id
+  inner join application a
+  	on e.application_id = a.application_id
+  inner join program p
+  	on a.program_id = p.program_id
+  inner join project proj 
+  	on p.project_id = proj.project_id 
+  inner join usergroup ug 
+  	on proj.usergroup_id = ug.usergroup_id 
+  inner join problem prob
+  	on proj.problem_id = prob.problem_id  
+  {= where ef.farm_id = :integer^int^notnull}
+;
+
+FIND_EXPERIMENT_BY_INPUT_SET(QRY)=
+  select 
+  	e.experiment_id @id, e.name @name, e.description @description, 
+  	a.application_id @application.id^int^id, a.version @application.version, a.executable @application.executable, 
+  	p.program_id @application.program.id^int^id, p.name @application.program.name, p.description @application.program.description, p.command @application.program.command,
+	proj.project_id @application.program.project.id^int^id, proj.name @application.program.project.name, proj.description @application.program.project.description, 
+  	ug.usergroup_id @application.program.project.userGroup.id^int^id, ug.name @application.program.project.userGroup.name,
+  	prob.problem_id @application.program.project.problem.id^int^id, prob.name @application.program.project.problem.name, prob.description @application.program.project.problem.description
+  from experiment e
+  inner join experiment_input_set eis
+  	on e.experiment_id = eis.experiment_id
+  inner join application a
+  	on e.application_id = a.application_id
+  inner join program p
+  	on a.program_id = p.program_id
+  inner join project proj 
+  	on p.project_id = proj.project_id 
+  inner join usergroup ug 
+  	on proj.usergroup_id = ug.usergroup_id 
+  inner join problem prob
+  	on proj.problem_id = prob.problem_id  
+  {= where eis.input_set_id = :integer^int^notnull}
+;
+
 INSERT_EXPERIMENT(CRUD)=
   insert into experiment (experiment_id, name, description, project_id, application_id)
   {= values (:id^int^seq=SEQ_EXPERIMENT, :name, :description, :project.id, :application.id) }

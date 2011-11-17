@@ -46,6 +46,11 @@ ident GET_USER_BY_CRITERIA user;
 col GET_USER_BY_CRITERIA user;
 dbcol GET_USER_BY_CRITERIA user prefix u;
 
+ident FIND_USERS_BY_USERGROUP simple_form;
+col FIND_USERS_BY_USERGROUP user;
+dbcol FIND_USERS_BY_USERGROUP user prefix u;
+dbcol FIND_USERS_BY_USERGROUP user_usergroup prefix ug;
+
 ident DELETE_USER_BY_ID simple_form;
 
 ident UPDATE_USER user;
@@ -63,6 +68,11 @@ dbcol GET_USERGROUP_BY_ID usergroup prefix u;
 ident GET_USERGROUP_BY_CRITERIA usergroup;
 col GET_USERGROUP_BY_CRITERIA usergroup;
 dbcol GET_USERGROUP_BY_CRITERIA usergroup prefix u;
+
+ident FIND_USERGROUP_BY_USER simple_form;
+col FIND_USERGROUP_BY_USER usergroup;
+dbcol FIND_USERGROUP_BY_USER usergroup prefix u;
+dbcol FIND_USERGROUP_BY_USER user_usergroup prefix ug;
 
 ident DELETE_USERGROUP_BY_ID simple_form;
 
@@ -113,10 +123,17 @@ dbcol INSERT_FARM farm;
 ident GET_FARM_BY_ID simple_form;
 col GET_FARM_BY_ID farm;
 dbcol GET_FARM_BY_ID farm prefix f;
+dbcol GET_FARM_BY_ID usergroup prefix ug;
 
 ident GET_FARM_BY_CRITERIA farm;
 col GET_FARM_BY_CRITERIA farm;
 dbcol GET_FARM_BY_CRITERIA farm prefix f;
+
+ident FIND_FARM_BY_EXPERIMENT simple_form;
+col FIND_FARM_BY_EXPERIMENT farm;
+dbcol FIND_FARM_BY_EXPERIMENT farm prefix f;
+dbcol FIND_FARM_BY_EXPERIMENT usergroup prefix ug;
+dbcol FIND_FARM_BY_EXPERIMENT experiment_farm prefix ef;
 
 ident DELETE_FARM_BY_ID simple_form;
 
@@ -135,6 +152,11 @@ dbcol GET_PROJECT_BY_ID project prefix p;
 ident GET_PROJECT_BY_CRITERIA project;
 col GET_PROJECT_BY_CRITERIA project;
 dbcol GET_PROJECT_BY_CRITERIA project prefix p;
+
+ident FIND_PROJECT_BY_INPUT_SET simple_form;
+col FIND_PROJECT_BY_INPUT_SET project;
+dbcol FIND_PROJECT_BY_INPUT_SET project prefix p;
+dbcol FIND_PROJECT_BY_INPUT_SET project_input_set prefix pis;
 
 ident DELETE_PROJECT_BY_ID simple_form;
 
@@ -208,6 +230,12 @@ ident GET_INPUT_BY_CRITERIA input;
 col GET_INPUT_BY_CRITERIA input;
 dbcol GET_INPUT_BY_CRITERIA input prefix i;
 
+ident FIND_INPUT_BY_INPUT_SET simple_form;
+col FIND_INPUT_BY_INPUT_SET input;
+dbcol FIND_INPUT_BY_INPUT_SET input prefix i;
+dbcol FIND_INPUT_BY_INPUT_SET input_input_set prefix iis;
+
+
 ident DELETE_INPUT_BY_ID simple_form;
 
 ident UPDATE_INPUT input;
@@ -226,6 +254,21 @@ ident GET_INPUT_SET_BY_CRITERIA input_set;
 col GET_INPUT_SET_BY_CRITERIA input_set;
 dbcol GET_INPUT_SET_BY_CRITERIA input_set prefix i;
 
+ident FIND_INPUT_SET_BY_EXPERIMENT simple_form;
+col FIND_INPUT_SET_BY_EXPERIMENT input_set;
+dbcol FIND_INPUT_SET_BY_EXPERIMENT input_set prefix i;
+dbcol FIND_INPUT_SET_BY_EXPERIMENT experiment_input_set prefix eis;
+
+ident FIND_INPUT_SET_BY_INPUT simple_form;
+col FIND_INPUT_SET_BY_INPUT input_set;
+dbcol FIND_INPUT_SET_BY_INPUT input_set prefix i;
+dbcol FIND_INPUT_SET_BY_INPUT input_input_set prefix iis;
+
+ident FIND_INPUT_SET_BY_PROJECT simple_form;
+col FIND_INPUT_SET_BY_PROJECT input_set;
+dbcol FIND_INPUT_SET_BY_PROJECT input_set prefix i;
+dbcol FIND_INPUT_SET_BY_PROJECT project_input_set prefix pis;
+
 ident DELETE_INPUT_SET_BY_ID simple_form;
 
 ident UPDATE_INPUT_SET input_set;
@@ -239,10 +282,32 @@ dbcol INSERT_EXPERIMENT experiment;
 ident GET_EXPERIMENT_BY_ID simple_form;
 col GET_EXPERIMENT_BY_ID experiment;
 dbcol GET_EXPERIMENT_BY_ID experiment prefix e;
+dbcol GET_EXPERIMENT_BY_ID application prefix a;
+dbcol GET_EXPERIMENT_BY_ID program prefix p;
+dbcol GET_EXPERIMENT_BY_ID project prefix proj;
+dbcol GET_EXPERIMENT_BY_ID usergroup prefix ug;
 
 ident GET_EXPERIMENT_BY_CRITERIA experiment;
 col GET_EXPERIMENT_BY_CRITERIA experiment;
 dbcol GET_EXPERIMENT_BY_CRITERIA experiment prefix e;
+
+ident FIND_EXPERIMENT_BY_FARM simple_form;
+col FIND_EXPERIMENT_BY_FARM experiment;
+dbcol FIND_EXPERIMENT_BY_FARM experiment prefix e;
+dbcol FIND_EXPERIMENT_BY_FARM application prefix a;
+dbcol FIND_EXPERIMENT_BY_FARM program prefix p;
+dbcol FIND_EXPERIMENT_BY_FARM project prefix proj;
+dbcol FIND_EXPERIMENT_BY_FARM usergroup prefix ug;
+dbcol FIND_EXPERIMENT_BY_FARM experiment_farm prefix ef;
+
+ident FIND_EXPERIMENT_BY_INPUT_SET simple_form;
+col FIND_EXPERIMENT_BY_INPUT_SET experiment;
+dbcol FIND_EXPERIMENT_BY_INPUT_SET experiment prefix e;
+dbcol FIND_EXPERIMENT_BY_INPUT_SET application prefix a;
+dbcol FIND_EXPERIMENT_BY_INPUT_SET program prefix p;
+dbcol FIND_EXPERIMENT_BY_INPUT_SET project prefix proj;
+dbcol FIND_EXPERIMENT_BY_INPUT_SET usergroup prefix ug;
+dbcol FIND_EXPERIMENT_BY_INPUT_SET experiment_input_set prefix eis;
 
 ident DELETE_EXPERIMENT_BY_ID simple_form;
 

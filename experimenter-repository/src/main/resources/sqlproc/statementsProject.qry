@@ -10,7 +10,7 @@ GET_PROJECT_BY_ID(CRUD)=
   	on p.usergroup_id = ug.usergroup_id 
   inner join problem prob
   	on p.problem_id = prob.problem_id
-  {= where project_id = :integer^int^notnull}
+  {= where p.project_id = :integer^int^notnull}
 ;
 
 GET_PROJECT_BY_CRITERIA(QRY)=
@@ -31,6 +31,22 @@ GET_PROJECT_BY_CRITERIA(QRY)=
   	{& p.problem_id = :problem.id}
   }
 ;
+
+FIND_PROJECT_BY_INPUT_SET(QRY)=
+  select 
+  	p.project_id @id, p.name @name, p.description @description, 
+  	ug.usergroup_id @userGroup.id^int^id, ug.name @userGroup.name,
+  	prob.problem_id @problem.id^int^id, prob.name @problem.name, prob.description @problem.description
+  from project p 
+  inner join project_input_set pis
+  	on p.project_id = pis.project_id
+  inner join usergroup ug 
+  	on p.usergroup_id = ug.usergroup_id 
+  inner join problem prob
+  	on p.problem_id = prob.problem_id
+  {= where pis.input_set_id = :integer^int^notnull}
+;
+
 
 INSERT_PROJECT(CRUD)=
   insert into project (project_id, name, description, usergroup_id, problem_id)

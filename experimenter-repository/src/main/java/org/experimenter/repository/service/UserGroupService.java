@@ -60,6 +60,13 @@ public interface UserGroupService {
      */
     public void delete(List<UserGroup> userGroups);
 
+    /**
+     * Find all userGroups the user belongs to.
+     * 
+     * @param user
+     *            the user to search by
+     * @return a list of userGroups
+     */
     public List<UserGroup> findUserGroupsByUser(User user);
 
 }

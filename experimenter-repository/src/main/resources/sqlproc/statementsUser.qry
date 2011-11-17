@@ -18,6 +18,14 @@ GET_USER_BY_CRITERIA(QRY)=
   }
 ;
 
+FIND_USERS_BY_USERGROUP(QRY)=
+  select u.user_id @id, u.name @name, u.surname @surname, u.login @login, u.password @password, u.email @email
+  from user u
+  inner join user_usergroup ug
+  	on u.user_id = ug.user_id
+  {= where ug.usergroup_id = :integer^int^notnull}
+;
+
 INSERT_USER(CRUD)=
   insert into user (user_id, name, surname, login, password, email)
   {= values (:id^int^seq=SEQ_USER, :name, :surname, :login, :password, :email) }

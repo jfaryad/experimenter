@@ -10,8 +10,18 @@ GET_USERGROUP_BY_CRITERIA(QRY)=
   select usergroup_id @id, name @name
   from usergroup u
   {= where 
-  	{& user_id = :id}
+  	{& usergroup_id = :id}
   	{& UPPER(u.name) like :+name}
+  }
+;
+
+FIND_USERGROUP_BY_USER(QRY)=
+  select u.usergroup_id @id, u.name @name
+  from usergroup u
+  inner join user_usergroup ug
+  	on u.usergroup_id = ug.usergroup_id
+  {= where 
+  	{& ug.user_id = :integer^int^notnull}
   }
 ;
 

@@ -61,8 +61,22 @@ public interface ConnectionService {
      */
     public void delete(List<Connection> connections);
 
+    /**
+     * Find all connections belonging to the given connectionFarm.
+     * 
+     * @param connectionFarm
+     *            the connectionFarm to search by
+     * @return a list of connections
+     */
     public List<Connection> findConnectionsByConnectionFarm(ConnectionFarm connectionFarm);
 
+    /**
+     * Find all connections belonging to the given computer.
+     * 
+     * @param computer
+     *            the computer to search by
+     * @return a list of connections
+     */
     public List<Connection> findConnectionsByComputer(Computer computer);
 
 }

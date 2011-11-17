@@ -60,6 +60,13 @@ public interface ApplicationService {
      */
     public void delete(List<Application> applications);
 
+    /**
+     * Find all applications belonging to the given program.
+     * 
+     * @param program
+     *            the program to search by
+     * @return a list of applications
+     */
     public List<Application> findApplicationsByProgram(Program program);
 
 }

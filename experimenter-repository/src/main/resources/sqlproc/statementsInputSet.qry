@@ -25,6 +25,42 @@ GET_INPUT_SET_BY_CRITERIA(QRY)=
   }
 ;
 
+FIND_INPUT_SET_BY_EXPERIMENT(QRY)=
+  select 
+  	i.input_set_id @id, i.name @name, i.description @description, 
+	prob.problem_id @problem.id^int^id, prob.name @problem.name, prob.description @problem.description
+  from input_set i
+  inner join experiment_input_set eis
+  	on i.input_set_id = eis.input_set_id
+  inner join problem prob
+  	on i.problem_id = prob.problem_id
+  {= where eis.experiment_id = :integer^int^notnull}
+;
+
+FIND_INPUT_SET_BY_INPUT(QRY)=
+  select 
+  	i.input_set_id @id, i.name @name, i.description @description, 
+	prob.problem_id @problem.id^int^id, prob.name @problem.name, prob.description @problem.description
+  from input_set i
+  inner join input_input_set iis
+  	on i.input_set_id = iis.input_set_id
+  inner join problem prob
+  	on i.problem_id = prob.problem_id
+  {= where iis.input_id = :integer^int^notnull}
+;
+
+FIND_INPUT_SET_BY_PROJECT(QRY)=
+  select 
+  	i.input_set_id @id, i.name @name, i.description @description, 
+	prob.problem_id @problem.id^int^id, prob.name @problem.name, prob.description @problem.description
+  from input_set i
+  inner join project_input_set pis
+  	on i.input_set_id = pis.input_set_id
+  inner join problem prob
+  	on i.problem_id = prob.problem_id
+  {= where is.project_id = :integer^int^notnull}
+;
+
 INSERT_INPUT_SET(CRUD)=
   insert into input_set (input_set_id, name, description, problem_id)
   {= values (:id^int^seq=SEQ_INPUT_SET, :name, :description, :problem.id) }

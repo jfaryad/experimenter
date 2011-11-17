@@ -74,11 +74,18 @@ public interface UserService {
      * Removes a {@link User} from a {@link UserGroup}
      * 
      * @param user
-     *            the user to removew
+     *            the user to remove
      * @param userGroup
      *            the group to remove from
      */
     public void removeUserFromUserGroup(User user, UserGroup userGroup);
 
+    /**
+     * Find all users belonging to the given userGroup.
+     * 
+     * @param userGroup
+     *            the userGroup to search by
+     * @return a list of users
+     */
     public List<User> findUsersByUserGroup(UserGroup userGroup);
 }

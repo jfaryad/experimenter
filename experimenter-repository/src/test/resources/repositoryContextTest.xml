@@ -67,4 +67,59 @@
     <bean id="programDao" class="org.experimenter.repository.dao.impl.ProgramDaoImpl" parent="dao" />
     <bean id="projectDao" class="org.experimenter.repository.dao.impl.ProjectDaoImpl" parent="dao" />
     <bean id="junctionDao" class="org.experimenter.repository.dao.impl.JunctionDaoImpl" parent="dao" />
+    
+    <!-- ========= DAO Service ========= -->
+
+    <bean id="service" class="org.experimenter.repository.service.impl.AbstractService" abstract="true">
+        <property name="applicationService" ref="applicationService" />
+        <property name="computerService" ref="computerService" />
+        <property name="connectionService" ref="connectionService" />
+        <property name="connectionFarmService" ref="connectionFarmService" />
+        <property name="experimentService" ref="experimentService" />
+        <property name="inputService" ref="inputService" />
+        <property name="inputSetService" ref="inputSetService" />
+        <property name="problemTypeService" ref="problemTypeService" />
+        <property name="programService" ref="programService" />
+        <property name="projectService" ref="projectService" />
+        <property name="userService" ref="userService" />
+        <property name="userGroupService" ref="userGroupService" />
+        <property name="junctionDao" ref="junctionDao" />
+    </bean>
+
+    <bean id="userService" class="org.experimenter.repository.service.impl.UserServiceImpl" parent="service" >
+    	<property name="baseDao" ref="userDao" />
+    </bean>
+    <bean id="userGroupService" class="org.experimenter.repository.service.impl.UserGroupServiceImpl" parent="service" >
+    	<property name="baseDao" ref="userGroupDao" />
+    </bean>
+    <bean id="applicationService" class="org.experimenter.repository.service.impl.ApplicationServiceImpl" parent="service" >
+    	<property name="baseDao" ref="applicationDao" />
+    </bean>
+    <bean id="computerService" class="org.experimenter.repository.service.impl.ComputerServiceImpl" parent="service" >
+    	<property name="baseDao" ref="computerDao" />
+    </bean>
+    <bean id="connectionService" class="org.experimenter.repository.service.impl.ConnectionServiceImpl" parent="service" >
+    	<property name="baseDao" ref="connectionDao" />
+    </bean>
+    <bean id="connectionFarmService" class="org.experimenter.repository.service.impl.ConnectionFarmServiceImpl" parent="service" >
+    	<property name="baseDao" ref="connectionFarmDao" />
+    </bean>
+    <bean id="experimentService" class="org.experimenter.repository.service.impl.ExperimentServiceImpl" parent="service" >
+    	<property name="baseDao" ref="experimentDao" />
+    </bean>
+    <bean id="inputService" class="org.experimenter.repository.service.impl.InputServiceImpl" parent="service" >
+    	<property name="baseDao" ref="inputDao" />
+    </bean>
+    <bean id="inputSetService" class="org.experimenter.repository.service.impl.InputSetServiceImpl" parent="service" >
+    	<property name="baseDao" ref="inputSetDao" />
+    </bean>
+    <bean id="problemTypeService" class="org.experimenter.repository.service.impl.ProblemTypeServiceImpl" parent="service" >
+    	<property name="baseDao" ref="problemTypeDao" />
+    </bean>
+    <bean id="programService" class="org.experimenter.repository.service.impl.ProgramServiceImpl" parent="service" >
+    	<property name="baseDao" ref="programDao" />
+    </bean>
+    <bean id="projectService" class="org.experimenter.repository.service.impl.ProjectServiceImpl" parent="service" >
+    	<property name="baseDao" ref="projectDao" />
+    </bean>
 </beans>

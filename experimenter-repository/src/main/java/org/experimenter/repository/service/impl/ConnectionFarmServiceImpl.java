@@ -2,12 +2,15 @@ package org.experimenter.repository.service.impl;
 
 import java.util.List;
 
+import org.experimenter.repository.dao.ConnectionFarmDao;
 import org.experimenter.repository.entity.ConnectionFarm;
 import org.experimenter.repository.entity.Experiment;
 import org.experimenter.repository.entity.UserGroup;
+import org.experimenter.repository.form.CriteriaForm;
 import org.experimenter.repository.service.ConnectionFarmService;
 
-public class ConnectionFarmServiceImpl extends AbstractService<ConnectionFarm> implements ConnectionFarmService {
+public class ConnectionFarmServiceImpl extends AbstractService<ConnectionFarm, ConnectionFarmDao> implements
+        ConnectionFarmService {
 
     @Override
     protected void deleteDependencies(ConnectionFarm connectionFarm) {
@@ -27,14 +30,17 @@ public class ConnectionFarmServiceImpl extends AbstractService<ConnectionFarm> i
 
     @Override
     public List<ConnectionFarm> findConnectionFarmsByUserGroup(UserGroup userGroup) {
-        // TODO Auto-generated method stub
-        return null;
+        checkIdNotNull(userGroup);
+        ConnectionFarm connectionFarm = new ConnectionFarm();
+        connectionFarm.setUserGroup(userGroup);
+        CriteriaForm<ConnectionFarm> criteria = new CriteriaForm<ConnectionFarm>(connectionFarm);
+        return baseDao.findByCriteria(criteria);
     }
 
     @Override
     public List<ConnectionFarm> findConnectionFarmsByExperiment(Experiment experiment) {
-        // TODO Auto-generated method stub
-        return null;
+        checkIdNotNull(experiment);
+        return baseDao.findConnectionFarmsByExperiment(experiment);
     }
 
 }

@@ -25,6 +25,18 @@ GET_INPUT_BY_CRITERIA(QRY)=
   }
 ;
 
+FIND_INPUT_BY_INPUT_SET(QRY)=
+  select 
+  	i.input_id @id, i.name @name, i.data @data,
+  	prob.problem_id @problem.id^int^id, prob.name @problem.name, prob.description @problem.description
+  from input i
+  inner join input_input_set iis
+  	on i.input_id = iis.input_id
+  inner join problem prob
+  	on i.problem_id = prob.problem_id
+  {= where iis.input_set_id = :integer^int^notnull}
+;
+
 INSERT_INPUT(CRUD)=
   insert into input (input_id, name, data, problem_id)
   {= values (:id^int^seq=SEQ_INPUT, :name, :data, :problem.id) }

@@ -62,9 +62,30 @@ public interface ExperimentService {
      */
     public void delete(List<Experiment> experiments);
 
+    /**
+     * Find all experiments belonging to the given application.
+     * 
+     * @param application
+     *            the application to search by
+     * @return a list of experiments
+     */
     public List<Experiment> findExperimentsByApplication(Application application);
 
+    /**
+     * Find all experiments the connectionFarm belongs to.
+     * 
+     * @param connectionFarm
+     *            the connectionFarm to search by
+     * @return a list of experiments
+     */
     public List<Experiment> findExperimentsByConnectionFarm(ConnectionFarm connectionFarm);
 
+    /**
+     * Find all experiments the inputSet belongs to.
+     * 
+     * @param inputSet
+     *            the inputSet to search by
+     * @return a list of experiments
+     */
     public List<Experiment> findExperimentsByInputSet(InputSet inputSet);
 }

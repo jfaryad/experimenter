@@ -62,10 +62,31 @@ public interface ProjectService {
      */
     public void delete(List<Project> projects);
 
+    /**
+     * Find all projects belonging to the given userGroup.
+     * 
+     * @param userGroup
+     *            the userGroup to search by
+     * @return a list of projects
+     */
     public List<Project> findProjectsByUserGroup(UserGroup userGroup);
 
+    /**
+     * Find all projects belonging to the given problemType.
+     * 
+     * @param problemType
+     *            the problemType to search by
+     * @return a list of projects
+     */
     public List<Project> findProjectsByProblemType(ProblemType problemType);
 
+    /**
+     * Find all projects the inputSet belongs to.
+     * 
+     * @param inputSet
+     *            the inputSet to search by
+     * @return a list of projects
+     */
     public List<Project> findProjectsByInputSet(InputSet inputSet);
 
 }

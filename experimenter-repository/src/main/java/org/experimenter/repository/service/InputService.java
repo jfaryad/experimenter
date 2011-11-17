@@ -81,8 +81,22 @@ public interface InputService {
      */
     public void removeInputFromInputSet(Input input, InputSet inputSet);
 
+    /**
+     * Find all inputs belonging to the given problemType.
+     * 
+     * @param problemType
+     *            the problemType to search by
+     * @return a list of inputs
+     */
     public List<Input> findInputsByProblemType(ProblemType problemType);
 
+    /**
+     * Find all inputs belonging to the given inputSet.
+     * 
+     * @param inputSet
+     *            the inputSet to search by
+     * @return a list of inputs
+     */
     public List<Input> findInputsByInputSet(InputSet inputSet);
 
 }

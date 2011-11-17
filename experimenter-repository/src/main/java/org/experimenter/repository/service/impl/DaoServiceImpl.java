@@ -764,62 +764,75 @@ public class DaoServiceImpl implements DaoService {
 
     @Override
     public List<User> findUsersByUserGroup(UserGroup userGroup) {
-        // TODO Auto-generated method stub
-        return null;
+        if (userGroup == null || userGroup.getId() == null)
+            throw new IllegalArgumentException("The userGroup to search by must not be null or have a null identifier.");
+        return userDao.findUsersByUserGroup(userGroup);
     }
 
     @Override
     public List<UserGroup> findUserGroupsByUser(User user) {
-        // TODO Auto-generated method stub
-        return null;
+        if (user == null || user.getId() == null)
+            throw new IllegalArgumentException("The user to search by must not be null or have a null identifier.");
+        return userGroupDao.findUserGroupsByUser(user);
     }
 
     @Override
     public List<ConnectionFarm> findConnectionFarmsByExperiment(Experiment experiment) {
-        // TODO Auto-generated method stub
-        return null;
+        if (experiment == null || experiment.getId() == null)
+            throw new IllegalArgumentException(
+                    "The experiment to search by must not be null or have a null identifier.");
+        return connectionFarmDao.findConnectionFarmsByExperiment(experiment);
     }
 
     @Override
     public List<Experiment> findExperimentsByConnectionFarm(ConnectionFarm connectionFarm) {
-        // TODO Auto-generated method stub
-        return null;
+        if (connectionFarm == null || connectionFarm.getId() == null)
+            throw new IllegalArgumentException(
+                    "The connectionFarm to search by must not be null or have a null identifier.");
+        return experimentDao.findExperimentsByConnectionFarm(connectionFarm);
     }
 
     @Override
     public List<InputSet> findInputSetsByExperiment(Experiment experiment) {
-        // TODO Auto-generated method stub
-        return null;
+        if (experiment == null || experiment.getId() == null)
+            throw new IllegalArgumentException(
+                    "The experiment to search by must not be null or have a null identifier.");
+        return inputSetDao.findInputSetsByExperiment(experiment);
     }
 
     @Override
     public List<Experiment> findExperimentsByInputSet(InputSet inputSet) {
-        // TODO Auto-generated method stub
-        return null;
+        if (inputSet == null || inputSet.getId() == null)
+            throw new IllegalArgumentException("The inputSet to search by must not be null or have a null identifier.");
+        return experimentDao.findExperimentsByInputSet(inputSet);
     }
 
     @Override
     public List<InputSet> findInputSetsByInput(Input input) {
-        // TODO Auto-generated method stub
-        return null;
+        if (input == null || input.getId() == null)
+            throw new IllegalArgumentException("The input to search by must not be null or have a null identifier.");
+        return inputSetDao.findInputSetsByInput(input);
     }
 
     @Override
     public List<Input> findInputsByInputSet(InputSet inputSet) {
-        // TODO Auto-generated method stub
-        return null;
+        if (inputSet == null || inputSet.getId() == null)
+            throw new IllegalArgumentException("The inputSet to search by must not be null or have a null identifier.");
+        return inputDao.findInputsByInputSet(inputSet);
     }
 
     @Override
     public List<InputSet> findInputSetsByProject(Project project) {
-        // TODO Auto-generated method stub
-        return null;
+        if (project == null || project.getId() == null)
+            throw new IllegalArgumentException("The project to search by must not be null or have a null identifier.");
+        return inputSetDao.findInputSetsByProject(project);
     }
 
     @Override
     public List<Project> findProjectsByInputSet(InputSet inputSet) {
-        // TODO Auto-generated method stub
-        return null;
+        if (inputSet == null || inputSet.getId() == null)
+            throw new IllegalArgumentException("The inputSet to search by must not be null or have a null identifier.");
+        return projectDao.findProjectsByInputSet(inputSet);
     }
 
     @Required

@@ -2,11 +2,12 @@ package org.experimenter.repository.service.impl;
 
 import java.util.List;
 
+import org.experimenter.repository.dao.UserDao;
 import org.experimenter.repository.entity.User;
 import org.experimenter.repository.entity.UserGroup;
 import org.experimenter.repository.service.UserService;
 
-public class UserServiceImpl extends AbstractService<User> implements UserService {
+public class UserServiceImpl extends AbstractService<User, UserDao> implements UserService {
 
     @Override
     protected void deleteDependencies(User user) {
@@ -25,8 +26,8 @@ public class UserServiceImpl extends AbstractService<User> implements UserServic
 
     @Override
     public List<User> findUsersByUserGroup(UserGroup userGroup) {
-        // TODO Auto-generated method stub
-        return null;
+        checkIdNotNull(userGroup);
+        return baseDao.findUsersByUserGroup(userGroup);
     }
 
 }

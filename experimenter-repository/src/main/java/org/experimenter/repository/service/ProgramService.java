@@ -3,6 +3,7 @@ package org.experimenter.repository.service;
 import java.util.List;
 
 import org.experimenter.repository.entity.Program;
+import org.experimenter.repository.entity.Project;
 import org.experimenter.repository.form.CriteriaForm;
 
 public interface ProgramService {
@@ -58,5 +59,14 @@ public interface ProgramService {
      *            the programs to delete
      */
     public void delete(List<Program> programs);
+
+    /**
+     * Find all programs belonging to the given project.
+     * 
+     * @param project
+     *            the project to search by
+     * @return a list of programs
+     */
+    public List<Program> findProgramsByProject(Project project);
 
 }

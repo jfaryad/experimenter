@@ -103,12 +103,40 @@ public interface InputSetService {
      */
     public void removeInputSetFromProject(InputSet inputSet, Project project);
 
+    /**
+     * Find all inputSets belonging to the given problemType.
+     * 
+     * @param problemType
+     *            the problemType to search by
+     * @return a list of inputSets
+     */
     public List<InputSet> findInputSetsByProblemType(ProblemType problemType);
 
+    /**
+     * Find all inputSets belonging to the given experiment.
+     * 
+     * @param experiment
+     *            the experiment to search by
+     * @return a list of inputSets
+     */
     public List<InputSet> findInputSetsByExperiment(Experiment experiment);
 
+    /**
+     * Find all inputSets the input belongs to.
+     * 
+     * @param input
+     *            the input to search by
+     * @return a list of inputSets
+     */
     public List<InputSet> findInputSetsByInput(Input input);
 
+    /**
+     * Find all inputSets belonging to the given project.
+     * 
+     * @param project
+     *            the project to search by
+     * @return a list of inputSets
+     */
     public List<InputSet> findInputSetsByProject(Project project);
 
 }
