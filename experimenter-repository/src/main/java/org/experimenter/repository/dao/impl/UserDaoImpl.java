@@ -6,6 +6,7 @@ import org.experimenter.repository.Constants;
 import org.experimenter.repository.dao.UserDao;
 import org.experimenter.repository.entity.User;
 import org.experimenter.repository.entity.UserGroup;
+import org.experimenter.repository.form.SimpleForm;
 import org.sqlproc.engine.SqlSession;
 
 public class UserDaoImpl extends AbstractBaseDaoImpl<User> implements UserDao {
@@ -25,7 +26,8 @@ public class UserDaoImpl extends AbstractBaseDaoImpl<User> implements UserDao {
         logger.debug(">> findUsersByUserGroup: " + userGroup);
         SqlSession session = getSqlSession();
         String engineName = "FIND_USER_BY_USERGROUP";
-        List<User> users = getQueryEngine(engineName).query(session, getEntityClass(), userGroup.getId());
+        List<User> users = getQueryEngine(engineName).query(session, getEntityClass(),
+                new SimpleForm(userGroup.getId()));
         logger.debug("<< findUsersByUserGroup: number of users found:" + users.size());
         return users;
     }

@@ -8,6 +8,7 @@ import org.experimenter.repository.entity.Experiment;
 import org.experimenter.repository.entity.Input;
 import org.experimenter.repository.entity.InputSet;
 import org.experimenter.repository.entity.Project;
+import org.experimenter.repository.form.SimpleForm;
 import org.sqlproc.engine.SqlSession;
 
 public class InputSetDaoImpl extends AbstractBaseDaoImpl<InputSet> implements InputSetDao {
@@ -27,7 +28,8 @@ public class InputSetDaoImpl extends AbstractBaseDaoImpl<InputSet> implements In
         logger.debug(">> findInputSetsByExperiment: " + experiment);
         SqlSession session = getSqlSession();
         String engineName = "FIND_INPUT_SET_BY_EXPERIMENT";
-        List<InputSet> inputSets = getQueryEngine(engineName).query(session, getEntityClass(), experiment.getId());
+        List<InputSet> inputSets = getQueryEngine(engineName).query(session, getEntityClass(),
+                new SimpleForm(experiment.getId()));
         logger.debug("<< findInputSetsByExperiment: number of inputSets found:" + inputSets.size());
         return inputSets;
     }
@@ -37,7 +39,8 @@ public class InputSetDaoImpl extends AbstractBaseDaoImpl<InputSet> implements In
         logger.debug(">> findInputSetsByInput: " + input);
         SqlSession session = getSqlSession();
         String engineName = "FIND_INPUT_SET_BY_INPUT";
-        List<InputSet> inputSets = getQueryEngine(engineName).query(session, getEntityClass(), input.getId());
+        List<InputSet> inputSets = getQueryEngine(engineName).query(session, getEntityClass(),
+                new SimpleForm(input.getId()));
         logger.debug("<< findInputSetsByInput: number of inputSets found:" + inputSets.size());
         return inputSets;
     }
@@ -47,7 +50,8 @@ public class InputSetDaoImpl extends AbstractBaseDaoImpl<InputSet> implements In
         logger.debug(">> findInputSetsByProject: " + project);
         SqlSession session = getSqlSession();
         String engineName = "FIND_INPUT_SET_BY_PROJECT";
-        List<InputSet> inputSets = getQueryEngine(engineName).query(session, getEntityClass(), project.getId());
+        List<InputSet> inputSets = getQueryEngine(engineName).query(session, getEntityClass(),
+                new SimpleForm(project.getId()));
         logger.debug("<< findInputSetsByProject: number of inputSets found:" + inputSets.size());
         return inputSets;
     }

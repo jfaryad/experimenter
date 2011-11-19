@@ -6,11 +6,14 @@
 INSERT INTO USER (user_id, name,surname,login,password,email) VALUES (1, 'Tester1','Exists','tester1','heslo','tester1@experimenter.org');
 INSERT INTO USER (user_id, name,surname,login,password,email) VALUES (2, 'Tester2','Delete','tester2','heslo','tester2@experimenter.org');
 INSERT INTO USER (user_id, name,surname,login,password,email) VALUES (3, 'Tester3','Update','tester3','heslo','tester3@experimenter.org');
+INSERT INTO USER (user_id, name,surname,login,password,email) VALUES (4, 'Tester4','AddToGroup','tester4','heslo','tester4@experimenter.org');
+INSERT INTO USER (user_id, name,surname,login,password,email) VALUES (5, 'Tester4','RemoveFromGroup','tester5','heslo','tester5@experimenter.org');
 
 INSERT INTO USERGROUP (usergroup_id,name) VALUES (1,'students');
 INSERT INTO USERGROUP (usergroup_id,name) VALUES (2,'teachers');
 INSERT INTO USERGROUP (usergroup_id,name) VALUES (3,'public');
 INSERT INTO USERGROUP (usergroup_id,name) VALUES (4,'delete-group');
+INSERT INTO USERGROUP (usergroup_id,name) VALUES (5,'remove-group');
 
 INSERT INTO COMPUTER (computer_id,address,description) VALUES (1,'u-pl20','computer u-pl20, test exists');
 INSERT INTO COMPUTER (computer_id,address,description) VALUES (2,'u-pl21','computer u-pl21, test delete');
@@ -24,8 +27,8 @@ INSERT INTO CONNECTION (connection_id,name,login,password,description,computer_i
 INSERT INTO CONNECTION (connection_id,name,login,password,description,computer_id,port,farm_id) VALUES (2,'myConn2delete','comp','comp123','my test connection 2',3,221,1);
 INSERT INTO CONNECTION (connection_id,name,login,password,description,computer_id,port,farm_id) VALUES (3,'myConn3update','upd','upd123','my test connection 3',1,221,1);
 
--- INSERT INTO USER_USERGROUP (USER_USERGROUP_id,user_id,usergroup_id) VALUES
--- ('','','');
+INSERT INTO USER_USERGROUP (user_id,usergroup_id) VALUES ('1','1');
+INSERT INTO USER_USERGROUP (user_id,usergroup_id) VALUES ('5','5');
 
 INSERT INTO PROBLEM (problem_id,name,description) VALUES (1,'3-SAT','you know what it means');
 INSERT INTO PROBLEM (problem_id,name,description) VALUES (2,'4-SAT','yeah, right...');

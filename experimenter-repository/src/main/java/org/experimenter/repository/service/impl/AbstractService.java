@@ -73,10 +73,10 @@ public abstract class AbstractService<T extends Entity, D extends BaseDao<T>> {
         baseDao.deleteById(entity.getId());
     }
 
-    public void delete(List<T> entitys) {
-        if (entitys == null)
+    public void delete(List<T> entities) {
+        if (entities == null)
             throw new IllegalArgumentException("The list of entities to delete must not be null.");
-        for (T entity : entitys)
+        for (T entity : entities)
             delete(entity);
     }
 
@@ -84,13 +84,13 @@ public abstract class AbstractService<T extends Entity, D extends BaseDao<T>> {
 
     protected void checkNotNull(Entity entity) {
         if (entity == null) {
-            throw new IllegalArgumentException("The entity to search by must not be null.");
+            throw new IllegalArgumentException("The by must not be null.");
         }
     }
 
     protected void checkIdNotNull(Entity entity) {
         if (entity == null || entity.getId() == null) {
-            throw new IllegalArgumentException("The entity to search by or it's id must not be null.");
+            throw new IllegalArgumentException("The entity or it's id must not be null.");
         }
     }
 

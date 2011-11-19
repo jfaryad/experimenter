@@ -18,7 +18,7 @@ GET_USER_BY_CRITERIA(QRY)=
   }
 ;
 
-FIND_USERS_BY_USERGROUP(QRY)=
+FIND_USER_BY_USERGROUP(QRY)=
   select u.user_id @id, u.name @name, u.surname @surname, u.login @login, u.password @password, u.email @email
   from user u
   inner join user_usergroup ug

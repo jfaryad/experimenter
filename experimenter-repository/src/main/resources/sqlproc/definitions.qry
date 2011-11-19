@@ -1,4 +1,4 @@
-resolve references ON;
+resolve references OFF;
 database online OFF;
 
 pojo user org.experimenter.repository.entity.User;
@@ -46,10 +46,10 @@ ident GET_USER_BY_CRITERIA user;
 col GET_USER_BY_CRITERIA user;
 dbcol GET_USER_BY_CRITERIA user prefix u;
 
-ident FIND_USERS_BY_USERGROUP simple_form;
-col FIND_USERS_BY_USERGROUP user;
-dbcol FIND_USERS_BY_USERGROUP user prefix u;
-dbcol FIND_USERS_BY_USERGROUP user_usergroup prefix ug;
+ident FIND_USER_BY_USERGROUP simple_form;
+col FIND_USER_BY_USERGROUP user;
+dbcol FIND_USER_BY_USERGROUP user prefix u;
+dbcol FIND_USER_BY_USERGROUP user_usergroup prefix ug;
 
 ident DELETE_USER_BY_ID simple_form;
 

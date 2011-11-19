@@ -16,11 +16,15 @@ public class UserServiceImpl extends AbstractService<User, UserDao> implements U
 
     @Override
     public void addUserToUserGroup(User user, UserGroup userGroup) {
+        checkIdNotNull(user);
+        checkIdNotNull(userGroup);
         junctionDao.addUserToUserGroup(user, userGroup);
     }
 
     @Override
     public void removeUserFromUserGroup(User user, UserGroup userGroup) {
+        checkIdNotNull(user);
+        checkIdNotNull(userGroup);
         junctionDao.removeUserFromUserGroup(user, userGroup);
     }
 
