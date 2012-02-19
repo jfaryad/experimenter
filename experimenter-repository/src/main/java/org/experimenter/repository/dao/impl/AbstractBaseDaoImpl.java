@@ -5,63 +5,122 @@ import java.util.List;
 import org.experimenter.repository.dao.BaseDao;
 import org.experimenter.repository.entity.Entity;
 import org.experimenter.repository.form.CriteriaForm;
-import org.experimenter.repository.form.SimpleForm;
-import org.sqlproc.engine.SqlSession;
+import org.hibernate.Criteria;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Example;
+import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Order;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Required;
 
-public abstract class AbstractBaseDaoImpl<T extends Entity> extends AbstractDao implements BaseDao<T> {
+public abstract class AbstractBaseDaoImpl<T extends Entity> implements BaseDao<T> {
 
+    protected final Logger logger = LoggerFactory.getLogger(getClass());
+    protected SessionFactory sessionFactory;
+
+    @SuppressWarnings("unchecked")
     @Override
     public T findById(Integer id) {
-        logger.debug(">> findById: " + id);
-        SqlSession session = getSqlSession();
-        String engineName = "GET_" + getTableName() + "_BY_ID";
-        T item = getCrudEngine(engineName).get(session, getEntityClass(), new SimpleForm(id));
-        logger.debug("<< findById: " + item);
+        if (logger.isDebugEnabled())
+            logger.debug(">> findById: " + id);
+
+        T item = (T) getSession().get(getEntityClass(), id);
+
+        if (logger.isDebugEnabled())
+            logger.debug("<< findById: " + item);
         return item;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public List<T> findByCriteria(CriteriaForm<T> criteria) {
-        logger.debug(">> findByCriteria: " + criteria);
-        SqlSession session = getSqlSession();
-        String engineName = "GET_" + getTableName() + "_BY_CRITERIA";
-        List<T> items = getQueryEngine(engineName).query(session, getEntityClass(), criteria.getModel(), null,
-                criteria.getOrder(), 0, criteria.getFirst(), criteria.getCount());
-        logger.debug("<< findByCriteria: number of found entries:" + items.size());
+        if (logger.isDebugEnabled())
+            logger.debug(">> findByCriteria: " + criteria);
+
+        Criteria crit = getSession().createCriteria(getEntityClass()).add(
+                Example.create(criteria.getEntity()).enableLike(MatchMode.EXACT));
+        for (Order order : criteria.getOrder())
+            crit.addOrder(order);
+        if (criteria.getFirst() != null)
+            crit.setFirstResult(criteria.getFirst());
+        if (criteria.getCount() != null)
+            crit.setMaxResults(criteria.getCount());
+        List<T> items = crit.list();
+
+        if (logger.isDebugEnabled())
+            logger.debug("<< findByCriteria: number of found entries:" + items.size());
         return items;
     }
 
     @Override
     public void insert(T item) {
-        logger.debug(">> insert: " + item);
-        SqlSession session = getSqlSession();
-        String engineName = "INSERT_" + getTableName();
-        getCrudEngine(engineName).insert(session, item);
-        logger.debug("<< insert: " + item);
+        if (logger.isDebugEnabled())
+            logger.debug(">> insert: " + item);
+
+        getSession().save(item);
+
+        if (logger.isDebugEnabled())
+            logger.debug("<< insert: " + item);
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public void deleteById(Integer id) {
+        if (logger.isDebugEnabled())
+            logger.debug(">> deleteById: " + id);
+
+        T item = (T) getSession().load(getEntityClass(), id);
+        delete(item);
+
+        if (logger.isDebugEnabled())
+            logger.debug("<< deleteById");
+        return;
     }
 
     @Override
-    public void deleteById(Integer id) {
-        logger.debug(">> deleteById: " + id);
-        SqlSession session = getSqlSession();
-        String engineName = "DELETE_" + getTableName() + "_BY_ID";
-        int deletedRows = getCrudEngine(engineName).delete(session, new SimpleForm(id));
-        logger.debug("<< deleteById: number of rows deleted: " + deletedRows);
+    public void delete(T item) {
+        if (logger.isDebugEnabled())
+            logger.debug(">> delete: " + item);
+
+        removeFromAssociations(item);
+        getSession().delete(item);
+
+        if (logger.isDebugEnabled())
+            logger.debug("<< delete");
         return;
     }
 
     @Override
     public void update(T item) {
-        logger.debug("update: " + item);
-        SqlSession session = getSqlSession();
-        String engineName = "UPDATE_" + getTableName();
-        int updatedRows = getCrudEngine(engineName).update(session, item);
-        logger.debug("update: number of rows updated: " + updatedRows);
+        if (logger.isDebugEnabled())
+            logger.debug(">> update: " + item);
+
+        getSession().update(item);
+
+        if (logger.isDebugEnabled())
+            logger.debug("<< update");
         return;
     }
+
+    /**
+     * Removes the entity from all associations in other entities to keep them up to date, when the item is deleted.
+     * 
+     * @param item
+     *            the entity, that is going to be deleted
+     */
+    protected abstract void removeFromAssociations(T item);
 
     @Override
     public abstract Class<T> getEntityClass();
 
-    public abstract String getTableName();
+    protected Session getSession() {
+        return this.sessionFactory.getCurrentSession();
+    }
+
+    @Required
+    public void setSessionFactory(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
 }

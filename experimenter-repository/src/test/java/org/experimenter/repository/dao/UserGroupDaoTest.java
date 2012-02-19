@@ -10,21 +10,15 @@ import org.experimenter.repository.entity.UserGroup;
 import org.experimenter.repository.form.CriteriaForm;
 import org.experimenter.repository.util.DaoTestHelper;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.transaction.TransactionConfiguration;
-import org.springframework.transaction.annotation.Transactional;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { "classpath:repositoryContextTest.xml" })
-@Transactional
-@TransactionConfiguration(defaultRollback = true)
-public class UserGroupDaoTest {
+public class UserGroupDaoTest extends AbstractDaoTest {
 
     @Autowired
     private UserGroupDao userGroupDao;
+
+    @Autowired
+    private UserDao userDao;
 
     @Test
     public void insertUserGroup() {
@@ -41,13 +35,19 @@ public class UserGroupDaoTest {
         Integer id = 1;
         UserGroup userGroup = userGroupDao.findById(id);
         DaoTestHelper.checkUserGroup1(userGroup);
+        DaoTestHelper.checkUser1(userGroup.getUsers().get(0));
+        DaoTestHelper.checkConnectionFarm1(userGroup.getConnectionFarms().get(0));
     }
 
     @Test
     public void deleteUserGroup() {
         Integer id = 4;
+        assertEquals(1, userDao.findById(2).getUserGroups().size());
         userGroupDao.deleteById(id);
+        flush();
         assertNull("userGroup was not deleted", userGroupDao.findById(id));
+        assertEquals(0, userDao.findById(2).getUserGroups().size());
+
     }
 
     @Test

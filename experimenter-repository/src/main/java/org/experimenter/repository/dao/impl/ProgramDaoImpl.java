@@ -1,6 +1,5 @@
 package org.experimenter.repository.dao.impl;
 
-import org.experimenter.repository.Constants;
 import org.experimenter.repository.dao.ProgramDao;
 import org.experimenter.repository.entity.Program;
 
@@ -12,8 +11,8 @@ public class ProgramDaoImpl extends AbstractBaseDaoImpl<Program> implements Prog
     }
 
     @Override
-    public String getTableName() {
-        return Constants.PROGRAM;
+    public void removeFromAssociations(Program program) {
+        program.getProject().getPrograms().remove(program);
     }
 
 }

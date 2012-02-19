@@ -11,21 +11,8 @@ import org.experimenter.repository.entity.Project;
 import org.experimenter.repository.form.CriteriaForm;
 import org.experimenter.repository.util.DaoTestHelper;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.transaction.TransactionConfiguration;
-import org.springframework.transaction.annotation.Transactional;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { "classpath:repositoryContextTest.xml" })
-@Transactional
-@TransactionConfiguration(defaultRollback = true)
-public class ProgramDaoTest {
-
-    @Autowired
-    private ProgramDao programDao;
+public class ProgramDaoTest extends AbstractDaoTest {
 
     @Test
     public void insertProgram() {
@@ -55,6 +42,7 @@ public class ProgramDaoTest {
     public void deleteProgram() {
         Integer id = 3;
         programDao.deleteById(id);
+        flush();
         assertNull("program was not deleted", programDao.findById(id));
     }
 

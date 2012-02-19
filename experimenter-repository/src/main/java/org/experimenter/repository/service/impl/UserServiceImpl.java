@@ -11,27 +11,29 @@ public class UserServiceImpl extends AbstractService<User, UserDao> implements U
 
     @Override
     protected void deleteDependencies(User user) {
-        junctionDao.removeUserFromUserGroup(user, null);
+        // nothing to do
     }
 
     @Override
     public void addUserToUserGroup(User user, UserGroup userGroup) {
         checkIdNotNull(user);
         checkIdNotNull(userGroup);
-        junctionDao.addUserToUserGroup(user, userGroup);
+        user.getUserGroups().add(userGroup);
+        userGroup.getUsers().add(user);
     }
 
     @Override
     public void removeUserFromUserGroup(User user, UserGroup userGroup) {
         checkIdNotNull(user);
         checkIdNotNull(userGroup);
-        junctionDao.removeUserFromUserGroup(user, userGroup);
+        user.getUserGroups().remove(userGroup);
+        userGroup.getUsers().remove(user);
     }
 
     @Override
     public List<User> findUsersByUserGroup(UserGroup userGroup) {
         checkIdNotNull(userGroup);
-        return baseDao.findUsersByUserGroup(userGroup);
+        return userGroup.getUsers();
     }
 
 }

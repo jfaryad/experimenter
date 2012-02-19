@@ -2,12 +2,10 @@ package org.experimenter.repository.dao.impl;
 
 import java.util.List;
 
-import org.experimenter.repository.Constants;
 import org.experimenter.repository.dao.ConnectionFarmDao;
 import org.experimenter.repository.entity.ConnectionFarm;
 import org.experimenter.repository.entity.Experiment;
-import org.experimenter.repository.form.SimpleForm;
-import org.sqlproc.engine.SqlSession;
+import org.experimenter.repository.entity.UserGroup;
 
 public class ConnectionFarmDaoImpl extends AbstractBaseDaoImpl<ConnectionFarm> implements ConnectionFarmDao {
 
@@ -17,18 +15,37 @@ public class ConnectionFarmDaoImpl extends AbstractBaseDaoImpl<ConnectionFarm> i
     }
 
     @Override
-    public String getTableName() {
-        return Constants.CONNECTION_FARM;
+    public void removeFromAssociations(ConnectionFarm connectionFarm) {
+        connectionFarm.getUserGroup().getConnectionFarms().remove(connectionFarm);
+        for (Experiment experiment : connectionFarm.getExperiments())
+            experiment.getConnectionFarms().remove(connectionFarm);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public List<ConnectionFarm> findConnectionFarmsByExperiment(Experiment experiment) {
         logger.debug(">> findConnectionFarmsByExperiment: " + experiment);
-        SqlSession session = getSqlSession();
-        String engineName = "FIND_FARM_BY_EXPERIMENT";
-        List<ConnectionFarm> farms = getQueryEngine(engineName).query(session, getEntityClass(),
-                new SimpleForm(experiment.getId()));
+        List<ConnectionFarm> farms = getSession().getNamedQuery(ConnectionFarm.Q_GET_BY_EXPERIMENT)
+                .setEntity("experiment", experiment).list();
         logger.debug("<< findConnectionFarmsByExperiment: number of farms found:" + farms.size());
+        return farms;
+    }
+
+    @Override
+    public void deleteConnectionFarmsByUserGroup(UserGroup userGroup) {
+        logger.debug(">> deleteConnectionFarmsByUserGroup: " + userGroup);
+        getSession().getNamedQuery(ConnectionFarm.Q_DELETE_BY_USERGROUP).setEntity("userGroup", userGroup)
+                .executeUpdate();
+        logger.debug("<< deleteConnectionFarmsByUserGroup");
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<ConnectionFarm> findConnectionFarmsByUserGroup(UserGroup userGroup) {
+        logger.debug(">> findConnectionFarmsByUserGroup: " + userGroup);
+        List<ConnectionFarm> farms = getSession().getNamedQuery(ConnectionFarm.Q_GET_BY_USERGROUP)
+                .setEntity("userGroup", userGroup).list();
+        logger.debug("<< findConnectionFarmsByUserGroup: number of farms found:" + farms.size());
         return farms;
     }
 

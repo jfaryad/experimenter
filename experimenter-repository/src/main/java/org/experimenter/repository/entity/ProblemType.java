@@ -2,20 +2,41 @@ package org.experimenter.repository.entity;
 
 import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
 /**
  * Entity for database table PROBLEM
  * 
  * @author Jakub Faryad (jfaryad@gmail.com)
  * 
  */
+@javax.persistence.Entity
+@Table(name = "PROBLEM")
 public class ProblemType implements Entity {
 
-    private static final long serialVersionUID = 1L;
+    @Column(name = "problem_id")
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
+    @Column(name = "name", nullable = false)
     private String name;
+
+    @Column(name = "description")
     private String description;
+
+    @OneToMany(mappedBy = "problem")
     private List<Project> projects;
+
+    @OneToMany(mappedBy = "problem")
     private List<Input> inputs;
+
+    @OneToMany(mappedBy = "problem")
     private List<InputSet> inputSets;
 
     public ProblemType() {

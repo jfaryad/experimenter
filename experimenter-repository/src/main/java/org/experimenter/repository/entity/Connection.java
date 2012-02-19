@@ -1,21 +1,55 @@
 package org.experimenter.repository.entity;
 
+import javax.persistence.Column;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 /**
  * Entity for database table CONNECTION
  * 
  * @author Jakub Faryad (jfaryad@gmail.com)
  * 
  */
+@javax.persistence.Entity
+@Table(name = "CONNECTION")
 public class Connection implements Entity {
 
-    private static final long serialVersionUID = 1L;
+    @Column(name = "connection_id")
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
+    @Column(name = "name", nullable = false)
     private String name;
+
+    @Column(name = "login", nullable = false)
     private String login;
+
+    @Column(name = "password", nullable = false)
     private String password;
+
+    @Column(name = "description")
     private String description;
+
+    @Column(name = "port")
     private Short port;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "computer_id", referencedColumnName = "computer_id", nullable = false)
+    @Fetch(FetchMode.SELECT)
     private Computer computer;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "farm_id", referencedColumnName = "farm_id", nullable = false)
+    @Fetch(FetchMode.SELECT)
     private ConnectionFarm connectionFarm;
 
     public Connection() {

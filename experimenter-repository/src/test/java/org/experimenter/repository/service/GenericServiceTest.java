@@ -12,18 +12,9 @@ import org.experimenter.repository.entity.User;
 import org.experimenter.repository.form.CriteriaForm;
 import org.experimenter.repository.util.DaoTestHelper;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.transaction.TransactionConfiguration;
-import org.springframework.transaction.annotation.Transactional;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { "classpath:repositoryContextTest.xml" })
-@Transactional
-@TransactionConfiguration(defaultRollback = true)
-public class GenericServiceTest {
+public class GenericServiceTest extends AbstractServiceTest {
 
     @Autowired
     private UserService userService;

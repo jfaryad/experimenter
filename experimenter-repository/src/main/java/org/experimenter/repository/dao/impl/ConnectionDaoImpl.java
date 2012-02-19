@@ -1,6 +1,5 @@
 package org.experimenter.repository.dao.impl;
 
-import org.experimenter.repository.Constants;
 import org.experimenter.repository.dao.ConnectionDao;
 import org.experimenter.repository.entity.Connection;
 
@@ -12,8 +11,9 @@ public class ConnectionDaoImpl extends AbstractBaseDaoImpl<Connection> implement
     }
 
     @Override
-    public String getTableName() {
-        return Constants.CONNECTION;
+    public void removeFromAssociations(Connection connection) {
+        connection.getConnectionFarm().getConnections().remove(connection);
+        connection.getComputer().getConnections().remove(connection);
     }
 
 }

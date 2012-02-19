@@ -1,6 +1,5 @@
 package org.experimenter.repository.dao.impl;
 
-import org.experimenter.repository.Constants;
 import org.experimenter.repository.dao.ComputerDao;
 import org.experimenter.repository.entity.Computer;
 
@@ -12,8 +11,8 @@ public class ComputerDaoImpl extends AbstractBaseDaoImpl<Computer> implements Co
     }
 
     @Override
-    public String getTableName() {
-        return Constants.COMPUTER;
+    protected void removeFromAssociations(Computer item) {
+        // do nothing
     }
 
 }

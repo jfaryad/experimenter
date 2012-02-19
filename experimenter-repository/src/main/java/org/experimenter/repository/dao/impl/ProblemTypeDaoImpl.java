@@ -1,6 +1,5 @@
 package org.experimenter.repository.dao.impl;
 
-import org.experimenter.repository.Constants;
 import org.experimenter.repository.dao.ProblemTypeDao;
 import org.experimenter.repository.entity.ProblemType;
 
@@ -12,8 +11,8 @@ public class ProblemTypeDaoImpl extends AbstractBaseDaoImpl<ProblemType> impleme
     }
 
     @Override
-    public String getTableName() {
-        return Constants.PROBLEM_TYPE;
+    protected void removeFromAssociations(ProblemType item) {
+        // do nothing
     }
 
 }

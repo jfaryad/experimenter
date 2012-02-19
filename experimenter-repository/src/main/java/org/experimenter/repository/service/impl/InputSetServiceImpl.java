@@ -8,67 +8,65 @@ import org.experimenter.repository.entity.Input;
 import org.experimenter.repository.entity.InputSet;
 import org.experimenter.repository.entity.ProblemType;
 import org.experimenter.repository.entity.Project;
-import org.experimenter.repository.form.CriteriaForm;
 import org.experimenter.repository.service.InputSetService;
 
 public class InputSetServiceImpl extends AbstractService<InputSet, InputSetDao> implements InputSetService {
 
     @Override
     protected void deleteDependencies(InputSet inputSet) {
-        junctionDao.removeInputSetFromProject(inputSet, null);
-        junctionDao.removeInputFromInputSet(null, inputSet);
-        junctionDao.removeInputSetFromExperiment(inputSet, null);
+        // nothing to do
     }
 
     @Override
     public void addInputSetToExperiment(InputSet inputSet, Experiment experiment) {
-        junctionDao.addInputSetToExperiment(inputSet, experiment);
+        inputSet.getExperiments().add(experiment);
+        experiment.getInputSets().add(inputSet);
 
     }
 
     @Override
     public void addInputSetToProject(InputSet inputSet, Project project) {
-        junctionDao.addInputSetToProject(inputSet, project);
+        inputSet.getProjects().add(project);
+        project.getInputSets().add(inputSet);
 
     }
 
     @Override
     public void removeInputSetFromExperiment(InputSet inputSet, Experiment experiment) {
-        junctionDao.removeInputSetFromExperiment(inputSet, experiment);
+        inputSet.getExperiments().remove(experiment);
+        experiment.getInputSets().remove(inputSet);
 
     }
 
     @Override
     public void removeInputSetFromProject(InputSet inputSet, Project project) {
-        junctionDao.removeInputSetFromProject(inputSet, project);
+        inputSet.getProjects().remove(project);
+        project.getInputSets().remove(inputSet);
 
     }
 
     @Override
     public List<InputSet> findInputSetsByProblemType(ProblemType problemType) {
         checkIdNotNull(problemType);
-        InputSet inputSet = new InputSet();
-        inputSet.setProblem(problemType);
-        CriteriaForm<InputSet> criteria = new CriteriaForm<InputSet>(inputSet);
-        return baseDao.findByCriteria(criteria);
+        return problemType.getInputSets();
     }
 
     @Override
     public List<InputSet> findInputSetsByExperiment(Experiment experiment) {
         checkIdNotNull(experiment);
-        return baseDao.findInputSetsByExperiment(experiment);
+        return experiment.getInputSets();
     }
 
     @Override
     public List<InputSet> findInputSetsByInput(Input input) {
         checkIdNotNull(input);
-        return baseDao.findInputSetsByInput(input);
+        return input.getInputSets();
     }
 
     @Override
     public List<InputSet> findInputSetsByProject(Project project) {
         checkIdNotNull(project);
-        return baseDao.findInputSetsByProject(project);
+        return project.getInputSets();
     }
 
 }

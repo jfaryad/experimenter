@@ -2,18 +2,35 @@ package org.experimenter.repository.entity;
 
 import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
 /**
  * Entity for database table COMPUTER
  * 
  * @author Jakub Faryad (jfaryad@gmail.com)
  * 
  */
+@javax.persistence.Entity
+@Table(name = "COMPUTER")
 public class Computer implements Entity {
 
-    private static final long serialVersionUID = 1L;
+    @Column(name = "computer_id")
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
+    @Column(name = "address", nullable = false)
     private String address;
+
+    @Column(name = "description")
     private String description;
+
+    @OneToMany(mappedBy = "computer")
     private List<Connection> connections;
 
     public Computer() {

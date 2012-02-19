@@ -8,9 +8,9 @@ public class ProblemTypeServiceImpl extends AbstractService<ProblemType, Problem
 
     @Override
     protected void deleteDependencies(ProblemType problemType) {
-        projectService.delete(projectService.findProjectsByProblemType(problemType));
-        inputService.delete(inputService.findInputsByProblemType(problemType));
-        inputSetService.delete(inputSetService.findInputSetsByProblemType(problemType));
+        projectService.delete(problemType.getProjects());
+        inputService.delete(problemType.getInputs());
+        inputSetService.delete(problemType.getInputSets());
     }
 
 }

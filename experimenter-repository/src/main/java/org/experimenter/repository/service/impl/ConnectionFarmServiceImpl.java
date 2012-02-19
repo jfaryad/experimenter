@@ -6,7 +6,6 @@ import org.experimenter.repository.dao.ConnectionFarmDao;
 import org.experimenter.repository.entity.ConnectionFarm;
 import org.experimenter.repository.entity.Experiment;
 import org.experimenter.repository.entity.UserGroup;
-import org.experimenter.repository.form.CriteriaForm;
 import org.experimenter.repository.service.ConnectionFarmService;
 
 public class ConnectionFarmServiceImpl extends AbstractService<ConnectionFarm, ConnectionFarmDao> implements
@@ -14,27 +13,25 @@ public class ConnectionFarmServiceImpl extends AbstractService<ConnectionFarm, C
 
     @Override
     protected void deleteDependencies(ConnectionFarm connectionFarm) {
-        junctionDao.removeConnectionFarmFromExperiment(connectionFarm, null);
-        connectionService.delete(connectionService.findConnectionsByConnectionFarm(connectionFarm));
+        connectionService.delete(connectionFarm.getConnections());
     }
 
     @Override
     public void addConnectionFarmToExperiment(ConnectionFarm connectionFarm, Experiment experiment) {
-        junctionDao.addConnectionFarmToExperiment(connectionFarm, experiment);
+        experiment.getConnectionFarms().add(connectionFarm);
+        connectionFarm.getExperiments().add(experiment);
     }
 
     @Override
     public void removeConnectionFarmFromExperiment(ConnectionFarm connectionFarm, Experiment experiment) {
-        junctionDao.removeConnectionFarmFromExperiment(connectionFarm, experiment);
+        experiment.getConnectionFarms().remove(connectionFarm);
+        connectionFarm.getExperiments().remove(experiment);
     }
 
     @Override
     public List<ConnectionFarm> findConnectionFarmsByUserGroup(UserGroup userGroup) {
         checkIdNotNull(userGroup);
-        ConnectionFarm connectionFarm = new ConnectionFarm();
-        connectionFarm.setUserGroup(userGroup);
-        CriteriaForm<ConnectionFarm> criteria = new CriteriaForm<ConnectionFarm>(connectionFarm);
-        return baseDao.findByCriteria(criteria);
+        return baseDao.findConnectionFarmsByUserGroup(userGroup);
     }
 
     @Override

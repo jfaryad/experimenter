@@ -8,34 +8,17 @@ import java.util.List;
 
 import org.experimenter.repository.entity.Application;
 import org.experimenter.repository.entity.Experiment;
-import org.experimenter.repository.entity.Project;
 import org.experimenter.repository.form.CriteriaForm;
 import org.experimenter.repository.util.DaoTestHelper;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.transaction.TransactionConfiguration;
-import org.springframework.transaction.annotation.Transactional;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { "classpath:repositoryContextTest.xml" })
-@Transactional
-@TransactionConfiguration(defaultRollback = true)
-public class ExperimentDaoTest {
-
-    @Autowired
-    private ExperimentDao experimentDao;
+public class ExperimentDaoTest extends AbstractDaoTest {
 
     @Test
     public void insertExperiment() {
         Experiment experiment = new Experiment();
         experiment.setName("exp1");
         experiment.setDescription("exp1 - sat");
-        Project project = new Project();
-        project.setId(1);
-        experiment.setProject(project);
         Application application = new Application();
         application.setId(1);
         experiment.setApplication(application);
@@ -44,7 +27,6 @@ public class ExperimentDaoTest {
         assertEquals("exp1", experiment.getName());
         assertEquals("exp1 - sat", experiment.getDescription());
         assertEquals(1, experiment.getApplication().getId().intValue());
-        assertEquals(1, experiment.getProject().getId().intValue());
     }
 
     @Test
@@ -56,9 +38,12 @@ public class ExperimentDaoTest {
 
     @Test
     public void deleteExperiment() {
-        Integer id = 3;
+        Integer id = 2;
+        assertEquals(2, applicationDao.findById(2).getExperiments().size());
         experimentDao.deleteById(id);
+        flush();
         assertNull("experiment was not deleted", experimentDao.findById(id));
+        assertEquals(1, applicationDao.findById(2).getExperiments().size());
     }
 
     @Test

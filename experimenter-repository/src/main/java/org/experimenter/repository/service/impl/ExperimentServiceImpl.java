@@ -7,36 +7,31 @@ import org.experimenter.repository.entity.Application;
 import org.experimenter.repository.entity.ConnectionFarm;
 import org.experimenter.repository.entity.Experiment;
 import org.experimenter.repository.entity.InputSet;
-import org.experimenter.repository.form.CriteriaForm;
 import org.experimenter.repository.service.ExperimentService;
 
 public class ExperimentServiceImpl extends AbstractService<Experiment, ExperimentDao> implements ExperimentService {
 
     @Override
     protected void deleteDependencies(Experiment experiment) {
-        junctionDao.removeConnectionFarmFromExperiment(null, experiment);
-        junctionDao.removeInputSetFromExperiment(null, experiment);
+        // nothing to do
     }
 
     @Override
     public List<Experiment> findExperimentsByApplication(Application application) {
         checkIdNotNull(application);
-        Experiment experiment = new Experiment();
-        experiment.setApplication(application);
-        CriteriaForm<Experiment> criteria = new CriteriaForm<Experiment>(experiment);
-        return baseDao.findByCriteria(criteria);
+        return application.getExperiments();
     }
 
     @Override
     public List<Experiment> findExperimentsByConnectionFarm(ConnectionFarm connectionFarm) {
         checkIdNotNull(connectionFarm);
-        return baseDao.findExperimentsByConnectionFarm(connectionFarm);
+        return connectionFarm.getExperiments();
     }
 
     @Override
     public List<Experiment> findExperimentsByInputSet(InputSet inputSet) {
         checkIdNotNull(inputSet);
-        return baseDao.findExperimentsByInputSet(inputSet);
+        return inputSet.getExperiments();
     }
 
 }

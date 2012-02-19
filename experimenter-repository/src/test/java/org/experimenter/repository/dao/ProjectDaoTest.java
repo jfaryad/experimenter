@@ -12,21 +12,8 @@ import org.experimenter.repository.entity.UserGroup;
 import org.experimenter.repository.form.CriteriaForm;
 import org.experimenter.repository.util.DaoTestHelper;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.transaction.TransactionConfiguration;
-import org.springframework.transaction.annotation.Transactional;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { "classpath:repositoryContextTest.xml" })
-@Transactional
-@TransactionConfiguration(defaultRollback = true)
-public class ProjectDaoTest {
-
-    @Autowired
-    private ProjectDao projectDao;
+public class ProjectDaoTest extends AbstractDaoTest {
 
     @Test
     public void insertProject() {
@@ -44,10 +31,6 @@ public class ProjectDaoTest {
         project = projectDao.findById(project.getId());
         assertEquals("testProject", project.getName());
         assertEquals("project for testing", project.getDescription());
-        assertEquals(1, project.getUserGroup().getId().intValue());
-        assertEquals("students", project.getUserGroup().getName());
-        assertEquals(1, project.getProblem().getId().intValue());
-        assertEquals("3-SAT", project.getProblem().getName());
     }
 
     @Test
@@ -55,13 +38,19 @@ public class ProjectDaoTest {
         Integer id = 1;
         Project project = projectDao.findById(id);
         DaoTestHelper.checkProject1(project);
+        DaoTestHelper.checkUserGroup1(project.getUserGroup());
+        DaoTestHelper.checkProblem1(project.getProblem());
     }
 
     @Test
     public void deleteProject() {
         Integer id = 2;
+        assertEquals(2, userGroupDao.findById(5).getProjects().size());
         projectDao.deleteById(id);
+        flush();
         assertNull("project was not deleted", projectDao.findById(id));
+        assertNotNull(userGroupDao.findById(4));
+        assertEquals(1, userGroupDao.findById(5).getProjects().size());
     }
 
     @Test

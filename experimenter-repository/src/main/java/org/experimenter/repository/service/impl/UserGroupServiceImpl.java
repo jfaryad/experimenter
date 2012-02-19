@@ -11,15 +11,14 @@ public class UserGroupServiceImpl extends AbstractService<UserGroup, UserGroupDa
 
     @Override
     protected void deleteDependencies(UserGroup userGroup) {
-        junctionDao.removeUserFromUserGroup(null, userGroup);
-        connectionFarmService.delete(connectionFarmService.findConnectionFarmsByUserGroup(userGroup));
-        projectService.delete(projectService.findProjectsByUserGroup(userGroup));
+        connectionFarmService.delete(userGroup.getConnectionFarms());
+        projectService.delete(userGroup.getProjects());
     }
 
     @Override
     public List<UserGroup> findUserGroupsByUser(User user) {
         checkIdNotNull(user);
-        return baseDao.findUserGroupsByUser(user);
+        return user.getUserGroups();
     }
 
 }

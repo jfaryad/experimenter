@@ -2,21 +2,52 @@ package org.experimenter.repository.entity;
 
 import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 /**
  * Entity for database table EXPERIMENT
  * 
  * @author Jakub Faryad (jfaryad@gmail.com)
  * 
  */
+@javax.persistence.Entity
+@Table(name = "EXPERIMENT")
 public class Experiment implements Entity {
 
-    private static final long serialVersionUID = 1L;
+    @Column(name = "experiment_id")
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
+    @Column(name = "name", nullable = false)
     private String name;
+
+    @Column(name = "description")
     private String description;
-    private Project project;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "application_id", referencedColumnName = "application_id", nullable = false)
+    @Fetch(FetchMode.SELECT)
     private Application application;
+
+    @ManyToMany
+    @JoinTable(name = "EXPERIMENT_FARM", joinColumns = @JoinColumn(name = "experiment_id"), inverseJoinColumns = @JoinColumn(name = "farm_id"))
     private List<ConnectionFarm> connectionFarms;
+
+    @ManyToMany
+    @JoinTable(name = "EXPERIMENT_INPUT_SET", joinColumns = @JoinColumn(name = "experiment_id"), inverseJoinColumns = @JoinColumn(name = "input_set_id"))
     private List<InputSet> inputSets;
 
     public Experiment() {
@@ -53,14 +84,6 @@ public class Experiment implements Entity {
         this.description = description;
     }
 
-    public Project getProject() {
-        return project;
-    }
-
-    public void setProject(Project project) {
-        this.project = project;
-    }
-
     public Application getApplication() {
         return application;
     }
@@ -87,8 +110,8 @@ public class Experiment implements Entity {
 
     @Override
     public String toString() {
-        return "Experiment[id: " + getId() + ", name: " + name + ", description: " + description + ", project: "
-                + project + ", application: " + application + "]";
+        return "Experiment[id: " + getId() + ", name: " + name + ", description: " + description + ", application: "
+                + application + "]";
     }
 
 }

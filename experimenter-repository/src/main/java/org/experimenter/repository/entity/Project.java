@@ -2,22 +2,60 @@ package org.experimenter.repository.entity;
 
 import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 /**
  * Entity for database table PROJECT
  * 
  * @author Jakub Faryad (jfaryad@gmail.com)
  * 
  */
+@javax.persistence.Entity
+@Table(name = "PROJECT")
 public class Project implements Entity {
 
-    private static final long serialVersionUID = 1L;
+    @Column(name = "project_id")
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
+    @Column(name = "name", nullable = false)
     private String name;
+
+    @Column(name = "description")
     private String description;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "usergroup_id", referencedColumnName = "usergroup_id", nullable = false)
+    @Fetch(FetchMode.SELECT)
     private UserGroup userGroup;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "problem_id", referencedColumnName = "problem_id", nullable = false)
+    @Fetch(FetchMode.SELECT)
     private ProblemType problem;
-    private List<Experiment> experiments;
+
+    @OneToMany(mappedBy = "project")
     private List<Program> programs;
+
+    @ManyToMany
+    @JoinTable(
+            name = "PROJECT_INPUT_SET",
+            joinColumns = @JoinColumn(name = "project_id"),
+            inverseJoinColumns = @JoinColumn(name = "input_set_id"))
     private List<InputSet> inputSets;
 
     public Project() {
@@ -68,14 +106,6 @@ public class Project implements Entity {
 
     public void setProblem(ProblemType problem) {
         this.problem = problem;
-    }
-
-    public List<Experiment> getExperiments() {
-        return experiments;
-    }
-
-    public void setExperiments(List<Experiment> experiments) {
-        this.experiments = experiments;
     }
 
     public List<Program> getPrograms() {

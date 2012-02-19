@@ -1,9 +1,9 @@
 package org.experimenter.repository.service.impl;
 
+import java.util.Iterator;
 import java.util.List;
 
 import org.experimenter.repository.dao.BaseDao;
-import org.experimenter.repository.dao.JunctionDao;
 import org.experimenter.repository.entity.Entity;
 import org.experimenter.repository.form.CriteriaForm;
 import org.experimenter.repository.service.ApplicationService;
@@ -23,7 +23,6 @@ import org.springframework.beans.factory.annotation.Required;
 public abstract class AbstractService<T extends Entity, D extends BaseDao<T>> {
 
     protected D baseDao;
-    protected JunctionDao junctionDao;
 
     protected ApplicationService applicationService;
     protected ComputerService computerService;
@@ -60,7 +59,7 @@ public abstract class AbstractService<T extends Entity, D extends BaseDao<T>> {
     }
 
     public List<T> findByCriteria(CriteriaForm<T> criteria) {
-        if (criteria == null || criteria.getModel() == null)
+        if (criteria == null || criteria.getEntity() == null)
             throw new IllegalArgumentException("The criteria or the model entity to search by must not be null.");
         return baseDao.findByCriteria(criteria);
     }
@@ -76,8 +75,11 @@ public abstract class AbstractService<T extends Entity, D extends BaseDao<T>> {
     public void delete(List<T> entities) {
         if (entities == null)
             throw new IllegalArgumentException("The list of entities to delete must not be null.");
-        for (T entity : entities)
+        for (Iterator<T> it = entities.iterator(); it.hasNext();) {
+            T entity = it.next();
+            it.remove();
             delete(entity);
+        }
     }
 
     protected abstract void deleteDependencies(T entity);
@@ -97,11 +99,6 @@ public abstract class AbstractService<T extends Entity, D extends BaseDao<T>> {
     @Required
     public void setBaseDao(D baseDao) {
         this.baseDao = baseDao;
-    }
-
-    @Required
-    public void setJunctionDao(JunctionDao junctionDao) {
-        this.junctionDao = junctionDao;
     }
 
     @Required

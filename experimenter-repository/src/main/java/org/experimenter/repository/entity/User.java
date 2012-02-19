@@ -2,21 +2,57 @@ package org.experimenter.repository.entity;
 
 import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.NamedQueries;
+import org.hibernate.annotations.NamedQuery;
+
 /**
  * Entity for database table USER.
  * 
  * @author Jakub Faryad (jfaryad@gmail.com)
  * 
  */
+@javax.persistence.Entity
+@Table(name = "USER")
+@NamedQueries({ @NamedQuery(
+        name = User.Q_GET_BY_USERGROUP,
+        query = "select u from User u join u.userGroups ug where ug = :userGroup order by u.surname, u.name",
+        readOnly = true) })
 public class User implements Entity {
 
-    private static final long serialVersionUID = 1L;
+    public static final String Q_GET_BY_USERGROUP = "User.Q_GET_BY_USERGROUP";
+
+    @Column(name = "user_id")
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
+    @Column(name = "name", nullable = false)
     private String name;
+
+    @Column(name = "surname", nullable = false)
     private String surname;
+
+    @Column(name = "login", nullable = false)
     private String login;
+
+    @Column(name = "password", nullable = false)
     private String password;
+
+    @Column(name = "email", nullable = false)
     private String email;
+
+    @ManyToMany
+    @JoinTable(name = "USER_USERGROUP", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(
+            name = "usergroup_id"))
     private List<UserGroup> userGroups;
 
     public User() {

@@ -1,60 +1,67 @@
 package org.experimenter.repository.form;
 
-import org.sqlproc.engine.SqlOrder;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.hibernate.criterion.Order;
 
 public class CriteriaForm<T> {
 
-    private T model;
-    int first;
-    int count;
-    SqlOrder order;
+    private T entity;
+    Integer first;
+    Integer count;
+    List<Order> order = new ArrayList<Order>();
 
     public CriteriaForm() {
 
     }
 
-    public CriteriaForm(T model) {
-        this.model = model;
+    public CriteriaForm(T entity) {
+        this.entity = entity;
     }
 
-    public T getModel() {
-        return model;
+    public T getEntity() {
+        return entity;
     }
 
-    public void setModel(T model) {
-        this.model = model;
+    public void setEntity(T entity) {
+        this.entity = entity;
     }
 
-    public int getFirst() {
+    public Integer getFirst() {
         return first;
     }
 
-    public void setFirst(int first) {
+    public void setFirst(Integer first) {
         this.first = first;
     }
 
-    public int getCount() {
+    public Integer getCount() {
         return count;
     }
 
-    public void setCount(int count) {
+    public void setCount(Integer count) {
         this.count = count;
     }
 
-    public SqlOrder getOrder() {
-        if (order == null)
-            return SqlOrder.getOrder();
-        else
-            return order;
+    public List<Order> getOrder() {
+        return order;
     }
 
-    public void setOrder(SqlOrder order) {
+    public void setOrder(List<Order> order) {
         this.order = order;
+    }
+
+    public void addOrder(String property, boolean ascending) {
+        if (ascending)
+            this.order.add(Order.asc(property));
+        else
+            this.order.add(Order.desc(property));
     }
 
     @Override
     public String toString() {
-        return "CriteriaForm [" + model + ", first=" + first + ", count=" + count + ", order=" + order + "]";
+        return "CriteriaForm [" + entity + ", first=" + first + ", count=" + count + ", order=" + order + "]";
     }
 
 }

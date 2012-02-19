@@ -8,7 +8,7 @@ public class ComputerServiceImpl extends AbstractService<Computer, ComputerDao> 
 
     @Override
     protected void deleteDependencies(Computer computer) {
-        connectionService.delete(connectionService.findConnectionsByComputer(computer));
+        connectionService.delete(computer.getConnections());
     }
 
 }
