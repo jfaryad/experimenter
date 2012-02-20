@@ -21,6 +21,7 @@
 		<hibernate.annotations.version>3.4.0.GA</hibernate.annotations.version>
 		<version.commons-dbcp>1.4</version.commons-dbcp>
 		<version.cglib>2.2</version.cglib>
+		<version.aspectj>1.6.8</version.aspectj>
 	</properties>
 
 	<build>
@@ -125,7 +126,7 @@
 		<dependency>
 			<groupId>org.aspectj</groupId>
 			<artifactId>aspectjweaver</artifactId>
-			<version>1.6.12</version>
+			<version>${version.aspectj}</version>
 		</dependency>
 		<dependency>
 			<groupId>commons-dbcp</groupId>
