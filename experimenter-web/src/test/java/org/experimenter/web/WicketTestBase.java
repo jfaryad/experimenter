@@ -1,47 +1,31 @@
 package org.experimenter.web;
 
-import java.util.Locale;
-
-import org.apache.wicket.protocol.http.WebApplication;
-import org.apache.wicket.spring.injection.annot.SpringComponentInjector;
 import org.apache.wicket.util.tester.WicketTester;
 import org.junit.Before;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.transaction.TransactionConfiguration;
+import org.springframework.transaction.annotation.Transactional;
 
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = { "classpath:applicationContextTest.xml" })
+@Transactional
+@TransactionConfiguration(defaultRollback = true)
 public class WicketTestBase {
 
     @Autowired
-    private ApplicationContext applicationContext;
+    protected ApplicationContext applicationContext;
+
+    @Autowired
+    private ExperimenterApplication experimenterApplication;
 
     protected WicketTester tester;
 
     @Before
     public void init() {
-        populateData();
-        createTester();
-    }
-
-    private void createTester() {
-        WebApplication app = (WebApplication) applicationContext.getBean("experimenterApplication");
-        tester = new WicketTester(app, app.getServletContext());
-        tester.getApplication().getComponentInstantiationListeners()
-                .add(new SpringComponentInjector(tester.getApplication(), applicationContext));
-    }
-
-    /**
-     * Override to change locale
-     * 
-     * @return locale, default EN
-     */
-    protected Locale getLocale() {
-        return new Locale("EN");
-    }
-
-    /**
-     * Override to populate data in database for each test
-     */
-    protected void populateData() {
-        // override in test if necessary
+        tester = new WicketTester(experimenterApplication);
     }
 }
