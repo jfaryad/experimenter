@@ -26,6 +26,8 @@ import org.hibernate.annotations.FetchMode;
 @Table(name = "INPUT_SET")
 public class InputSet implements Entity {
 
+    private static final long serialVersionUID = 1L;
+
     @Column(name = "input_set_id")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -43,7 +45,10 @@ public class InputSet implements Entity {
     private ProblemType problem;
 
     @ManyToMany
-    @JoinTable(name = "INPUT_INPUT_SET", joinColumns = @JoinColumn(name = "input_set_id"), inverseJoinColumns = @JoinColumn(name = "input_id"))
+    @JoinTable(
+            name = "INPUT_INPUT_SET",
+            joinColumns = @JoinColumn(name = "input_set_id"),
+            inverseJoinColumns = @JoinColumn(name = "input_id"))
     private List<Input> inputs;
 
     @ManyToMany(mappedBy = "inputSets")

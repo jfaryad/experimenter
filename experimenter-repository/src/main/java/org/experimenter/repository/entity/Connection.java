@@ -22,6 +22,8 @@ import org.hibernate.annotations.FetchMode;
 @Table(name = "CONNECTION")
 public class Connection implements Entity {
 
+    private static final long serialVersionUID = 1L;
+
     @Column(name = "connection_id")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

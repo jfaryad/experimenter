@@ -19,6 +19,8 @@ import javax.persistence.Table;
 @Table(name = "PROBLEM")
 public class ProblemType implements Entity {
 
+    private static final long serialVersionUID = 1L;
+
     @Column(name = "problem_id")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

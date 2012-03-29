@@ -31,6 +31,8 @@ import org.hibernate.annotations.NamedQuery;
         readOnly = true) })
 public class Application implements Entity {
 
+    private static final long serialVersionUID = 1L;
+
     public static final String Q_GET_BY_PROGRAM = "Application.Q_GET_BY_PROGRAM";
 
     @Column(name = "application_id")

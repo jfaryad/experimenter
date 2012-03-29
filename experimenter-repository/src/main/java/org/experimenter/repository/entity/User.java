@@ -28,6 +28,8 @@ import org.hibernate.annotations.NamedQuery;
         readOnly = true) })
 public class User implements Entity {
 
+    private static final long serialVersionUID = 1L;
+
     public static final String Q_GET_BY_USERGROUP = "User.Q_GET_BY_USERGROUP";
 
     @Column(name = "user_id")

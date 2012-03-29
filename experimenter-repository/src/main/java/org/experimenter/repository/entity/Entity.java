@@ -1,7 +1,8 @@
 package org.experimenter.repository.entity;
 
+import java.io.Serializable;
 
-public interface Entity {
+public interface Entity extends Serializable {
 
     public Integer getId();
 

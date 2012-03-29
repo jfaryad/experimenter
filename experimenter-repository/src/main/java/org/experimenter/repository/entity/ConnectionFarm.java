@@ -40,6 +40,8 @@ import org.hibernate.annotations.NamedQuery;
                 readOnly = true) })
 public class ConnectionFarm implements Entity {
 
+    private static final long serialVersionUID = 1L;
+
     public static final String Q_GET_BY_USERGROUP = "ConnectionFarm.Q_GET_BY_USERGROUP";
     public static final String Q_DELETE_BY_USERGROUP = "ConnectionFarm.Q_DELETE_BY_USERGROUP";
     public static final String Q_GET_BY_EXPERIMENT = "ConnectionFarm.Q_GET_BY_EXPERIMENT";
