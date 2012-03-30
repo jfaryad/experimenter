@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+<wicket:head>
+  <link rel="stylesheet" href="menu.css" type="text/css" />
+</wicket:head>
+
+<style type="text/css">
+.menu {
+  font-size: 0.75em;
+  width: 150px;
+}
+
+.menu ul {
+  margin: 0 0 0 0px;
+  padding: 0;
+  border-bottom: #fff solid;
+  border-top: #fff solid;
+  border-width: 1px;
+  background: #fff;
+}
+
+.menu li {
+  list-style: none;
+  border-bottom: #fff solid;
+  border-top: #fff solid;
+  border-width: 1px;
+  background-color: #6493D2;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+}
+
+.menu a {
+  color: #fff;
+  cursor: pointer;
+  display: block;
+  height: 25px;
+  line-height: 25px;
+  text-indent: 10px;
+  text-decoration: none;
+  width: 100%;
+}
+
+.menu a:hover {
+  text-decoration: underline;
+}
+
+.menu li:hover {
+  background: #f90;
+  position: relative;
+}
+</style>
+</head>
+<body>
+  <wicket:panel>
+      <div class="menu">
+        <ul>
+          <wicket:link>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Contact</a></li>
+            <li><a href="#">FAQ</a></li>
+            <li><a href="#">News</a></li>
+          </wicket:link>
+        </ul>
+      </div>
+  </wicket:panel>
+</body>
+</html>

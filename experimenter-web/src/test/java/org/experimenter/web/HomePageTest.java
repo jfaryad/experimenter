@@ -6,7 +6,7 @@ import org.junit.Test;
  * Simple test using the WicketTester
  */
 
-public class TestHomePage extends WicketTestBase {
+public class HomePageTest extends WicketTestBase {
 
     @Test
     public void homepageRendersSuccessfully() {
