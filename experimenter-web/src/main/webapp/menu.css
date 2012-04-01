@@ -1,6 +1,9 @@
 .menu {
   font-size: 0.75em;
   width: 150px;
+  color: #f90;
+  line-height: 25px;
+  text-indent: 10px;
 }
 
 .menu ul {
@@ -24,13 +27,13 @@
 }
 
 .menu a {
-  color: #fff;
   cursor: pointer;
+  color: #fff;
   display: block;
   height: 25px;
+  text-decoration: none;
   line-height: 25px;
   text-indent: 10px;
-  text-decoration: none;
   width: 100%;
 }
 

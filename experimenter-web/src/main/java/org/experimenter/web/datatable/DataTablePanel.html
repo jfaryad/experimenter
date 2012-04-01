@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<wicket:head>
+	<link rel="stylesheet" href="datatable.css" type="text/css" />
+</wicket:head>
+<head>
+
+<style type="text/css">
+.datatable {
+	border-collapse: collapse;
+}
+
+.datatable td,.datatable th {
+	padding: .3em;
+	border: 1px #ccc solid;
+}
+
+.datatable thead {
+	background: #6493D2;
+	color: #fff;
+}
+
+.datatable tbody tr:hover {
+	background: yellow;
+}
+
+.datatable tbody {
+	background: #fff;
+}
+</style>
+</head>
+<body>
+	<wicket:panel>
+		<table class="datatable" wicket:id="datatable">
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>Surname</th>
+					<th>Email</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>John</td>
+					<td>Smith</td>
+					<td>john.smith@email.com</td>
+				</tr>
+			</tbody>
+		</table>
+
+		<div wicket:id="modal-window" />
+	</wicket:panel>
+</body>
+</html>

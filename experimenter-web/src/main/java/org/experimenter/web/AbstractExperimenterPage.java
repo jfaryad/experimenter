@@ -9,7 +9,7 @@ public abstract class AbstractExperimenterPage extends WebPage {
 
     public AbstractExperimenterPage(final PageParameters parameters, final String pageTitle) {
         super(parameters);
-        add(new Label("page-title", pageTitle));
+        // add(new Label("page-title", pageTitle));
         add(new Label("content-title", pageTitle));
         add(new Menu("menu"));
     }
