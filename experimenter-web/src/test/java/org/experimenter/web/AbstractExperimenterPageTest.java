@@ -1,11 +1,12 @@
 package org.experimenter.web;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
  * Simple test using the WicketTester
  */
-
+@Ignore
 public class AbstractExperimenterPageTest extends WicketTestBase {
 
     @Test
