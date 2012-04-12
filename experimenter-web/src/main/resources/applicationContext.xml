@@ -45,6 +45,41 @@
 			expression="execution(* org.experimenter.repository.service.impl..*(..))" />
 		<aop:advisor advice-ref="txAdvice" pointcut-ref="serviceOperation" />
 	</aop:config>
+  
+  <bean id="runMeTask" class="org.experimenter.repository.service.impl.RunMeTask" />
+
+  <bean name="runMeJob" class="org.springframework.scheduling.quartz.JobDetailBean">
+    <property name="jobClass" value="org.experimenter.repository.service.impl.RunMeJob" />
+    <property name="jobDataAsMap">
+      <map>
+        <entry key="runMeTask" value-ref="runMeTask" />
+      </map>
+    </property>
+
+  </bean>
+  
+  <bean id="cronTrigger"
+    class="org.springframework.scheduling.quartz.CronTriggerBean">
+ 
+    <property name="jobDetail" ref="runMeJob" />
+    <property name="cronExpression" value="0/5 * * * * ?" />
+ 
+  </bean>
+
+  <bean id="schedulerFactory" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+  <property name="applicationContextSchedulerContextKey" value="applicationContext"/>
+    <property name="jobDetails">
+      <list>
+        <ref bean="runMeJob" />
+      </list>
+    </property>
+
+    <property name="triggers">
+      <list>
+        <ref bean="cronTrigger" />
+      </list>
+    </property>
+  </bean>
 
 	<!-- ========= DAO ========= -->
 
