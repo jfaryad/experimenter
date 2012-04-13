@@ -34,6 +34,8 @@ public class ExperimentTable extends DataTablePanel<Experiment> {
         columns.add(new PropertyColumn<Experiment>(new Model<String>("Description"), "description"));
         columns.add(new PropertyColumn<Experiment>(new Model<String>("Program"), "application.program.name"));
         columns.add(new PropertyColumn<Experiment>(new Model<String>("Application version"), "application.version"));
+        columns.add(new PropertyColumn<Experiment>(new Model<String>("Active"), "isActive"));
+        columns.add(new PropertyColumn<Experiment>(new Model<String>("Cron expression"), "cronExpression"));
 
         return columns;
     }

@@ -62,11 +62,11 @@ INSERT INTO INPUT (input_id,name,data,problem_id) VALUES (2,'testInput2','data2'
 INSERT INTO INPUT (input_id,name,data,problem_id) VALUES (3,'testInput3','data3', 2);
 INSERT INTO INPUT (input_id,name,data,problem_id) VALUES (4,'testInput4','dependent on problem', 4);
 
-INSERT INTO EXPERIMENT (experiment_id,name,description,application_id) VALUES (1,'experiment1','experiment to test find',1);
-INSERT INTO EXPERIMENT (experiment_id,name,description,application_id) VALUES (2,'experiment2','experiment to test delete',2);
-INSERT INTO EXPERIMENT (experiment_id,name,description,application_id) VALUES (3,'experiment3','experiment to test update',3);
-INSERT INTO EXPERIMENT (experiment_id,name,description,application_id) VALUES (4,'experiment4','experiment to remove input set from',2);
-INSERT INTO EXPERIMENT (experiment_id,name,description,application_id) VALUES (5,'experiment5','dependent on application',4);
+INSERT INTO EXPERIMENT (experiment_id,name,description, cron_expression, active, application_id) VALUES (1,'experiment1','experiment to test find','0/10 * * * * ?', false, 1);
+INSERT INTO EXPERIMENT (experiment_id,name,description, cron_expression, active, application_id) VALUES (2,'experiment2','experiment to test delete','0/10 * * * * ?', false, 2);
+INSERT INTO EXPERIMENT (experiment_id,name,description, cron_expression, active, application_id) VALUES (3,'experiment3','experiment to test update','0/10 * * * * ?', false, 3);
+INSERT INTO EXPERIMENT (experiment_id,name,description, cron_expression, active, application_id) VALUES (4,'experiment4','experiment to remove input set from','0/10 * * * * ?', false, 2);
+INSERT INTO EXPERIMENT (experiment_id,name,description, cron_expression, active, application_id) VALUES (5,'experiment5','dependent on application','0/10 * * * * ?', false, 4);
 
 INSERT INTO INPUT_SET (input_set_id,name,description,problem_id) VALUES (1,'testInputSet1','basic set of inputs', 1);
 INSERT INTO INPUT_SET (input_set_id,name,description,problem_id) VALUES (2,'testInputSet2','set to test delete', 2);

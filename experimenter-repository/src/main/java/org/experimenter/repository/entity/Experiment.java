@@ -39,6 +39,12 @@ public class Experiment implements Entity {
     @Column(name = "description")
     private String description;
 
+    @Column(name = "cron_expression")
+    private String cronExpression;
+
+    @Column(name = "active", nullable = false)
+    private Boolean isActive;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "application_id", referencedColumnName = "application_id", nullable = false)
     @Fetch(FetchMode.SELECT)
@@ -92,6 +98,22 @@ public class Experiment implements Entity {
         this.description = description;
     }
 
+    public String getCronExpression() {
+        return cronExpression;
+    }
+
+    public void setCronExpression(String cronExpression) {
+        this.cronExpression = cronExpression;
+    }
+
+    public Boolean getIsActive() {
+        return isActive;
+    }
+
+    public void setIsActive(Boolean isActive) {
+        this.isActive = isActive;
+    }
+
     public Application getApplication() {
         return application;
     }
@@ -118,8 +140,8 @@ public class Experiment implements Entity {
 
     @Override
     public String toString() {
-        return "Experiment[id: " + getId() + ", name: " + name + ", description: " + description + ", application: "
-                + application + "]";
+        return "Experiment[id: " + getId() + ", name: " + name + ", description: " + description + ", isActive: "
+                + isActive + ", cronExpression: " + cronExpression + ", application: " + application + "]";
     }
 
 }

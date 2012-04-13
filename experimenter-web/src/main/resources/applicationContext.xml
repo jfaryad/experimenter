@@ -1,227 +1,236 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
-	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
+  xmlns:aop="http://www.springframework.org/schema/aop" xmlns:context="http://www.springframework.org/schema/context"
+  xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
 						http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
 						http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-3.0.xsd
 						http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
 						http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
 
-	<context:annotation-config />
-	
-	<context:component-scan base-package="com.experimenter.web" />
+  <context:annotation-config />
 
-	<bean id="placeholderConfig"
-		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-	</bean>
+  <context:component-scan base-package="com.experimenter.web" />
 
-	<jdbc:embedded-database id="dataSource">
-		<jdbc:script location="classpath:sql/schema.sql" />
-		<jdbc:script location="classpath:sql/test-data.sql" />
-	</jdbc:embedded-database>
-	
-	<bean id="experimenterApplication" class="org.experimenter.web.ExperimenterApplication"></bean>
-
-	<!-- =========== Transactions ============ -->
-
-	<bean id="transactionManager"
-		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
-		<property name="sessionFactory" ref="sessionFactory" />
-	</bean>
-	<tx:advice id="txAdvice" transaction-manager="transactionManager">
-		<tx:attributes>
-			<!-- all methods starting with 'find' are read-only -->
-			<tx:method name="find*" read-only="true" />
-			<!-- other methods use the default transaction settings (see below) -->
-			<tx:method name="*" />
-		</tx:attributes>
-	</tx:advice>
-
-	<!-- set up transactions for the whole service layer -->
-	<aop:config>
-		<aop:pointcut id="serviceOperation"
-			expression="execution(* org.experimenter.repository.service.impl..*(..))" />
-		<aop:advisor advice-ref="txAdvice" pointcut-ref="serviceOperation" />
-	</aop:config>
-  
-  <bean id="runMeTask" class="org.experimenter.repository.service.impl.RunMeTask" />
-
-  <bean name="runMeJob" class="org.springframework.scheduling.quartz.JobDetailBean">
-    <property name="jobClass" value="org.experimenter.repository.service.impl.RunMeJob" />
-    <property name="jobDataAsMap">
-      <map>
-        <entry key="runMeTask" value-ref="runMeTask" />
-      </map>
-    </property>
-
-  </bean>
-  
-  <bean id="cronTrigger"
-    class="org.springframework.scheduling.quartz.CronTriggerBean">
- 
-    <property name="jobDetail" ref="runMeJob" />
-    <property name="cronExpression" value="0/5 * * * * ?" />
- 
+  <bean id="placeholderConfig"
+    class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
   </bean>
 
-  <bean id="schedulerFactory" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
-  <property name="applicationContextSchedulerContextKey" value="applicationContext"/>
+  <jdbc:embedded-database id="dataSource">
+    <jdbc:script location="classpath:sql/schema.sql" />
+    <jdbc:script location="classpath:sql/test-data.sql" />
+  </jdbc:embedded-database>
+
+  <bean id="experimenterApplication" class="org.experimenter.web.ExperimenterApplication"></bean>
+
+  <!-- =========== Transactions ============ -->
+
+  <bean id="transactionManager"
+    class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+    <property name="sessionFactory" ref="sessionFactory" />
+  </bean>
+  <tx:advice id="txAdvice" transaction-manager="transactionManager">
+    <tx:attributes>
+      <!-- all methods starting with 'find' are read-only -->
+      <tx:method name="find*" read-only="true" />
+      <!-- other methods use the default transaction settings (see below) -->
+      <tx:method name="*" />
+    </tx:attributes>
+  </tx:advice>
+
+  <!-- set up transactions for the whole service layer -->
+  <aop:config>
+    <aop:pointcut id="serviceOperation"
+      expression="execution(* org.experimenter.repository.service.impl..*(..))" />
+    <aop:advisor advice-ref="txAdvice" pointcut-ref="serviceOperation" />
+  </aop:config>
+
+  <!-- <bean id="runMeTask" class="org.experimenter.repository.service.impl.RunMeTask" 
+    /> <bean name="runMeJob" class="org.springframework.scheduling.quartz.JobDetailBean"> 
+    <property name="jobClass" value="org.experimenter.repository.service.impl.RunMeJob" 
+    /> <property name="jobDataAsMap"> <map> <entry key="runMeTask" value-ref="runMeTask" 
+    /> </map> </property> </bean> <bean id="cronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean"> 
+    <property name="jobDetail" ref="runMeJob" /> <property name="cronExpression" 
+    value="0/5 * * * * ?" /> </bean> -->
+
+  <bean id="schedulerFactory"
+    class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+    <property name="applicationContextSchedulerContextKey"
+      value="applicationContext" />
     <property name="jobDetails">
       <list>
-        <ref bean="runMeJob" />
+        <!-- <ref bean="runMeJob" /> -->
       </list>
     </property>
 
     <property name="triggers">
       <list>
-        <ref bean="cronTrigger" />
+        <!-- <ref bean="cronTrigger" /> -->
       </list>
     </property>
   </bean>
 
-	<!-- ========= DAO ========= -->
+  <!-- ========= DAO ========= -->
 
-	<bean id="dao" autowire="byType" abstract="true">
-		<property name="sessionFactory" ref="sessionFactory" />
-	</bean>
+  <bean id="dao" autowire="byType" abstract="true">
+    <property name="sessionFactory" ref="sessionFactory" />
+  </bean>
 
-	<bean id="userDao" class="org.experimenter.repository.dao.impl.UserDaoImpl"
-		parent="dao" />
-	<bean id="userGroupDao" class="org.experimenter.repository.dao.impl.UserGroupDaoImpl"
-		parent="dao" />
-	<bean id="applicationDao" class="org.experimenter.repository.dao.impl.ApplicationDaoImpl"
-		parent="dao" />
-	<bean id="computerDao" class="org.experimenter.repository.dao.impl.ComputerDaoImpl"
-		parent="dao" />
-	<bean id="connectionDao" class="org.experimenter.repository.dao.impl.ConnectionDaoImpl"
-		parent="dao" />
-	<bean id="connectionFarmDao"
-		class="org.experimenter.repository.dao.impl.ConnectionFarmDaoImpl"
-		parent="dao" />
-	<bean id="experimentDao" class="org.experimenter.repository.dao.impl.ExperimentDaoImpl"
-		parent="dao" />
-	<bean id="inputDao" class="org.experimenter.repository.dao.impl.InputDaoImpl"
-		parent="dao" />
-	<bean id="inputSetDao" class="org.experimenter.repository.dao.impl.InputSetDaoImpl"
-		parent="dao" />
-	<bean id="problemTypeDao" class="org.experimenter.repository.dao.impl.ProblemTypeDaoImpl"
-		parent="dao" />
-	<bean id="programDao" class="org.experimenter.repository.dao.impl.ProgramDaoImpl"
-		parent="dao" />
-	<bean id="projectDao" class="org.experimenter.repository.dao.impl.ProjectDaoImpl"
-		parent="dao" />
+  <bean id="userDao" class="org.experimenter.repository.dao.impl.UserDaoImpl"
+    parent="dao" />
+  <bean id="userGroupDao" class="org.experimenter.repository.dao.impl.UserGroupDaoImpl"
+    parent="dao" />
+  <bean id="applicationDao"
+    class="org.experimenter.repository.dao.impl.ApplicationDaoImpl"
+    parent="dao" />
+  <bean id="computerDao" class="org.experimenter.repository.dao.impl.ComputerDaoImpl"
+    parent="dao" />
+  <bean id="connectionDao" class="org.experimenter.repository.dao.impl.ConnectionDaoImpl"
+    parent="dao" />
+  <bean id="connectionFarmDao"
+    class="org.experimenter.repository.dao.impl.ConnectionFarmDaoImpl"
+    parent="dao" />
+  <bean id="experimentDao" class="org.experimenter.repository.dao.impl.ExperimentDaoImpl"
+    parent="dao" />
+  <bean id="inputDao" class="org.experimenter.repository.dao.impl.InputDaoImpl"
+    parent="dao" />
+  <bean id="inputSetDao" class="org.experimenter.repository.dao.impl.InputSetDaoImpl"
+    parent="dao" />
+  <bean id="problemTypeDao"
+    class="org.experimenter.repository.dao.impl.ProblemTypeDaoImpl"
+    parent="dao" />
+  <bean id="programDao" class="org.experimenter.repository.dao.impl.ProgramDaoImpl"
+    parent="dao" />
+  <bean id="projectDao" class="org.experimenter.repository.dao.impl.ProjectDaoImpl"
+    parent="dao" />
 
-	<!-- ========= DAO Service ========= -->
+  <!-- ========= DAO Service ========= -->
 
-	<bean id="service"
-		class="org.experimenter.repository.service.impl.AbstractService"
-		abstract="true">
-		<property name="applicationService" ref="applicationService" />
-		<property name="computerService" ref="computerService" />
-		<property name="connectionService" ref="connectionService" />
-		<property name="connectionFarmService" ref="connectionFarmService" />
-		<property name="experimentService" ref="experimentService" />
-		<property name="inputService" ref="inputService" />
-		<property name="inputSetService" ref="inputSetService" />
-		<property name="problemTypeService" ref="problemTypeService" />
-		<property name="programService" ref="programService" />
-		<property name="projectService" ref="projectService" />
-		<property name="userService" ref="userService" />
-		<property name="userGroupService" ref="userGroupService" />
-	</bean>
+  <bean id="service"
+    class="org.experimenter.repository.service.impl.AbstractService"
+    abstract="true">
+    <property name="applicationService" ref="applicationService" />
+    <property name="computerService" ref="computerService" />
+    <property name="connectionService" ref="connectionService" />
+    <property name="connectionFarmService" ref="connectionFarmService" />
+    <property name="experimentService" ref="experimentService" />
+    <property name="inputService" ref="inputService" />
+    <property name="inputSetService" ref="inputSetService" />
+    <property name="problemTypeService" ref="problemTypeService" />
+    <property name="programService" ref="programService" />
+    <property name="projectService" ref="projectService" />
+    <property name="userService" ref="userService" />
+    <property name="userGroupService" ref="userGroupService" />
+  </bean>
 
-	<bean id="userService"
-		class="org.experimenter.repository.service.impl.UserServiceImpl"
-		parent="service">
-		<property name="baseDao" ref="userDao" />
-	</bean>
-	<bean id="userGroupService"
-		class="org.experimenter.repository.service.impl.UserGroupServiceImpl"
-		parent="service">
-		<property name="baseDao" ref="userGroupDao" />
-	</bean>
-	<bean id="applicationService"
-		class="org.experimenter.repository.service.impl.ApplicationServiceImpl"
-		parent="service">
-		<property name="baseDao" ref="applicationDao" />
-	</bean>
-	<bean id="computerService"
-		class="org.experimenter.repository.service.impl.ComputerServiceImpl"
-		parent="service">
-		<property name="baseDao" ref="computerDao" />
-	</bean>
-	<bean id="connectionService"
-		class="org.experimenter.repository.service.impl.ConnectionServiceImpl"
-		parent="service">
-		<property name="baseDao" ref="connectionDao" />
-	</bean>
-	<bean id="connectionFarmService"
-		class="org.experimenter.repository.service.impl.ConnectionFarmServiceImpl"
-		parent="service">
-		<property name="baseDao" ref="connectionFarmDao" />
-	</bean>
-	<bean id="experimentService"
-		class="org.experimenter.repository.service.impl.ExperimentServiceImpl"
-		parent="service">
-		<property name="baseDao" ref="experimentDao" />
-	</bean>
-	<bean id="inputService"
-		class="org.experimenter.repository.service.impl.InputServiceImpl"
-		parent="service">
-		<property name="baseDao" ref="inputDao" />
-	</bean>
-	<bean id="inputSetService"
-		class="org.experimenter.repository.service.impl.InputSetServiceImpl"
-		parent="service">
-		<property name="baseDao" ref="inputSetDao" />
-	</bean>
-	<bean id="problemTypeService"
-		class="org.experimenter.repository.service.impl.ProblemTypeServiceImpl"
-		parent="service">
-		<property name="baseDao" ref="problemTypeDao" />
-	</bean>
-	<bean id="programService"
-		class="org.experimenter.repository.service.impl.ProgramServiceImpl"
-		parent="service">
-		<property name="baseDao" ref="programDao" />
-	</bean>
-	<bean id="projectService"
-		class="org.experimenter.repository.service.impl.ProjectServiceImpl"
-		parent="service">
-		<property name="baseDao" ref="projectDao" />
-	</bean>
+  <bean id="userService"
+    class="org.experimenter.repository.service.impl.UserServiceImpl"
+    parent="service">
+    <property name="baseDao" ref="userDao" />
+  </bean>
+  <bean id="userGroupService"
+    class="org.experimenter.repository.service.impl.UserGroupServiceImpl"
+    parent="service">
+    <property name="baseDao" ref="userGroupDao" />
+  </bean>
+  <bean id="applicationService"
+    class="org.experimenter.repository.service.impl.ApplicationServiceImpl"
+    parent="service">
+    <property name="baseDao" ref="applicationDao" />
+  </bean>
+  <bean id="computerService"
+    class="org.experimenter.repository.service.impl.ComputerServiceImpl"
+    parent="service">
+    <property name="baseDao" ref="computerDao" />
+  </bean>
+  <bean id="connectionService"
+    class="org.experimenter.repository.service.impl.ConnectionServiceImpl"
+    parent="service">
+    <property name="baseDao" ref="connectionDao" />
+  </bean>
+  <bean id="connectionFarmService"
+    class="org.experimenter.repository.service.impl.ConnectionFarmServiceImpl"
+    parent="service">
+    <property name="baseDao" ref="connectionFarmDao" />
+  </bean>
+  <bean id="experimentService"
+    class="org.experimenter.repository.service.impl.ExperimentServiceImpl"
+    parent="service">
+    <property name="baseDao" ref="experimentDao" />
+  </bean>
+  <bean id="inputService"
+    class="org.experimenter.repository.service.impl.InputServiceImpl"
+    parent="service">
+    <property name="baseDao" ref="inputDao" />
+  </bean>
+  <bean id="inputSetService"
+    class="org.experimenter.repository.service.impl.InputSetServiceImpl"
+    parent="service">
+    <property name="baseDao" ref="inputSetDao" />
+  </bean>
+  <bean id="problemTypeService"
+    class="org.experimenter.repository.service.impl.ProblemTypeServiceImpl"
+    parent="service">
+    <property name="baseDao" ref="problemTypeDao" />
+  </bean>
+  <bean id="programService"
+    class="org.experimenter.repository.service.impl.ProgramServiceImpl"
+    parent="service">
+    <property name="baseDao" ref="programDao" />
+  </bean>
+  <bean id="projectService"
+    class="org.experimenter.repository.service.impl.ProjectServiceImpl"
+    parent="service">
+    <property name="baseDao" ref="projectDao" />
+  </bean>
+
+  <bean id="schedulerService"
+    class="org.experimenter.repository.service.impl.SchedulerServiceImpl">
+    <property name="scheduler" ref="schedulerFactory" />
+    <property name="experimentService" ref="experimentService" />
+    <property name="hibernateInterceptor" ref="hibernateInterceptor" />
+
+  </bean>
 
 
-	<!-- Hibernate session management -->
+  <!-- Hibernate session management -->
 
-	<bean id="sessionFactory"
-		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
-		<property name="dataSource" ref="dataSource"></property>
-		<property name="annotatedClasses">
-			<list>
-				<value>org.experimenter.repository.entity.User</value>
-				<value>org.experimenter.repository.entity.UserGroup</value>
-				<value>org.experimenter.repository.entity.ConnectionFarm</value>
-				<value>org.experimenter.repository.entity.Connection</value>
-				<value>org.experimenter.repository.entity.Computer</value>
-				<value>org.experimenter.repository.entity.Project</value>
-				<value>org.experimenter.repository.entity.Program</value>
-				<value>org.experimenter.repository.entity.Application</value>
-				<value>org.experimenter.repository.entity.Experiment</value>
-				<value>org.experimenter.repository.entity.ProblemType</value>
-				<value>org.experimenter.repository.entity.Input</value>
-				<value>org.experimenter.repository.entity.InputSet</value>
-			</list>
-		</property>
-		<property name="hibernateProperties">
-			<props>
-				<prop key="hibernate.dialect"> org.hibernate.dialect.HSQLDialect </prop>
-				<prop key="hibernate.show_sql">true</prop>
-				<prop key="hibernate.connection.release_mode"> on_close </prop>
-			</props>
-		</property>
-	</bean>
+  <bean id="sessionFactory"
+    class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+    <property name="dataSource" ref="dataSource"></property>
+    <property name="annotatedClasses">
+      <list>
+        <value>org.experimenter.repository.entity.User</value>
+        <value>org.experimenter.repository.entity.UserGroup</value>
+        <value>org.experimenter.repository.entity.ConnectionFarm</value>
+        <value>org.experimenter.repository.entity.Connection</value>
+        <value>org.experimenter.repository.entity.Computer</value>
+        <value>org.experimenter.repository.entity.Project</value>
+        <value>org.experimenter.repository.entity.Program</value>
+        <value>org.experimenter.repository.entity.Application</value>
+        <value>org.experimenter.repository.entity.Experiment</value>
+        <value>org.experimenter.repository.entity.ProblemType</value>
+        <value>org.experimenter.repository.entity.Input</value>
+        <value>org.experimenter.repository.entity.InputSet</value>
+      </list>
+    </property>
+    <property name="hibernateProperties">
+      <props>
+        <prop key="hibernate.dialect"> org.hibernate.dialect.HSQLDialect </prop>
+        <prop key="hibernate.show_sql">true</prop>
+        <prop key="hibernate.connection.release_mode"> on_close </prop>
+      </props>
+    </property>
+  </bean>
+
+  <!-- The Hibernate interceptor, which takes care of opening and closing 
+    hibernate session around method calls. -->
+  <bean id="hibernateInterceptor"
+    class="org.springframework.orm.hibernate3.HibernateInterceptor">
+    <property name="sessionFactory">
+      <ref bean="sessionFactory" />
+    </property>
+  </bean>
 
 </beans>

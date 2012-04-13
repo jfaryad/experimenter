@@ -92,6 +92,8 @@ public class DaoTestHelper {
         assertNotNull("experiment not found", experiment);
         assertEquals("experiment1", experiment.getName());
         assertEquals("experiment to test find", experiment.getDescription());
+        assertEquals("0/10 * * * * ?", experiment.getCronExpression());
+        assertEquals(false, experiment.getIsActive());
         checkApplication1(experiment.getApplication());
     }
 

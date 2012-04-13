@@ -19,6 +19,7 @@ public class ExperimentDaoTest extends AbstractDaoTest {
         Experiment experiment = new Experiment();
         experiment.setName("exp1");
         experiment.setDescription("exp1 - sat");
+        experiment.setIsActive(false);
         Application application = new Application();
         application.setId(1);
         experiment.setApplication(application);
