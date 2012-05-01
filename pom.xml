@@ -16,7 +16,7 @@
     <version.slf4j>1.6.1</version.slf4j>
     <version.spring>3.0.5.RELEASE</version.spring>
     <version.hibernate>3.6.8.Final</version.hibernate>
-    <hibernate.annotations.version>3.4.0.GA</hibernate.annotations.version>
+    <hibernate.annotations.version>3.3.0.ga</hibernate.annotations.version>
     <version.commons-dbcp>1.4</version.commons-dbcp>
     <version.cglib>2.2</version.cglib>
     <version.aspectj>1.6.8</version.aspectj>
@@ -118,6 +118,11 @@
       <dependency>
         <groupId>org.springframework</groupId>
         <artifactId>spring-context</artifactId>
+        <version>${version.spring}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-context-support</artifactId>
         <version>${version.spring}</version>
       </dependency>
       <dependency>
@@ -252,12 +257,7 @@
         <version>${version.junit}</version>
         <scope>test</scope>
       </dependency>
-      <dependency>
-        <groupId>org.springframework</groupId>
-        <artifactId>spring-context-support</artifactId>
-        <version>${version.spring}</version>
-        <scope>test</scope>
-      </dependency>
+      
       <dependency>
         <groupId>org.springframework</groupId>
         <artifactId>spring-test</artifactId>
