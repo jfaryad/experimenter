@@ -3,6 +3,8 @@ package org.experimenter.repository.service.impl;
 import java.text.ParseException;
 
 import org.experimenter.repository.entity.Experiment;
+import org.experimenter.repository.scheduler.ExperimentExecutor;
+import org.experimenter.repository.scheduler.ScheduledJob;
 import org.experimenter.repository.service.ExperimentService;
 import org.experimenter.repository.service.SchedulerService;
 import org.quartz.CronTrigger;
@@ -53,14 +55,14 @@ public class SchedulerServiceImpl implements SchedulerService {
     }
 
     private void addNewJobToScheduler(Experiment experiment) throws SchedulerException {
-        RunMeTask task = new RunMeTask(experiment.getId(), experimentService);
+        ExperimentExecutor task = new ExperimentExecutor(experiment.getId(), experimentService);
         ProxyFactory factory = new ProxyFactory(task);
         Advised advised = (Advised) factory.getProxy();
         advised.addAdvice(hibernateInterceptor);
-        RunMeTask advisedTask = (RunMeTask) advised;
-        JobDetail jobDetail = new JobDetail(experiment.getId().toString(), null, RunMeJob.class);
+        ExperimentExecutor advisedTask = (ExperimentExecutor) advised;
+        JobDetail jobDetail = new JobDetail(experiment.getId().toString(), null, ScheduledJob.class);
         jobDetail.getJobDataMap().put("type", "FULL");
-        jobDetail.getJobDataMap().put("runMeTask", advisedTask);
+        jobDetail.getJobDataMap().put("experimentExecutor", advisedTask);
         scheduler.addJob(jobDetail, true);
     }
 
