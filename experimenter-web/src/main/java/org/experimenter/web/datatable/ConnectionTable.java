@@ -46,4 +46,9 @@ public class ConnectionTable extends DataTablePanel<Connection> {
         return new ConnectionFormPanel(componentId, new ConnectionModel(new Connection()));
     }
 
+    @Override
+    protected Connection getNewEntity() {
+        return new Connection();
+    }
+
 }

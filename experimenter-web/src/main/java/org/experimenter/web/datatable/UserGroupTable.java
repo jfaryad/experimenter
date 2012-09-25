@@ -40,4 +40,14 @@ public class UserGroupTable extends DataTablePanel<UserGroup> {
         return new UserGroupFormPanel(componentId, new UserGroupModel(new UserGroup()));
     }
 
+    @Override
+    protected UserGroup getNewEntity() {
+        return new UserGroup();
+    }
+
+    @Override
+    protected boolean enableAdding() {
+        return false;
+    }
+
 }

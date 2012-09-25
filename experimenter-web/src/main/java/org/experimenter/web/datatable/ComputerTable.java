@@ -41,4 +41,9 @@ public class ComputerTable extends DataTablePanel<Computer> {
         return new ComputerFormPanel(componentId, new ComputerModel(new Computer()));
     }
 
+    @Override
+    protected Computer getNewEntity() {
+        return new Computer();
+    }
+
 }

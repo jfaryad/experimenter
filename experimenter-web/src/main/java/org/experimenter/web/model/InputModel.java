@@ -27,7 +27,7 @@ public class InputModel extends EntityModel<Input> {
     }
 
     @Override
-    protected Input load(Integer id) {
+    protected Input loadForId(Integer id) {
         return inputService.findById(id);
     }
 

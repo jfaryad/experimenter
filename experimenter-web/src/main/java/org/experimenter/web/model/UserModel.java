@@ -27,7 +27,7 @@ public class UserModel extends EntityModel<User> {
     }
 
     @Override
-    protected User load(Integer id) {
+    protected User loadForId(Integer id) {
         return userService.findById(id);
     }
 

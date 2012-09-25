@@ -42,4 +42,9 @@ public class ConnectionFarmTable extends DataTablePanel<ConnectionFarm> {
         return new ConnectionFarmFormPanel(componentId, new ConnectionFarmModel(new ConnectionFarm()));
     }
 
+    @Override
+    protected ConnectionFarm getNewEntity() {
+        return new ConnectionFarm();
+    }
+
 }

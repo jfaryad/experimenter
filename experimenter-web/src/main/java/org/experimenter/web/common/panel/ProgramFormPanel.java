@@ -1,11 +1,15 @@
 package org.experimenter.web.common.panel;
 
+import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.RequiredTextField;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.experimenter.repository.entity.Program;
+import org.experimenter.repository.entity.Project;
 import org.experimenter.repository.service.ProgramService;
 import org.experimenter.web.model.ProgramModel;
+import org.experimenter.web.model.aggregate.AvailableProjects;
+import org.experimenter.web.renderer.PropertyChoiceRenderer;
 
 /**
  * Simple panel with a form to edit the {@link Program} entity.
@@ -29,6 +33,7 @@ public class ProgramFormPanel extends EntityFormPanel<Program> {
         form.add(new RequiredTextField<String>("name"));
         form.add(new RequiredTextField<String>("description"));
         form.add(new RequiredTextField<String>("command"));
+        form.add(new DropDownChoice<Project>("project", new AvailableProjects(), PropertyChoiceRenderer.PROJECT));
 
     }
 

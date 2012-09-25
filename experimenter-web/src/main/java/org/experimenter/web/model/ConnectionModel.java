@@ -27,7 +27,7 @@ public class ConnectionModel extends EntityModel<Connection> {
     }
 
     @Override
-    protected Connection load(Integer id) {
+    protected Connection loadForId(Integer id) {
         return connectionService.findById(id);
     }
 

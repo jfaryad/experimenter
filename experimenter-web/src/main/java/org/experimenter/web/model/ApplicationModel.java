@@ -27,7 +27,7 @@ public class ApplicationModel extends EntityModel<Application> {
     }
 
     @Override
-    protected Application load(Integer id) {
+    protected Application loadForId(Integer id) {
         return applicationService.findById(id);
     }
 

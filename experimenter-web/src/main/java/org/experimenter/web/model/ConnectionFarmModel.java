@@ -27,7 +27,7 @@ public class ConnectionFarmModel extends EntityModel<ConnectionFarm> {
     }
 
     @Override
-    protected ConnectionFarm load(Integer id) {
+    protected ConnectionFarm loadForId(Integer id) {
         return connectionFarmService.findById(id);
     }
 

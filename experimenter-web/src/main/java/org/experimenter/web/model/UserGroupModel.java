@@ -27,7 +27,7 @@ public class UserGroupModel extends EntityModel<UserGroup> {
     }
 
     @Override
-    protected UserGroup load(Integer id) {
+    protected UserGroup loadForId(Integer id) {
         return UserGroupService.findById(id);
     }
 

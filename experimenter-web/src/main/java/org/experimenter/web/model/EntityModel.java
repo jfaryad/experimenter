@@ -1,7 +1,6 @@
 package org.experimenter.web.model;
 
 import org.apache.wicket.injection.Injector;
-import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.LoadableDetachableModel;
 import org.experimenter.repository.entity.Entity;
 
@@ -20,7 +19,7 @@ import org.experimenter.repository.entity.Entity;
  * @param <T>
  *            the specific entity this model works with
  */
-public abstract class EntityModel<T extends Entity> implements IModel<T> {
+public abstract class EntityModel<T extends Entity> extends LoadableDetachableModel<T> {
 
     private static final long serialVersionUID = -1039464884750961390L;
 
@@ -41,10 +40,10 @@ public abstract class EntityModel<T extends Entity> implements IModel<T> {
     }
 
     @Override
-    public T getObject() {
+    public T load() {
         if (entity == null) {
             if (id != null) {
-                entity = load(id);
+                entity = loadForId(id);
                 if (entity == null) {
                     throw new EntityNotFoundException("Entity model " + getClass() + " could not find entity with id "
                             + id);
@@ -55,7 +54,7 @@ public abstract class EntityModel<T extends Entity> implements IModel<T> {
     }
 
     @Override
-    public void detach() {
+    public void onDetach() {
         if (entity != null) {
             if (entity.getId() != null) {
                 id = entity.getId();
@@ -71,10 +70,14 @@ public abstract class EntityModel<T extends Entity> implements IModel<T> {
      *            the id of the entity to load
      * @return the loaded entity
      */
-    protected abstract T load(Integer id);
+    protected abstract T loadForId(Integer id);
 
     @Override
     public void setObject(T object) {
-        throw new UnsupportedOperationException(getClass() + " does not support #setObject(T entity)");
+        super.setObject(object);
+        entity = object;
+        if (entity != null) {
+            id = entity.getId();
+        }
     }
 }

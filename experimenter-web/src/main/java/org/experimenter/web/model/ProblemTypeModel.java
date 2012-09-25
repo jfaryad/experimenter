@@ -27,7 +27,7 @@ public class ProblemTypeModel extends EntityModel<ProblemType> {
     }
 
     @Override
-    protected ProblemType load(Integer id) {
+    protected ProblemType loadForId(Integer id) {
         return problemTypeService.findById(id);
     }
 

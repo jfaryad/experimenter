@@ -27,7 +27,7 @@ public class ExperimentModel extends EntityModel<Experiment> {
     }
 
     @Override
-    protected Experiment load(Integer id) {
+    protected Experiment loadForId(Integer id) {
         return experimentService.findById(id);
     }
 

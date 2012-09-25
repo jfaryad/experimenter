@@ -8,9 +8,11 @@ import org.apache.wicket.extensions.markup.html.repeater.data.table.PropertyColu
 import org.apache.wicket.markup.repeater.data.IDataProvider;
 import org.apache.wicket.model.Model;
 import org.experimenter.repository.entity.Project;
+import org.experimenter.repository.entity.UserGroup;
 import org.experimenter.web.common.panel.EntityFormPanel;
 import org.experimenter.web.common.panel.ProjectFormPanel;
 import org.experimenter.web.model.ProjectModel;
+import org.experimenter.web.model.aggregate.AvailableUserGroups;
 
 /**
  * Table listing {@link Project} entities.
@@ -43,4 +45,13 @@ public class ProjectTable extends DataTablePanel<Project> {
         return new ProjectFormPanel(componentId, new ProjectModel(new Project()));
     }
 
+    @Override
+    protected Project getNewEntity() {
+        Project project = new Project();
+        // TODO set active user group
+        UserGroup group = new AvailableUserGroups().getObject().get(0);
+        project.setUserGroup(group);
+        group.getProjects().add(project);
+        return project;
+    }
 }

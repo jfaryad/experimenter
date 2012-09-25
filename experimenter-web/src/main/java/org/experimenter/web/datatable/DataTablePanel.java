@@ -3,6 +3,7 @@ package org.experimenter.web.datatable;
 import java.util.List;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
 import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow.WindowClosedCallback;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.DataTable;
@@ -41,6 +42,8 @@ public abstract class DataTablePanel<T extends Entity> extends Panel {
 
         modalWindow.setContent(entityForm);
         addDataTable(dataProvider);
+
+        add(createAddLink());
     }
 
     private void addDataTable(IDataProvider<T> dataProvider) {
@@ -66,6 +69,37 @@ public abstract class DataTablePanel<T extends Entity> extends Panel {
      */
     protected abstract EntityFormPanel<T> createEntityForm(String componentId);
 
+    /**
+     * Determines whether it's possible to create a new instance of this entity using a "new" button.
+     * 
+     * @return true, if the "new" button should be displayed
+     */
+    protected boolean enableAdding() {
+        return true;
+    }
+
+    protected abstract T getNewEntity();
+
+    private AjaxLink<String> createAddLink() {
+        AjaxLink<String> link = new AjaxLink<String>("add-link") {
+
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public void onClick(AjaxRequestTarget target) {
+                showEditDialog(target, getNewEntity());
+            }
+
+            @Override
+            protected void onConfigure() {
+                super.onConfigure();
+                setVisibilityAllowed(enableAdding());
+            }
+        };
+
+        return link;
+    }
+
     private TableRowEditColumn<T> createEditColumn() {
         return new TableRowEditColumn<T>() {
 
@@ -73,7 +107,7 @@ public abstract class DataTablePanel<T extends Entity> extends Panel {
 
             @Override
             protected void onClick(AjaxRequestTarget target, IModel<T> rowModel) {
-                showEditDialog(target, rowModel);
+                showEditDialog(target, rowModel.getObject());
 
             }
 
@@ -95,9 +129,9 @@ public abstract class DataTablePanel<T extends Entity> extends Panel {
         return modal;
     }
 
-    private void showEditDialog(AjaxRequestTarget target, IModel<T> rowModel) {
+    private void showEditDialog(AjaxRequestTarget target, T object) {
         target.add(this);
-        entityForm.setEntityModel(rowModel);
+        entityForm.setFormObject(object);
         modalWindow.show(target);
     }
 }

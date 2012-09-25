@@ -27,7 +27,7 @@ public class ProgramModel extends EntityModel<Program> {
     }
 
     @Override
-    protected Program load(Integer id) {
+    protected Program loadForId(Integer id) {
         return programService.findById(id);
     }
 

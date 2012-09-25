@@ -27,7 +27,7 @@ public class ProjectModel extends EntityModel<Project> {
     }
 
     @Override
-    protected Project load(Integer id) {
+    protected Project loadForId(Integer id) {
         return projectService.findById(id);
     }
 

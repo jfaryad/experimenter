@@ -45,4 +45,9 @@ public class ExperimentTable extends DataTablePanel<Experiment> {
         return new ExperimentFormPanel(componentId, new ExperimentModel(new Experiment()));
     }
 
+    @Override
+    protected Experiment getNewEntity() {
+        return new Experiment();
+    }
+
 }

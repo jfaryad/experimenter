@@ -42,4 +42,9 @@ public class InputSetTable extends DataTablePanel<InputSet> {
         return new InputSetFormPanel(componentId, new InputSetModel(new InputSet()));
     }
 
+    @Override
+    protected InputSet getNewEntity() {
+        return new InputSet();
+    }
+
 }

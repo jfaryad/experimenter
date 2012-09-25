@@ -43,4 +43,9 @@ public class ProgramTable extends DataTablePanel<Program> {
         return new ProgramFormPanel(componentId, new ProgramModel(new Program()));
     }
 
+    @Override
+    protected Program getNewEntity() {
+        return new Program();
+    }
+
 }

@@ -27,7 +27,7 @@ public class ComputerModel extends EntityModel<Computer> {
     }
 
     @Override
-    protected Computer load(Integer id) {
+    protected Computer loadForId(Integer id) {
         return computerService.findById(id);
     }
 

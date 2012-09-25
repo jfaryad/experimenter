@@ -42,4 +42,14 @@ public class UserTable extends DataTablePanel<User> {
     protected EntityFormPanel<User> createEntityForm(String componentId) {
         return new UserFormPanel(componentId, new UserModel(new User()));
     }
+
+    @Override
+    protected User getNewEntity() {
+        return new User();
+    }
+
+    @Override
+    protected boolean enableAdding() {
+        return false;
+    }
 }

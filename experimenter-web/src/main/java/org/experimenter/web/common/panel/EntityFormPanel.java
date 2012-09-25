@@ -1,6 +1,7 @@
 package org.experimenter.web.common.panel;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.ajax.markup.html.form.AjaxButton;
 import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
 import org.apache.wicket.injection.Injector;
@@ -45,8 +46,8 @@ public abstract class EntityFormPanel<T extends Entity> extends Panel {
         add(form);
     }
 
-    public void setEntityModel(IModel<T> model) {
-        this.form.setModel(new CompoundPropertyModel<T>(model));
+    public void setFormObject(T object) {
+        this.form.setModelObject(object);
     }
 
     /**
@@ -79,6 +80,10 @@ public abstract class EntityFormPanel<T extends Entity> extends Panel {
             modalContainer.close(target);
     }
 
+    protected Form<T> getForm() {
+        return form;
+    }
+
     private Form<T> createForm(IModel<T> model) {
         Form<T> form = new Form<T>("entity-form", new CompoundPropertyModel<T>(model)) {
 
@@ -105,19 +110,13 @@ public abstract class EntityFormPanel<T extends Entity> extends Panel {
 
             }
         });
-        form.add(new AjaxButton("cancel") {
+        form.add(new AjaxLink<String>("cancel") {
 
             private static final long serialVersionUID = 1L;
 
             @Override
-            protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
+            public void onClick(AjaxRequestTarget target) {
                 EntityFormPanel.this.onCancel(target);
-
-            }
-
-            @Override
-            protected void onError(AjaxRequestTarget target, Form<?> form) {
-                // TODO Auto-generated method stub
 
             }
         });

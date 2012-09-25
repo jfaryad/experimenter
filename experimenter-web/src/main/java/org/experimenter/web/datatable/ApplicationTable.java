@@ -42,4 +42,9 @@ public class ApplicationTable extends DataTablePanel<Application> {
         return new ApplicationFormPanel(componentId, new ApplicationModel(new Application()));
     }
 
+    @Override
+    protected Application getNewEntity() {
+        return new Application();
+    }
+
 }

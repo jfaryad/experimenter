@@ -41,4 +41,9 @@ public class ProblemTypeTable extends DataTablePanel<ProblemType> {
         return new ProblemTypeFormPanel(componentId, new ProblemTypeModel(new ProblemType()));
     }
 
+    @Override
+    protected ProblemType getNewEntity() {
+        return new ProblemType();
+    }
+
 }
