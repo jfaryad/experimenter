@@ -12,7 +12,7 @@ import org.experimenter.repository.entity.UserGroup;
 import org.experimenter.web.common.panel.EntityFormPanel;
 import org.experimenter.web.common.panel.ProjectFormPanel;
 import org.experimenter.web.model.ProjectModel;
-import org.experimenter.web.model.aggregate.AvailableUserGroups;
+import org.experimenter.web.model.UserGroupModel;
 
 /**
  * Table listing {@link Project} entities.
@@ -49,7 +49,7 @@ public class ProjectTable extends DataTablePanel<Project> {
     protected Project getNewEntity() {
         Project project = new Project();
         // TODO set active user group
-        UserGroup group = new AvailableUserGroups().getObject().get(0);
+        UserGroup group = new UserGroupModel(6).getObject();
         project.setUserGroup(group);
         group.getProjects().add(project);
         return project;

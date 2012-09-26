@@ -33,7 +33,7 @@ public class ProgramFormPanel extends EntityFormPanel<Program> {
         form.add(new RequiredTextField<String>("name"));
         form.add(new RequiredTextField<String>("description"));
         form.add(new RequiredTextField<String>("command"));
-        form.add(new DropDownChoice<Project>("project", new AvailableProjects(), PropertyChoiceRenderer.PROJECT));
+        form.add(new DropDownChoice<Project>("project", new AvailableProjects(), PropertyChoiceRenderer.PROJECT_RENDERER));
 
     }
 

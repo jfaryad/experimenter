@@ -42,7 +42,8 @@ public class ApplicationFormPanel extends EntityFormPanel<Application> {
     protected void addFieldsToForm(Form<Application> form) {
         form.add(new RequiredTextField<String>("version"));
         form.add(fileUploadField = new FileUploadField("executable"));
-        form.add(new DropDownChoice<Program>("program", new AvailablePrograms(), PropertyChoiceRenderer.PROGRAM));
+        form.add(new DropDownChoice<Program>("program", new AvailablePrograms(),
+                PropertyChoiceRenderer.PROGRAM_RENDERER));
 
     }
 
@@ -90,7 +91,8 @@ public class ApplicationFormPanel extends EntityFormPanel<Application> {
     }
 
     private Folder getUploadFolder(Application application) {
-        return new Folder("/tmp/executables/" + application.getProgram().getName() + "/"
+        return new Folder("/home/jfaryad/expstore/executables/" + application.getProgram().getProject().getId() + "/"
+                + application.getProgram().getId() + "/"
                 + application.getVersion());
     }
 

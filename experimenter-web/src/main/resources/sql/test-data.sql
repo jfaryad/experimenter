@@ -86,3 +86,7 @@ INSERT INTO PROJECT_INPUT_SET (input_set_id,project_id) VALUES (3, 5);
 
 INSERT INTO EXPERIMENT_FARM (experiment_id,farm_id) VALUES (1, 1);
 INSERT INTO EXPERIMENT_FARM (experiment_id,farm_id) VALUES (2, 4);
+
+COMMIT;
+SHUTDOWN;
+

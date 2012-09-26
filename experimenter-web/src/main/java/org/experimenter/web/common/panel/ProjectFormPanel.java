@@ -33,7 +33,7 @@ public class ProjectFormPanel extends EntityFormPanel<Project> {
         form.add(new RequiredTextField<String>("name"));
         form.add(new RequiredTextField<String>("description"));
         form.add(new DropDownChoice<ProblemType>("problem", new AvailableProblemTypes(),
-                PropertyChoiceRenderer.PROBLEM_TYPE));
+                PropertyChoiceRenderer.PROBLEM_TYPE_RENDERER));
 
     }
 

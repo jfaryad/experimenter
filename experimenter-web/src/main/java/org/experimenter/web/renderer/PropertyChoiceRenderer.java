@@ -3,7 +3,11 @@ package org.experimenter.web.renderer;
 import org.apache.wicket.markup.html.form.IChoiceRenderer;
 import org.apache.wicket.model.PropertyModel;
 import org.experimenter.repository.entity.Application;
+import org.experimenter.repository.entity.Computer;
+import org.experimenter.repository.entity.ConnectionFarm;
 import org.experimenter.repository.entity.Entity;
+import org.experimenter.repository.entity.Input;
+import org.experimenter.repository.entity.InputSet;
 import org.experimenter.repository.entity.ProblemType;
 import org.experimenter.repository.entity.Program;
 import org.experimenter.repository.entity.Project;
@@ -12,23 +16,32 @@ public class PropertyChoiceRenderer<T extends Entity> implements IChoiceRenderer
 
     private static final long serialVersionUID = 1L;
 
-    private String property;
+    private final String property;
 
-    public static final PropertyChoiceRenderer<ProblemType> PROBLEM_TYPE = new PropertyChoiceRenderer<ProblemType>(
+    public static final PropertyChoiceRenderer<ProblemType> PROBLEM_TYPE_RENDERER = new PropertyChoiceRenderer<ProblemType>(
             "name");
-    public static final PropertyChoiceRenderer<Project> PROJECT = new PropertyChoiceRenderer<Project>("name");
-    public static final PropertyChoiceRenderer<Program> PROGRAM = new PropertyChoiceRenderer<Program>("name");
-    public static final PropertyChoiceRenderer<Application> APPLICATION = new PropertyChoiceRenderer<Application>(
+    public static final PropertyChoiceRenderer<Project> PROJECT_RENDERER = new PropertyChoiceRenderer<Project>("name");
+    public static final PropertyChoiceRenderer<Program> PROGRAM_RENDERER = new PropertyChoiceRenderer<Program>("name");
+    public static final PropertyChoiceRenderer<Application> APPLICATION_RENDERER = new PropertyChoiceRenderer<Application>(
             "version");
+    public static final PropertyChoiceRenderer<Computer> COMPUTER_RENDERER = new PropertyChoiceRenderer<Computer>(
+            "address");
+    public static final PropertyChoiceRenderer<ConnectionFarm> CONNECTION_FARM_RENDERER = new PropertyChoiceRenderer<ConnectionFarm>(
+            "name");
+    public static final PropertyChoiceRenderer<Input> INPUT_RENDERER = new PropertyChoiceRenderer<Input>("name");
+    public static final PropertyChoiceRenderer<InputSet> INPUT_SET_RENDERER = new PropertyChoiceRenderer<InputSet>(
+            "name");
 
     public PropertyChoiceRenderer(String property) {
         this.property = property;
     }
 
+    @Override
     public Object getDisplayValue(T object) {
         return getPropertyValue(object);
     }
 
+    @Override
     public String getIdValue(T object, int index) {
         return object.getId().toString();
     }
