@@ -13,4 +13,11 @@ public class ProblemTypeServiceImpl extends AbstractService<ProblemType, Problem
         inputSetService.delete(problemType.getInputSets());
     }
 
+    @Override
+    protected boolean hasDependencies(ProblemType problemType) {
+        return !problemType.getProjects().isEmpty()
+                || !problemType.getInputs().isEmpty()
+                || !problemType.getInputSets().isEmpty();
+    }
+
 }

@@ -1,6 +1,6 @@
 body,p,li,a {
   font-family: georgia, times, serif;
-  font-size: 13pt;
+  font-size: 12pt;
 }
 
 h1,h2,h3 {
@@ -14,18 +14,21 @@ body {
 
 .header {
   width: 100%;
+  min-width: 1200px;
   height: 87px;
   background-color: #092E67;
   margin-top: 0;
   padding-top: 10px;
   border-bottom: 1px solid #888;
   z-index: 0;
+  height: 87px;
 }
 
 .footer {
   position: absolute;
   bottom: 0;
   width: 100%;
+  min-width: 1200px;
   height: 99px;
   background-color: #6493D2;
   border-top: 1px solid #888;
@@ -33,12 +36,10 @@ body {
 }
 
 .logo,.middle {
-  width: 1200px;
+  width: 1125px;
   margin: 0 auto;
   padding: 25px 50px 0 10px;
-  position: absolute;
-  margin-left: -600px;
-  left: 50%;
+  position: relative;
 }
 
 .logo h1 {
@@ -57,8 +58,13 @@ body {
   padding-top: 0;
 }
 
+.logo span {
+  float: right;
+  padding-top: 30px
+}
+
 .middle {
-  top: 75px;
+  margin-top: 50px;
   bottom: 75px;
   z-index: 1;
   overflow: auto;
@@ -69,18 +75,22 @@ body {
   -moz-box-shadow: 0px 0px 10px #888;
   -webkit-box-shadow: 0px 0px 10px #888;
   box-shadow: 0px 0px 10px #888;
+  width: 1140px;
+  min-height: 600px;
 }
 
 .sidebar {
   float: left;
   width: 170px;
   padding: 0px;
+  margin-bottom: 20px;
 }
 
 .content {
-  float: right;
-  width: 1000px;
+  margin-left: 160px;
   padding: 10px;
+  position: relative;
+  width: 1000px;
 }
 
 .content-title {
@@ -102,6 +112,92 @@ h2 {
 h3 {
   padding: 0;
   margin: 0;
-  font-size: 24pt;
-  color: #092E67;
+  font-size: 14pt;
+  color: #6493D2;
+}
+
+span .yui-skin-sam .yui-calendar {
+  font-size: 10pt
+}
+
+.feedbackPanelERROR {
+  color: red;
+}
+
+.signedInBlock span {
+  color: #FF9900;
+  float: none;
+  padding-left: 20px
+}
+
+.signedInBlock a {
+  padding-left: 20px;
+}
+
+.formTable {
+  left: 30px;
+  position: relative;
+  width: 80%;
+  padding-left: 10px;
+  padding-top: 10px;
+}
+
+.formTable td {
+  padding-left: 10px;
+  padding-top: 5px;
+  padding-right: 10px;
+  padding-bottom: 0px;
+}
+
+.formTable input,.formTable select {
+  width: 80%;
+}
+
+.formTableButtons {
+  padding-left: 20px;
+  padding-top: 10px;
+  left: 150px;
+  position: relative;
+}
+
+.timeSchedulePanelTable {
+  left: 0px;
+  width: 100%%;
+  padding: 0px;
+}
+
+.timeSchedulePanelTable td {
+  padding: 0px;
+}
+
+.timeSchedulePanelTable input {
+  width: 90px;
+}
+
+.timeSchedulePanelTable select {
+  width: 50px;
+}
+
+.dataTableContainer {
+  width: 100%
+}
+
+.dateTimeSelector input,.dateTimeSelector select {
+  width: auto;
+}
+
+tr.navigation .navigatorLabel {
+  float: left;
+}
+
+tr.navigation .navigator {
+  text-align: right;
+}
+
+div.inline {
+  float: left;
+}
+
+.clearBoth {
+  clear: both;
 }

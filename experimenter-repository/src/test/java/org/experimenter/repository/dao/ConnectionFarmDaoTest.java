@@ -7,9 +7,10 @@ import static org.junit.Assert.assertNull;
 import java.util.List;
 
 import org.experimenter.repository.entity.ConnectionFarm;
+import org.experimenter.repository.entity.User;
 import org.experimenter.repository.entity.UserGroup;
 import org.experimenter.repository.form.CriteriaForm;
-import org.experimenter.repository.util.DaoTestHelper;
+import org.experimenter.repository.testutil.DaoTestHelper;
 import org.junit.Test;
 
 public class ConnectionFarmDaoTest extends AbstractDaoTest {
@@ -68,6 +69,16 @@ public class ConnectionFarmDaoTest extends AbstractDaoTest {
         ConnectionFarm connectionFarm = connectionFarms.get(0);
         assertNotNull("connectionFarm not found", connectionFarm);
         DaoTestHelper.checkConnectionFarm1(connectionFarm);
+    }
+
+    @Test
+    public void findConnectionFarmsByUser() {
+        User user = userDao.findById(5);
+        List<ConnectionFarm> farms = connectionFarmDao.findConnectionFarmsByUser(user);
+        assertNotNull(farms);
+        assertEquals(1, farms.size());
+        ConnectionFarm connectionFarm = farms.get(0);
+        assertEquals(4, connectionFarm.getId().intValue());
     }
 
 }

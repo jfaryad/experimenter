@@ -18,5 +18,6 @@ public class WicketTestBase {
     @Before
     public void init() {
         tester = new WicketTester(experimenterApplication);
+        ((ExperimenterSession) tester.getSession()).authenticate("tester1", "heslo");
     }
 }

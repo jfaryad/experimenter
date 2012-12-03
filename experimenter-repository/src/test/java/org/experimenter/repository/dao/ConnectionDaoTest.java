@@ -4,13 +4,15 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.experimenter.repository.entity.Computer;
 import org.experimenter.repository.entity.Connection;
 import org.experimenter.repository.entity.ConnectionFarm;
+import org.experimenter.repository.entity.User;
 import org.experimenter.repository.form.CriteriaForm;
-import org.experimenter.repository.util.DaoTestHelper;
+import org.experimenter.repository.testutil.DaoTestHelper;
 import org.junit.Test;
 
 public class ConnectionDaoTest extends AbstractDaoTest {
@@ -79,4 +81,41 @@ public class ConnectionDaoTest extends AbstractDaoTest {
         DaoTestHelper.checkConnection1(connection);
     }
 
+    @Test
+    public void findConnectionsByUser() {
+        User user = userDao.findById(5);
+        List<Connection> list = connectionDao.findConnectionsByUser(user);
+        assertNotNull(list);
+        assertEquals(1, list.size());
+        assertEquals(4, list.get(0).getId().intValue());
+    }
+
+    @Test
+    public void findLeastLoadedConnection() {
+        List<ConnectionFarm> farms = new ArrayList<ConnectionFarm>();
+        farms.add(connectionFarmDao.findById(1));
+        farms.add(connectionFarmDao.findById(4));
+        Connection connection = connectionDao.findLeastLoadedConnection(farms, 5);
+        assertNotNull(connection);
+        assertEquals(4, connection.getId().intValue());
+        assertEquals(1, connection.getComputer().getNumberOfRunningJobs().intValue());
+    }
+
+    @Test
+    public void findFirstLeastLoadedConnectionFromMultipleEquallyLoaded() {
+        List<ConnectionFarm> farms = new ArrayList<ConnectionFarm>();
+        farms.add(connectionFarmDao.findById(1));
+        Connection connection = connectionDao.findLeastLoadedConnection(farms, 5);
+        assertNotNull(connection);
+        assertEquals(2, connection.getId().intValue());
+        assertEquals(2, connection.getComputer().getNumberOfRunningJobs().intValue());
+    }
+
+    @Test
+    public void findLeastLoadedConnectionTooRestrictive() {
+        List<ConnectionFarm> farms = new ArrayList<ConnectionFarm>();
+        farms.add(connectionFarmDao.findById(1));
+        Connection connection = connectionDao.findLeastLoadedConnection(farms, 1);
+        assertNull(connection);
+    }
 }

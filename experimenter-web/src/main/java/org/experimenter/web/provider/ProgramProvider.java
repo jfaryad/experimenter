@@ -3,10 +3,10 @@ package org.experimenter.web.provider;
 import java.util.List;
 
 import org.apache.wicket.model.IModel;
-import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.experimenter.repository.entity.Program;
-import org.experimenter.repository.service.ProgramService;
+import org.experimenter.repository.entity.Project;
 import org.experimenter.web.model.ProgramModel;
+import org.experimenter.web.model.aggregate.AvailablePrograms;
 
 /**
  * Default provider of the {@link Program} entity.
@@ -18,8 +18,11 @@ public class ProgramProvider extends EntityDataProvider<Program> {
 
     private static final long serialVersionUID = 1L;
 
-    @SpringBean
-    private ProgramService programService;
+    private final IModel<List<Program>> innerProgramModel;
+
+    public ProgramProvider(IModel<Project> projectFilter) {
+        innerProgramModel = new AvailablePrograms().filterBy("project", projectFilter);
+    }
 
     @Override
     public IModel<Program> model(Program program) {
@@ -28,8 +31,13 @@ public class ProgramProvider extends EntityDataProvider<Program> {
 
     @Override
     protected List<Program> load() {
-        // loads all programs
-        return programService.findByExample(new Program());
+        return innerProgramModel.getObject();
+    }
+
+    @Override
+    public void detach() {
+        super.detach();
+        innerProgramModel.detach();
     }
 
 }

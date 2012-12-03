@@ -31,23 +31,34 @@
 </head>
 <body>
 	<wicket:panel>
-		<table class="datatable" wicket:id="datatable">
-			<thead>
-				<tr>
-					<th>Name</th>
-					<th>Surname</th>
-					<th>Email</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td>John</td>
-					<td>Smith</td>
-					<td>john.smith@email.com</td>
-				</tr>
-			</tbody>
-		</table>
-		<a href="#" wicket:id="add-link">Add</a>
+      <div wicket:id="feedback" />
+      <table style="width:100%">
+        <tr>
+          <td>
+            <table class="datatable" wicket:id="datatable">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Surname</th>
+                        <th>Email</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>John</td>
+                        <td>Smith</td>
+                        <td>john.smith@email.com</td>
+                    </tr>
+                </tbody>
+            </table>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <a href="#" wicket:id="add-link">Add</a>
+          </td>
+        </tr>
+      </table>
 		<div wicket:id="modal-window" />
 	</wicket:panel>
 </body>

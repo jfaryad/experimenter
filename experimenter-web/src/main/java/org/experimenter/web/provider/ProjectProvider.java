@@ -3,10 +3,10 @@ package org.experimenter.web.provider;
 import java.util.List;
 
 import org.apache.wicket.model.IModel;
-import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.experimenter.repository.entity.ProblemType;
 import org.experimenter.repository.entity.Project;
-import org.experimenter.repository.service.ProjectService;
 import org.experimenter.web.model.ProjectModel;
+import org.experimenter.web.model.aggregate.AvailableProjects;
 
 /**
  * Default provider of the {@link Project} entity.
@@ -18,8 +18,11 @@ public class ProjectProvider extends EntityDataProvider<Project> {
 
     private static final long serialVersionUID = 1L;
 
-    @SpringBean
-    private ProjectService projectService;
+    private final IModel<List<Project>> innerProjectModel;
+
+    public ProjectProvider(IModel<ProblemType> problemTypeFilter) {
+        innerProjectModel = new AvailableProjects().filterBy("problem", problemTypeFilter);
+    }
 
     @Override
     public IModel<Project> model(Project project) {
@@ -28,8 +31,13 @@ public class ProjectProvider extends EntityDataProvider<Project> {
 
     @Override
     protected List<Project> load() {
-        // loads all projects
-        return projectService.findByExample(new Project());
+        return innerProjectModel.getObject();
+    }
+
+    @Override
+    public void detach() {
+        super.detach();
+        innerProjectModel.detach();
     }
 
 }

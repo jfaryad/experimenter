@@ -3,17 +3,17 @@ package org.experimenter.web.datatable;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.wicket.extensions.markup.html.repeater.data.grid.ICellPopulator;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.PropertyColumn;
-import org.apache.wicket.markup.html.basic.Label;
-import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.markup.repeater.data.IDataProvider;
-import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.experimenter.repository.entity.Connection;
+import org.experimenter.repository.service.ConnectionService;
+import org.experimenter.repository.service.EntityService;
 import org.experimenter.web.common.panel.ConnectionFormPanel;
 import org.experimenter.web.common.panel.EntityFormPanel;
+import org.experimenter.web.datatable.column.AddressPortColumn;
 import org.experimenter.web.model.ConnectionModel;
 
 /**
@@ -25,32 +25,22 @@ import org.experimenter.web.model.ConnectionModel;
 public class ConnectionTable extends DataTablePanel<Connection> {
 
     private static final long serialVersionUID = 1L;
+    @SpringBean
+    private ConnectionService connectionService;
 
     public ConnectionTable(String id, IDataProvider<Connection> dataProvider) {
         super(id, dataProvider);
     }
 
     @Override
-    protected List<IColumn<Connection>> getColumns() {
-        List<IColumn<Connection>> columns = new ArrayList<IColumn<Connection>>();
+    protected List<IColumn<Connection, String>> getColumns() {
+        List<IColumn<Connection, String>> columns = new ArrayList<IColumn<Connection, String>>();
 
-        columns.add(new PropertyColumn<Connection>(new Model<String>("Name"), "name"));
-        columns.add(new PropertyColumn<Connection>(new Model<String>("Login"), "login"));
-        columns.add(new PropertyColumn<Connection>(new Model<String>("Password"), "password") {
-
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            public void populateItem(Item<ICellPopulator<Connection>> cellItem, String componentId,
-                    IModel<Connection> rowModel) {
-                cellItem.add(new Label(componentId, "*****"));
-            }
-
-        });
-        columns.add(new PropertyColumn<Connection>(new Model<String>("Description"), "description"));
-        columns.add(new PropertyColumn<Connection>(new Model<String>("Port"), "port"));
-        columns.add(new PropertyColumn<Connection>(new Model<String>("Adress"), "computer.address"));
-        columns.add(new PropertyColumn<Connection>(new Model<String>("Farm"), "connectionFarm.name"));
+        columns.add(new PropertyColumn<Connection, String>(new Model<String>("Name"), "name"));
+        columns.add(new PropertyColumn<Connection, String>(new Model<String>("Login"), "login"));
+        columns.add(new AddressPortColumn(new Model<String>("Address")));
+        columns.add(new PropertyColumn<Connection, String>(new Model<String>("Description"), "description"));
+        columns.add(new PropertyColumn<Connection, String>(new Model<String>("Farm"), "connectionFarm.name"));
 
         return columns;
     }
@@ -63,6 +53,16 @@ public class ConnectionTable extends DataTablePanel<Connection> {
     @Override
     protected Connection getNewEntity() {
         return new Connection();
+    }
+
+    @Override
+    protected EntityService<Connection> getEntityService() {
+        return connectionService;
+    }
+
+    @Override
+    protected int getInitialModalWindowHeight() {
+        return 450;
     }
 
 }

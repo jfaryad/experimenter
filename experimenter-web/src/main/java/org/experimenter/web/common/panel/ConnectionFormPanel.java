@@ -3,15 +3,16 @@ package org.experimenter.web.common.panel;
 import static org.experimenter.web.renderer.PropertyChoiceRenderer.COMPUTER_RENDERER;
 import static org.experimenter.web.renderer.PropertyChoiceRenderer.CONNECTION_FARM_RENDERER;
 
-import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.PasswordTextField;
 import org.apache.wicket.markup.html.form.RequiredTextField;
+import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.experimenter.repository.entity.Computer;
 import org.experimenter.repository.entity.Connection;
 import org.experimenter.repository.entity.ConnectionFarm;
 import org.experimenter.repository.service.ConnectionService;
+import org.experimenter.web.component.FinalEntityPropertyDropDownChoice;
 import org.experimenter.web.model.ConnectionModel;
 import org.experimenter.web.model.aggregate.AvailableComputers;
 import org.experimenter.web.model.aggregate.AvailableConnectionFarms;
@@ -35,14 +36,20 @@ public class ConnectionFormPanel extends EntityFormPanel<Connection> {
 
     @Override
     protected void addFieldsToForm(Form<Connection> form) {
-        form.add(new DropDownChoice<Computer>("computer", new AvailableComputers(), COMPUTER_RENDERER));
-        form.add(new DropDownChoice<ConnectionFarm>("connectionFarm", new AvailableConnectionFarms(),
-                CONNECTION_FARM_RENDERER));
+        form.add(new FinalEntityPropertyDropDownChoice<Connection, Computer>("computer", new AvailableComputers(),
+                COMPUTER_RENDERER, form.getModel()));
+        form.add(new FinalEntityPropertyDropDownChoice<Connection, ConnectionFarm>("connectionFarm",
+                new AvailableConnectionFarms(),
+                CONNECTION_FARM_RENDERER, form.getModel()));
         form.add(new RequiredTextField<String>("name"));
         form.add(new RequiredTextField<String>("login"));
-        form.add(new PasswordTextField("password"));
+
+        PasswordTextField password = new PasswordTextField("password");
+        password.setResetPassword(false);
+        form.add(password);
+
         form.add(new RequiredTextField<String>("port"));
-        form.add(new RequiredTextField<String>("description"));
+        form.add(new TextField<String>("description"));
 
     }
 

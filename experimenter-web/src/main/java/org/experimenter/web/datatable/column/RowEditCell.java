@@ -1,4 +1,4 @@
-package org.experimenter.web.datatable;
+package org.experimenter.web.datatable.column;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
@@ -6,6 +6,13 @@ import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
 import org.experimenter.repository.entity.Entity;
 
+/**
+ * The cell in a entity data table containing the edit link.
+ * 
+ * @author jfaryad
+ * 
+ * @param <T>
+ */
 public abstract class RowEditCell<T extends Entity> extends Panel {
 
     private static final long serialVersionUID = 1L;
@@ -21,6 +28,7 @@ public abstract class RowEditCell<T extends Entity> extends Panel {
                 RowEditCell.this.onClick(target, rowModel);
             }
         };
+
         add(link);
     }
 

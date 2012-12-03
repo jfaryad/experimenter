@@ -6,6 +6,7 @@ import org.apache.wicket.ajax.markup.html.form.AjaxButton;
 import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
 import org.apache.wicket.injection.Injector;
 import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.IModel;
@@ -26,8 +27,9 @@ import org.experimenter.web.model.EntityModel;
 public abstract class EntityFormPanel<T extends Entity> extends Panel {
     private static final long serialVersionUID = 1L;
 
-    private Form<T> form;
+    private final Form<T> form;
     private ModalWindow modalContainer;
+    private FeedbackPanel feedbackPanel;
 
     /**
      * Creates a new Entity Panel
@@ -93,6 +95,9 @@ public abstract class EntityFormPanel<T extends Entity> extends Panel {
             protected void onSubmit() {
             }
         };
+        feedbackPanel = new FeedbackPanel("feedback");
+        feedbackPanel.setOutputMarkupId(true);
+        form.add(feedbackPanel);
         form.add(new AjaxButton("save") {
 
             private static final long serialVersionUID = 1L;
@@ -101,13 +106,13 @@ public abstract class EntityFormPanel<T extends Entity> extends Panel {
             @Override
             protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
                 save((T) form.getModelObject());
+                target.add(feedbackPanel);
                 EntityFormPanel.this.onSubmit(target);
             }
 
             @Override
             protected void onError(AjaxRequestTarget target, Form<?> form) {
-                // TODO Auto-generated method stub
-
+                target.add(feedbackPanel);
             }
         });
         form.add(new AjaxLink<String>("cancel") {

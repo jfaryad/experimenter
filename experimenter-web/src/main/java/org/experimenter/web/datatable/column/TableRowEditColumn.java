@@ -1,4 +1,4 @@
-package org.experimenter.web.datatable;
+package org.experimenter.web.datatable.column;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.extensions.markup.html.repeater.data.grid.ICellPopulator;
@@ -8,7 +8,14 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.experimenter.repository.entity.Entity;
 
-public abstract class TableRowEditColumn<T extends Entity> extends AbstractColumn<T> {
+/**
+ * Column containing the edit link in a data table
+ * 
+ * @author jfaryad
+ * 
+ * @param <T>
+ */
+public abstract class TableRowEditColumn<T extends Entity> extends AbstractColumn<T, String> {
 
     private static final long serialVersionUID = 1L;
 

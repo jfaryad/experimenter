@@ -1,11 +1,19 @@
 package org.experimenter.web.common.panel;
 
+import java.util.Collection;
+
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.RequiredTextField;
+import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.experimenter.repository.entity.User;
 import org.experimenter.repository.entity.UserGroup;
 import org.experimenter.repository.service.UserGroupService;
+import org.experimenter.web.component.ReverseUserListMultipleChoice;
 import org.experimenter.web.model.UserGroupModel;
+import org.experimenter.web.model.aggregate.AvailableUsers;
+import org.experimenter.web.renderer.PropertyChoiceRenderer;
 
 /**
  * Simple panel with a form to edit the {@link UserGroup} entity.
@@ -24,9 +32,13 @@ public class UserGroupFormPanel extends EntityFormPanel<UserGroup> {
         super(id, userGroupModel);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     protected void addFieldsToForm(Form<UserGroup> form) {
         form.add(new RequiredTextField<String>("name"));
+        form.add(new ReverseUserListMultipleChoice("users", new PropertyModel<Collection<User>>(
+                getDefaultModel(), "users"), new AvailableUsers(), PropertyChoiceRenderer.USER_RENDERER,
+                (IModel<UserGroup>) getDefaultModel()).setMaxRows(10));
 
     }
 

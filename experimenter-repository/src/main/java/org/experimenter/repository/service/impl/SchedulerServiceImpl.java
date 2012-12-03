@@ -1,26 +1,39 @@
 package org.experimenter.repository.service.impl;
 
 import java.text.ParseException;
+import java.util.List;
 
 import org.experimenter.repository.entity.Experiment;
 import org.experimenter.repository.scheduler.ExperimentExecutor;
 import org.experimenter.repository.scheduler.ScheduledJob;
+import org.experimenter.repository.scheduler.SessionAdvisor;
 import org.experimenter.repository.service.ExperimentService;
 import org.experimenter.repository.service.SchedulerService;
 import org.quartz.CronTrigger;
 import org.quartz.JobDetail;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
-import org.springframework.aop.framework.Advised;
-import org.springframework.aop.framework.ProxyFactory;
-import org.springframework.beans.factory.annotation.Required;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.orm.hibernate3.HibernateInterceptor;
 
 public class SchedulerServiceImpl implements SchedulerService {
 
+    private static final Logger LOG = LoggerFactory.getLogger(SchedulerServiceImpl.class);
+
+    @Autowired
     private Scheduler scheduler;
+    @Autowired
     private ExperimentService experimentService;
+    @Autowired
     private HibernateInterceptor hibernateInterceptor;
+    @Autowired
+    private AutowireCapableBeanFactory beanFactory;
+
+    public SchedulerServiceImpl() {
+    }
 
     @Override
     public void saveUpdateJob(Experiment experiment) {
@@ -31,9 +44,9 @@ public class SchedulerServiceImpl implements SchedulerService {
                 createJob(experiment);
             }
         } catch (ParseException e) {
-            e.printStackTrace();
+            LOG.error("Error saving job for experiment: " + experiment.getId(), e);
         } catch (SchedulerException e) {
-            e.printStackTrace();
+            LOG.error("Error saving job for experiment: " + experiment.getId(), e);
         }
     }
 
@@ -42,7 +55,7 @@ public class SchedulerServiceImpl implements SchedulerService {
         try {
             scheduler.deleteJob(experiment.getId().toString(), null);
         } catch (SchedulerException e) {
-            e.printStackTrace();
+            LOG.error("Error stopping job for experiment: " + experiment.getId(), e);
         }
     }
 
@@ -55,14 +68,14 @@ public class SchedulerServiceImpl implements SchedulerService {
     }
 
     private void addNewJobToScheduler(Experiment experiment) throws SchedulerException {
-        ExperimentExecutor task = new ExperimentExecutor(experiment.getId(), experimentService);
-        ProxyFactory factory = new ProxyFactory(task);
-        Advised advised = (Advised) factory.getProxy();
-        advised.addAdvice(hibernateInterceptor);
-        ExperimentExecutor advisedTask = (ExperimentExecutor) advised;
+        ExperimentExecutor task = new ExperimentExecutor(experiment.getId());
+        beanFactory.autowireBean(task);
+        ExperimentExecutor sessionAwareTask = SessionAdvisor.adviseWithHibernateInterceptor(task,
+                hibernateInterceptor);
+
         JobDetail jobDetail = new JobDetail(experiment.getId().toString(), null, ScheduledJob.class);
         jobDetail.getJobDataMap().put("type", "FULL");
-        jobDetail.getJobDataMap().put("experimentExecutor", advisedTask);
+        jobDetail.getJobDataMap().put("experimentExecutor", sessionAwareTask);
         scheduler.addJob(jobDetail, true);
     }
 
@@ -80,19 +93,16 @@ public class SchedulerServiceImpl implements SchedulerService {
         scheduler.rescheduleJob(updatedCronTrigger.getName(), null, updatedCronTrigger);
     }
 
-    @Required
-    public void setScheduler(Scheduler scheduler) {
-        this.scheduler = scheduler;
-    }
+    /**
+     * Is run at the start of the application to register all jobs from the database.
+     */
+    public void initializeAllActiveJobs() {
+        List<Experiment> experiments = experimentService.findScheduledExperiments();
+        for (Experiment experiment : experiments) {
+            LOG.debug("Initializing experiment " + experiment.getId());
+            saveUpdateJob(experiment);
+        }
 
-    @Required
-    public void setExperimentService(ExperimentService experimentService) {
-        this.experimentService = experimentService;
-    }
-
-    @Required
-    public void setHibernateInterceptor(HibernateInterceptor hibernateInterceptor) {
-        this.hibernateInterceptor = hibernateInterceptor;
     }
 
 }

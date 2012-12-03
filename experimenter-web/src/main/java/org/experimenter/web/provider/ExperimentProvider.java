@@ -3,10 +3,12 @@ package org.experimenter.web.provider;
 import java.util.List;
 
 import org.apache.wicket.model.IModel;
-import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.experimenter.repository.entity.Application;
 import org.experimenter.repository.entity.Experiment;
-import org.experimenter.repository.service.ExperimentService;
+import org.experimenter.repository.entity.Program;
+import org.experimenter.repository.entity.Project;
 import org.experimenter.web.model.ExperimentModel;
+import org.experimenter.web.model.aggregate.AvailableExperiments;
 
 /**
  * Default provider of the {@link Experiment} entity.
@@ -18,8 +20,19 @@ public class ExperimentProvider extends EntityDataProvider<Experiment> {
 
     private static final long serialVersionUID = 1L;
 
-    @SpringBean
-    private ExperimentService experimentService;
+    private final IModel<List<Experiment>> innerExperimentModel;
+
+    public ExperimentProvider(IModel<Program> programFilter) {
+        innerExperimentModel = new AvailableExperiments().filterBy("application.program", programFilter);
+    }
+
+    public ExperimentProvider(IModel<Project> projectFilter, IModel<Program> programFilter,
+            IModel<Application> applicationFilter) {
+        innerExperimentModel = new AvailableExperiments()
+                .filterBy("application.program", programFilter)
+                .filterBy("application.program.project", projectFilter)
+                .filterBy("application", applicationFilter);
+    }
 
     @Override
     public IModel<Experiment> model(Experiment experiment) {
@@ -28,8 +41,13 @@ public class ExperimentProvider extends EntityDataProvider<Experiment> {
 
     @Override
     protected List<Experiment> load() {
-        // loads all experiments
-        return experimentService.findByExample(new Experiment());
+        return innerExperimentModel.getObject();
+    }
+
+    @Override
+    public void detach() {
+        super.detach();
+        innerExperimentModel.detach();
     }
 
 }

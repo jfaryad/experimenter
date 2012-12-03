@@ -1,21 +1,28 @@
 .datatable {
-	border-collapse: collapse;
+  border-collapse: collapse;
 }
 
 .datatable td,.datatable th {
-	padding: .3em;
-	border: 1px #ccc solid;
+  border: 1px #ccc solid;
+  padding: 0px 5px 0px 5px;
+  max-width: 160px;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 .datatable thead {
-	background: #6493D2;
-	color: #fff;
+  background: #6493D2;
+  color: #fff;
 }
 
 .datatable tbody tr:hover {
-	background: yellow;
+  background: yellow;
 }
 
 .datatable tbody {
-	background: #fff;
+  background: #fff;
+}
+
+.datatable thead a,.datatable thead a:hover,.datatable thead a:active {
+  color: #FFFFFF;
 }

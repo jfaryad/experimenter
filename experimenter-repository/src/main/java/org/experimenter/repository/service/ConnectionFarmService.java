@@ -4,10 +4,11 @@ import java.util.List;
 
 import org.experimenter.repository.entity.ConnectionFarm;
 import org.experimenter.repository.entity.Experiment;
+import org.experimenter.repository.entity.User;
 import org.experimenter.repository.entity.UserGroup;
 import org.experimenter.repository.form.CriteriaForm;
 
-public interface ConnectionFarmService {
+public interface ConnectionFarmService extends EntityService<ConnectionFarm> {
 
     /**
      * Saves the given {@link ConnectionFarm} to database. If the entry doesn't exists yet, it will be created.
@@ -15,6 +16,7 @@ public interface ConnectionFarmService {
      * @param connectionFarm
      *            the connectionFarm to save
      */
+    @Override
     public void saveUpdate(ConnectionFarm connectionFarm);
 
     /**
@@ -24,6 +26,7 @@ public interface ConnectionFarmService {
      *            the identifier of the connectionFarm
      * @return the connectionFarm with the given id or null, if such an entry doesn't exist in the database.
      */
+    @Override
     public ConnectionFarm findById(Integer id);
 
     /**
@@ -33,6 +36,7 @@ public interface ConnectionFarmService {
      *            a search form with the properties you want to search by
      * @return a list of connectionFarms that match the example
      */
+    @Override
     public List<ConnectionFarm> findByExample(ConnectionFarm connectionFarm);
 
     /**
@@ -43,6 +47,7 @@ public interface ConnectionFarmService {
      *            a search form with the properties you want to search by
      * @return a list of connectionFarms that match the criteria
      */
+    @Override
     public List<ConnectionFarm> findByCriteria(CriteriaForm<ConnectionFarm> criteria);
 
     /**
@@ -51,6 +56,7 @@ public interface ConnectionFarmService {
      * @param connectionFarm
      *            the connectionFarm to delete
      */
+    @Override
     public void delete(ConnectionFarm connectionFarm);
 
     /**
@@ -60,6 +66,7 @@ public interface ConnectionFarmService {
      * @param connectionFarms
      *            the connectionFarms to delete
      */
+    @Override
     public void delete(List<ConnectionFarm> connectionFarms);
 
     /**
@@ -99,4 +106,13 @@ public interface ConnectionFarmService {
      * @return a list of conectionFarms
      */
     public List<ConnectionFarm> findConnectionFarmsByExperiment(Experiment experiment);
+
+    /**
+     * Find all connectionFarms belonging to any user group the given user belongs to.
+     * 
+     * @param user
+     *            the user to search by
+     * @return a list of connectionFarms
+     */
+    public List<ConnectionFarm> findConnectionFarmsByUser(User user);
 }

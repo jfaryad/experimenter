@@ -9,7 +9,7 @@ import org.experimenter.repository.entity.ProblemType;
 import org.experimenter.repository.entity.Project;
 import org.experimenter.repository.form.CriteriaForm;
 
-public interface InputSetService {
+public interface InputSetService extends EntityService<InputSet> {
 
     /**
      * Saves the given {@link InputSet} to database. If the entry doesn't exists yet, it will be created.
@@ -17,6 +17,7 @@ public interface InputSetService {
      * @param inputSet
      *            the inputSet to save
      */
+    @Override
     public void saveUpdate(InputSet inputSet);
 
     /**
@@ -26,6 +27,7 @@ public interface InputSetService {
      *            the identifier of the inputSet
      * @return the inputSet with the given id or null, if such an entry doesn't exist in the database.
      */
+    @Override
     public InputSet findById(Integer id);
 
     /**
@@ -35,6 +37,7 @@ public interface InputSetService {
      *            a search form with the properties you want to search by
      * @return a list of inputSets that match the example
      */
+    @Override
     public List<InputSet> findByExample(InputSet inputSet);
 
     /**
@@ -45,6 +48,7 @@ public interface InputSetService {
      *            a search form with the properties you want to search by
      * @return a list of inputSets that match the criteria
      */
+    @Override
     public List<InputSet> findByCriteria(CriteriaForm<InputSet> criteria);
 
     /**
@@ -53,6 +57,7 @@ public interface InputSetService {
      * @param inputSet
      *            the inputSet to delete
      */
+    @Override
     public void delete(InputSet inputSet);
 
     /**
@@ -61,6 +66,7 @@ public interface InputSetService {
      * @param inputSets
      *            the inputSets to delete
      */
+    @Override
     public void delete(List<InputSet> inputSets);
 
     /**

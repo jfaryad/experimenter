@@ -9,7 +9,7 @@ import java.util.List;
 import org.experimenter.repository.entity.ConnectionFarm;
 import org.experimenter.repository.entity.Experiment;
 import org.experimenter.repository.entity.UserGroup;
-import org.experimenter.repository.util.DaoTestHelper;
+import org.experimenter.repository.testutil.DaoTestHelper;
 import org.junit.Test;
 
 public class ConnectionFarmServiceTest extends AbstractServiceTest {

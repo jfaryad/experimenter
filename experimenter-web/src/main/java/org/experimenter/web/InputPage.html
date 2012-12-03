@@ -3,12 +3,19 @@
 <head>
 <meta charset="utf-8" />
 <wicket:head>
-	<title>Experimenter - Input Administration</title>
+  <title>Experimenter - Input Administration</title>
 </wicket:head>
 </head>
 <body>
-	<wicket:extend>
-		<div wicket:id="input-table" />
-	</wicket:extend>
+  <wicket:extend>
+    <table>
+      <tr>
+        <td>Problem type: <select wicket:id="problemTypeFilter" /></td>
+        <td>Input set: <select wicket:id="inputSetFilter" /></td>
+        <td style="padding-left: 25px"><a href="#" wicket:id="reset-filters">Reset filters</a></td>
+      </tr>
+    </table>
+    <div wicket:id="input-table" class="dataTableContainer" />
+  </wicket:extend>
 </body>
 </html>

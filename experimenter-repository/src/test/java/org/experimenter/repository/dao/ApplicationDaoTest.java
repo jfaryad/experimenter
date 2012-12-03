@@ -8,8 +8,9 @@ import java.util.List;
 
 import org.experimenter.repository.entity.Application;
 import org.experimenter.repository.entity.Program;
+import org.experimenter.repository.entity.User;
 import org.experimenter.repository.form.CriteriaForm;
-import org.experimenter.repository.util.DaoTestHelper;
+import org.experimenter.repository.testutil.DaoTestHelper;
 import org.junit.Test;
 
 public class ApplicationDaoTest extends AbstractDaoTest {
@@ -66,6 +67,15 @@ public class ApplicationDaoTest extends AbstractDaoTest {
         assertEquals("wrong number of applications found", 1, applications.size());
         Application application = applications.get(0);
         DaoTestHelper.checkApplication1(application);
+    }
+
+    @Test
+    public void findApplicationsByUser() {
+        User user = userDao.findById(5);
+        List<Application> list = applicationDao.findApplicationsByUser(user);
+        assertNotNull(list);
+        assertEquals(1, list.size());
+        assertEquals(4, list.get(0).getId().intValue());
     }
 
 }

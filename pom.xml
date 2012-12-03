@@ -20,9 +20,14 @@
     <version.commons-dbcp>1.4</version.commons-dbcp>
     <version.cglib>2.2</version.cglib>
     <version.aspectj>1.6.8</version.aspectj>
-    <wicket.version>1.5.4</wicket.version>
+    <wicket.version>6.2.0</wicket.version>
     <version.quartz>1.8.5</version.quartz>
     <version.jsch>0.1.48</version.jsch>
+    <commons-lang.version>2.6</commons-lang.version>
+    <commons-beanutils.version>1.8.3</commons-beanutils.version>
+    <commons-io.version>1.4</commons-io.version>
+    <jfreechart.version>1.0.14</jfreechart.version>
+    <itext.version>5.3.4</itext.version>
   </properties>
 
   <modules>
@@ -215,6 +220,13 @@
         <artifactId>wicket-datetime</artifactId>
         <version>${wicket.version}</version>
       </dependency>
+      <dependency>
+        <groupId>org.apache.wicket</groupId>
+        <artifactId>wicket-auth-roles</artifactId>
+        <version>${wicket.version}</version>
+      </dependency>
+
+
 
 
       <!-- LOG -->
@@ -255,6 +267,33 @@
         <groupId>org.slf4j</groupId>
         <artifactId>slf4j-ext</artifactId>
         <version>${version.slf4j}</version>
+      </dependency>
+
+      <!-- OTHER -->
+      <dependency>
+        <groupId>commons-lang</groupId>
+        <artifactId>commons-lang</artifactId>
+        <version>${commons-lang.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>commons-beanutils</groupId>
+        <artifactId>commons-beanutils</artifactId>
+        <version>${commons-beanutils.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>commons-io</groupId>
+        <artifactId>commons-io</artifactId>
+        <version>${commons-io.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.jfree</groupId>
+        <artifactId>jfreechart</artifactId>
+        <version>${jfreechart.version}</version>
+      </dependency>
+      <dependency>
+          <groupId>com.itextpdf</groupId>
+          <artifactId>itextpdf</artifactId>
+          <version>${itext.version}</version>
       </dependency>
 
       <!-- TESTS -->

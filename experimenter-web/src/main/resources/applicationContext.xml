@@ -13,21 +13,32 @@
 
   <context:component-scan base-package="com.experimenter.web" />
 
-  <bean id="placeholderConfig"
-    class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+  <bean id="placeholderConfig" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+    <property name="location">
+        <value>classpath:configuration.properties</value>
+    </property>
+    <property name="ignoreUnresolvablePlaceholders" value="true"/>
   </bean>
 
-  <jdbc:embedded-database id="dataSource">
-    <!-- <jdbc:script location="classpath:sql/schema.sql" />
-    <jdbc:script location="classpath:sql/test-data.sql" /> -->
+<!--   <bean id="beanFactory" class="org.springframework.beans.factory.config.AutowireCapableBeanFactory" /> -->
+<!--   <jdbc:embedded-database id="dataSource">
+    <jdbc:script location="classpath:sql/schema.sql" />
+    <jdbc:script location="classpath:sql/test-data.sql" />
   </jdbc:embedded-database>
   
   <bean id="adapterDataSource" class="org.apache.commons.dbcp.BasicDataSource" depends-on="dataSource" destroy-method="close">
     <property name="driverClassName" value="org.hsqldb.jdbcDriver" />
-    <property name="url" value="jdbc:hsqldb:file:/tmp/fileDb" />
-    <property name="username" value="SA" />
+    <property name="url" value="jdbc:hsqldb:hsql://localhost/xdb" />
+    <property name="username" value="sa" />
     <property name="password" value="" />
-  </bean>
+  </bean> -->
+  
+  <bean id="dataSource" destroy-method="close" class="org.apache.commons.dbcp.BasicDataSource">
+    <property name="driverClassName" value="org.hsqldb.jdbcDriver" />
+    <property name="url" value="jdbc:hsqldb:hsql://localhost/xdb" />
+    <property name="username" value="sa" />
+    <property name="password" value="" />
+</bean>
   
 
   <bean id="experimenterApplication" class="org.experimenter.web.ExperimenterApplication"></bean>
@@ -54,18 +65,8 @@
     <aop:advisor advice-ref="txAdvice" pointcut-ref="serviceOperation" />
   </aop:config>
 
-  <!-- <bean id="runMeTask" class="org.experimenter.repository.service.impl.RunMeTask" 
-    /> <bean name="runMeJob" class="org.springframework.scheduling.quartz.JobDetailBean"> 
-    <property name="jobClass" value="org.experimenter.repository.service.impl.RunMeJob" 
-    /> <property name="jobDataAsMap"> <map> <entry key="runMeTask" value-ref="runMeTask" 
-    /> </map> </property> </bean> <bean id="cronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean"> 
-    <property name="jobDetail" ref="runMeJob" /> <property name="cronExpression" 
-    value="0/5 * * * * ?" /> </bean> -->
-
-  <bean id="schedulerFactory"
-    class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
-    <property name="applicationContextSchedulerContextKey"
-      value="applicationContext" />
+  <bean id="schedulerFactory" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+    <property name="applicationContextSchedulerContextKey" value="applicationContext" />
     <property name="jobDetails">
       <list>
         <!-- <ref bean="runMeJob" /> -->
@@ -85,33 +86,20 @@
     <property name="sessionFactory" ref="sessionFactory" />
   </bean>
 
-  <bean id="userDao" class="org.experimenter.repository.dao.impl.UserDaoImpl"
-    parent="dao" />
-  <bean id="userGroupDao" class="org.experimenter.repository.dao.impl.UserGroupDaoImpl"
-    parent="dao" />
+  <bean id="userDao" class="org.experimenter.repository.dao.impl.UserDaoImpl" parent="dao" />
+  <bean id="userGroupDao" class="org.experimenter.repository.dao.impl.UserGroupDaoImpl" parent="dao" />
   <bean id="applicationDao"
-    class="org.experimenter.repository.dao.impl.ApplicationDaoImpl"
-    parent="dao" />
-  <bean id="computerDao" class="org.experimenter.repository.dao.impl.ComputerDaoImpl"
-    parent="dao" />
-  <bean id="connectionDao" class="org.experimenter.repository.dao.impl.ConnectionDaoImpl"
-    parent="dao" />
-  <bean id="connectionFarmDao"
-    class="org.experimenter.repository.dao.impl.ConnectionFarmDaoImpl"
-    parent="dao" />
-  <bean id="experimentDao" class="org.experimenter.repository.dao.impl.ExperimentDaoImpl"
-    parent="dao" />
-  <bean id="inputDao" class="org.experimenter.repository.dao.impl.InputDaoImpl"
-    parent="dao" />
-  <bean id="inputSetDao" class="org.experimenter.repository.dao.impl.InputSetDaoImpl"
-    parent="dao" />
-  <bean id="problemTypeDao"
-    class="org.experimenter.repository.dao.impl.ProblemTypeDaoImpl"
-    parent="dao" />
-  <bean id="programDao" class="org.experimenter.repository.dao.impl.ProgramDaoImpl"
-    parent="dao" />
-  <bean id="projectDao" class="org.experimenter.repository.dao.impl.ProjectDaoImpl"
-    parent="dao" />
+    class="org.experimenter.repository.dao.impl.ApplicationDaoImpl" parent="dao" />
+  <bean id="computerDao" class="org.experimenter.repository.dao.impl.ComputerDaoImpl" parent="dao" />
+  <bean id="connectionDao" class="org.experimenter.repository.dao.impl.ConnectionDaoImpl" parent="dao" />
+  <bean id="connectionFarmDao" class="org.experimenter.repository.dao.impl.ConnectionFarmDaoImpl" parent="dao" />
+  <bean id="experimentDao" class="org.experimenter.repository.dao.impl.ExperimentDaoImpl" parent="dao" />
+  <bean id="inputDao" class="org.experimenter.repository.dao.impl.InputDaoImpl" parent="dao" />
+  <bean id="inputSetDao" class="org.experimenter.repository.dao.impl.InputSetDaoImpl" parent="dao" />
+  <bean id="problemTypeDao" class="org.experimenter.repository.dao.impl.ProblemTypeDaoImpl" parent="dao" />
+  <bean id="programDao" class="org.experimenter.repository.dao.impl.ProgramDaoImpl" parent="dao" />
+  <bean id="projectDao" class="org.experimenter.repository.dao.impl.ProjectDaoImpl" parent="dao" />
+  <bean id="resultDao" class="org.experimenter.repository.dao.impl.ResultDaoImpl" parent="dao" />
 
   <!-- ========= DAO Service ========= -->
 
@@ -130,83 +118,71 @@
     <property name="projectService" ref="projectService" />
     <property name="userService" ref="userService" />
     <property name="userGroupService" ref="userGroupService" />
+    <property name="storageService" ref="storageService" />
+    <property name="resultService" ref="resultService" />
+    <property name="sessionFactory" ref="sessionFactory" />
   </bean>
 
   <bean id="userService"
-    class="org.experimenter.repository.service.impl.UserServiceImpl"
-    parent="service">
+    class="org.experimenter.repository.service.impl.UserServiceImpl" parent="service">
     <property name="baseDao" ref="userDao" />
   </bean>
-  <bean id="userGroupService"
-    class="org.experimenter.repository.service.impl.UserGroupServiceImpl"
-    parent="service">
+  <bean id="userGroupService" class="org.experimenter.repository.service.impl.UserGroupServiceImpl" parent="service">
     <property name="baseDao" ref="userGroupDao" />
   </bean>
   <bean id="applicationService"
-    class="org.experimenter.repository.service.impl.ApplicationServiceImpl"
-    parent="service">
+    class="org.experimenter.repository.service.impl.ApplicationServiceImpl" parent="service">
     <property name="baseDao" ref="applicationDao" />
   </bean>
-  <bean id="computerService"
-    class="org.experimenter.repository.service.impl.ComputerServiceImpl"
-    parent="service">
+  <bean id="computerService" class="org.experimenter.repository.service.impl.ComputerServiceImpl" parent="service">
     <property name="baseDao" ref="computerDao" />
   </bean>
-  <bean id="connectionService"
-    class="org.experimenter.repository.service.impl.ConnectionServiceImpl"
-    parent="service">
+  <bean id="connectionService" class="org.experimenter.repository.service.impl.ConnectionServiceImpl" parent="service">
     <property name="baseDao" ref="connectionDao" />
   </bean>
-  <bean id="connectionFarmService"
-    class="org.experimenter.repository.service.impl.ConnectionFarmServiceImpl"
+  <bean id="connectionFarmService" class="org.experimenter.repository.service.impl.ConnectionFarmServiceImpl"
     parent="service">
     <property name="baseDao" ref="connectionFarmDao" />
   </bean>
-  <bean id="experimentService"
-    class="org.experimenter.repository.service.impl.ExperimentServiceImpl"
-    parent="service">
+  <bean id="experimentService" class="org.experimenter.repository.service.impl.ExperimentServiceImpl" parent="service">
     <property name="baseDao" ref="experimentDao" />
   </bean>
-  <bean id="inputService"
-    class="org.experimenter.repository.service.impl.InputServiceImpl"
-    parent="service">
+  <bean id="inputService" class="org.experimenter.repository.service.impl.InputServiceImpl" parent="service">
     <property name="baseDao" ref="inputDao" />
   </bean>
-  <bean id="inputSetService"
-    class="org.experimenter.repository.service.impl.InputSetServiceImpl"
-    parent="service">
+  <bean id="inputSetService" class="org.experimenter.repository.service.impl.InputSetServiceImpl" parent="service">
     <property name="baseDao" ref="inputSetDao" />
   </bean>
-  <bean id="problemTypeService"
-    class="org.experimenter.repository.service.impl.ProblemTypeServiceImpl"
-    parent="service">
+  <bean id="problemTypeService" class="org.experimenter.repository.service.impl.ProblemTypeServiceImpl" parent="service">
     <property name="baseDao" ref="problemTypeDao" />
   </bean>
-  <bean id="programService"
-    class="org.experimenter.repository.service.impl.ProgramServiceImpl"
-    parent="service">
+  <bean id="programService" class="org.experimenter.repository.service.impl.ProgramServiceImpl" parent="service">
     <property name="baseDao" ref="programDao" />
   </bean>
-  <bean id="projectService"
-    class="org.experimenter.repository.service.impl.ProjectServiceImpl"
-    parent="service">
+  <bean id="projectService" class="org.experimenter.repository.service.impl.ProjectServiceImpl" parent="service">
     <property name="baseDao" ref="projectDao" />
   </bean>
+  <bean id="resultService" class="org.experimenter.repository.service.impl.ResultServiceImpl" parent="service">
+    <property name="baseDao" ref="resultDao" />
+  </bean>
 
-  <bean id="schedulerService"
-    class="org.experimenter.repository.service.impl.SchedulerServiceImpl">
-    <property name="scheduler" ref="schedulerFactory" />
-    <property name="experimentService" ref="experimentService" />
-    <property name="hibernateInterceptor" ref="hibernateInterceptor" />
-
+<!-- dependencies are autowired -->
+  <bean id="schedulerService" class="org.experimenter.repository.service.impl.SchedulerServiceImpl" init-method="initializeAllActiveJobs" />
+  
+  <bean id="storageService" class="org.experimenter.repository.service.impl.FileStorageService" />
+  
+  
+  <bean id="taskExecutor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+    <property name="corePoolSize" value="5" />
+    <property name="maxPoolSize" value="120" />
+    <property name="keepAliveSeconds" value="3600" />
   </bean>
 
 
   <!-- Hibernate session management -->
 
-  <bean id="sessionFactory"
-    class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
-    <property name="dataSource" ref="adapterDataSource"></property>
+  <bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+    <property name="dataSource" ref="dataSource"></property>
     <property name="annotatedClasses">
       <list>
         <value>org.experimenter.repository.entity.User</value>
@@ -221,6 +197,7 @@
         <value>org.experimenter.repository.entity.ProblemType</value>
         <value>org.experimenter.repository.entity.Input</value>
         <value>org.experimenter.repository.entity.InputSet</value>
+        <value>org.experimenter.repository.entity.Result</value>
       </list>
     </property>
     <property name="hibernateProperties">
@@ -234,8 +211,7 @@
 
   <!-- The Hibernate interceptor, which takes care of opening and closing 
     hibernate session around method calls. -->
-  <bean id="hibernateInterceptor"
-    class="org.springframework.orm.hibernate3.HibernateInterceptor">
+  <bean id="hibernateInterceptor" class="org.springframework.orm.hibernate3.HibernateInterceptor">
     <property name="sessionFactory">
       <ref bean="sessionFactory" />
     </property>

@@ -11,6 +11,8 @@ import org.experimenter.repository.entity.InputSet;
 import org.experimenter.repository.entity.ProblemType;
 import org.experimenter.repository.entity.Program;
 import org.experimenter.repository.entity.Project;
+import org.experimenter.repository.entity.User;
+import org.experimenter.repository.entity.UserGroup;
 
 public class PropertyChoiceRenderer<T extends Entity> implements IChoiceRenderer<T> {
 
@@ -24,6 +26,8 @@ public class PropertyChoiceRenderer<T extends Entity> implements IChoiceRenderer
     public static final PropertyChoiceRenderer<Program> PROGRAM_RENDERER = new PropertyChoiceRenderer<Program>("name");
     public static final PropertyChoiceRenderer<Application> APPLICATION_RENDERER = new PropertyChoiceRenderer<Application>(
             "version");
+    public static final PropertyChoiceRenderer<Application> APPLICATION_FULL_NAME_RENDERER = new PropertyChoiceRenderer<Application>(
+            "fullName");
     public static final PropertyChoiceRenderer<Computer> COMPUTER_RENDERER = new PropertyChoiceRenderer<Computer>(
             "address");
     public static final PropertyChoiceRenderer<ConnectionFarm> CONNECTION_FARM_RENDERER = new PropertyChoiceRenderer<ConnectionFarm>(
@@ -31,6 +35,9 @@ public class PropertyChoiceRenderer<T extends Entity> implements IChoiceRenderer
     public static final PropertyChoiceRenderer<Input> INPUT_RENDERER = new PropertyChoiceRenderer<Input>("name");
     public static final PropertyChoiceRenderer<InputSet> INPUT_SET_RENDERER = new PropertyChoiceRenderer<InputSet>(
             "name");
+    public static final PropertyChoiceRenderer<UserGroup> USERGROUP_RENDERER = new PropertyChoiceRenderer<UserGroup>(
+            "name");
+    public static final PropertyChoiceRenderer<User> USER_RENDERER = new PropertyChoiceRenderer<User>("login");
 
     public PropertyChoiceRenderer(String property) {
         this.property = property;

@@ -8,9 +8,10 @@ import java.util.List;
 
 import org.experimenter.repository.entity.ProblemType;
 import org.experimenter.repository.entity.Project;
+import org.experimenter.repository.entity.User;
 import org.experimenter.repository.entity.UserGroup;
 import org.experimenter.repository.form.CriteriaForm;
-import org.experimenter.repository.util.DaoTestHelper;
+import org.experimenter.repository.testutil.DaoTestHelper;
 import org.junit.Test;
 
 public class ProjectDaoTest extends AbstractDaoTest {
@@ -75,6 +76,16 @@ public class ProjectDaoTest extends AbstractDaoTest {
         assertEquals("wrong number of projects found", 1, projects.size());
         Project project = projects.get(0);
         DaoTestHelper.checkProject1(project);
+    }
+
+    @Test
+    public void findProjectsByUser() {
+        User user = userDao.findById(5);
+        List<Project> list = projectDao.findProjectsByUser(user);
+        assertNotNull(list);
+        assertEquals(2, list.size());
+        assertEquals(2, list.get(0).getId().intValue());
+        assertEquals(6, list.get(1).getId().intValue());
     }
 
 }

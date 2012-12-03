@@ -9,7 +9,7 @@ import org.experimenter.repository.entity.Application;
 import org.experimenter.repository.entity.ConnectionFarm;
 import org.experimenter.repository.entity.Experiment;
 import org.experimenter.repository.entity.InputSet;
-import org.experimenter.repository.util.DaoTestHelper;
+import org.experimenter.repository.testutil.DaoTestHelper;
 import org.junit.Test;
 
 public class ExperimentServiceTest extends AbstractServiceTest {
@@ -42,6 +42,30 @@ public class ExperimentServiceTest extends AbstractServiceTest {
         Experiment experiment = experiments.get(0);
         assertNotNull("experiment not found", experiment);
         DaoTestHelper.checkExperiment1(experiment);
+    }
+
+    @Test
+    public void experimentJobManagementTest() {
+        Experiment experiment = new Experiment();
+        experiment.setName("exp1");
+        experiment.setDescription("exp1 - sat");
+        Application application = new Application();
+        application.setId(1);
+        experiment.setApplication(application);
+        experimentService.saveUpdate(experiment);
+
+        Experiment.Status status = experimentService.getExperimentStatus(experiment);
+        assertEquals("experiment job has wrong status", Experiment.Status.NEW, status);
+
+        boolean start = experimentService.setExperimentStarted(experiment);
+        assertEquals("experiment job didn't start successfully", true, start);
+        status = experimentService.getExperimentStatus(experiment);
+        assertEquals("experiment job has wrong status", Experiment.Status.RUNNING, status);
+
+        boolean finish = experimentService.setExperimentFinished(experiment);
+        assertEquals("experiment job didn't finish successfully", true, finish);
+        status = experimentService.getExperimentStatus(experiment);
+        assertEquals("experiment job has wrong status", Experiment.Status.FINISHED, status);
     }
 
 }

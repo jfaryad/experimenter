@@ -1,12 +1,17 @@
 <!DOCTYPE html>
 <html>
 <body>
-<wicket:panel>
-      <form wicket:id="entity-form">
-      	<wicket:child />
-      	<input type="button" wicket:id="save" value="Save" />
-      	<input type="button" wicket:id="cancel" value="Cancel" />
-      </form>
-</wicket:panel>
+  <wicket:panel>
+    <form wicket:id="entity-form">
+      <div wicket:id="feedback" />
+      <wicket:child />
+      <table class="formTableButtons">
+        <tr>
+          <td><input type="button" wicket:id="save" value="Save" /></td>
+          <td><input type="button" wicket:id="cancel" value="Cancel" /></td>
+        </tr>
+      </table>
+    </form>
+  </wicket:panel>
 </body>
 </html>

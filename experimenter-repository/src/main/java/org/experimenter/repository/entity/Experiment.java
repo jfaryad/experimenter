@@ -1,5 +1,6 @@
 package org.experimenter.repository.entity;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -11,10 +12,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.NamedQueries;
+import org.hibernate.annotations.NamedQuery;
 
 /**
  * Entity for database table EXPERIMENT
@@ -24,9 +28,70 @@ import org.hibernate.annotations.FetchMode;
  */
 @javax.persistence.Entity
 @Table(name = "EXPERIMENT")
+@NamedQueries({
+        @NamedQuery(
+                name = Experiment.Q_GET_BY_USER,
+                query = "select e from Experiment e " +
+                        "inner join fetch e.application as a " +
+                        "inner join fetch a.program as prog " +
+                        "inner join fetch prog.project as proj " +
+                        "inner join proj.userGroup as g " +
+                        "inner join g.users as u " +
+                        "where u = :user " +
+                        "order by prog.name, a.version, e.name",
+                readOnly = true),
+        @NamedQuery(
+                name = Experiment.Q_GET_SCHEDULED,
+                query = "select e from Experiment e " +
+                        "where e.scheduledTime > current_timestamp()",
+                readOnly = true) })
 public class Experiment implements Entity {
 
     private static final long serialVersionUID = 1L;
+    public static final String Q_GET_BY_USER = "Experiment.Q_GET_BY_USER";
+    public static final String Q_GET_SCHEDULED = "Experiment.Q_GET_SCHEDULED";
+    public static final String Q_GET_EXPERIMENTS_WITH_RESULTS = "Experiment.Q_GET_SCHEDULED";
+
+    public static final String NATIVE_Q_GET_STATUS = "select status from job_status where experiment_id = :experimentId";
+    public static final String NATIVE_Q_GET_STATUS_LIST = "select experiment_id, status from job_status where experiment_id in (:experimentIds)";
+    public static final String NATIVE_CREATE_JOB = "insert into job_status (experiment_id, status) values (:experimentId, 0)";
+    public static final String NATIVE_START_JOB = "update job_status set status = 1 where experiment_id = :experimentId";
+    public static final String NATIVE_FINISH_JOB = "update job_status set status = 2 where experiment_id = :experimentId";
+    public static final String NATIVE_RESET_JOB = "update job_status set status = 0 where experiment_id = :experimentId";
+    public static final String NATIVE_DELETE_JOB = "delete from job_status where experiment_id = :experimentId";
+
+    public static enum Status {
+        NEW(0), RUNNING(1), FINISHED(2), FAILED(3);
+        private Integer status;
+
+        private Status(Integer status) {
+            this.status = status;
+        }
+
+        public static Status fromValue(Integer status) {
+            if (status == null) {
+                return NEW;
+            }
+            switch (status) {
+            case 0:
+                return NEW;
+            case 1:
+                return RUNNING;
+            case 2:
+                return FINISHED;
+            default:
+                return FAILED;
+            }
+        }
+
+        public boolean hasValue(Integer value) {
+            return status.equals(value);
+        }
+    }
+
+    public static final Integer STATUS_NEW = 0;
+    public static final Integer STATUS_RUNNING = 1;
+    public static final Integer STATUS_FINISHED = 2;
 
     @Column(name = "experiment_id")
     @Id
@@ -42,8 +107,11 @@ public class Experiment implements Entity {
     @Column(name = "cron_expression")
     private String cronExpression;
 
-    @Column(name = "active", nullable = false)
-    private Boolean isActive;
+    @Column(name = "scheduled_time")
+    private Date scheduledTime;
+
+    @Column(name = "max_jobs")
+    private Integer maxRunningJobs;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "application_id", referencedColumnName = "application_id", nullable = false)
@@ -63,6 +131,9 @@ public class Experiment implements Entity {
             joinColumns = @JoinColumn(name = "experiment_id"),
             inverseJoinColumns = @JoinColumn(name = "input_set_id"))
     private List<InputSet> inputSets;
+
+    @OneToMany(mappedBy = "experiment")
+    private List<Result> results;
 
     public Experiment() {
 
@@ -106,12 +177,20 @@ public class Experiment implements Entity {
         this.cronExpression = cronExpression;
     }
 
-    public Boolean getIsActive() {
-        return isActive;
+    public Date getScheduledTime() {
+        return scheduledTime;
     }
 
-    public void setIsActive(Boolean isActive) {
-        this.isActive = isActive;
+    public void setScheduledTime(Date scheduledTime) {
+        this.scheduledTime = scheduledTime;
+    }
+
+    public Integer getMaxRunningJobs() {
+        return maxRunningJobs;
+    }
+
+    public void setMaxRunningJobs(Integer maxRunningJobs) {
+        this.maxRunningJobs = maxRunningJobs;
     }
 
     public Application getApplication() {
@@ -138,10 +217,32 @@ public class Experiment implements Entity {
         this.inputSets = inputSets;
     }
 
+    public List<Result> getResults() {
+        return results;
+    }
+
+    public void setResults(List<Result> results) {
+        this.results = results;
+    }
+
+    @Override
+    public int hashCode() {
+        return id.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof Experiment)) {
+            return false;
+        }
+        final Experiment other = (Experiment) o;
+        return other.getId().equals(this.getId());
+    }
+
     @Override
     public String toString() {
-        return "Experiment[id: " + getId() + ", name: " + name + ", description: " + description + ", isActive: "
-                + isActive + ", cronExpression: " + cronExpression + ", application: " + application + "]";
+        return "Experiment[id: " + getId() + ", name: " + name + ", description: " + description + ", cronExpression: "
+                + cronExpression + ", application: " + application + "]";
     }
 
 }

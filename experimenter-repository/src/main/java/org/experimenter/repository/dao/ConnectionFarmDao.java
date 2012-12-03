@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.experimenter.repository.entity.ConnectionFarm;
 import org.experimenter.repository.entity.Experiment;
+import org.experimenter.repository.entity.User;
 import org.experimenter.repository.entity.UserGroup;
 
 public interface ConnectionFarmDao extends BaseDao<ConnectionFarm> {
@@ -33,5 +34,14 @@ public interface ConnectionFarmDao extends BaseDao<ConnectionFarm> {
      *            the user group whose connection farms to delete
      */
     public void deleteConnectionFarmsByUserGroup(UserGroup userGroup);
+
+    /**
+     * Find all connectionFarms belonging to any user group the given user belongs to.
+     * 
+     * @param user
+     *            the user to search by
+     * @return a list of connectionFarms
+     */
+    public List<ConnectionFarm> findConnectionFarmsByUser(User user);
 
 }

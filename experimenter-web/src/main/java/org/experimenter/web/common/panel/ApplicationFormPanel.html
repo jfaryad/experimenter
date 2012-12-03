@@ -1,10 +1,21 @@
 <!DOCTYPE html>
 <html>
 <body>
-<wicket:extend>
-      Version:    <input type="text" wicket:id="version"></input><br/>
-      Executable: <input wicket:id="executable" type="file" /><br>
-      Program: <select  wicket:id="program"></select><br>
-</wicket:extend>
+  <wicket:extend>
+    <table class="formTable">
+      <tr>
+        <td>Program:</td>
+        <td><select wicket:id="program"></select></td>
+      </tr>
+      <tr>
+        <td>Version:</td>
+        <td><input type="text" wicket:id="version"></input></td>
+      </tr>
+      <tr>
+        <td>Executable:</td>
+        <td><input wicket:id="executable" type="file" /></td>
+      </tr>
+    </table>
+  </wicket:extend>
 </body>
 </html>

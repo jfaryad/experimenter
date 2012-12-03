@@ -11,6 +11,8 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.NamedQueries;
+import org.hibernate.annotations.NamedQuery;
 
 /**
  * Entity for database table CONNECTION
@@ -20,9 +22,34 @@ import org.hibernate.annotations.FetchMode;
  */
 @javax.persistence.Entity
 @Table(name = "CONNECTION")
+@NamedQueries({
+        @NamedQuery(
+                name = Connection.Q_GET_BY_USER,
+                query = "select c from Connection c " +
+                        "inner join c.connectionFarm as f " +
+                        "inner join f.userGroup as g " +
+                        "inner join g.users as u " +
+                        "where u = :user",
+                readOnly = true),
+        @NamedQuery(
+                name = Connection.Q_GET_LEAST_LOADED,
+                query = "select c from Connection c " +
+                        "inner join fetch c.computer computer " +
+                        "inner join c.connectionFarm as f " +
+                        "where f.id in (:farmIds) " +
+                        "and computer.numberOfRunningJobs <= :maxJobs " +
+                        "and computer.numberOfRunningJobs = " +
+                        "(select min(comp.numberOfRunningJobs) from Connection conn " +
+                        "inner join conn.connectionFarm as farm " +
+                        "inner join conn.computer as comp " +
+                        "where farm.id in (:farmIds)) " +
+                        "order by c.id",
+                readOnly = true) })
 public class Connection implements Entity {
 
     private static final long serialVersionUID = 1L;
+    public static final String Q_GET_BY_USER = "Connection.Q_GET_BY_USER";
+    public static final String Q_GET_LEAST_LOADED = "Connection.Q_GET_LEAST_LOADED";
 
     @Column(name = "connection_id")
     @Id

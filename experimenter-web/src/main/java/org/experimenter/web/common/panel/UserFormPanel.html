@@ -1,10 +1,43 @@
 <!DOCTYPE html>
 <html>
 <body>
-<wicket:extend>
-      Name:    <input type="text" wicket:id="name"></input><br/>
-      Surname: <input type="text"  wicket:id="surname"></input><br>
-      Email:    <input type="text"  wicket:id="email"></input><br/>
-</wicket:extend>
+  <wicket:extend>
+    <table class="formTable">
+      <tr>
+        <td>Login:</td>
+        <td><input type="text" wicket:id="login"></input></td>
+      </tr>
+      <tr>
+        <td>Password:</td>
+        <td><input type="password" wicket:id="password"></input></td>
+      </tr>
+      <tr>
+        <td>Confirm password:</td>
+        <td><input type="password" wicket:id="confirmPassword"></input></td>
+      </tr>
+      <tr>
+        <td>Name:</td>
+        <td><input type="text" wicket:id="name"></input></td>
+      </tr>
+      <tr>
+        <td>Surname:</td>
+        <td><input type="text" wicket:id="surname"></input></td>
+      </tr>
+      <tr>
+        <td>Email:</td>
+        <td><input type="text" wicket:id="email"></input></td>
+      </tr>
+      <wicket:container wicket:id="adminOnly">
+        <tr>
+          <td>Admin rights:</td>
+          <td><input type="checkbox" wicket:id="isAdmin"></input></td>
+        </tr>
+      </wicket:container>
+        <tr>
+          <td>User groups:</td>
+          <td><select size="6" wicket:id="userGroups"></select></td>
+        </tr>
+    </table>
+  </wicket:extend>
 </body>
 </html>

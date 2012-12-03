@@ -1,10 +1,21 @@
 <!DOCTYPE html>
 <html>
 <body>
-<wicket:extend>
-      Problem type: <select  wicket:id="problem"></select><br>
-      Name:    <input type="text" wicket:id="name"></input><br/>
-      Zipped data: <input type="file"  wicket:id="data"></input><br>
-</wicket:extend>
+  <wicket:extend>
+    <table class="formTable">
+      <tr>
+        <td>Problem type:</td>
+        <td><select wicket:id="problem"></select></td>
+      </tr>
+      <tr>
+        <td>Name:</td>
+        <td><input type="text" wicket:id="name"></input></td>
+      </tr>
+      <tr>
+        <td>Data:</td>
+        <td><input type="file" wicket:id="data"></input></td>
+      </tr>
+    </table>
+  </wicket:extend>
 </body>
 </html>

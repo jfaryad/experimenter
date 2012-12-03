@@ -5,10 +5,11 @@ import java.util.List;
 import org.experimenter.repository.entity.InputSet;
 import org.experimenter.repository.entity.ProblemType;
 import org.experimenter.repository.entity.Project;
+import org.experimenter.repository.entity.User;
 import org.experimenter.repository.entity.UserGroup;
 import org.experimenter.repository.form.CriteriaForm;
 
-public interface ProjectService {
+public interface ProjectService extends EntityService<Project> {
 
     /**
      * Saves the given {@link Project} to database. If the entry doesn't exists yet, it will be created.
@@ -16,6 +17,7 @@ public interface ProjectService {
      * @param project
      *            the project to save
      */
+    @Override
     public void saveUpdate(Project project);
 
     /**
@@ -25,6 +27,7 @@ public interface ProjectService {
      *            the identifier of the project
      * @return the project with the given id or null, if such an entry doesn't exist in the database.
      */
+    @Override
     public Project findById(Integer id);
 
     /**
@@ -34,6 +37,7 @@ public interface ProjectService {
      *            a search form with the properties you want to search by
      * @return a list of projects that match the example
      */
+    @Override
     public List<Project> findByExample(Project project);
 
     /**
@@ -44,6 +48,7 @@ public interface ProjectService {
      *            a search form with the properties you want to search by
      * @return a list of projects that match the criteria
      */
+    @Override
     public List<Project> findByCriteria(CriteriaForm<Project> criteria);
 
     /**
@@ -52,6 +57,7 @@ public interface ProjectService {
      * @param project
      *            the project to delete
      */
+    @Override
     public void delete(Project project);
 
     /**
@@ -60,6 +66,7 @@ public interface ProjectService {
      * @param projects
      *            the projects to delete
      */
+    @Override
     public void delete(List<Project> projects);
 
     /**
@@ -88,5 +95,14 @@ public interface ProjectService {
      * @return a list of projects
      */
     public List<Project> findProjectsByInputSet(InputSet inputSet);
+
+    /**
+     * Find all projects belonging to any user group the given user belongs to.
+     * 
+     * @param user
+     *            the user to search by
+     * @return a list of projects
+     */
+    public List<Project> findProjectsByUser(User user);
 
 }

@@ -4,9 +4,10 @@ import java.util.List;
 
 import org.experimenter.repository.entity.Program;
 import org.experimenter.repository.entity.Project;
+import org.experimenter.repository.entity.User;
 import org.experimenter.repository.form.CriteriaForm;
 
-public interface ProgramService {
+public interface ProgramService extends EntityService<Program> {
 
     /**
      * Saves the given {@link Program} to database. If the entry doesn't exists yet, it will be created.
@@ -14,6 +15,7 @@ public interface ProgramService {
      * @param program
      *            the program to save
      */
+    @Override
     public void saveUpdate(Program program);
 
     /**
@@ -23,6 +25,7 @@ public interface ProgramService {
      *            the identifier of the program
      * @return the program with the given id or null, if such an entry doesn't exist in the database.
      */
+    @Override
     public Program findById(Integer id);
 
     /**
@@ -32,6 +35,7 @@ public interface ProgramService {
      *            a search form with the properties you want to search by
      * @return a list of programs that match the example
      */
+    @Override
     public List<Program> findByExample(Program program);
 
     /**
@@ -42,6 +46,7 @@ public interface ProgramService {
      *            a search form with the properties you want to search by
      * @return a list of programs that match the criteria
      */
+    @Override
     public List<Program> findByCriteria(CriteriaForm<Program> criteria);
 
     /**
@@ -50,6 +55,7 @@ public interface ProgramService {
      * @param program
      *            the program to delete
      */
+    @Override
     public void delete(Program program);
 
     /**
@@ -58,6 +64,7 @@ public interface ProgramService {
      * @param programs
      *            the programs to delete
      */
+    @Override
     public void delete(List<Program> programs);
 
     /**
@@ -68,5 +75,14 @@ public interface ProgramService {
      * @return a list of programs
      */
     public List<Program> findProgramsByProject(Project project);
+
+    /**
+     * Find all programs belonging to any user group the given user belongs to.
+     * 
+     * @param user
+     *            the user to search by
+     * @return a list of programs
+     */
+    public List<Program> findProgramsByUser(User user);
 
 }

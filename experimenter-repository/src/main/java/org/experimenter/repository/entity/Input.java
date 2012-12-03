@@ -1,5 +1,6 @@
 package org.experimenter.repository.entity;
 
+import java.util.Comparator;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -14,6 +15,8 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.NamedQueries;
+import org.hibernate.annotations.NamedQuery;
 
 /**
  * Entity for database table INPUT
@@ -23,9 +26,18 @@ import org.hibernate.annotations.FetchMode;
  */
 @javax.persistence.Entity
 @Table(name = "INPUT")
+@NamedQueries({
+        @NamedQuery(
+                name = Input.Q_GET_BY_CHECKSUM,
+                query = "select i from Input i " +
+                        "where i.checksum = :checksum ",
+                readOnly = true) })
 public class Input implements Entity {
 
     private static final long serialVersionUID = 1L;
+    public static final String Q_GET_BY_CHECKSUM = "Experiment.Q_GET_BY_CHECKSUM";
+
+    public static final Comparator<Input> COMPARATOR_BY_NAME = new ByNameComparator();
 
     @Column(name = "input_id")
     @Id
@@ -37,6 +49,9 @@ public class Input implements Entity {
 
     @Column(name = "data", nullable = false)
     private String data;
+
+    @Column(name = "checksum", nullable = false, unique = true)
+    private String checksum;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "problem_id", referencedColumnName = "problem_id", nullable = false)
@@ -80,6 +95,14 @@ public class Input implements Entity {
         this.data = data;
     }
 
+    public String getChecksum() {
+        return checksum;
+    }
+
+    public void setChecksum(String checksum) {
+        this.checksum = checksum;
+    }
+
     public ProblemType getProblem() {
         return problem;
     }
@@ -97,8 +120,29 @@ public class Input implements Entity {
     }
 
     @Override
+    public int hashCode() {
+        return id.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof Input)) {
+            return false;
+        }
+        final Input other = (Input) o;
+        return other.getId().equals(this.getId());
+    }
+
+    @Override
     public String toString() {
         return "Input[id: " + getId() + ", name: " + name + ", data: " + data + ", problem: " + problem + "]";
+    }
+
+    private static final class ByNameComparator implements Comparator<Input> {
+        @Override
+        public int compare(final Input i1, final Input i2) {
+            return i1.getName().compareTo(i2.getName());
+        }
     }
 
 }

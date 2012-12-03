@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:wicket="http://wicket.apache.org">
+<head>
+<meta charset="utf-8" />
+<link href='http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz:regular,bold' rel='stylesheet' type='text/css' />
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+<body>
+  <div class="header">
+    <div class="logo">
+      <h1>Experimenter</h1>
+      <span class="signedInBlock" wicket:id="forSignedInUsers">
+        <wicket:link><a href="ConfigurationPage.html"><wicket:container wicket:id="configLinkText" /></a></wicket:link>
+        <wicket:link><a href="LogoutPage.html">Logout</a></wicket:link>
+      </span>
+    </div>
+  </div>
+  <div class="middle">
+    <wicket:child/>
+  </div>
+  <div class="footer"></div>
+</body>
+</html>

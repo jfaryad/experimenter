@@ -21,4 +21,11 @@ public class UserGroupServiceImpl extends AbstractService<UserGroup, UserGroupDa
         return user.getUserGroups();
     }
 
+    @Override
+    protected boolean hasDependencies(UserGroup userGroup) {
+        return !userGroup.getConnectionFarms().isEmpty()
+                || !userGroup.getProjects().isEmpty()
+                || !userGroup.getUsers().isEmpty();
+    }
+
 }

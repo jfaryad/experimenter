@@ -11,4 +11,9 @@ public class ComputerServiceImpl extends AbstractService<Computer, ComputerDao> 
         connectionService.delete(computer.getConnections());
     }
 
+    @Override
+    protected boolean hasDependencies(Computer computer) {
+        return !computer.getConnections().isEmpty();
+    }
+
 }

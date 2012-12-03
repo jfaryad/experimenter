@@ -16,4 +16,15 @@ public interface UserDao extends BaseDao<User> {
      */
     public List<User> findUsersByUserGroup(UserGroup userGroup);
 
+    /**
+     * Finds the user with the given credentials.
+     * 
+     * @param login
+     *            login of the user
+     * @param password
+     *            user's password
+     * @return the user or null, if no such entity exists
+     */
+    public User findUserByLoginAndPassword(String login, String password);
+
 }

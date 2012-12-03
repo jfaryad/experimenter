@@ -29,8 +29,10 @@ public abstract class EntityModel<T extends Entity> extends LoadableDetachableMo
     public EntityModel(T entity) {
         Injector.get().inject(this);
 
-        id = entity.getId();
-        this.entity = entity;
+        if (entity != null) {
+            id = entity.getId();
+            this.entity = entity;
+        }
     }
 
     public EntityModel(Integer id) {
@@ -78,6 +80,8 @@ public abstract class EntityModel<T extends Entity> extends LoadableDetachableMo
         entity = object;
         if (entity != null) {
             id = entity.getId();
+        } else {
+            id = null;
         }
     }
 }

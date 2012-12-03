@@ -9,7 +9,7 @@ import java.util.List;
 import org.experimenter.repository.entity.Input;
 import org.experimenter.repository.entity.ProblemType;
 import org.experimenter.repository.form.CriteriaForm;
-import org.experimenter.repository.util.DaoTestHelper;
+import org.experimenter.repository.testutil.DaoTestHelper;
 import org.junit.Test;
 
 public class InputDaoTest extends AbstractDaoTest {
@@ -19,6 +19,7 @@ public class InputDaoTest extends AbstractDaoTest {
         Input input = new Input();
         input.setName("sampleInput");
         input.setData("input for testing");
+        input.setChecksum("checksum");
         ProblemType problem = new ProblemType();
         problem.setId(1);
         input.setProblem(problem);

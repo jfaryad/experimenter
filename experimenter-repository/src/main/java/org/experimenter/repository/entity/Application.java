@@ -18,7 +18,7 @@ import org.hibernate.annotations.NamedQueries;
 import org.hibernate.annotations.NamedQuery;
 
 /**
- * Entity for database table APPLICXATION
+ * Entity for database table APPLICATION
  * 
  * @author Jakub Faryad (jfaryad@gmail.com)
  * 
@@ -28,12 +28,23 @@ import org.hibernate.annotations.NamedQuery;
 @NamedQueries({ @NamedQuery(
         name = Application.Q_GET_BY_PROGRAM,
         query = "select a from Application a where a.program = :program " + "order by a.version",
-        readOnly = true) })
+        readOnly = true),
+        @NamedQuery(
+                name = Application.Q_GET_BY_USER,
+                query = "select a from Application a " +
+                        "inner join fetch a.program as prog " +
+                        "inner join fetch prog.project as proj " +
+                        "inner join proj.userGroup as g " +
+                        "inner join g.users as u " +
+                        "where u = :user " +
+                        "order by prog.name, a.version",
+                readOnly = true) })
 public class Application implements Entity {
 
     private static final long serialVersionUID = 1L;
 
     public static final String Q_GET_BY_PROGRAM = "Application.Q_GET_BY_PROGRAM";
+    public static final String Q_GET_BY_USER = "Application.Q_GET_BY_USER";
 
     @Column(name = "application_id")
     @Id
@@ -51,7 +62,7 @@ public class Application implements Entity {
     @Fetch(FetchMode.SELECT)
     private Program program;
 
-    @OneToMany(mappedBy = "application", orphanRemoval = true)
+    @OneToMany(mappedBy = "application")
     private List<Experiment> experiments;
 
     public Application() {
@@ -102,6 +113,13 @@ public class Application implements Entity {
 
     public void setExperiments(List<Experiment> experiments) {
         this.experiments = experiments;
+    }
+
+    /**
+     * Returns the name of the program concatenated with the version.
+     */
+    public String getFullName() {
+        return program.getName() + " " + version;
     }
 
     @Override

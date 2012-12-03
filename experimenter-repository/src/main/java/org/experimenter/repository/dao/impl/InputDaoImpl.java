@@ -18,6 +18,16 @@ public class InputDaoImpl extends AbstractBaseDaoImpl<Input> implements InputDao
             inputSet.getInputs().remove(input);
     }
 
+    @Override
+    public Input findInputByChecksum(String checksum) {
+        logger.debug(">> findInputByChecksum: " + checksum);
+        Input input = (Input) getSession().getNamedQuery(Input.Q_GET_BY_CHECKSUM)
+                .setString("checksum", checksum)
+                .uniqueResult();
+        logger.debug("<< findInputByChecksum: found:" + input);
+        return input;
+    }
+
     // @Override
     // public List<Input> findInputsByInputSet(InputSet inputSet) {
     // logger.debug(">> findInputsByInputSet: " + inputSet);

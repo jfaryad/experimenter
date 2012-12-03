@@ -1,8 +1,17 @@
 <!DOCTYPE html>
 <html>
 <body>
-<wicket:extend>
-      Name:    <input type="text" wicket:id="name"></input><br/>
-</wicket:extend>
+  <wicket:extend>
+    <table class="formTable">
+      <tr>
+        <td>Name:</td>
+        <td><input type="text" wicket:id="name"></input></td>
+        </tr>
+        <tr>
+        <td>Users:</td>
+        <td><select size="10" wicket:id="users"></select></td>
+      </tr>
+    </table>
+  </wicket:extend>
 </body>
 </html>

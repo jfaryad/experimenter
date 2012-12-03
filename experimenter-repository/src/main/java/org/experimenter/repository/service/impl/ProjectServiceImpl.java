@@ -6,6 +6,7 @@ import org.experimenter.repository.dao.ProjectDao;
 import org.experimenter.repository.entity.InputSet;
 import org.experimenter.repository.entity.ProblemType;
 import org.experimenter.repository.entity.Project;
+import org.experimenter.repository.entity.User;
 import org.experimenter.repository.entity.UserGroup;
 import org.experimenter.repository.service.ProjectService;
 
@@ -32,6 +33,17 @@ public class ProjectServiceImpl extends AbstractService<Project, ProjectDao> imp
     public List<Project> findProjectsByInputSet(InputSet inputSet) {
         checkIdNotNull(inputSet);
         return inputSet.getProjects();
+    }
+
+    @Override
+    public List<Project> findProjectsByUser(User user) {
+        checkIdNotNull(user);
+        return baseDao.findProjectsByUser(user);
+    }
+
+    @Override
+    protected boolean hasDependencies(Project project) {
+        return !project.getPrograms().isEmpty();
     }
 
 }

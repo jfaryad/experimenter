@@ -2,6 +2,7 @@ package org.experimenter.web.common.panel;
 
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.RequiredTextField;
+import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.experimenter.repository.entity.Computer;
 import org.experimenter.repository.service.ComputerService;
@@ -27,7 +28,7 @@ public class ComputerFormPanel extends EntityFormPanel<Computer> {
     @Override
     protected void addFieldsToForm(Form<Computer> form) {
         form.add(new RequiredTextField<String>("address"));
-        form.add(new RequiredTextField<String>("description"));
+        form.add(new TextField<String>("description"));
 
     }
 

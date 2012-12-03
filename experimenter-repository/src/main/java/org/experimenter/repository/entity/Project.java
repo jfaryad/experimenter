@@ -16,6 +16,8 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.NamedQueries;
+import org.hibernate.annotations.NamedQuery;
 
 /**
  * Entity for database table PROJECT
@@ -25,9 +27,20 @@ import org.hibernate.annotations.FetchMode;
  */
 @javax.persistence.Entity
 @Table(name = "PROJECT")
+@NamedQueries({
+        @NamedQuery(
+                name = Project.Q_GET_BY_USER,
+                query = "select p from Project p " +
+                        "inner join p.userGroup as g " +
+                        "inner join g.users as u " +
+                        "where u = :user " +
+                        "order by p.name",
+                readOnly = true) })
 public class Project implements Entity {
 
     private static final long serialVersionUID = 1L;
+
+    public static final String Q_GET_BY_USER = "Project.Q_GET_BY_USER";
 
     @Column(name = "project_id")
     @Id

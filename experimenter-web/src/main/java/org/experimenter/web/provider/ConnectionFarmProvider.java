@@ -28,8 +28,7 @@ public class ConnectionFarmProvider extends EntityDataProvider<ConnectionFarm> {
 
     @Override
     protected List<ConnectionFarm> load() {
-        // loads all connectionFarms
-        return connectionFarmService.findByExample(new ConnectionFarm());
+        return connectionFarmService.findConnectionFarmsByUser(currentUser());
     }
 
 }

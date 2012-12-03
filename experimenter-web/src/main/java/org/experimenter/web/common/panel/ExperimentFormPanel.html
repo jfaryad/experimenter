@@ -1,13 +1,37 @@
 <!DOCTYPE html>
 <html>
 <body>
-<wicket:extend>
-      Version: <select  wicket:id="application"></select><br>
-      Name:    <input type="text" wicket:id="name"></input><br/>
-      Description: <input type="text"  wicket:id="description"></input><br>
-      Active:    <input type="checkbox" wicket:id="isActive"></input><br/>
-      Cron Expression: <input type="text"  wicket:id="cronExpression"></input><br>
-      Input sets: <select  wicket:id="inputSets"></select><br>
-</wicket:extend>
+  <wicket:extend>
+    <table class="formTable">
+      <tr>
+        <td>Program version:</td>
+        <td><select wicket:id="application"></select></td>
+      </tr>
+      <tr>
+        <td>Name:</td>
+        <td><input type="text" wicket:id="name"></input></td>
+      </tr>
+      <tr>
+        <td>Description:</td>
+        <td><input type="text" wicket:id="description"></input></td>
+      </tr>
+      <tr>
+        <td>Maximum jobs:</td>
+        <td><input type="text" wicket:id="maxRunningJobs"></input></td>
+      </tr>
+      <tr>
+        <td>Scheduled time:</td>
+        <td><span wicket:id="scheduledTime" /></td>
+      </tr>
+      <tr>
+        <td>Input sets:</td>
+        <td><select size="5" wicket:id="inputSets"></select></td>
+      </tr>
+      <tr>
+        <td>Connection farms:</td>
+        <td><select size="5" wicket:id="connectionFarms"></select><br></td>
+      </tr>
+    </table>
+  </wicket:extend>
 </body>
 </html>

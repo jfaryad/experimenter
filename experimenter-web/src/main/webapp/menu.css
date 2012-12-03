@@ -28,7 +28,7 @@
 
 .menu a {
   cursor: pointer;
-  color: #fff;
+  color: #fff !important;
   display: block;
   height: 25px;
   text-decoration: none;

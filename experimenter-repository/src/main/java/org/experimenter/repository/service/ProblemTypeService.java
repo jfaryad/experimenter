@@ -5,7 +5,7 @@ import java.util.List;
 import org.experimenter.repository.entity.ProblemType;
 import org.experimenter.repository.form.CriteriaForm;
 
-public interface ProblemTypeService {
+public interface ProblemTypeService extends EntityService<ProblemType> {
 
     /**
      * Saves the given {@link ProblemType} to database. If the entry doesn't exists yet, it will be created.
@@ -13,6 +13,7 @@ public interface ProblemTypeService {
      * @param problemType
      *            the problemType to save
      */
+    @Override
     public void saveUpdate(ProblemType problemType);
 
     /**
@@ -22,6 +23,7 @@ public interface ProblemTypeService {
      *            the identifier of the problemType
      * @return the problemType with the given id or null, if such an entry doesn't exist in the database.
      */
+    @Override
     public ProblemType findById(Integer id);
 
     /**
@@ -31,6 +33,7 @@ public interface ProblemTypeService {
      *            a search form with the properties you want to search by
      * @return a list of problemTypes that match the example
      */
+    @Override
     public List<ProblemType> findByExample(ProblemType problemType);
 
     /**
@@ -41,6 +44,7 @@ public interface ProblemTypeService {
      *            a search form with the properties you want to search by
      * @return a list of problemTypes that match the criteria
      */
+    @Override
     public List<ProblemType> findByCriteria(CriteriaForm<ProblemType> criteria);
 
     /**
@@ -49,6 +53,7 @@ public interface ProblemTypeService {
      * @param problemType
      *            the problemType to delete
      */
+    @Override
     public void delete(ProblemType problemType);
 
     /**
@@ -57,6 +62,7 @@ public interface ProblemTypeService {
      * @param problemTypes
      *            the problemTypes to delete
      */
+    @Override
     public void delete(List<ProblemType> problemTypes);
 
 }

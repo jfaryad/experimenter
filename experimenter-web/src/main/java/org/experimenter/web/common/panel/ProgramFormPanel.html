@@ -1,11 +1,31 @@
 <!DOCTYPE html>
 <html>
 <body>
-<wicket:extend>
-      Name:    <input type="text" wicket:id="name"></input><br/>
-      Description: <input type="text"  wicket:id="description"></input><br>
-      Launch command:    <input type="text"  wicket:id="command"></input><br/>
-      Project: <select  wicket:id="project"></select><br>
-</wicket:extend>
+  <wicket:extend>
+    <table class="formTable">
+      <tr>
+        <td>Project:</td>
+        <td><select wicket:id="project"></select></td>
+      </tr>
+      <tr>
+        <td>Name:</td>
+        <td><input type="text" wicket:id="name"></input></td>
+      </tr>
+      <tr>
+        <td>Description:</td>
+        <td><input type="text" wicket:id="description"></input></td>
+      </tr>
+      <tr>
+        <td colspan="2">Launch command/script:</td>
+      </tr>
+      <tr>
+        <td colspan="2"><textarea rows="18" style="width: 100%" wicket:id="command" /></td>
+      </tr>
+      <tr>
+        <td colspan="2"><span style="font-size: 10pt">* use ${PROGRAM} to refer to the executable program file and ${DATA} to refer to the input data file</span></td>
+      </tr>
+    </table>
+
+  </wicket:extend>
 </body>
 </html>

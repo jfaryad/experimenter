@@ -5,9 +5,10 @@ import java.util.List;
 import org.experimenter.repository.entity.Computer;
 import org.experimenter.repository.entity.Connection;
 import org.experimenter.repository.entity.ConnectionFarm;
+import org.experimenter.repository.entity.User;
 import org.experimenter.repository.form.CriteriaForm;
 
-public interface ConnectionService {
+public interface ConnectionService extends EntityService<Connection> {
 
     /**
      * Saves the given {@link Connection} to database. If the entry doesn't exists yet, it will be created.
@@ -15,6 +16,7 @@ public interface ConnectionService {
      * @param connection
      *            the connection to save
      */
+    @Override
     public void saveUpdate(Connection connection);
 
     /**
@@ -24,6 +26,7 @@ public interface ConnectionService {
      *            the identifier of the connection
      * @return the connection with the given id or null, if such an entry doesn't exist in the database.
      */
+    @Override
     public Connection findById(Integer id);
 
     /**
@@ -33,6 +36,7 @@ public interface ConnectionService {
      *            a search form with the properties you want to search by
      * @return a list of connections that match the example
      */
+    @Override
     public List<Connection> findByExample(Connection connection);
 
     /**
@@ -43,6 +47,7 @@ public interface ConnectionService {
      *            a search form with the properties you want to search by
      * @return a list of connections that match the criteria
      */
+    @Override
     public List<Connection> findByCriteria(CriteriaForm<Connection> criteria);
 
     /**
@@ -51,6 +56,7 @@ public interface ConnectionService {
      * @param connection
      *            the connection to delete
      */
+    @Override
     public void delete(Connection connection);
 
     /**
@@ -59,6 +65,7 @@ public interface ConnectionService {
      * @param connections
      *            the connections to delete
      */
+    @Override
     public void delete(List<Connection> connections);
 
     /**
@@ -78,5 +85,31 @@ public interface ConnectionService {
      * @return a list of connections
      */
     public List<Connection> findConnectionsByComputer(Computer computer);
+
+    /**
+     * Find all connections belonging to any user group the given user belongs to.
+     * 
+     * @param user
+     *            the user to search by
+     * @return a list of connections
+     */
+    public List<Connection> findConnectionsByUser(User user);
+
+    /**
+     * Finds the connection belonging to any of the given farms that have the lowest number of running jobs on it's
+     * machine and increments the job counter.<br>
+     * If there are several equally loaded machines, any of them can be selected.
+     * <p>
+     * <b>WARNING</b> This method must be synchronized, either in jdk or in the database (select for update)
+     * 
+     * @param connectionFarms
+     *            the farms that will be searched
+     * 
+     * @param maxRunningJobs
+     *            find only computers with maxRunningJobs running. If maxRunningJobs is null or negative, it will be
+     *            ignored
+     * @return the selected connection
+     */
+    public Connection addJobToLeastLoadedConnection(List<ConnectionFarm> connectionFarms, Integer maxRunningJobs);
 
 }

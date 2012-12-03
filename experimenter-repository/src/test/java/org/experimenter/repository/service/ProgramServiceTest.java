@@ -7,7 +7,7 @@ import java.util.List;
 
 import org.experimenter.repository.entity.Program;
 import org.experimenter.repository.entity.Project;
-import org.experimenter.repository.util.DaoTestHelper;
+import org.experimenter.repository.testutil.DaoTestHelper;
 import org.junit.Test;
 
 public class ProgramServiceTest extends AbstractServiceTest {

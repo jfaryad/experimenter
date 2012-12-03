@@ -37,6 +37,14 @@ import org.hibernate.annotations.NamedQuery;
         @NamedQuery(
                 name = ConnectionFarm.Q_GET_BY_EXPERIMENT,
                 query = "select c from ConnectionFarm c join c.experiments e where e = :experiment order by name",
+                readOnly = true),
+        @NamedQuery(
+                name = ConnectionFarm.Q_GET_BY_USER,
+                query = "select c from ConnectionFarm c " +
+                        "inner join c.userGroup as g " +
+                        "inner join g.users as u " +
+                        "where u = :user " +
+                        "order by c.name",
                 readOnly = true) })
 public class ConnectionFarm implements Entity {
 
@@ -45,6 +53,7 @@ public class ConnectionFarm implements Entity {
     public static final String Q_GET_BY_USERGROUP = "ConnectionFarm.Q_GET_BY_USERGROUP";
     public static final String Q_DELETE_BY_USERGROUP = "ConnectionFarm.Q_DELETE_BY_USERGROUP";
     public static final String Q_GET_BY_EXPERIMENT = "ConnectionFarm.Q_GET_BY_EXPERIMENT";
+    public static final String Q_GET_BY_USER = "ConnectionFarm.Q_GET_BY_USER";
 
     @Column(name = "farm_id")
     @Id

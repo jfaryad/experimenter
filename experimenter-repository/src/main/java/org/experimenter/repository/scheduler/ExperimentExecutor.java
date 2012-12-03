@@ -1,153 +1,140 @@
 package org.experimenter.repository.scheduler;
 
-import java.io.IOException;
-import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
 import org.experimenter.repository.entity.Connection;
+import org.experimenter.repository.entity.ConnectionFarm;
 import org.experimenter.repository.entity.Experiment;
+import org.experimenter.repository.entity.Input;
+import org.experimenter.repository.entity.InputSet;
+import org.experimenter.repository.service.ConnectionService;
 import org.experimenter.repository.service.ExperimentService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
+import org.springframework.orm.hibernate3.HibernateInterceptor;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
-import com.jcraft.jsch.ChannelExec;
-import com.jcraft.jsch.ChannelSftp;
-import com.jcraft.jsch.JSch;
-import com.jcraft.jsch.JSchException;
-import com.jcraft.jsch.Session;
-
+/**
+ * The actual executor of the experiment. It holds references to the experimenterService and the taskExecutor and when
+ * the {@link #execute()} method is called, it prepares the input files, the executable and starts multiple background
+ * threads for runnint the experiment on multiple machines in parallel.
+ * 
+ * @author jfaryad
+ * 
+ */
 public class ExperimentExecutor {
 
+    private static final Logger LOG = LoggerFactory.getLogger(ExperimentExecutor.class);
+
+    private static final String DEST_DIR_BASE = "/tmp/expwork";
+    private static final String FILE_SEPARATOR = System.getProperty("file.separator");
+
     private Integer experimentId;
+
+    @Autowired
     private ExperimentService experimentService;
+    @Autowired
+    private ConnectionService connectionService;
+    @Autowired
+    private HibernateInterceptor hibernateInterceptor;
+    @Autowired
+    private ThreadPoolTaskExecutor taskExecutor;
+    @Autowired
+    private AutowireCapableBeanFactory beanFactory;
+
+    @Value("${experiment-timeout-seconds}")
+    private Integer maxWaitTimeForExperiments;
+
+    @Value("${overloaded-connection-pool.retry.interval.millis}")
+    private Integer overloadWaitInterval;
 
     public ExperimentExecutor() {
 
     }
 
-    public ExperimentExecutor(Integer experimentId, ExperimentService experimentService) {
+    public ExperimentExecutor(Integer experimentId) {
         this.experimentId = experimentId;
-        this.experimentService = experimentService;
     }
 
     public void execute() {
+        LOG.info("Initializing experiment " + experimentId);
         Experiment experiment = experimentService.findById(experimentId);
+        if (experiment == null) {
+            throw new RuntimeException("Unable to find an experiment with id: " + experimentId);
+        }
+        List<ExperimentJob> jobList = loadBalanceJobs(experiment);
+        final CountDownLatch doneSignal = new CountDownLatch(jobList.size());
+        if (!experimentService.setExperimentStarted(experiment)) {
+            LOG.error("Experiment " + experimentId + " already running or finished. Aborting ...");
+            return;
+        }
+        for (ExperimentJob job : jobList) {
+            job.setDoneSignal(doneSignal);
+            taskExecutor.submit(job);
+        }
+        boolean finished = false;
+        try {
+            finished = doneSignal.await(maxWaitTimeForExperiments, TimeUnit.SECONDS);
+        } catch (InterruptedException e) {
+            LOG.info("Executor for experiment: " + experimentId + " interrupted. Number of jobs still running: "
+                    + doneSignal.getCount());
+        }
+        LOG.info("Executor for experiment: " + experimentId + ", finished in time: " + finished + ", jobs executed: "
+                + (jobList.size() - doneSignal.getCount()));
+        experimentService.setExperimentFinished(experiment);
+
+    }
+
+    private List<ExperimentJob> loadBalanceJobs(Experiment experiment) {
+        List<ExperimentJob> jobList = new ArrayList<ExperimentJob>();
+        List<ConnectionFarm> availableFarms = experiment.getConnectionFarms();
+        Integer maximumAllowedRunningJobsPerMachine = experiment.getMaxRunningJobs();
+        Set<Input> availableInputs = getDistinctInputs(experiment);
+        for (Input input : availableInputs) {
+            Connection leastLoadedConnection;
+            while ((leastLoadedConnection = connectionService.addJobToLeastLoadedConnection(availableFarms,
+                    maximumAllowedRunningJobsPerMachine)) == null) {
+                try {
+                    Thread.sleep(overloadWaitInterval);
+                } catch (InterruptedException e) {
+                    LOG.warn("Interrupted while waiting for connection pool to unload", e);
+                }
+            }
+            jobList.add(createJob(experiment, input, leastLoadedConnection));
+        }
+        return jobList;
+    }
+
+    private ExperimentJob createJob(Experiment experiment, Input input, Connection connection) {
         String executable = experiment.getApplication().getExecutable();
-        // TODO select from experiment's connection farms, not user group's farms
-        Connection connection = experiment.getApplication().getProgram().getProject().getUserGroup()
-                .getConnectionFarms().get(0).getConnections().get(1);
-        // System.out.println("Experiment has " + experiment.getConnectionFarms().size()
-        // + " connection farms, \nthe first one has "
-        // + experiment.getConnectionFarms().get(0).getConnections().size()
-        // + " connections and the first one of them is: " + connection);
-        String name = experiment.getName();
+        Integer computerId = connection.getComputer().getId();
+        Integer inputId = input.getId();
         String hostname = connection.getComputer().getAddress();
+        Short port = connection.getPort();
         String login = connection.getLogin();
         String password = connection.getPassword();
-        String pathToFile = experiment.getInputSets().get(0).getInputs().get(0).getData();
-        runExperiment(hostname, login, password, pathToFile, executable);
-        System.out.println("Running experiment " + name + " on " + hostname + " with username " + login
-                + " using input data " + pathToFile);
+        String pathToFile = input.getData();
+        String command = experiment.getApplication().getProgram().getCommand();
+        ExperimentJob job = new ExperimentJob(experimentId, computerId, inputId, hostname, port, login, password,
+                pathToFile, command, executable);
+        beanFactory.autowireBean(job);
+        return job;
     }
 
-    private void runExperiment(String hostname, String login, String password, String pathToFile,
-            String executable) {
-        JSch jsch = null;
-        Session session = null;
-        ChannelSftp sftpChannel = null;
-        ChannelExec execChannel = null;
-        java.util.Properties config = new java.util.Properties();
-        config.put("StrictHostKeyChecking", "no");
-
-        try {
-            jsch = new JSch();
-            session = jsch.getSession(login, hostname, 22);
-            session.setPassword(password);
-            session.setConfig(config);
-            session.connect();
-
-            // create work directory
-            execChannel = (ChannelExec) session.openChannel("exec");
-            execChannel.setCommand("mkdir /tmp/expwork");
-            executeExecChannel(execChannel);
-
-            // upload files
-            System.out.println("Starting File Upload:");
-            sftpChannel = (ChannelSftp) session.openChannel("sftp");
-            sftpChannel.connect();
-            String srcInput = pathToFile;
-            String destInput = "/tmp/expwork/input.zip";
-            sftpChannel.put(srcInput, destInput);
-            String srcExecutable = executable;
-            String destExecutable = "/tmp/expwork/executable";
-            sftpChannel.put(srcExecutable, destExecutable);
-            sftpChannel.disconnect();
-
-            // run experiment
-            execChannel = (ChannelExec) session.openChannel("exec");
-            execChannel.setCommand("cd /tmp/expwork; sh executable; cd /tmp");
-            executeExecChannel(execChannel);
-
-            // download result file
-            System.out.println("Result:");
-            sftpChannel = (ChannelSftp) session.openChannel("sftp");
-            sftpChannel.connect();
-            String result = "/tmp/expwork/output.txt";
-            sftpChannel.get(result, System.out);
-            System.out.flush();
-            sftpChannel.disconnect();
-
-            // delete work directory
-            execChannel = (ChannelExec) session.openChannel("exec");
-            execChannel.setCommand("rm -Rf /tmp/expwork");
-            executeExecChannel(execChannel);
-
-        } catch (Exception e) {
-            e.printStackTrace();
+    private Set<Input> getDistinctInputs(Experiment experiment) {
+        Set<Input> distinctInputs = new HashSet<Input>();
+        for (InputSet inputSet : experiment.getInputSets()) {
+            distinctInputs.addAll(inputSet.getInputs());
         }
-
-        session.disconnect();
-    }
-
-    public Integer getExperimentId() {
-        return experimentId;
-    }
-
-    public void setExperimentId(Integer experimentId) {
-        this.experimentId = experimentId;
-    }
-
-    public ExperimentService getExperimentService() {
-        return experimentService;
-    }
-
-    public void setExperimentService(ExperimentService experimentService) {
-        this.experimentService = experimentService;
-    }
-
-    private void executeExecChannel(ChannelExec execChannel) throws JSchException, IOException {
-        execChannel.setErrStream(System.err);
-
-        InputStream in = execChannel.getInputStream();
-
-        execChannel.connect();
-
-        byte[] tmp = new byte[1024];
-        while (true) {
-            while (in.available() > 0) {
-                int i = in.read(tmp, 0, 1024);
-                if (i < 0)
-                    break;
-                System.out.print(new String(tmp, 0, i));
-            }
-            if (execChannel.isClosed()) {
-                System.out.println("exit-status: " + execChannel.getExitStatus());
-                break;
-            }
-            try {
-                Thread.sleep(1000);
-            } catch (Exception ee) {
-            }
-        }
-
-        execChannel.disconnect();
+        return distinctInputs;
     }
 
 }

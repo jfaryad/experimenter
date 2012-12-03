@@ -29,6 +29,9 @@ public class Computer implements Entity {
     @Column(name = "address", nullable = false)
     private String address;
 
+    @Column(name = "running_jobs", nullable = false)
+    private Integer numberOfRunningJobs;
+
     @Column(name = "description")
     private String description;
 
@@ -67,6 +70,14 @@ public class Computer implements Entity {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Integer getNumberOfRunningJobs() {
+        return numberOfRunningJobs;
+    }
+
+    public void setNumberOfRunningJobs(Integer numberOfRunningJobs) {
+        this.numberOfRunningJobs = numberOfRunningJobs;
     }
 
     public List<Connection> getConnections() {

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:wicket="http://wicket.apache.org">
+<head>
+<meta charset="utf-8" />
+<wicket:head>
+  <title>Experimenter Charts</title>
+  <link rel="stylesheet" href="datatable.css" type="text/css" />
+</wicket:head>
+</head>
+<body>
+  <wicket:extend>
+    <div wicket:id="feedback" />
+    <div wicket:id="filter" style="width: 100%; border: solid 1px; border-color: #6493D2; padding: 5px">
+      <table style="width: 100%">
+        <tr>
+          <td>Project: <select wicket:id="projectFilter" />
+          </td>
+          <td>Program: <select wicket:id="programFilter" />
+          </td>
+          <td>Version: <select wicket:id="applicationFilter" />
+          </td>
+          <td><a href="#" wicket:id="reset-filters">Reset filters</a></td>
+        </tr>
+      </table>
+    </div>
+    <div wicket:id="chart-config"
+      style="width: 100%; border: solid 1px; border-color: #6493D2; padding: 5px; margin-top: 10px">
+      <form wicket:id="form">
+        <table style="width: 100%">
+          <tr>
+            <td>Measured parameter: <select wicket:id="param" />
+            </td>
+            <td>Size: <select wicket:id="size" />
+            </td>
+            <td>y-axis label: <input style="width: 120px;" type="text" wicket:id="ylabel" />
+            </td>
+
+            <td><a href="#" wicket:id="reset-settings">Reset chart settings</a></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td>Title: <input style="width: 160px;" type="text" wicket:id="title" />
+            </td>
+            <td>x-axis label: <input style="width: 120px;" type="text" wicket:id="xlabel" />
+            </td>
+
+            <td><button type="submit" wicket:id="preview" title="Preview">Preview</button>
+              <button type="submit" wicket:id="generate" title="Generate">Generate</button></td>
+          </tr>
+        </table>
+      </form>
+    </div>
+    <div wicket:id="experiments-container"
+      style="float: left; overflow: auto; margin-top: 20px; width: 230px; max-height: 300px">
+      <table class="datatable">
+        <thead>
+          <tr>
+            <th></th>
+            <th style="max-width: 220px">Choose experiments:</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr wicket:id="experiment">
+            <td><input type="checkbox" wicket:id="experiment-check" /></td>
+            <td style="max-width: 220px"><span wicket:id="experiment-name" /></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div style="width:600px; margin-top: 20px; margin-left: 300px">
+      <img wicket:id="chart-preview" />
+    </div>
+
+  </wicket:extend>
+</body>
+</html>

@@ -11,9 +11,12 @@
 
 	<context:annotation-config />
 
-	<bean id="placeholderConfig"
-		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-	</bean>
+	<bean id="placeholderConfig" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+    <property name="location">
+        <value>classpath:configuration.properties</value>
+    </property>
+    <property name="ignoreUnresolvablePlaceholders" value="true"/>
+  </bean>
 
 	<jdbc:embedded-database id="dataSource">
 		<jdbc:script location="classpath:sql/schema.sql" />
@@ -73,6 +76,8 @@
 		parent="dao" />
 	<bean id="projectDao" class="org.experimenter.repository.dao.impl.ProjectDaoImpl"
 		parent="dao" />
+    
+  <bean id="resultDao" class="org.experimenter.repository.dao.impl.ResultDaoImpl" parent="dao" />
 
 	<!-- ========= DAO Service ========= -->
 
@@ -91,6 +96,9 @@
 		<property name="projectService" ref="projectService" />
 		<property name="userService" ref="userService" />
 		<property name="userGroupService" ref="userGroupService" />
+        <property name="storageService" ref="storageService" />
+    <property name="resultService" ref="resultService" />
+        <property name="sessionFactory" ref="sessionFactory" />
 	</bean>
 
 	<bean id="userService"
@@ -153,7 +161,22 @@
 		parent="service">
 		<property name="baseDao" ref="projectDao" />
 	</bean>
+  <bean id="resultService" class="org.experimenter.repository.service.impl.ResultServiceImpl" parent="service">
+    <property name="baseDao" ref="resultDao" />
+  </bean>
 
+  <!-- DUMMY -->
+  <bean id="schedulerService" class="org.experimenter.repository.testutil.DummySchedulerService">
+
+  </bean>
+  
+  <bean id="storageService" class="org.experimenter.repository.testutil.DummyStorageService" />
+  
+  <bean id="taskExecutor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+    <property name="corePoolSize" value="5" />
+    <property name="maxPoolSize" value="120" />
+    <property name="keepAliveSeconds" value="3600" />
+  </bean>
 
 	<!-- Hibernate session management -->
 
@@ -174,6 +197,7 @@
 				<value>org.experimenter.repository.entity.ProblemType</value>
 				<value>org.experimenter.repository.entity.Input</value>
 				<value>org.experimenter.repository.entity.InputSet</value>
+        <value>org.experimenter.repository.entity.Result</value>
 			</list>
 		</property>
 		<property name="hibernateProperties">

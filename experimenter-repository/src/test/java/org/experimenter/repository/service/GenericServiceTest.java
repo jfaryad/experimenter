@@ -10,7 +10,7 @@ import org.experimenter.repository.entity.Input;
 import org.experimenter.repository.entity.Project;
 import org.experimenter.repository.entity.User;
 import org.experimenter.repository.form.CriteriaForm;
-import org.experimenter.repository.util.DaoTestHelper;
+import org.experimenter.repository.testutil.DaoTestHelper;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -36,6 +36,7 @@ public class GenericServiceTest extends AbstractServiceTest {
         user.setLogin("pepa");
         user.setPassword("pepa123");
         user.setEmail("pepa@novak.cz");
+        user.setIsAdmin(Boolean.FALSE);
         userService.saveUpdate(user);
         assertNotNull("userId is null after insert", user.getId());
         user = userService.findById(user.getId());
@@ -43,6 +44,7 @@ public class GenericServiceTest extends AbstractServiceTest {
         assertEquals("Novak", user.getSurname());
         assertEquals("pepa", user.getLogin());
         assertEquals("pepa123", user.getPassword());
+        assertEquals(Boolean.FALSE, user.getIsAdmin());
         assertEquals("pepa@novak.cz", user.getEmail());
     }
 

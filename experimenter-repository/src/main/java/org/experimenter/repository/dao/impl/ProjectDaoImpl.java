@@ -1,8 +1,11 @@
 package org.experimenter.repository.dao.impl;
 
+import java.util.List;
+
 import org.experimenter.repository.dao.ProjectDao;
 import org.experimenter.repository.entity.InputSet;
 import org.experimenter.repository.entity.Project;
+import org.experimenter.repository.entity.User;
 
 public class ProjectDaoImpl extends AbstractBaseDaoImpl<Project> implements ProjectDao {
 
@@ -20,15 +23,15 @@ public class ProjectDaoImpl extends AbstractBaseDaoImpl<Project> implements Proj
         }
     }
 
-    // @Override
-    // public List<Project> findProjectsByInputSet(InputSet inputSet) {
-    // logger.debug(">> findProjectsByInputSet: " + inputSet);
-    // SqlSession session = getSqlSession();
-    // String engineName = "FIND_PROJECT_BY_INPUT_SET";
-    // List<Project> projects = getQueryEngine(engineName).query(session, getEntityClass(),
-    // new SimpleForm(inputSet.getId()));
-    // logger.debug("<< findProjectsByInputSet: number of projects found:" + projects.size());
-    // return projects;
-    // }
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<Project> findProjectsByUser(User user) {
+        logger.debug(">> findProjectsByUser: " + user);
+        List<Project> list = getSession().getNamedQuery(Project.Q_GET_BY_USER)
+                .setEntity("user", user)
+                .list();
+        logger.debug("<< findProjectsByUser: number found:" + list.size());
+        return list;
+    }
 
 }

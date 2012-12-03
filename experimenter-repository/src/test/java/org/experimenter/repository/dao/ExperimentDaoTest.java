@@ -8,8 +8,9 @@ import java.util.List;
 
 import org.experimenter.repository.entity.Application;
 import org.experimenter.repository.entity.Experiment;
+import org.experimenter.repository.entity.User;
 import org.experimenter.repository.form.CriteriaForm;
-import org.experimenter.repository.util.DaoTestHelper;
+import org.experimenter.repository.testutil.DaoTestHelper;
 import org.junit.Test;
 
 public class ExperimentDaoTest extends AbstractDaoTest {
@@ -19,7 +20,6 @@ public class ExperimentDaoTest extends AbstractDaoTest {
         Experiment experiment = new Experiment();
         experiment.setName("exp1");
         experiment.setDescription("exp1 - sat");
-        experiment.setIsActive(false);
         Application application = new Application();
         application.setId(1);
         experiment.setApplication(application);
@@ -40,11 +40,11 @@ public class ExperimentDaoTest extends AbstractDaoTest {
     @Test
     public void deleteExperiment() {
         Integer id = 2;
-        assertEquals(2, applicationDao.findById(2).getExperiments().size());
+        assertEquals(3, applicationDao.findById(3).getExperiments().size());
         experimentDao.deleteById(id);
         flush();
         assertNull("experiment was not deleted", experimentDao.findById(id));
-        assertEquals(1, applicationDao.findById(2).getExperiments().size());
+        assertEquals(2, applicationDao.findById(3).getExperiments().size());
     }
 
     @Test
@@ -69,6 +69,15 @@ public class ExperimentDaoTest extends AbstractDaoTest {
         assertEquals("wrong number of experiments found", 1, experiments.size());
         Experiment experiment = experiments.get(0);
         DaoTestHelper.checkExperiment1(experiment);
+    }
+
+    @Test
+    public void findExperimentsByUser() {
+        User user = userDao.findById(5);
+        List<Experiment> list = experimentDao.findExperimentsByUser(user);
+        assertNotNull(list);
+        assertEquals(1, list.size());
+        assertEquals(5, list.get(0).getId().intValue());
     }
 
 }

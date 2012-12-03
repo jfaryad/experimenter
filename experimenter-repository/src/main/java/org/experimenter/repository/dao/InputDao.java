@@ -4,13 +4,13 @@ import org.experimenter.repository.entity.Input;
 
 public interface InputDao extends BaseDao<Input> {
 
-    // /**
-    // * Find all inputs belonging to the given inputSet.
-    // *
-    // * @param inputSet
-    // * the inputSet to search by
-    // * @return a list of inputs
-    // */
-    // public List<Input> findInputsByInputSet(InputSet inputSet);
+    /**
+     * Finds the input by the value of the checksum of it's data.
+     * 
+     * @param checksum
+     *            the checksom of the input data
+     * @return the unique input
+     */
+    public Input findInputByChecksum(String checksum);
 
 }

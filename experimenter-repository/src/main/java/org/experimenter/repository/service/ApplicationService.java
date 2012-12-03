@@ -1,12 +1,14 @@
 package org.experimenter.repository.service;
 
+import java.io.File;
 import java.util.List;
 
 import org.experimenter.repository.entity.Application;
 import org.experimenter.repository.entity.Program;
+import org.experimenter.repository.entity.User;
 import org.experimenter.repository.form.CriteriaForm;
 
-public interface ApplicationService {
+public interface ApplicationService extends EntityService<Application> {
 
     /**
      * Saves the given {@link Application} to database. If the entry doesn't exists yet, it will be created.
@@ -14,7 +16,19 @@ public interface ApplicationService {
      * @param application
      *            the application to save
      */
+    @Override
     public void saveUpdate(Application application);
+
+    /**
+     * Saves the givn {@link Application} to the database and copies the given data file to the storage.<br>
+     * If copying fails, the database operation will be rolled back.
+     * 
+     * @param application
+     *            the application to save
+     * @param tmpDataFile
+     *            the application data in a temporary file
+     */
+    public void saveWithData(Application application, File tmpDataFile);
 
     /**
      * Finds the {@link Application} with the given id.
@@ -23,6 +37,7 @@ public interface ApplicationService {
      *            the identifier of the application
      * @return the application with the given id or null, if such an entry doesn't exist in the database.
      */
+    @Override
     public Application findById(Integer id);
 
     /**
@@ -32,6 +47,7 @@ public interface ApplicationService {
      *            a search form with the properties you want to search by
      * @return a list of applications that match the example
      */
+    @Override
     public List<Application> findByExample(Application application);
 
     /**
@@ -42,6 +58,7 @@ public interface ApplicationService {
      *            a search form with the properties you want to search by
      * @return a list of applications that match the criteria
      */
+    @Override
     public List<Application> findByCriteria(CriteriaForm<Application> criteria);
 
     /**
@@ -50,6 +67,7 @@ public interface ApplicationService {
      * @param application
      *            the application to delete
      */
+    @Override
     public void delete(Application application);
 
     /**
@@ -58,6 +76,7 @@ public interface ApplicationService {
      * @param applications
      *            the applications to delete
      */
+    @Override
     public void delete(List<Application> applications);
 
     /**
@@ -68,5 +87,14 @@ public interface ApplicationService {
      * @return a list of applications
      */
     public List<Application> findApplicationsByProgram(Program program);
+
+    /**
+     * Find all applications belonging to any user group the given user belongs to.
+     * 
+     * @param user
+     *            the user to search by
+     * @return a list of applications
+     */
+    public List<Application> findApplicationsByUser(User user);
 
 }

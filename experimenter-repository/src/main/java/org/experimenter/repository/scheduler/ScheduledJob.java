@@ -4,6 +4,12 @@ import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.springframework.scheduling.quartz.QuartzJobBean;
 
+/**
+ * The {@link QuartzJobBean} that executes the actual {@link ExperimentExecutor}
+ * 
+ * @author jfaryad
+ * 
+ */
 public class ScheduledJob extends QuartzJobBean {
     private ExperimentExecutor experimentExecutor;
 

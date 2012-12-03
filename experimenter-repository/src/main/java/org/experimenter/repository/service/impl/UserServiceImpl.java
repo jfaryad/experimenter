@@ -36,4 +36,9 @@ public class UserServiceImpl extends AbstractService<User, UserDao> implements U
         return userGroup.getUsers();
     }
 
+    @Override
+    protected boolean hasDependencies(User user) {
+        return false;
+    }
+
 }

@@ -5,6 +5,7 @@ import java.util.List;
 import org.experimenter.repository.dao.ConnectionFarmDao;
 import org.experimenter.repository.entity.ConnectionFarm;
 import org.experimenter.repository.entity.Experiment;
+import org.experimenter.repository.entity.User;
 import org.experimenter.repository.entity.UserGroup;
 import org.experimenter.repository.service.ConnectionFarmService;
 
@@ -38,6 +39,17 @@ public class ConnectionFarmServiceImpl extends AbstractService<ConnectionFarm, C
     public List<ConnectionFarm> findConnectionFarmsByExperiment(Experiment experiment) {
         checkIdNotNull(experiment);
         return baseDao.findConnectionFarmsByExperiment(experiment);
+    }
+
+    @Override
+    public List<ConnectionFarm> findConnectionFarmsByUser(User user) {
+        checkIdNotNull(user);
+        return baseDao.findConnectionFarmsByUser(user);
+    }
+
+    @Override
+    protected boolean hasDependencies(ConnectionFarm connectionFarm) {
+        return !connectionFarm.getConnections().isEmpty();
     }
 
 }

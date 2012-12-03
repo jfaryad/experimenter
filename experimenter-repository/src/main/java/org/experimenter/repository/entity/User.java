@@ -10,6 +10,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.NamedQueries;
 import org.hibernate.annotations.NamedQuery;
@@ -22,15 +23,21 @@ import org.hibernate.annotations.NamedQuery;
  */
 @javax.persistence.Entity
 @Table(name = "USER")
-@NamedQueries({ @NamedQuery(
-        name = User.Q_GET_BY_USERGROUP,
-        query = "select u from User u join u.userGroups ug where ug = :userGroup order by u.surname, u.name",
-        readOnly = true) })
+@NamedQueries({
+        @NamedQuery(
+                name = User.Q_GET_BY_USERGROUP,
+                query = "select u from User u join u.userGroups ug where ug = :userGroup order by u.surname, u.name",
+                readOnly = true),
+        @NamedQuery(
+                name = User.Q_GET_BY_LOGIN_AND_PASSWORD,
+                query = "from User where login = :userGroup and password = :password",
+                readOnly = true) })
 public class User implements Entity {
 
     private static final long serialVersionUID = 1L;
 
     public static final String Q_GET_BY_USERGROUP = "User.Q_GET_BY_USERGROUP";
+    public static final String Q_GET_BY_LOGIN_AND_PASSWORD = "User.Q_GET_BY_LOGIN_AND_PASSWORD";
 
     @Column(name = "user_id")
     @Id
@@ -49,8 +56,14 @@ public class User implements Entity {
     @Column(name = "password", nullable = false)
     private String password;
 
+    @Transient
+    private String confirmPassword;
+
     @Column(name = "email", nullable = false)
     private String email;
+
+    @Column(name = "admin", nullable = false)
+    private Boolean isAdmin;
 
     @ManyToMany
     @JoinTable(name = "USER_USERGROUP", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(
@@ -73,6 +86,10 @@ public class User implements Entity {
     @Override
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getFullName() {
+        return name + " " + surname;
     }
 
     public String getName() {
@@ -107,12 +124,28 @@ public class User implements Entity {
         this.password = password;
     }
 
+    public String getConfirmPassword() {
+        return confirmPassword;
+    }
+
+    public void setConfirmPassword(String confirmPassword) {
+        this.confirmPassword = confirmPassword;
+    }
+
     public String getEmail() {
         return email;
     }
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public Boolean getIsAdmin() {
+        return isAdmin;
+    }
+
+    public void setIsAdmin(Boolean isAdmin) {
+        this.isAdmin = isAdmin;
     }
 
     public List<UserGroup> getUserGroups() {

@@ -131,6 +131,21 @@
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-ext</artifactId>
     </dependency>
+    
+    <!-- OTHER -->
+    
+    <dependency>
+      <groupId>commons-io</groupId>
+      <artifactId>commons-io</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.jfree</groupId>
+      <artifactId>jfreechart</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.itextpdf</groupId>
+      <artifactId>itextpdf</artifactId>
+    </dependency>
 
     <!-- TESTS -->
 

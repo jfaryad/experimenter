@@ -28,4 +28,15 @@ public class UserDaoImpl extends AbstractBaseDaoImpl<User> implements UserDao {
         return users;
     }
 
+    @Override
+    public User findUserByLoginAndPassword(String login, String password) {
+        logger.debug(">> findUserByLoginAndPassword: " + login + ", " + password);
+        User user = (User) getSession().getNamedQuery(User.Q_GET_BY_LOGIN_AND_PASSWORD)
+                .setString("login", login)
+                .setString("password", password)
+                .uniqueResult();
+        logger.debug("<< findUsersByUserGroup: user found:" + user);
+        return user;
+    }
+
 }

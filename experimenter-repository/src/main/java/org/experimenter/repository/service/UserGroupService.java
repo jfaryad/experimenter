@@ -6,7 +6,7 @@ import org.experimenter.repository.entity.User;
 import org.experimenter.repository.entity.UserGroup;
 import org.experimenter.repository.form.CriteriaForm;
 
-public interface UserGroupService {
+public interface UserGroupService extends EntityService<UserGroup> {
 
     /**
      * Saves the given {@link UserGroup} to database. If the entry doesn't exists yet, it will be created.
@@ -14,6 +14,7 @@ public interface UserGroupService {
      * @param userGroup
      *            the userGroup to save
      */
+    @Override
     public void saveUpdate(UserGroup userGroup);
 
     /**
@@ -23,6 +24,7 @@ public interface UserGroupService {
      *            the identifier of the userGroup
      * @return the userGroup with the given id or null, if such an entry doesn't exist in the database.
      */
+    @Override
     public UserGroup findById(Integer id);
 
     /**
@@ -32,6 +34,7 @@ public interface UserGroupService {
      *            a search form with the properties you want to search by
      * @return a list of userGroups that match the example
      */
+    @Override
     public List<UserGroup> findByExample(UserGroup userGroup);
 
     /**
@@ -42,6 +45,7 @@ public interface UserGroupService {
      *            a search form with the properties you want to search by
      * @return a list of userGroups that match the criteria
      */
+    @Override
     public List<UserGroup> findByCriteria(CriteriaForm<UserGroup> criteria);
 
     /**
@@ -50,6 +54,7 @@ public interface UserGroupService {
      * @param userGroup
      *            the userGroup to delete
      */
+    @Override
     public void delete(UserGroup userGroup);
 
     /**
@@ -58,6 +63,7 @@ public interface UserGroupService {
      * @param userGroups
      *            the userGroups to delete
      */
+    @Override
     public void delete(List<UserGroup> userGroups);
 
     /**

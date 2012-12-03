@@ -8,7 +8,11 @@
 </head>
 <body>
 	<wicket:extend>
-		<div wicket:id="experiment-table" />
+        Project: <select wicket:id="projectFilter" /> &nbsp;&nbsp;&nbsp;&nbsp;
+        Program: <select wicket:id="programFilter" />&nbsp;&nbsp;&nbsp;&nbsp;
+        Version: <select wicket:id="applicationFilter" />&nbsp;&nbsp;&nbsp;&nbsp;
+        <a href="#" wicket:id="reset-filters">Reset filters</a><br/>
+		<div wicket:id="experiment-table" class="dataTableContainer"/>
 	</wicket:extend>
 </body>
 </html>

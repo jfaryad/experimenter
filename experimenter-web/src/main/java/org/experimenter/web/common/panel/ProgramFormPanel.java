@@ -1,12 +1,15 @@
 package org.experimenter.web.common.panel;
 
-import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.RequiredTextField;
+import org.apache.wicket.markup.html.form.TextArea;
+import org.apache.wicket.markup.html.form.TextField;
+import org.apache.wicket.model.IModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.experimenter.repository.entity.Program;
 import org.experimenter.repository.entity.Project;
 import org.experimenter.repository.service.ProgramService;
+import org.experimenter.web.component.FinalEntityPropertyDropDownChoice;
 import org.experimenter.web.model.ProgramModel;
 import org.experimenter.web.model.aggregate.AvailableProjects;
 import org.experimenter.web.renderer.PropertyChoiceRenderer;
@@ -28,12 +31,14 @@ public class ProgramFormPanel extends EntityFormPanel<Program> {
         super(id, programModel);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     protected void addFieldsToForm(Form<Program> form) {
+        form.add(new FinalEntityPropertyDropDownChoice<Program, Project>("project", new AvailableProjects(),
+                PropertyChoiceRenderer.PROJECT_RENDERER, (IModel<Program>) getDefaultModel()));
         form.add(new RequiredTextField<String>("name"));
-        form.add(new RequiredTextField<String>("description"));
-        form.add(new RequiredTextField<String>("command"));
-        form.add(new DropDownChoice<Project>("project", new AvailableProjects(), PropertyChoiceRenderer.PROJECT_RENDERER));
+        form.add(new TextField<String>("description"));
+        form.add(new TextArea<String>("command").setRequired(true));
 
     }
 

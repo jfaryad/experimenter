@@ -69,4 +69,9 @@ public class InputSetServiceImpl extends AbstractService<InputSet, InputSetDao> 
         return project.getInputSets();
     }
 
+    @Override
+    protected boolean hasDependencies(InputSet inputSet) {
+        return !inputSet.getProjects().isEmpty() || !inputSet.getExperiments().isEmpty();
+    }
+
 }

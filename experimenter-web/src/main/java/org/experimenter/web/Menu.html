@@ -56,8 +56,21 @@
   <wicket:panel>
       <div class="menu">
         <ul>
-          <wicket:link>
-            <li><a href="HomePage.html">Home</a></li>
+            <wicket:container wicket:id="homePage"><li><a wicket:id="homePage-link">Home</a></li></wicket:container>
+           <wicket:container wicket:id="userPage"><li><a wicket:id="userPage-link">Users</a></li></wicket:container>
+            <wicket:container wicket:id="userGroupPage"><li><a wicket:id="userGroupPage-link">User groups</a></li></wicket:container>
+            <wicket:container wicket:id="projectPage"><li><a wicket:id="projectPage-link">Projects</a></li></wicket:container>
+            <wicket:container wicket:id="programPage"><li><a wicket:id="programPage-link">Programs</a></li></wicket:container>
+            <wicket:container wicket:id="applicationPage"><li><a wicket:id="applicationPage-link">Applications</a></li></wicket:container>
+            <wicket:container wicket:id="experimentPage"><li><a wicket:id="experimentPage-link">Experiments</a></li></wicket:container>
+            <wicket:container wicket:id="connectionFarmPage"><li><a wicket:id="connectionFarmPage-link">Connection farms</a></li></wicket:container>
+            <wicket:container wicket:id="connectionPage"><li><a wicket:id="connectionPage-link">Connections</a></li></wicket:container>
+            <wicket:container wicket:id="computerPage"><li><a wicket:id="computerPage-link">Computers</a></li></wicket:container>
+            <wicket:container wicket:id="inputPage"><li><a wicket:id="inputPage-link">Input</a></li></wicket:container>
+            <wicket:container wicket:id="inputSetPage"><li><a wicket:id="inputSetPage-link">Input sets</a></li></wicket:container>
+            <wicket:container wicket:id="problemTypePage"><li><a wicket:id="problemTypePage-link">Problem types</a></li></wicket:container> 
+            <wicket:container wicket:id="chartPage"><li><a wicket:id="chartPage-link">Charts</a></li></wicket:container> 
+<!--           <wicket:link>
             <li><a href="UserPage.html">Users</a></li>
             <li><a href="UserGroupPage.html">User groups</a></li>
             <li><a href="ProjectPage.html">Projects</a></li>
@@ -70,7 +83,7 @@
             <li><a href="InputPage.html">Input</a></li>
             <li><a href="InputSetPage.html">Input sets</a></li>
             <li><a href="ProblemTypePage.html">Problem types</a></li>
-          </wicket:link>
+          </wicket:link> -->
         </ul>
       </div>
   </wicket:panel>

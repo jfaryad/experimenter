@@ -1,5 +1,6 @@
 package org.experimenter.web;
 
+import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.experimenter.web.datatable.ConnectionFarmTable;
 import org.experimenter.web.provider.ConnectionFarmProvider;
@@ -10,6 +11,7 @@ import org.experimenter.web.provider.ConnectionFarmProvider;
  * @author jakub
  * 
  */
+@AuthorizeInstantiation("USER")
 public class ConnectionFarmPage extends AbstractExperimenterPage {
     private static final long serialVersionUID = 1L;
 

@@ -8,7 +8,7 @@ import java.util.List;
 
 import org.experimenter.repository.entity.Computer;
 import org.experimenter.repository.form.CriteriaForm;
-import org.experimenter.repository.util.DaoTestHelper;
+import org.experimenter.repository.testutil.DaoTestHelper;
 import org.junit.Test;
 
 public class ComputerDaoTest extends AbstractDaoTest {
@@ -18,6 +18,7 @@ public class ComputerDaoTest extends AbstractDaoTest {
         Computer computer = new Computer();
         computer.setAddress("localhost");
         computer.setDescription("localhost");
+        computer.setNumberOfRunningJobs(0);
         computerDao.insert(computer);
         assertNotNull("computerId is null after insert", computer.getId());
         assertNotNull("setId is null after insert", computer.getId());

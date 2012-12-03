@@ -15,6 +15,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Required;
 
+/**
+ * The base to all implementations of entity DAOs. It implements the methods from BaseDao and provides additional common
+ * useful methods.
+ * 
+ * @author jfaryad
+ * 
+ * @param <T>
+ */
 public abstract class AbstractBaseDaoImpl<T extends Entity> implements BaseDao<T> {
 
     protected final Logger logger = LoggerFactory.getLogger(getClass());

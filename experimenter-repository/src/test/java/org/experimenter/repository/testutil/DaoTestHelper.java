@@ -1,7 +1,11 @@
-package org.experimenter.repository.util;
+package org.experimenter.repository.testutil;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 import org.experimenter.repository.entity.Application;
 import org.experimenter.repository.entity.Computer;
@@ -17,6 +21,8 @@ import org.experimenter.repository.entity.User;
 import org.experimenter.repository.entity.UserGroup;
 
 public class DaoTestHelper {
+
+    public static final DateFormat timeStampFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 
     public static void checkUserGroup1(UserGroup userGroup) {
         assertNotNull("userGroup not found", userGroup);
@@ -46,6 +52,7 @@ public class DaoTestHelper {
         assertEquals("Exists", user.getSurname());
         assertEquals("tester1", user.getLogin());
         assertEquals("heslo", user.getPassword());
+        assertEquals(Boolean.FALSE, user.getIsAdmin());
         assertEquals("tester1@experimenter.org", user.getEmail());
     }
 
@@ -93,7 +100,11 @@ public class DaoTestHelper {
         assertEquals("experiment1", experiment.getName());
         assertEquals("experiment to test find", experiment.getDescription());
         assertEquals("0/10 * * * * ?", experiment.getCronExpression());
-        assertEquals(false, experiment.getIsActive());
+        try {
+            assertEquals(timeStampFormat.parse("2008-08-08 20:08:00"), experiment.getScheduledTime());
+        } catch (ParseException e) {
+            throw new RuntimeException("error parsing time format");
+        }
         checkApplication1(experiment.getApplication());
     }
 

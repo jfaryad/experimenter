@@ -1,5 +1,6 @@
 package org.experimenter.repository.service;
 
+import java.io.File;
 import java.util.List;
 
 import org.experimenter.repository.entity.Input;
@@ -7,7 +8,7 @@ import org.experimenter.repository.entity.InputSet;
 import org.experimenter.repository.entity.ProblemType;
 import org.experimenter.repository.form.CriteriaForm;
 
-public interface InputService {
+public interface InputService extends EntityService<Input> {
 
     /**
      * Saves the given {@link Input} to database. If the entry doesn't exists yet, it will be created.
@@ -15,7 +16,31 @@ public interface InputService {
      * @param input
      *            the input to save
      */
+    @Override
     public void saveUpdate(Input input);
+
+    /**
+     * Saves the given {@link Input} to the database and copies the given data file to the storage.<br>
+     * If copying fails, the database operation will be rolled back.
+     * 
+     * @param input
+     *            the input to save
+     * @param tmpDataFile
+     *            the input data in a temporary file
+     */
+    public void saveWithData(Input input, File tmpDataFile);
+
+    /**
+     * Saves the {@link Input}s specified in the given zip archive to the database and copies the given data files to
+     * the storage.<br>
+     * If copying fails, the database operation will be rolled back.
+     * 
+     * @param inputSet
+     *            the inputSet to add the new inputs to
+     * @param tmpDataFile
+     *            the input data in a temporary zip file
+     */
+    public void saveFromZipArchive(InputSet inputSet, File tmpDataFile);
 
     /**
      * Finds the {@link Input} with the given id.
@@ -24,6 +49,7 @@ public interface InputService {
      *            the identifier of the input
      * @return the input with the given id or null, if such an entry doesn't exist in the database.
      */
+    @Override
     public Input findById(Integer id);
 
     /**
@@ -33,6 +59,7 @@ public interface InputService {
      *            a search form with the properties you want to search by
      * @return a list of inputs that match the example
      */
+    @Override
     public List<Input> findByExample(Input input);
 
     /**
@@ -43,6 +70,7 @@ public interface InputService {
      *            a search form with the properties you want to search by
      * @return a list of inputs that match the criteria
      */
+    @Override
     public List<Input> findByCriteria(CriteriaForm<Input> criteria);
 
     /**
@@ -51,6 +79,7 @@ public interface InputService {
      * @param input
      *            the input to delete
      */
+    @Override
     public void delete(Input input);
 
     /**
@@ -59,6 +88,7 @@ public interface InputService {
      * @param inputs
      *            the inputs to delete
      */
+    @Override
     public void delete(List<Input> inputs);
 
     /**

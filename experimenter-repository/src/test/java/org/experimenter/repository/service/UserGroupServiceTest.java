@@ -8,7 +8,7 @@ import java.util.List;
 
 import org.experimenter.repository.entity.User;
 import org.experimenter.repository.entity.UserGroup;
-import org.experimenter.repository.util.DaoTestHelper;
+import org.experimenter.repository.testutil.DaoTestHelper;
 import org.junit.Test;
 
 public class UserGroupServiceTest extends AbstractServiceTest {

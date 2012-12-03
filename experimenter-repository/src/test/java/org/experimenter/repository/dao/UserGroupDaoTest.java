@@ -8,7 +8,7 @@ import java.util.List;
 
 import org.experimenter.repository.entity.UserGroup;
 import org.experimenter.repository.form.CriteriaForm;
-import org.experimenter.repository.util.DaoTestHelper;
+import org.experimenter.repository.testutil.DaoTestHelper;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 

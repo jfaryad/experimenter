@@ -5,6 +5,7 @@ import java.util.List;
 import org.experimenter.repository.dao.ConnectionFarmDao;
 import org.experimenter.repository.entity.ConnectionFarm;
 import org.experimenter.repository.entity.Experiment;
+import org.experimenter.repository.entity.User;
 import org.experimenter.repository.entity.UserGroup;
 
 public class ConnectionFarmDaoImpl extends AbstractBaseDaoImpl<ConnectionFarm> implements ConnectionFarmDao {
@@ -46,6 +47,17 @@ public class ConnectionFarmDaoImpl extends AbstractBaseDaoImpl<ConnectionFarm> i
         List<ConnectionFarm> farms = getSession().getNamedQuery(ConnectionFarm.Q_GET_BY_USERGROUP)
                 .setEntity("userGroup", userGroup).list();
         logger.debug("<< findConnectionFarmsByUserGroup: number of farms found:" + farms.size());
+        return farms;
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<ConnectionFarm> findConnectionFarmsByUser(User user) {
+        logger.debug(">> findConnectionFarmsByUser: " + user);
+        List<ConnectionFarm> farms = getSession().getNamedQuery(ConnectionFarm.Q_GET_BY_USER)
+                .setEntity("user", user)
+                .list();
+        logger.debug("<< findConnectionFarmsByUser: number of farms found:" + farms.size());
         return farms;
     }
 

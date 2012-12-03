@@ -8,7 +8,7 @@ import java.util.List;
 
 import org.experimenter.repository.entity.User;
 import org.experimenter.repository.form.CriteriaForm;
-import org.experimenter.repository.util.DaoTestHelper;
+import org.experimenter.repository.testutil.DaoTestHelper;
 import org.junit.Test;
 
 public class UserDaoTest extends AbstractDaoTest {
@@ -19,6 +19,7 @@ public class UserDaoTest extends AbstractDaoTest {
         user.setName("Josef");
         user.setSurname("Novak");
         user.setLogin("pepa");
+        user.setIsAdmin(Boolean.TRUE);
         user.setPassword("pepa123");
         user.setEmail("pepa@novak.cz");
         userDao.insert(user);
@@ -29,6 +30,7 @@ public class UserDaoTest extends AbstractDaoTest {
         assertEquals("pepa", user.getLogin());
         assertEquals("pepa123", user.getPassword());
         assertEquals("pepa@novak.cz", user.getEmail());
+        assertEquals(Boolean.TRUE, user.getIsAdmin());
     }
 
     @Test

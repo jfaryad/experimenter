@@ -14,6 +14,8 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.NamedQueries;
+import org.hibernate.annotations.NamedQuery;
 
 /**
  * Entity for database table PROGRAM
@@ -23,9 +25,20 @@ import org.hibernate.annotations.FetchMode;
  */
 @javax.persistence.Entity
 @Table(name = "PROGRAM")
+@NamedQueries({
+        @NamedQuery(
+                name = Program.Q_GET_BY_USER,
+                query = "select p from Program p " +
+                        "inner join p.project as proj " +
+                        "inner join proj.userGroup as g " +
+                        "inner join g.users as u " +
+                        "where u = :user " +
+                        "order by proj.name, p.name",
+                readOnly = true) })
 public class Program implements Entity {
 
     private static final long serialVersionUID = 1L;
+    public static final String Q_GET_BY_USER = "Program.Q_GET_BY_USER";
 
     @Column(name = "program_id")
     @Id
@@ -38,7 +51,7 @@ public class Program implements Entity {
     @Column(name = "description")
     private String description;
 
-    @Column(name = "command", nullable = false)
+    @Column(name = "command", nullable = true)
     private String command;
 
     @ManyToOne(fetch = FetchType.LAZY)

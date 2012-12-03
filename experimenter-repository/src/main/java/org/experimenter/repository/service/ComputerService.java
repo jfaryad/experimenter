@@ -5,7 +5,7 @@ import java.util.List;
 import org.experimenter.repository.entity.Computer;
 import org.experimenter.repository.form.CriteriaForm;
 
-public interface ComputerService {
+public interface ComputerService extends EntityService<Computer> {
 
     /**
      * Saves the given {@link Computer} to database. If the entry doesn't exists yet, it will be created.
@@ -13,6 +13,7 @@ public interface ComputerService {
      * @param computer
      *            the computer to save
      */
+    @Override
     public void saveUpdate(Computer computer);
 
     /**
@@ -22,6 +23,7 @@ public interface ComputerService {
      *            the identifier of the computer
      * @return the computer with the given id or null, if such an entry doesn't exist in the database.
      */
+    @Override
     public Computer findById(Integer id);
 
     /**
@@ -31,6 +33,7 @@ public interface ComputerService {
      *            a search form with the properties you want to search by
      * @return a list of computers that match the example
      */
+    @Override
     public List<Computer> findByExample(Computer computer);
 
     /**
@@ -41,6 +44,7 @@ public interface ComputerService {
      *            a search form with the properties you want to search by
      * @return a list of computers that match the criteria
      */
+    @Override
     public List<Computer> findByCriteria(CriteriaForm<Computer> criteria);
 
     /**
@@ -49,6 +53,7 @@ public interface ComputerService {
      * @param computer
      *            the computer to delete
      */
+    @Override
     public void delete(Computer computer);
 
     /**
@@ -57,6 +62,7 @@ public interface ComputerService {
      * @param computers
      *            the computers to delete
      */
+    @Override
     public void delete(List<Computer> computers);
 
 }

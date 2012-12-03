@@ -2,16 +2,9 @@
 <html xmlns:wicket="http://wicket.apache.org">
 <head>
 <meta charset="utf-8" />
-<link href='http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz:regular,bold' rel='stylesheet' type='text/css' />
-<link rel="stylesheet" href="style.css" type="text/css" />
 </head>
 <body>
-  <div class="header">
-    <div class="logo">
-      <h1>Experimenter</h1>
-    </div>
-  </div>
-  <div class="middle">
+ <wicket:extend>
     <div class="sidebar">
       <div wicket:id="menu">menu</div>
     </div>
@@ -21,7 +14,7 @@
       </div>
       <wicket:child/>
     </div>
-  </div>
-  <div class="footer"></div>
+  
+ </wicket:extend>
 </body>
 </html>

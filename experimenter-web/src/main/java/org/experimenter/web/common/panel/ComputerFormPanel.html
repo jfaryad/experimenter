@@ -1,9 +1,17 @@
 <!DOCTYPE html>
 <html>
 <body>
-<wicket:extend>
-      Address:    <input type="text" wicket:id="address"></input><br/>
-      Description: <input type="text"  wicket:id="description"></input><br>
-</wicket:extend>
+  <wicket:extend>
+    <table class="formTable">
+      <tr>
+        <td>Address:</td>
+        <td><input type="text" wicket:id="address"></input></td>
+      </tr>
+      <tr>
+        <td>Description:</td>
+        <td><input type="text" wicket:id="description"></input></td>
+      </tr>
+    </table>
+  </wicket:extend>
 </body>
 </html>

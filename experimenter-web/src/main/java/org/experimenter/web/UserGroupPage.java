@@ -1,5 +1,6 @@
 package org.experimenter.web;
 
+import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.experimenter.web.datatable.UserGroupTable;
 import org.experimenter.web.provider.UserGroupProvider;
@@ -10,6 +11,7 @@ import org.experimenter.web.provider.UserGroupProvider;
  * @author jakub
  * 
  */
+@AuthorizeInstantiation("ADMIN")
 public class UserGroupPage extends AbstractExperimenterPage {
     private static final long serialVersionUID = 1L;
 

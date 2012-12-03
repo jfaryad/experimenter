@@ -5,6 +5,7 @@ import java.util.List;
 import org.experimenter.repository.dao.ProgramDao;
 import org.experimenter.repository.entity.Program;
 import org.experimenter.repository.entity.Project;
+import org.experimenter.repository.entity.User;
 import org.experimenter.repository.service.ProgramService;
 
 public class ProgramServiceImpl extends AbstractService<Program, ProgramDao> implements ProgramService {
@@ -18,5 +19,16 @@ public class ProgramServiceImpl extends AbstractService<Program, ProgramDao> imp
     public List<Program> findProgramsByProject(Project project) {
         checkIdNotNull(project);
         return project.getPrograms();
+    }
+
+    @Override
+    public List<Program> findProgramsByUser(User user) {
+        checkIdNotNull(user);
+        return baseDao.findProgramsByUser(user);
+    }
+
+    @Override
+    protected boolean hasDependencies(Program program) {
+        return !program.getApplications().isEmpty();
     }
 }

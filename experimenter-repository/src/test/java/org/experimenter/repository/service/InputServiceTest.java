@@ -8,7 +8,7 @@ import java.util.List;
 import org.experimenter.repository.entity.Input;
 import org.experimenter.repository.entity.InputSet;
 import org.experimenter.repository.entity.ProblemType;
-import org.experimenter.repository.util.DaoTestHelper;
+import org.experimenter.repository.testutil.DaoTestHelper;
 import org.junit.Test;
 
 public class InputServiceTest extends AbstractServiceTest {
