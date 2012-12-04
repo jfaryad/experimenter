@@ -15,7 +15,7 @@
 
   <bean id="placeholderConfig" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
     <property name="location">
-        <value>classpath:configuration.properties</value>
+        <value>classpath:experimenter.properties</value>
     </property>
     <property name="ignoreUnresolvablePlaceholders" value="true"/>
   </bean>
