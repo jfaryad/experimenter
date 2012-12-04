@@ -38,7 +38,7 @@ public class FileStorageService implements StorageService {
 
     @Override
     public String saveInput(Integer inputId, File tmpFile) {
-        return moveTmpFileToStorage(getInputDataDir(inputId), tmpFile, true, true);
+        return moveTmpFileToStorage(getInputDataDir(inputId), tmpFile, true, false);
     }
 
     @Override

@@ -144,4 +144,8 @@ public class ChartUtil {
         }
     }
 
+    public static void main(String[] args) {
+        System.out.println("balblabla; ; ;    sdfs sdf; s; ;;;sdf   ;;     ;dd ;".replaceAll(";+[;\\s]*;+", ";"));
+    }
+
 }

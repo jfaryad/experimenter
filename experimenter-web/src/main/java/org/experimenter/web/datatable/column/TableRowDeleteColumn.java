@@ -37,5 +37,13 @@ public abstract class TableRowDeleteColumn<T extends Entity> extends AbstractCol
 
     }
 
+    /**
+     * Callback for when the link is clicked
+     * 
+     * @param target
+     *            the {@link AjaxRequestTarget}
+     * @param rowModel
+     *            the model of the clicked row
+     */
     protected abstract void onClick(AjaxRequestTarget target, IModel<T> rowModel);
 }

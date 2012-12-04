@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Fetch;
@@ -60,6 +61,9 @@ public class Input implements Entity {
 
     @ManyToMany(mappedBy = "inputs")
     private List<InputSet> inputSets;
+
+    @OneToMany(mappedBy = "input")
+    private List<Result> results;
 
     public Input() {
 
@@ -119,6 +123,14 @@ public class Input implements Entity {
         this.inputSets = inputSets;
     }
 
+    public List<Result> getResults() {
+        return results;
+    }
+
+    public void setResults(List<Result> results) {
+        this.results = results;
+    }
+
     @Override
     public int hashCode() {
         return id.hashCode();
@@ -130,7 +142,7 @@ public class Input implements Entity {
             return false;
         }
         final Input other = (Input) o;
-        return other.getId().equals(this.getId());
+        return other.getId() == id;
     }
 
     @Override

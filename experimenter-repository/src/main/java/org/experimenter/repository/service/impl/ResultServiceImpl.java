@@ -46,6 +46,7 @@ public class ResultServiceImpl extends AbstractService<Result, ResultDao> implem
         Experiment experiment = experimentService.findById(experimentId);
         Input input = inputService.findById(inputId);
         if (experiment == null || input == null) {
+            storedResultFile.delete();
             throw new IllegalArgumentException("Unable to save result for non existing experiment or input");
         }
         for (Entry<String, BigDecimal> entry : resultMap.entrySet()) {

@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.apache.commons.lang.time.DateUtils;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.markup.html.form.AjaxCheckBox;
 import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.FormComponent;
@@ -15,11 +16,14 @@ import org.apache.wicket.markup.html.form.ListMultipleChoice;
 import org.apache.wicket.markup.html.form.RequiredTextField;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.form.validation.AbstractFormValidator;
+import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.experimenter.repository.entity.Application;
 import org.experimenter.repository.entity.ConnectionFarm;
 import org.experimenter.repository.entity.Experiment;
+import org.experimenter.repository.entity.Experiment.Status;
 import org.experimenter.repository.entity.InputSet;
 import org.experimenter.repository.entity.Project;
 import org.experimenter.repository.service.ExperimentService;
@@ -48,6 +52,7 @@ public class ExperimentFormPanel extends EntityFormPanel<Experiment> {
     private SchedulerService schedulerService;
 
     private TimeSchedulePanel timeSchedulePanel;
+    private IModel<Boolean> executeImmediately;
 
     public ExperimentFormPanel(String id, ExperimentModel experimentModel) {
         super(id, experimentModel);
@@ -63,7 +68,19 @@ public class ExperimentFormPanel extends EntityFormPanel<Experiment> {
         timeSchedulePanel = new TimeSchedulePanel("scheduledTime",
                 new PropertyModel<String>(getDefaultModel(), "cronExpression"),
                 new PropertyModel<Date>(getDefaultModel(), "scheduledTime"));
+        timeSchedulePanel.setOutputMarkupId(true);
         form.add(timeSchedulePanel);
+
+        form.add(new AjaxCheckBox("immediate", executeImmediately = new Model<Boolean>(false)) {
+
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            protected void onUpdate(AjaxRequestTarget target) {
+                timeSchedulePanel.setEnabled(!getModelObject());
+                target.add(timeSchedulePanel);
+            }
+        }.setDefaultModel(executeImmediately));
 
         form.add(new ListMultipleChoice<InputSet>("inputSets", new AvailableInputSetsByProject(
                 new PropertyModel<Project>(getDefaultModel(), "application.program.project")),
@@ -78,6 +95,18 @@ public class ExperimentFormPanel extends EntityFormPanel<Experiment> {
 
     @Override
     protected void save(Experiment experiment) {
+        if (experiment.getId() != null &&
+                Status.RUNNING.equals(experimentService.getExperimentStatus(experiment))) {
+            error("Unable to edit the experiment while it is running");
+            return;
+        }
+        if (executeImmediately.getObject()) {
+            Calendar cal = Calendar.getInstance();
+            cal.add(Calendar.SECOND, 1);
+            cal.add(Calendar.MINUTE, 1);
+            DateUtils.truncate(cal, Calendar.MINUTE);
+            timeSchedulePanel.setDefaultModelObject(cal.getTime());
+        }
         experimentService.saveUpdate(experiment);
         if (experiment.getCronExpression() != null) {
             schedulerService.saveUpdateJob(experiment);
@@ -90,6 +119,7 @@ public class ExperimentFormPanel extends EntityFormPanel<Experiment> {
     protected void onModelChanged() {
         super.onModelChanged();
         timeSchedulePanel.modelChanged();
+        executeImmediately.setObject(false);
     }
 
     private DropDownChoice<Application> applicationSelect(final Form<Experiment> form) {

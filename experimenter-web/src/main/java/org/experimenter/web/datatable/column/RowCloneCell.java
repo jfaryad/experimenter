@@ -7,17 +7,17 @@ import org.apache.wicket.model.IModel;
 import org.experimenter.repository.entity.Entity;
 
 /**
- * The cell in a entity data table containing the edit link.
+ * The cell in a entity data table containing the clone link.
  * 
  * @author jfaryad
  * 
  * @param <T>
  */
-public abstract class RowEditCell<T extends Entity> extends Panel {
+public abstract class RowCloneCell<T extends Entity> extends Panel {
 
     private static final long serialVersionUID = 1L;
 
-    public RowEditCell(String id, final IModel<T> rowModel) {
+    public RowCloneCell(String id, final IModel<T> rowModel) {
         super(id);
         AjaxLink<String> link = new AjaxLink<String>("edit-link") {
 
@@ -25,7 +25,7 @@ public abstract class RowEditCell<T extends Entity> extends Panel {
 
             @Override
             public void onClick(AjaxRequestTarget target) {
-                RowEditCell.this.onClick(target, rowModel);
+                RowCloneCell.this.onClick(target, rowModel);
             }
         };
 

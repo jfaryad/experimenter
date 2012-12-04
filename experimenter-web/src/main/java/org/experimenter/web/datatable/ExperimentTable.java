@@ -38,7 +38,14 @@ public class ExperimentTable extends DataTablePanel<Experiment> {
 
     public ExperimentTable(String id, IDataProvider<Experiment> dataProvider) {
         super(id, dataProvider);
-        add(new AjaxSelfUpdatingTimerBehavior(Duration.seconds(10)));
+        add(new AjaxSelfUpdatingTimerBehavior(Duration.seconds(10)) {
+
+            @Override
+            protected String findIndicatorId() {
+                return null;
+            }
+
+        });
     }
 
     @Override
@@ -88,6 +95,16 @@ public class ExperimentTable extends DataTablePanel<Experiment> {
     @Override
     protected int getInitialModalWindowWidth() {
         return 640;
+    }
+
+    @Override
+    protected boolean isCloneable() {
+        return true;
+    }
+
+    @Override
+    protected String[] cloneIgnoredProperties() {
+        return new String[] { "results", "connectionFarms", "inputSets" };
     }
 
 }

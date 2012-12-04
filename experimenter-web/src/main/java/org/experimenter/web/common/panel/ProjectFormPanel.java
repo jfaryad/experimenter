@@ -2,6 +2,7 @@ package org.experimenter.web.common.panel;
 
 import static org.experimenter.web.renderer.PropertyChoiceRenderer.USERGROUP_RENDERER;
 
+import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.ListMultipleChoice;
 import org.apache.wicket.markup.html.form.RequiredTextField;
@@ -32,6 +33,7 @@ public class ProjectFormPanel extends EntityFormPanel<Project> {
 
     @SpringBean
     private ProjectService projectService;
+    private ListMultipleChoice<InputSet> inputSets;
 
     public ProjectFormPanel(String id, ProjectModel projectModel) {
         super(id, projectModel);
@@ -42,13 +44,23 @@ public class ProjectFormPanel extends EntityFormPanel<Project> {
         form.add(new FinalEntityPropertyDropDownChoice<Project, UserGroup>("userGroup",
                 new AvailableUserGroups(), USERGROUP_RENDERER, form.getModel()));
         form.add(new FinalEntityPropertyDropDownChoice<Project, ProblemType>("problem", new AvailableProblemTypes(),
-                PropertyChoiceRenderer.PROBLEM_TYPE_RENDERER, form.getModel()));
+                PropertyChoiceRenderer.PROBLEM_TYPE_RENDERER, form.getModel()) {
+
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public void onChange(AjaxRequestTarget target) {
+                target.add(inputSets);
+            }
+
+        });
+
         form.add(new RequiredTextField<String>("name"));
         form.add(new TextField<String>("description"));
-        form.add(new ListMultipleChoice<InputSet>("inputSets", new AllInputSetsByProblem(
+        form.add(inputSets = new ListMultipleChoice<InputSet>("inputSets", new AllInputSetsByProblem(
                 new PropertyModel<ProblemType>(getDefaultModel(), "problem")),
-                PropertyChoiceRenderer.INPUT_SET_RENDERER).setMaxRows(5).setRequired(true));
-
+                PropertyChoiceRenderer.INPUT_SET_RENDERER));
+        inputSets.setMaxRows(5).setRequired(true).setOutputMarkupId(true);
     }
 
     @Override

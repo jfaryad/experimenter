@@ -15,7 +15,7 @@
 
   <bean id="placeholderConfig" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
     <property name="location">
-        <value>classpath:configuration.properties</value>
+        <value>classpath:experimenter.properties</value>
     </property>
     <property name="ignoreUnresolvablePlaceholders" value="true"/>
   </bean>
@@ -34,10 +34,10 @@
   </bean> -->
   
   <bean id="dataSource" destroy-method="close" class="org.apache.commons.dbcp.BasicDataSource">
-    <property name="driverClassName" value="org.hsqldb.jdbcDriver" />
-    <property name="url" value="jdbc:hsqldb:hsql://localhost/xdb" />
-    <property name="username" value="sa" />
-    <property name="password" value="" />
+    <property name="driverClassName" value="${db.driverClassName}" />
+    <property name="url" value="${db.url}" />
+    <property name="username" value="${db.username}" />
+    <property name="password" value="${db.password}" />
 </bean>
   
 
@@ -173,9 +173,9 @@
   
   
   <bean id="taskExecutor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
-    <property name="corePoolSize" value="5" />
-    <property name="maxPoolSize" value="120" />
-    <property name="keepAliveSeconds" value="3600" />
+    <property name="corePoolSize" value="${corePoolSize}" />
+    <property name="maxPoolSize" value="${maxPoolSize}" />
+    <property name="keepAliveSeconds" value="${keepAliveSeconds}" />
   </bean>
 
 

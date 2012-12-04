@@ -2,6 +2,7 @@ package org.experimenter.web.datatable;
 
 import java.util.List;
 
+import org.apache.commons.lang.ArrayUtils;
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
@@ -12,6 +13,7 @@ import org.apache.wicket.extensions.markup.html.repeater.data.table.HeadersToolb
 import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.NavigationToolbar;
 import org.apache.wicket.injection.Injector;
+import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.markup.repeater.data.IDataProvider;
@@ -21,11 +23,13 @@ import org.experimenter.repository.entity.Entity;
 import org.experimenter.repository.service.EntityService;
 import org.experimenter.web.ExperimenterSession;
 import org.experimenter.web.common.panel.EntityFormPanel;
+import org.experimenter.web.datatable.column.TableRowCloneColumn;
 import org.experimenter.web.datatable.column.TableRowDeleteColumn;
 import org.experimenter.web.datatable.column.TableRowEditColumn;
 import org.experimenter.web.model.EntityModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 
 /**
  * Base class for all data tables in the experimenter application.
@@ -72,11 +76,15 @@ public abstract class DataTablePanel<T extends Entity> extends Panel {
             columns.add(createEditColumn());
         }
 
+        if (isCloneable()) {
+            columns.add(createCloneColumn());
+        }
+
         if (ExperimenterSession.get().getCurrentUser().getIsAdmin()) {
             columns.add(createDeleteColumn());
         }
 
-        table = new DataTable<T, String>("datatable", columns, dataProvider, 12);
+        table = new DataTable<T, String>("datatable", columns, dataProvider, 200);
         table.addTopToolbar(new NavigationToolbar(table));
         table.addTopToolbar(new HeadersToolbar<String>(table, null));
         table.setOutputMarkupId(true);
@@ -124,6 +132,25 @@ public abstract class DataTablePanel<T extends Entity> extends Panel {
         return true;
     }
 
+    /**
+     * Flag whether the clone column should be displayed
+     * 
+     * @return
+     */
+    protected boolean isCloneable() {
+        return false;
+    }
+
+    /**
+     * Returns an array of properties of the entity (except for id, that will never be cloned), that should be ignored
+     * when cloning. Only override, if the entity is cloneable.
+     * 
+     * @return
+     */
+    protected String[] cloneIgnoredProperties() {
+        return new String[] {};
+    }
+
     protected int getInitialModalWindowHeight() {
         return 230;
     }
@@ -134,15 +161,9 @@ public abstract class DataTablePanel<T extends Entity> extends Panel {
 
     protected abstract EntityService<T> getEntityService();
 
-    private AjaxLink<String> createAddLink() {
-        AjaxLink<String> link = new AjaxLink<String>("add-link") {
-
+    private WebMarkupContainer createAddLink() {
+        WebMarkupContainer wc = new WebMarkupContainer("add-link-container") {
             private static final long serialVersionUID = 1L;
-
-            @Override
-            public void onClick(AjaxRequestTarget target) {
-                showEditDialog(target, getNewEntity());
-            }
 
             @Override
             protected void onConfigure() {
@@ -150,7 +171,17 @@ public abstract class DataTablePanel<T extends Entity> extends Panel {
                 setVisibilityAllowed(enableAdding());
             }
         };
-        return link;
+        AjaxLink<String> link = new AjaxLink<String>("add-link") {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public void onClick(AjaxRequestTarget target) {
+                showEditDialog(target, getNewEntity());
+            }
+
+        };
+        wc.add(link);
+        return wc;
     }
 
     private TableRowEditColumn<T> createEditColumn() {
@@ -162,6 +193,25 @@ public abstract class DataTablePanel<T extends Entity> extends Panel {
             protected void onClick(AjaxRequestTarget target, IModel<T> rowModel) {
                 entityForm.modelChanged();
                 showEditDialog(target, rowModel.getObject());
+            }
+
+        };
+    }
+
+    private TableRowCloneColumn<T> createCloneColumn() {
+        return new TableRowCloneColumn<T>() {
+
+            private static final long serialVersionUID = 1L;
+
+            @SuppressWarnings("unchecked")
+            @Override
+            protected void onClick(AjaxRequestTarget target, IModel<T> rowModel) {
+                entityForm.setFormObject(getNewEntity());
+                T clone = (T) entityForm.getDefaultModelObject();
+                BeanUtils.copyProperties(rowModel.getObject(), clone,
+                        (String[]) ArrayUtils.addAll(new String[] { "id" }, cloneIgnoredProperties()));
+                entityForm.modelChanged();
+                showEditDialog(target, clone);
             }
 
         };
@@ -196,6 +246,7 @@ public abstract class DataTablePanel<T extends Entity> extends Panel {
             @Override
             public void onClose(AjaxRequestTarget target) {
                 target.add(DataTablePanel.this);
+                entityForm.setDefaultModelObject(null);
             }
         });
         modal.setInitialHeight(getInitialModalWindowHeight());
@@ -203,9 +254,13 @@ public abstract class DataTablePanel<T extends Entity> extends Panel {
         return modal;
     }
 
-    private void showEditDialog(AjaxRequestTarget target, T object) {
+    protected void showEditDialog(AjaxRequestTarget target, T object) {
         target.add(this);
         entityForm.setFormObject(object);
         modalWindow.show(target);
+    }
+
+    protected EntityFormPanel<T> getFormPanel() {
+        return entityForm;
     }
 }

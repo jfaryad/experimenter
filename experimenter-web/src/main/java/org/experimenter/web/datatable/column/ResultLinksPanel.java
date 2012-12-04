@@ -6,12 +6,15 @@ import javax.inject.Inject;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.injection.Injector;
+import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.LoadableDetachableModel;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.experimenter.repository.entity.Experiment;
 import org.experimenter.repository.service.ResultService;
+import org.experimenter.web.ChartPage;
 import org.experimenter.web.component.AjaxDownloadLink;
 
 /**
@@ -39,6 +42,20 @@ public class ResultLinksPanel extends Panel {
 
         final IModel<File> zipModel = new ZipDownloadModel();
         add(new AjaxDownloadLink("zip", zipModel, Model.of("results.zip"), feedbackPanel).setDeleteAfterDownload(true));
+
+        add(new Link<String>("chart") {
+
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public void onClick() {
+                Integer projectId = experiment.getObject().getApplication().getProgram().getProject().getId();
+                setResponsePage(ChartPage.class, new PageParameters()
+                        .set(ChartPage.PRESELECT_PROJECT_ID, projectId)
+                        .set(ChartPage.PRESELECT_EXPERIMENT_ID, experiment.getObject().getId()));
+            }
+
+        });
 
     }
 

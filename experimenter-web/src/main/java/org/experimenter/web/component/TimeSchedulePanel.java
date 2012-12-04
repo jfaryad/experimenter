@@ -39,12 +39,15 @@ public class TimeSchedulePanel extends Panel {
      *            wicket id
      * @param cronExpression
      *            model of the cronExpression to edit
+     * @param model
+     *            of the scheduled time
      */
     public TimeSchedulePanel(String id, IModel<String> cronExpression, IModel<Date> scheduledTime) {
         super(id);
         this.scheduledTime = scheduledTime;
         cronExpressionConversionModel = new CronExpressionDateModel(cronExpression);
         doubleModel = new DoubleScheduledTimeModel();
+        this.setDefaultModel(doubleModel);
         hour = new HourModel(doubleModel);
         minute = new MinuteModel(doubleModel);
 

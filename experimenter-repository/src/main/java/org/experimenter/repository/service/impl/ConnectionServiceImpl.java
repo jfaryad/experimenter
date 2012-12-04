@@ -8,8 +8,11 @@ import org.experimenter.repository.entity.Connection;
 import org.experimenter.repository.entity.ConnectionFarm;
 import org.experimenter.repository.entity.User;
 import org.experimenter.repository.service.ConnectionService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class ConnectionServiceImpl extends AbstractService<Connection, ConnectionDao> implements ConnectionService {
+    private static final Logger LOG = LoggerFactory.getLogger(ConnectionServiceImpl.class);
 
     @Override
     protected void deleteDependencies(Connection connection) {
@@ -49,9 +52,19 @@ public class ConnectionServiceImpl extends AbstractService<Connection, Connectio
         if (connection != null) {
             Computer computer = connection.getComputer();
             computer.setNumberOfRunningJobs(computer.getNumberOfRunningJobs() + 1);
+            LOG.debug("increasing jobs on computer " + computer.getId() + " to " + computer.getNumberOfRunningJobs());
             computerService.saveUpdate(computer);
         }
         return connection;
+    }
+
+    @Override
+    public synchronized void removeJobFromConnection(Connection connection) {
+        checkIdNotNull(connection);
+        Computer computer = connection.getComputer();
+        computer.setNumberOfRunningJobs(Math.max(computer.getNumberOfRunningJobs() - 1, 0));
+        LOG.debug("decreasing jobs on computer " + computer.getId() + " to " + computer.getNumberOfRunningJobs());
+        computerService.saveUpdate(computer);
     }
 
 }

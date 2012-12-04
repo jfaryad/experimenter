@@ -4,6 +4,7 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.experimenter.repository.entity.ProblemType;
+import org.experimenter.repository.entity.Project;
 import org.experimenter.web.component.AjaxDropDownChoice;
 import org.experimenter.web.datatable.ProjectTable;
 import org.experimenter.web.model.ProblemTypeModel;
@@ -43,6 +44,13 @@ public class ProjectPage extends AbstractExperimenterPage {
         parameters.remove(PRESELECT_PROBLEM_ID);
         add(problemTypeFilter.setNullValid(true));
 
-        add(dataTable = new ProjectTable("project-table", new ProjectProvider(problemTypeFilter.getModel())));
+        add(dataTable = new ProjectTable("project-table", new ProjectProvider(problemTypeFilter.getModel())) {
+            @Override
+            protected Project getNewEntity() {
+                Project project = super.getNewEntity();
+                project.setProblem(problemTypeFilter.getModelObject());
+                return project;
+            }
+        });
     }
 }

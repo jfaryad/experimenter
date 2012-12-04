@@ -64,6 +64,7 @@ public class ChartPage extends AbstractExperimenterPage {
     public static final String PRESELECT_APPLICATION_ID = "applicationId";
     public static final String PRESELECT_PROJECT_ID = "projectId";
     public static final String PRESELECT_PROGRAM_ID = "programId";
+    public static final String PRESELECT_EXPERIMENT_ID = "experimentId";
 
     private final IModel<Set<Integer>> selectedExperiments = new SelectedExperimentsModel();
     private final IModel<ChartSettings> settings = Model.of(new ChartSettings());
@@ -297,6 +298,7 @@ public class ChartPage extends AbstractExperimenterPage {
 
                     @Override
                     protected void onUpdate(AjaxRequestTarget target) {
+                        settings.setObject(new ChartSettings());
                         target.add(chartConfigPanel);
                     }
                 });
@@ -331,7 +333,7 @@ public class ChartPage extends AbstractExperimenterPage {
 
     private AjaxDropDownChoice<Program> addProgramFilter(final PageParameters parameters) {
         programFilter = new AjaxDropDownChoice<Program>("programFilter",
-                new ProgramModel((Program) null),
+                new ProgramModel(parameters.get(PRESELECT_PROGRAM_ID).toOptionalInteger()),
                 new AvailablePrograms().filterBy("project", projectFilter.getModel()),
                 PropertyChoiceRenderer.PROGRAM_RENDERER) {
 
@@ -352,7 +354,7 @@ public class ChartPage extends AbstractExperimenterPage {
 
     private void addProjectFilter(final PageParameters parameters) {
         projectFilter = new AjaxDropDownChoice<Project>("projectFilter",
-                new ProjectModel((Project) null),
+                new ProjectModel(parameters.get(PRESELECT_PROJECT_ID).toOptionalInteger()),
                 new AvailableProjects(),
                 PropertyChoiceRenderer.PROJECT_RENDERER) {
 
@@ -417,7 +419,7 @@ public class ChartPage extends AbstractExperimenterPage {
      * @author jfaryad
      * 
      */
-    private class ExperimentCheckboxModel implements IModel<Boolean> {
+    private class ExperimentCheckboxModel extends LoadableDetachableModel<Boolean> {
 
         private static final long serialVersionUID = 1L;
         private final Integer experimentId;
@@ -427,22 +429,18 @@ public class ChartPage extends AbstractExperimenterPage {
         }
 
         @Override
-        public Boolean getObject() {
-            return selectedExperiments.getObject().contains(experimentId);
-        }
-
-        @Override
         public void setObject(Boolean object) {
+            super.setObject(object);
             if (object) {
                 selectedExperiments.getObject().add(experimentId);
             } else {
-
                 selectedExperiments.getObject().remove(experimentId);
             }
         }
 
         @Override
-        public void detach() {
+        protected Boolean load() {
+            return selectedExperiments.getObject().contains(experimentId);
         }
     }
 
@@ -467,6 +465,10 @@ public class ChartPage extends AbstractExperimenterPage {
             Set<Integer> availableIds = new HashSet<Integer>();
             for (Experiment experiment : availableExperiments) {
                 availableIds.add(experiment.getId());
+            }
+            Integer experimentIdFromPageParams = getPageParameters().get(PRESELECT_EXPERIMENT_ID).toOptionalInteger();
+            if (experimentIdFromPageParams != null && availableIds.contains(experimentIdFromPageParams)) {
+                selectedExperiments.add(experimentIdFromPageParams);
             }
             for (Iterator<Integer> it = selectedExperiments.iterator(); it.hasNext();) {
                 Integer experimentId = it.next();

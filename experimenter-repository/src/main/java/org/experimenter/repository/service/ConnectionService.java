@@ -112,4 +112,14 @@ public interface ConnectionService extends EntityService<Connection> {
      */
     public Connection addJobToLeastLoadedConnection(List<ConnectionFarm> connectionFarms, Integer maxRunningJobs);
 
+    /**
+     * Decreases the running jobs counter on the computer this connection belogs to.
+     * <p>
+     * <b>WARNING</b> This method must be synchronized, either in jdk or in the database (select for update)
+     * 
+     * @param connection
+     *            the connection whose computer's job count is to be decreased
+     */
+    public void removeJobFromConnection(Connection connection);
+
 }

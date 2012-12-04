@@ -1,6 +1,5 @@
 package org.experimenter.repository.scheduler;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -56,6 +55,8 @@ public class ExperimentExecutor {
     @Value("${overloaded-connection-pool.retry.interval.millis}")
     private Integer overloadWaitInterval;
 
+    private CountDownLatch doneSignal;
+
     public ExperimentExecutor() {
 
     }
@@ -70,16 +71,12 @@ public class ExperimentExecutor {
         if (experiment == null) {
             throw new RuntimeException("Unable to find an experiment with id: " + experimentId);
         }
-        List<ExperimentJob> jobList = loadBalanceJobs(experiment);
-        final CountDownLatch doneSignal = new CountDownLatch(jobList.size());
         if (!experimentService.setExperimentStarted(experiment)) {
             LOG.error("Experiment " + experimentId + " already running or finished. Aborting ...");
             return;
         }
-        for (ExperimentJob job : jobList) {
-            job.setDoneSignal(doneSignal);
-            taskExecutor.submit(job);
-        }
+
+        int numberOfJobs = loadBalanceJobs(experiment);
         boolean finished = false;
         try {
             finished = doneSignal.await(maxWaitTimeForExperiments, TimeUnit.SECONDS);
@@ -88,16 +85,16 @@ public class ExperimentExecutor {
                     + doneSignal.getCount());
         }
         LOG.info("Executor for experiment: " + experimentId + ", finished in time: " + finished + ", jobs executed: "
-                + (jobList.size() - doneSignal.getCount()));
+                + (numberOfJobs - doneSignal.getCount()) + " out of total: " + numberOfJobs);
         experimentService.setExperimentFinished(experiment);
 
     }
 
-    private List<ExperimentJob> loadBalanceJobs(Experiment experiment) {
-        List<ExperimentJob> jobList = new ArrayList<ExperimentJob>();
+    private int loadBalanceJobs(Experiment experiment) {
         List<ConnectionFarm> availableFarms = experiment.getConnectionFarms();
         Integer maximumAllowedRunningJobsPerMachine = experiment.getMaxRunningJobs();
         Set<Input> availableInputs = getDistinctInputs(experiment);
+        doneSignal = new CountDownLatch(availableInputs.size());
         for (Input input : availableInputs) {
             Connection leastLoadedConnection;
             while ((leastLoadedConnection = connectionService.addJobToLeastLoadedConnection(availableFarms,
@@ -108,9 +105,11 @@ public class ExperimentExecutor {
                     LOG.warn("Interrupted while waiting for connection pool to unload", e);
                 }
             }
-            jobList.add(createJob(experiment, input, leastLoadedConnection));
+            ExperimentJob job = createJob(experiment, input, leastLoadedConnection);
+            job.setDoneSignal(doneSignal);
+            taskExecutor.submit(job);
         }
-        return jobList;
+        return availableInputs.size();
     }
 
     private ExperimentJob createJob(Experiment experiment, Input input, Connection connection) {

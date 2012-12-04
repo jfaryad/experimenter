@@ -61,7 +61,7 @@ public class InputSetFormPanel extends EntityFormPanel<InputSet> {
                 setEnabled(((InputSet) InputSetFormPanel.this.getDefaultModel().getObject()).getId() == null);
             }
 
-        });
+        }.setRequired(true));
         form.add(new RequiredTextField<String>("name"));
         form.add(new TextField<String>("description"));
 
@@ -81,7 +81,11 @@ public class InputSetFormPanel extends EntityFormPanel<InputSet> {
 
     @Override
     protected void save(InputSet inputSet) {
-        inputSetService.saveUpdate(inputSet);
+        try {
+            inputSetService.saveUpdate(inputSet);
+        } catch (Exception e) {
+            error("An error occured while saving the input set. Please, try again.");
+        }
         File tmpUploadFile = null;
         try {
             tmpUploadFile = fileUploadField.uploadToTmpFile();

@@ -56,7 +56,7 @@ public class ExperimentServiceImpl extends AbstractService<Experiment, Experimen
 
     @Override
     protected boolean hasDependencies(Experiment experiment) {
-        return false;
+        return !experiment.getResults().isEmpty();
     }
 
     @Override

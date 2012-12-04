@@ -13,6 +13,7 @@ import org.experimenter.web.component.TmpFileUploadField;
 import org.experimenter.web.model.ApplicationModel;
 import org.experimenter.web.model.aggregate.AvailablePrograms;
 import org.experimenter.web.renderer.PropertyChoiceRenderer;
+import org.experimenter.web.validator.NiceStringValidator;
 
 /**
  * Simple panel with a form to edit the {@link Application} entity.
@@ -38,7 +39,8 @@ public class ApplicationFormPanel extends EntityFormPanel<Application> {
     protected void addFieldsToForm(Form<Application> form) {
         form.add(new FinalEntityPropertyDropDownChoice<Application, Program>("program", new AvailablePrograms(),
                 PropertyChoiceRenderer.PROGRAM_RENDERER, form.getModel()).setRequired(true));
-        form.add(new FinalRequiredTextField<Application>("version", form.getModel()));
+        form.add(new FinalRequiredTextField<Application>("version", form.getModel())
+                .add(new NiceStringValidator(20)));
         form.add(fileUploadField = new TmpFileUploadField("executable"));
         fileUploadField.setRequired(true);
 

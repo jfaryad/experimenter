@@ -17,11 +17,11 @@ import org.springframework.transaction.annotation.Transactional;
 public class HomePageTest extends WicketTestBase {
 
     @Test
-    public void homepageRendersSuccessfully() {
+    public void redirectoToLoginPage() {
         // start and render the test page
         tester.startPage(HomePage.class);
 
         // assert rendered page class
-        tester.assertRenderedPage(HomePage.class);
+        tester.assertRenderedPage(LoginPage.class);
     }
 }

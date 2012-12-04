@@ -44,6 +44,14 @@ public abstract class RowDeleteCell<T extends Entity> extends Panel {
         add(link);
     }
 
+    /**
+     * Callback for when the link is clicked
+     * 
+     * @param target
+     *            the {@link AjaxRequestTarget}
+     * @param rowModel
+     *            the model of the clicked row
+     */
     protected abstract void onClick(AjaxRequestTarget target, IModel<T> rowModel);
 
 }

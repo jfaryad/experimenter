@@ -9,29 +9,29 @@ import org.apache.wicket.model.Model;
 import org.experimenter.repository.entity.Entity;
 
 /**
- * Column containing the edit link in a data table
+ * Column containing the clone link in a data table
  * 
  * @author jfaryad
  * 
  * @param <T>
  */
-public abstract class TableRowEditColumn<T extends Entity> extends AbstractColumn<T, String> {
+public abstract class TableRowCloneColumn<T extends Entity> extends AbstractColumn<T, String> {
 
     private static final long serialVersionUID = 1L;
 
-    public TableRowEditColumn() {
+    public TableRowCloneColumn() {
         super(new Model<String>(""));
     }
 
     @Override
     public void populateItem(Item<ICellPopulator<T>> cellItem, String componentId, final IModel<T> rowModel) {
-        cellItem.add(new RowEditCell<T>(componentId, rowModel) {
+        cellItem.add(new RowCloneCell<T>(componentId, rowModel) {
 
             private static final long serialVersionUID = 1L;
 
             @Override
             protected void onClick(AjaxRequestTarget target, IModel<T> rowModel) {
-                TableRowEditColumn.this.onClick(target, rowModel);
+                TableRowCloneColumn.this.onClick(target, rowModel);
             }
         });
 

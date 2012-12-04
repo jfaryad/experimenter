@@ -15,10 +15,10 @@ INSERT INTO USERGROUP (usergroup_id,name) VALUES (3,'public');
 INSERT INTO USERGROUP (usergroup_id,name) VALUES (4,'delete-group');
 INSERT INTO USERGROUP (usergroup_id,name) VALUES (5,'remove-group');
 
-INSERT INTO COMPUTER (computer_id,address,description) VALUES (1,'u-pl20','computer u-pl20, test exists');
-INSERT INTO COMPUTER (computer_id,address,description) VALUES (2,'u-pl21','computer u-pl21, test delete');
-INSERT INTO COMPUTER (computer_id,address,description) VALUES (3,'u-pl22','computer u-pl22');
-INSERT INTO COMPUTER (computer_id,address,description) VALUES (4,'u-pl22','computer u-pl23 has dependent connection');
+INSERT INTO COMPUTER (computer_id,address,description, running_jobs) VALUES (1,'u-pl20','computer u-pl20, test exists', 3);
+INSERT INTO COMPUTER (computer_id,address,description, running_jobs) VALUES (2,'u-pl21','computer u-pl21, test delete', 0);
+INSERT INTO COMPUTER (computer_id,address,description, running_jobs) VALUES (3,'u-pl22','computer u-pl22', 2);
+INSERT INTO COMPUTER (computer_id,address,description, running_jobs) VALUES (4,'u-pl22','computer u-pl23 has dependent connection', 1);
 
 INSERT INTO FARM (farm_id,name,description,usergroup_id) VALUES (1,'testFarm1','farm to test find',1);
 INSERT INTO FARM (farm_id,name,description,usergroup_id) VALUES (2,'testFarm2','farm to test delete',1);
@@ -57,17 +57,16 @@ INSERT INTO APPLICATION (application_id,version,executable,program_id) VALUES (2
 INSERT INTO APPLICATION (application_id,version,executable,program_id) VALUES (3,'1.5','solver1_1.5.sh run',1);
 INSERT INTO APPLICATION (application_id,version,executable,program_id) VALUES (4,'1.2','dependent on program',4);
 
-INSERT INTO INPUT (input_id,name,data,problem_id) VALUES (1,'testInput1','data1',1);
-INSERT INTO INPUT (input_id,name,data,problem_id) VALUES (2,'testInput2','data2', 1);
-INSERT INTO INPUT (input_id,name,data,problem_id) VALUES (3,'testInput3','data3', 2);
-INSERT INTO INPUT (input_id,name,data,problem_id) VALUES (4,'testInput4','dependent on problem', 4);
+INSERT INTO INPUT (input_id,name,data,checksum, problem_id) VALUES (1,'testInput1','data1','abcd1',1);
+INSERT INTO INPUT (input_id,name,data,checksum, problem_id) VALUES (2,'testInput2','data2','abcd2', 1);
+INSERT INTO INPUT (input_id,name,data,checksum, problem_id) VALUES (3,'testInput3','data3','abcd3', 2);
+INSERT INTO INPUT (input_id,name,data,checksum, problem_id) VALUES (4,'testInput4','dependent on problem','abcd4', 4);
 
-INSERT INTO EXPERIMENT (experiment_id,name,description, cron_expression, active, application_id) VALUES (1,'experiment1','experiment to test find','0/10 * * * * ?', false, 1);
-INSERT INTO EXPERIMENT (experiment_id,name,description, cron_expression, active, application_id) VALUES (2,'experiment2','experiment to test delete','0/10 * * * * ?', false, 2);
-INSERT INTO EXPERIMENT (experiment_id,name,description, cron_expression, active, application_id) VALUES (3,'experiment3','experiment to test update','0/10 * * * * ?', false, 3);
-INSERT INTO EXPERIMENT (experiment_id,name,description, cron_expression, active, application_id) VALUES (4,'experiment4','experiment to remove input set from','0/10 * * * * ?', false, 2);
-INSERT INTO EXPERIMENT (experiment_id,name,description, cron_expression, active, application_id) VALUES (5,'experiment5','dependent on application','0/10 * * * * ?', false, 4);
-INSERT INTO EXPERIMENT (experiment_id,name,description, cron_expression, active, application_id) VALUES (6,'experiment6','experiment to test jobs','0/10 * * * * ?', false, 3);
+INSERT INTO EXPERIMENT (experiment_id,name,description, cron_expression, scheduled_time, application_id) VALUES (1,'experiment1','experiment to test find','0/10 * * * * ?', '2008-08-08 20:08:00',  1);
+INSERT INTO EXPERIMENT (experiment_id,name,description, cron_expression, application_id) VALUES (2,'experiment2','experiment to test delete','0/10 * * * * ?', 3);
+INSERT INTO EXPERIMENT (experiment_id,name,description, cron_expression, application_id) VALUES (3,'experiment3','experiment to test update','0/10 * * * * ?', 3);
+INSERT INTO EXPERIMENT (experiment_id,name,description, cron_expression, application_id) VALUES (4,'experiment4','experiment to remove input set from','0/10 * * * * ?', 3);
+INSERT INTO EXPERIMENT (experiment_id,name,description, cron_expression, application_id) VALUES (5,'experiment5','dependent on application','0/10 * * * * ?', 4);
 
 INSERT INTO INPUT_SET (input_set_id,name,description,problem_id) VALUES (1,'testInputSet1','basic set of inputs', 1);
 INSERT INTO INPUT_SET (input_set_id,name,description,problem_id) VALUES (2,'testInputSet2','set to test delete', 2);
@@ -77,7 +76,6 @@ INSERT INTO INPUT_SET (input_set_id,name,description,problem_id) VALUES (5,'test
 
 INSERT INTO EXPERIMENT_INPUT_SET (input_set_id,experiment_id) VALUES (1,1);
 INSERT INTO EXPERIMENT_INPUT_SET (input_set_id,experiment_id) VALUES (4,4);
-INSERT INTO EXPERIMENT_INPUT_SET (input_set_id,experiment_id) VALUES (1,6);
 
 INSERT INTO INPUT_INPUT_SET (input_id,input_set_id) VALUES (1, 1);
 INSERT INTO INPUT_INPUT_SET (input_id,input_set_id) VALUES (2, 3);
@@ -88,4 +86,3 @@ INSERT INTO PROJECT_INPUT_SET (input_set_id,project_id) VALUES (3, 5);
 
 INSERT INTO EXPERIMENT_FARM (experiment_id,farm_id) VALUES (1, 1);
 INSERT INTO EXPERIMENT_FARM (experiment_id,farm_id) VALUES (2, 4);
-INSERT INTO EXPERIMENT_FARM (experiment_id,farm_id) VALUES (6, 1);

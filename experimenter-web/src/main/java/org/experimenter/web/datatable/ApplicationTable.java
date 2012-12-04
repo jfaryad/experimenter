@@ -73,4 +73,14 @@ public class ApplicationTable extends DataTablePanel<Application> {
         return applicationService;
     }
 
+    @Override
+    protected boolean isCloneable() {
+        return true;
+    }
+
+    @Override
+    protected String[] cloneIgnoredProperties() {
+        return new String[] { "executable", "experiments" };
+    }
+
 }

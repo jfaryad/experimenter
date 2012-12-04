@@ -44,8 +44,13 @@ public class DynamicChartImage extends Image {
 
             @Override
             protected byte[] getImageData(final Attributes attributes) {
-                return image == null ? toImageData(new BufferedImage(1, 1, BufferedImage.TYPE_INT_RGB))
-                        : toImageData(image);
+                if (image == null) {
+                    return toImageData(new BufferedImage(1, 1, BufferedImage.TYPE_INT_RGB));
+                } else {
+                    byte[] imageData = toImageData(image);
+                    image = null;
+                    return imageData;
+                }
             }
 
             @Override
@@ -74,5 +79,4 @@ public class DynamicChartImage extends Image {
     public void setImage(BufferedImage image) {
         this.image = image;
     }
-
 }

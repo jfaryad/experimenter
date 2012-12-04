@@ -2,6 +2,7 @@ package org.experimenter.web.component;
 
 import java.util.List;
 
+import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.IChoiceRenderer;
 import org.apache.wicket.model.IModel;
@@ -16,7 +17,7 @@ import org.experimenter.repository.entity.Entity;
  * 
  * @param <T>
  */
-public class FinalEntityPropertyDropDownChoice<E extends Entity, T> extends DropDownChoice<T> {
+public class FinalEntityPropertyDropDownChoice<E extends Entity, T> extends AjaxDropDownChoice<T> {
 
     private static final long serialVersionUID = 1L;
     private final IModel<E> entity;
@@ -49,5 +50,10 @@ public class FinalEntityPropertyDropDownChoice<E extends Entity, T> extends Drop
         } else {
             setEnabled(true);
         }
+    }
+
+    @Override
+    public void onChange(AjaxRequestTarget target) {
+        // do nothing, override if needed
     }
 }

@@ -85,6 +85,8 @@ public class ExperimentJob extends Thread {
             }
         }
         doneSignal.countDown();
+        LOG.debug("Exiting job for experiment: " + experimentId + " and input: " + inputId + ", remaining: "
+                + doneSignal.getCount());
     }
 
     public boolean executeJob() {
@@ -206,14 +208,15 @@ public class ExperimentJob extends Thread {
     private String prepareLaunchScript() {
         String script = "PROGRAM='" + getFileNameFromAbsolutePath(executable) + "'; "
                 + "DATA='" + getFileNameFromAbsolutePath(pathToFile) + "'; "
-                + command.replaceAll("\n", "; ");
+                + command.replaceAll("\\r\\n", "; ") // newlines by semicolon
+                        .replaceAll(";+[;\\s]*;+", ";"); // reduce multiple semicolons
 
         LOG.debug("Launch script: " + script);
         return script;
     }
 
     private String getActualExecutionCommand() {
-        String execCommand = "cd " + getDestDir() + "; sh " + getStartScriptName() + " > "
+        String execCommand = "cd " + getDestDir() + "; sh " + getStartScriptName() + " &> "
                 + getDestOutputFileName() + "; cd ..";
         LOG.debug("Execution command: " + execCommand);
         return execCommand;

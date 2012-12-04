@@ -19,6 +19,7 @@ import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.NamedQueries;
 import org.hibernate.annotations.NamedQuery;
+import org.springframework.beans.BeanUtils;
 
 /**
  * Entity for database table EXPERIMENT
@@ -144,6 +145,13 @@ public class Experiment implements Entity {
     }
 
     @Override
+    public Experiment clone() {
+        Experiment experiment = new Experiment();
+        BeanUtils.copyProperties(this, experiment, new String[] { "id" });
+        return experiment;
+    }
+
+    @Override
     public Integer getId() {
         return id;
     }
@@ -236,7 +244,7 @@ public class Experiment implements Entity {
             return false;
         }
         final Experiment other = (Experiment) o;
-        return other.getId().equals(this.getId());
+        return other.getId() == id;
     }
 
     @Override

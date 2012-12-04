@@ -81,4 +81,14 @@ public class ProgramTable extends DataTablePanel<Program> {
         return 830;
     }
 
+    @Override
+    protected boolean isCloneable() {
+        return true;
+    }
+
+    @Override
+    protected String[] cloneIgnoredProperties() {
+        return new String[] { "applications" };
+    }
+
 }

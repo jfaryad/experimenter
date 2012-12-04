@@ -87,4 +87,14 @@ public class ProjectTable extends DataTablePanel<Project> {
     protected int getInitialModalWindowHeight() {
         return 430;
     }
+
+    @Override
+    protected boolean isCloneable() {
+        return true;
+    }
+
+    @Override
+    protected String[] cloneIgnoredProperties() {
+        return new String[] { "programs", "inputSets" };
+    }
 }

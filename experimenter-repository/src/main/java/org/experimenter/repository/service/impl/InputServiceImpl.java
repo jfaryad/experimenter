@@ -29,7 +29,7 @@ public class InputServiceImpl extends AbstractService<Input, InputDao> implement
 
     @Override
     protected void deleteDependencies(Input input) {
-        // nothing to do
+        resultService.delete(input.getResults());
     }
 
     @Override
@@ -63,7 +63,7 @@ public class InputServiceImpl extends AbstractService<Input, InputDao> implement
 
     @Override
     protected boolean hasDependencies(Input input) {
-        return !input.getInputSets().isEmpty();
+        return !input.getInputSets().isEmpty() || !input.getResults().isEmpty();
     }
 
     @Override

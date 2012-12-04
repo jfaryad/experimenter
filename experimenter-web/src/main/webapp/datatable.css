@@ -5,7 +5,7 @@
 .datatable td,.datatable th {
   border: 1px #ccc solid;
   padding: 0px 5px 0px 5px;
-  max-width: 160px;
+  max-width: 220px;
   overflow: hidden;
   white-space: nowrap;
 }
@@ -25,4 +25,12 @@
 
 .datatable thead a,.datatable thead a:hover,.datatable thead a:active {
   color: #FFFFFF;
+}
+
+.datatable-container {
+    float: left;
+    max-height: 480px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding-right: 11px;
 }
