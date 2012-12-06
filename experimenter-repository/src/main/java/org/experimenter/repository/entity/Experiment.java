@@ -114,6 +114,9 @@ public class Experiment implements Entity {
     @Column(name = "max_jobs")
     private Integer maxRunningJobs;
 
+    @Column(name = "command", nullable = false)
+    private String command;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "application_id", referencedColumnName = "application_id", nullable = false)
     @Fetch(FetchMode.SELECT)
@@ -199,6 +202,14 @@ public class Experiment implements Entity {
 
     public void setMaxRunningJobs(Integer maxRunningJobs) {
         this.maxRunningJobs = maxRunningJobs;
+    }
+
+    public String getCommand() {
+        return command;
+    }
+
+    public void setCommand(String command) {
+        this.command = command;
     }
 
     public Application getApplication() {

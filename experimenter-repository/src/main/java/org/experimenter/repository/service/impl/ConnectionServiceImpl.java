@@ -11,6 +11,10 @@ import org.experimenter.repository.service.ConnectionService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.jcraft.jsch.JSch;
+import com.jcraft.jsch.JSchException;
+import com.jcraft.jsch.Session;
+
 public class ConnectionServiceImpl extends AbstractService<Connection, ConnectionDao> implements ConnectionService {
     private static final Logger LOG = LoggerFactory.getLogger(ConnectionServiceImpl.class);
 
@@ -84,6 +88,28 @@ public class ConnectionServiceImpl extends AbstractService<Connection, Connectio
             computerService.saveUpdate(computer);
             getSession().flush();
         }
+    }
+
+    @Override
+    public boolean testConnection(String hostname, String login, String password, Short port) {
+        JSch jsch = null;
+        Session session = null;
+        java.util.Properties config = new java.util.Properties();
+        config.put("StrictHostKeyChecking", "no");
+
+        try {
+            jsch = new JSch();
+            session = jsch.getSession(login, hostname, port);
+            session.setPassword(password);
+            session.setConfig(config);
+            session.connect();
+        } catch (JSchException e) {
+            LOG.error("Connection test failed", e);
+            return false;
+        } finally {
+            session.disconnect();
+        }
+        return true;
     }
 
 }

@@ -124,6 +124,10 @@ span .yui-skin-sam .yui-calendar {
   color: red;
 }
 
+.feedbackPanelINFO {
+  color: green;
+}
+
 .signedInBlock span {
   color: #FF9900;
   float: none;

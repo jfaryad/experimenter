@@ -48,6 +48,7 @@ public class ExperimentServiceTest extends AbstractServiceTest {
     public void experimentJobManagementTest() {
         Experiment experiment = new Experiment();
         experiment.setName("exp1");
+        experiment.setCommand("sh run.sh");
         experiment.setDescription("exp1 - sat");
         Application application = new Application();
         application.setId(1);

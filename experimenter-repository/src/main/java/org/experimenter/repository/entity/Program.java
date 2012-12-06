@@ -51,9 +51,6 @@ public class Program implements Entity {
     @Column(name = "description")
     private String description;
 
-    @Column(name = "command", nullable = true)
-    private String command;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "project_id", referencedColumnName = "project_id", nullable = false)
     @Fetch(FetchMode.SELECT)
@@ -96,14 +93,6 @@ public class Program implements Entity {
         this.description = description;
     }
 
-    public String getCommand() {
-        return command;
-    }
-
-    public void setCommand(String command) {
-        this.command = command;
-    }
-
     public Project getProject() {
         return project;
     }
@@ -122,7 +111,7 @@ public class Program implements Entity {
 
     @Override
     public String toString() {
-        return "Program[id: " + getId() + ", name: " + name + ", description: " + description + ", command: " + command
+        return "Program[id: " + getId() + ", name: " + name + ", description: " + description
                 + ", project: " + project + "]";
     }
 

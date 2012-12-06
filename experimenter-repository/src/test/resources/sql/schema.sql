@@ -99,7 +99,6 @@ CREATE TABLE PROGRAM (
   program_id INTEGER NOT NULL IDENTITY,
   name VARCHAR(60) DEFAULT NULL,
   description VARCHAR(100) DEFAULT NULL,
-  command VARCHAR(2000) NOT NULL,
   project_id INTEGER NOT NULL,
 );
 
@@ -160,6 +159,7 @@ CREATE TABLE EXPERIMENT (
   scheduled_time TIMESTAMP(0) DEFAULT NULL,
   cron_expression VARCHAR(60) DEFAULT NULL,
   max_jobs INTEGER DEFAULT NULL,
+  command VARCHAR(2000) NOT NULL,
   application_id INTEGER NOT NULL,
 );
 

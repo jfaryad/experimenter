@@ -60,7 +60,6 @@ public class DaoTestHelper {
         assertNotNull("program not found", program);
         assertEquals("solver1", program.getName());
         assertEquals("program to test find", program.getDescription());
-        assertEquals("solver1.sh run", program.getCommand());
         checkProject1(program.getProject());
     }
 
@@ -100,6 +99,7 @@ public class DaoTestHelper {
         assertEquals("experiment1", experiment.getName());
         assertEquals("experiment to test find", experiment.getDescription());
         assertEquals("0/10 * * * * ?", experiment.getCronExpression());
+        assertEquals("run", experiment.getCommand());
         try {
             assertEquals(timeStampFormat.parse("2008-08-08 20:08:00"), experiment.getScheduledTime());
         } catch (ParseException e) {

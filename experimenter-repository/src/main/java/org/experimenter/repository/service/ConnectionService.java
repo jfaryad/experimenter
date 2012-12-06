@@ -122,4 +122,15 @@ public interface ConnectionService extends EntityService<Connection> {
      */
     public void removeJobFromConnection(Connection connection);
 
+    /**
+     * Tests whether it is possible to connect to a remote machine using the information provided in the arguments.
+     * 
+     * @param hostname
+     * @param login
+     * @param password
+     * @param port
+     * @return true if connection was sucessful, false otherwise
+     */
+    boolean testConnection(String hostname, String login, String password, Short port);
+
 }

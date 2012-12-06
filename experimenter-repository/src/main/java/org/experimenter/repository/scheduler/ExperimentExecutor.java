@@ -149,7 +149,7 @@ public class ExperimentExecutor {
         String login = connection.getLogin();
         String password = connection.getPassword();
         String pathToFile = input.getData();
-        String command = experiment.getApplication().getProgram().getCommand();
+        String command = experiment.getCommand();
         ExperimentJob job = new ExperimentJob(experimentId, computerId, inputId, connection.getId(), hostname, port,
                 login, password,
                 pathToFile, command, executable);

@@ -3,6 +3,8 @@ package org.experimenter.web.common.panel;
 import static org.experimenter.web.renderer.PropertyChoiceRenderer.COMPUTER_RENDERER;
 import static org.experimenter.web.renderer.PropertyChoiceRenderer.CONNECTION_FARM_RENDERER;
 
+import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.markup.html.form.AjaxSubmitLink;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.PasswordTextField;
 import org.apache.wicket.markup.html.form.RequiredTextField;
@@ -16,6 +18,8 @@ import org.experimenter.web.component.FinalEntityPropertyDropDownChoice;
 import org.experimenter.web.model.ConnectionModel;
 import org.experimenter.web.model.aggregate.AvailableComputers;
 import org.experimenter.web.model.aggregate.AvailableConnectionFarms;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Simple panel with a form to edit the {@link Connection} entity.
@@ -26,6 +30,8 @@ import org.experimenter.web.model.aggregate.AvailableConnectionFarms;
 public class ConnectionFormPanel extends EntityFormPanel<Connection> {
 
     private static final long serialVersionUID = 1L;
+
+    private static final Logger LOG = LoggerFactory.getLogger(ConnectionFormPanel.class);
 
     @SpringBean
     private ConnectionService connectionService;
@@ -49,6 +55,30 @@ public class ConnectionFormPanel extends EntityFormPanel<Connection> {
         form.add(password);
 
         form.add(new RequiredTextField<String>("port"));
+        form.add(new AjaxSubmitLink("test-connection", form) {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
+                target.add(getFeedbackPanel());
+                try {
+                    Connection connection = (Connection) form.getModelObject();
+                    if (connectionService.testConnection(connection.getComputer().getAddress(),
+                            connection.getLogin(), connection.getPassword(), connection.getPort())) {
+                        info("Connection test successfull");
+                        return;
+                    }
+                } catch (Exception e) {
+                    LOG.error("Connection test failed", e);
+                }
+                error("Connection test failed");
+            }
+
+            @Override
+            protected void onError(AjaxRequestTarget target, Form<?> form) {
+                target.add(getFeedbackPanel());
+            }
+        });
         form.add(new TextField<String>("description"));
 
     }

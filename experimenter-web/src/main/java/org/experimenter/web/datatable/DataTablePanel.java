@@ -159,6 +159,16 @@ public abstract class DataTablePanel<T extends Entity> extends Panel {
         return 590;
     }
 
+    /**
+     * Callback to execute custom action after cloning, for example, copy elements of a collection.
+     * 
+     * @param source
+     * @param target
+     */
+    protected void afterPropertiesCloned(T source, T target) {
+
+    }
+
     protected abstract EntityService<T> getEntityService();
 
     private WebMarkupContainer createAddLink() {
@@ -210,6 +220,7 @@ public abstract class DataTablePanel<T extends Entity> extends Panel {
                 T clone = (T) entityForm.getDefaultModelObject();
                 BeanUtils.copyProperties(rowModel.getObject(), clone,
                         (String[]) ArrayUtils.addAll(new String[] { "id" }, cloneIgnoredProperties()));
+                afterPropertiesCloned(rowModel.getObject(), clone);
                 entityForm.modelChanged();
                 showEditDialog(target, clone);
             }

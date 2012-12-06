@@ -32,11 +32,19 @@ import org.hibernate.annotations.NamedQuery;
                 name = Input.Q_GET_BY_CHECKSUM,
                 query = "select i from Input i " +
                         "where i.checksum = :checksum ",
+                readOnly = false),
+        @NamedQuery(
+                name = Input.Q_GET_BY_EXPERIMENT,
+                query = "select i from Experiment e " +
+                        "inner join e.inputSets as s " +
+                        "inner join s.inputs as i " +
+                        "where e = :experiment",
                 readOnly = false) })
 public class Input implements Entity {
 
     private static final long serialVersionUID = 1L;
     public static final String Q_GET_BY_CHECKSUM = "Experiment.Q_GET_BY_CHECKSUM";
+    public static final String Q_GET_BY_EXPERIMENT = "Input.Q_GET_BY_EXPERIMENT";
 
     public static final Comparator<Input> COMPARATOR_BY_NAME = new ByNameComparator();
 

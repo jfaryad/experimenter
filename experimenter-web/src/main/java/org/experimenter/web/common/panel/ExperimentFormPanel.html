@@ -2,40 +2,56 @@
 <html>
 <body>
   <wicket:extend>
-    <table class="formTable">
-      <tr>
-        <td>Program version:</td>
-        <td><select wicket:id="application"></select></td>
-      </tr>
-      <tr>
-        <td>Name:</td>
-        <td><input type="text" wicket:id="name"></input></td>
-      </tr>
-      <tr>
-        <td>Description:</td>
-        <td><input type="text" wicket:id="description"></input></td>
-      </tr>
-      <tr>
-        <td>Maximum jobs:</td>
-        <td><input type="text" wicket:id="maxRunningJobs"></input></td>
-      </tr>
-      <tr>
-        <td>Scheduled time:</td>
-        <td><span wicket:id="scheduledTime" /></td>
-      </tr>
-      <tr>
-        <td>Execute immediately</td>
-        <td><input type="checkbox" wicket:id="immediate"/></td>
-      </tr>
-      <tr>
-        <td>Input sets:</td>
-        <td><select size="5" wicket:id="inputSets"></select></td>
-      </tr>
-      <tr>
-        <td>Connection farms:</td>
-        <td><select size="5" wicket:id="connectionFarms"></select><br></td>
-      </tr>
-    </table>
+    <div style="float:left; width:450px">
+      <table class="formTable" style="width:100%">
+        <tr>
+          <td>Program version:</td>
+          <td><select wicket:id="application"></select></td>
+        </tr>
+        <tr>
+          <td>Name:</td>
+          <td><input type="text" wicket:id="name"></input></td>
+        </tr>
+        <tr>
+          <td>Description:</td>
+          <td><input type="text" wicket:id="description"></input></td>
+        </tr>
+        <tr>
+          <td>Maximum jobs:</td>
+          <td><input type="text" wicket:id="maxRunningJobs"></input></td>
+        </tr>
+        <tr>
+          <td>Scheduled time:</td>
+          <td><span wicket:id="scheduledTime" /></td>
+        </tr>
+        <tr>
+          <td>Execute immediately</td>
+          <td><input type="checkbox" wicket:id="immediate" /></td>
+        </tr>
+        <tr>
+          <td>Input sets:</td>
+          <td><select size="5" wicket:id="inputSets"></select></td>
+        </tr>
+        <tr>
+          <td>Connection farms:</td>
+          <td><select size="5" wicket:id="connectionFarms"></select><br></td>
+        </tr>
+      </table>
+    </div>
+    <div style="width:500px">
+      <table class="formTable" style="width:90%">
+        <tr>
+          <td>Launch command/script:</td>
+        </tr>
+        <tr>
+          <td><textarea rows="18" style="width: 100%" wicket:id="command" /></td>
+        </tr>
+        <tr>
+          <td><span style="font-size: 10pt">* use ${PROGRAM} to refer to the executable program file and
+              ${DATA} to refer to the input data file</span></td>
+        </tr>
+      </table>
+    </div>
   </wicket:extend>
 </body>
 </html>

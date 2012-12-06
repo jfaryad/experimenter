@@ -20,6 +20,7 @@ public class ExperimentDaoTest extends AbstractDaoTest {
         Experiment experiment = new Experiment();
         experiment.setName("exp1");
         experiment.setDescription("exp1 - sat");
+        experiment.setCommand("sh run.sh");
         Application application = new Application();
         application.setId(1);
         experiment.setApplication(application);
@@ -28,6 +29,7 @@ public class ExperimentDaoTest extends AbstractDaoTest {
         assertEquals("exp1", experiment.getName());
         assertEquals("exp1 - sat", experiment.getDescription());
         assertEquals(1, experiment.getApplication().getId().intValue());
+        assertEquals("sh run.sh", experiment.getCommand());
     }
 
     @Test

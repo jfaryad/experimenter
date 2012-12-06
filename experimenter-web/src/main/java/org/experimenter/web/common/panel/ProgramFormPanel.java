@@ -2,7 +2,6 @@ package org.experimenter.web.common.panel;
 
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.RequiredTextField;
-import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
@@ -38,7 +37,6 @@ public class ProgramFormPanel extends EntityFormPanel<Program> {
                 PropertyChoiceRenderer.PROJECT_RENDERER, (IModel<Program>) getDefaultModel()));
         form.add(new RequiredTextField<String>("name"));
         form.add(new TextField<String>("description"));
-        form.add(new TextArea<String>("command").setRequired(true));
 
     }
 

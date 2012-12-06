@@ -127,4 +127,8 @@ public abstract class EntityFormPanel<T extends Entity> extends Panel {
         });
         return form;
     }
+
+    protected FeedbackPanel getFeedbackPanel() {
+        return feedbackPanel;
+    }
 }

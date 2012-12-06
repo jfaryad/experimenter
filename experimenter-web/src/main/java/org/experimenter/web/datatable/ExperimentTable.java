@@ -12,7 +12,9 @@ import org.apache.wicket.model.Model;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.apache.wicket.util.time.Duration;
+import org.experimenter.repository.entity.ConnectionFarm;
 import org.experimenter.repository.entity.Experiment;
+import org.experimenter.repository.entity.InputSet;
 import org.experimenter.repository.service.EntityService;
 import org.experimenter.repository.service.ExperimentService;
 import org.experimenter.web.InputSetPage;
@@ -89,12 +91,12 @@ public class ExperimentTable extends DataTablePanel<Experiment> {
 
     @Override
     protected int getInitialModalWindowHeight() {
-        return 570;
+        return 550;
     }
 
     @Override
     protected int getInitialModalWindowWidth() {
-        return 640;
+        return 970;
     }
 
     @Override
@@ -105,6 +107,12 @@ public class ExperimentTable extends DataTablePanel<Experiment> {
     @Override
     protected String[] cloneIgnoredProperties() {
         return new String[] { "results", "connectionFarms", "inputSets" };
+    }
+
+    @Override
+    protected void afterPropertiesCloned(Experiment source, Experiment target) {
+        target.setConnectionFarms(new ArrayList<ConnectionFarm>(source.getConnectionFarms()));
+        target.setInputSets(new ArrayList<InputSet>(source.getInputSets()));
     }
 
 }

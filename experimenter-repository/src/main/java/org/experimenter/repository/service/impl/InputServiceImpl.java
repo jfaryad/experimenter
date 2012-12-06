@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.experimenter.repository.dao.InputDao;
+import org.experimenter.repository.entity.Experiment;
 import org.experimenter.repository.entity.Input;
 import org.experimenter.repository.entity.InputSet;
 import org.experimenter.repository.entity.ProblemType;
@@ -86,5 +87,11 @@ public class InputServiceImpl extends AbstractService<Input, InputDao> implement
             saveWithData(input, inputFile);
             addInputToInputSet(input, inputSet);
         }
+    }
+
+    @Override
+    public List<Input> findInputsByExperiment(Experiment experiment) {
+        checkIdNotNull(experiment);
+        return baseDao.findInputsByExperiment(experiment);
     }
 }

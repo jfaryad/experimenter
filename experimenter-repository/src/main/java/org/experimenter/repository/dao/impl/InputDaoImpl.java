@@ -1,6 +1,9 @@
 package org.experimenter.repository.dao.impl;
 
+import java.util.List;
+
 import org.experimenter.repository.dao.InputDao;
+import org.experimenter.repository.entity.Experiment;
 import org.experimenter.repository.entity.Input;
 import org.experimenter.repository.entity.InputSet;
 
@@ -28,15 +31,15 @@ public class InputDaoImpl extends AbstractBaseDaoImpl<Input> implements InputDao
         return input;
     }
 
-    // @Override
-    // public List<Input> findInputsByInputSet(InputSet inputSet) {
-    // logger.debug(">> findInputsByInputSet: " + inputSet);
-    // SqlSession session = getSqlSession();
-    // String engineName = "FIND_INPUT_BY_INPUT_SET";
-    // List<Input> inputs = getQueryEngine(engineName).query(session, getEntityClass(),
-    // new SimpleForm(inputSet.getId()));
-    // logger.debug("<< findInputsByInputSet: number of inputs found:" + inputs.size());
-    // return inputs;
-    // }
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<Input> findInputsByExperiment(Experiment experiment) {
+        logger.debug(">> findInputsByExperiment: " + experiment);
+        List<Input> inputs = getSession().getNamedQuery(Input.Q_GET_BY_EXPERIMENT)
+                .setEntity("checksum", experiment)
+                .list();
+        logger.debug("<< findInputsByExperiment: number found:" + inputs.size());
+        return inputs;
+    }
 
 }

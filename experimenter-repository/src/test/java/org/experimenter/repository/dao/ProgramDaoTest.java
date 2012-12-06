@@ -20,7 +20,6 @@ public class ProgramDaoTest extends AbstractDaoTest {
         Program program = new Program();
         program.setName("SuperSolver");
         program.setDescription("the fastest solver ever");
-        program.setCommand("sh solver.sh -i inputData");
         Project project = new Project();
         project.setId(1);
         program.setProject(project);
@@ -28,7 +27,6 @@ public class ProgramDaoTest extends AbstractDaoTest {
         assertNotNull("programId is null after insert", program.getId());
         assertEquals("SuperSolver", program.getName());
         assertEquals("the fastest solver ever", program.getDescription());
-        assertEquals("sh solver.sh -i inputData", program.getCommand());
         assertEquals(1, program.getProject().getId().intValue());
     }
 
@@ -63,7 +61,7 @@ public class ProgramDaoTest extends AbstractDaoTest {
     @Test
     public void findProgramByCriteria() {
         Program model = new Program();
-        model.setCommand("solver1.sh run");
+        model.setName("solver1");
         CriteriaForm<Program> criteria = new CriteriaForm<Program>(model);
         List<Program> programs = programDao.findByCriteria(criteria);
         assertEquals("wrong number of programs found", 1, programs.size());

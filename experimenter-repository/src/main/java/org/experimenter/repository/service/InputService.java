@@ -3,6 +3,7 @@ package org.experimenter.repository.service;
 import java.io.File;
 import java.util.List;
 
+import org.experimenter.repository.entity.Experiment;
 import org.experimenter.repository.entity.Input;
 import org.experimenter.repository.entity.InputSet;
 import org.experimenter.repository.entity.ProblemType;
@@ -128,5 +129,14 @@ public interface InputService extends EntityService<Input> {
      * @return a list of inputs
      */
     public List<Input> findInputsByInputSet(InputSet inputSet);
+
+    /**
+     * Finds the inputs belonging to any of the input sets assigned to the given experiment
+     * 
+     * @param experiment
+     *            the experiment to retrieve inputs for
+     * @return list of inputs
+     */
+    public List<Input> findInputsByExperiment(Experiment experiment);
 
 }

@@ -65,4 +65,9 @@ public class ConnectionTable extends DataTablePanel<Connection> {
         return 450;
     }
 
+    @Override
+    protected boolean isCloneable() {
+        return true;
+    }
+
 }

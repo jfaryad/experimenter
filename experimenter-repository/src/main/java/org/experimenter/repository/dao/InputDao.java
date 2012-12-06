@@ -1,5 +1,8 @@
 package org.experimenter.repository.dao;
 
+import java.util.List;
+
+import org.experimenter.repository.entity.Experiment;
 import org.experimenter.repository.entity.Input;
 
 public interface InputDao extends BaseDao<Input> {
@@ -12,5 +15,14 @@ public interface InputDao extends BaseDao<Input> {
      * @return the unique input
      */
     public Input findInputByChecksum(String checksum);
+
+    /**
+     * Finds the inputs belonging to any of the input sets assigned to the given experiment
+     * 
+     * @param experiment
+     *            the experiment to retrieve inputs for
+     * @return list of inputs
+     */
+    public List<Input> findInputsByExperiment(Experiment experiment);
 
 }

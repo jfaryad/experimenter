@@ -125,7 +125,7 @@ public class ExperimentJob extends Thread {
 
         try {
             jsch = new JSch();
-            session = jsch.getSession(login, hostname, 22);
+            session = jsch.getSession(login, hostname, port);
             session.setPassword(password);
             session.setConfig(config);
             session.connect();

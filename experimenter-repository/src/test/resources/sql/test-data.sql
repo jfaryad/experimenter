@@ -47,10 +47,10 @@ INSERT INTO PROJECT (project_id,name,description,problem_id,usergroup_id) VALUES
 INSERT INTO PROJECT (project_id,name,description,problem_id,usergroup_id) VALUES (5,'testProject5','project to remove input set',2,1);
 INSERT INTO PROJECT (project_id,name,description,problem_id,usergroup_id) VALUES (6,'testProject6','dependent on user group and problem',4,5);
 
-INSERT INTO PROGRAM (program_id,name,description,command,project_id) VALUES (1, 'solver1','program to test find','solver1.sh run',1);
-INSERT INTO PROGRAM (program_id,name,description,command,project_id) VALUES (2, 'solver2','program to test delete','solver2.sh run',1);
-INSERT INTO PROGRAM (program_id,name,description,command,project_id) VALUES (3, 'solver3','program to test update','solver3.sh run',1);
-INSERT INTO PROGRAM (program_id,name,description,command,project_id) VALUES (4, 'solver4','dependent on project','solver4sh run',6);
+INSERT INTO PROGRAM (program_id,name,description,project_id) VALUES (1, 'solver1','program to test find',1);
+INSERT INTO PROGRAM (program_id,name,description,project_id) VALUES (2, 'solver2','program to test delete',1);
+INSERT INTO PROGRAM (program_id,name,description,project_id) VALUES (3, 'solver3','program to test update',1);
+INSERT INTO PROGRAM (program_id,name,description,project_id) VALUES (4, 'solver4','dependent on project',6);
 
 INSERT INTO APPLICATION (application_id,version,executable,program_id) VALUES (1,'1.3','solver1_1.3.sh run',1);
 INSERT INTO APPLICATION (application_id,version,executable,program_id) VALUES (2,'1.4','solver1_1.4.sh run',1);
@@ -62,11 +62,11 @@ INSERT INTO INPUT (input_id,name,data,checksum, problem_id) VALUES (2,'testInput
 INSERT INTO INPUT (input_id,name,data,checksum, problem_id) VALUES (3,'testInput3','data3','abcd3', 2);
 INSERT INTO INPUT (input_id,name,data,checksum, problem_id) VALUES (4,'testInput4','dependent on problem','abcd4', 4);
 
-INSERT INTO EXPERIMENT (experiment_id,name,description, cron_expression, scheduled_time, application_id) VALUES (1,'experiment1','experiment to test find','0/10 * * * * ?', '2008-08-08 20:08:00',  1);
-INSERT INTO EXPERIMENT (experiment_id,name,description, cron_expression, application_id) VALUES (2,'experiment2','experiment to test delete','0/10 * * * * ?', 3);
-INSERT INTO EXPERIMENT (experiment_id,name,description, cron_expression, application_id) VALUES (3,'experiment3','experiment to test update','0/10 * * * * ?', 3);
-INSERT INTO EXPERIMENT (experiment_id,name,description, cron_expression, application_id) VALUES (4,'experiment4','experiment to remove input set from','0/10 * * * * ?', 3);
-INSERT INTO EXPERIMENT (experiment_id,name,description, cron_expression, application_id) VALUES (5,'experiment5','dependent on application','0/10 * * * * ?', 4);
+INSERT INTO EXPERIMENT (experiment_id,name,description, cron_expression, command, scheduled_time, application_id) VALUES (1,'experiment1','experiment to test find','0/10 * * * * ?', 'run', '2008-08-08 20:08:00',  1);
+INSERT INTO EXPERIMENT (experiment_id,name,description, cron_expression, command, application_id) VALUES (2,'experiment2','experiment to test delete','0/10 * * * * ?', 'run', 3);
+INSERT INTO EXPERIMENT (experiment_id,name,description, cron_expression, command, application_id) VALUES (3,'experiment3','experiment to test update','0/10 * * * * ?', 'run', 3);
+INSERT INTO EXPERIMENT (experiment_id,name,description, cron_expression, command, application_id) VALUES (4,'experiment4','experiment to remove input set from','0/10 * * * * ?', 'run', 3);
+INSERT INTO EXPERIMENT (experiment_id,name,description, cron_expression, command, application_id) VALUES (5,'experiment5','dependent on application','0/10 * * * * ?', 'run', 4);
 
 INSERT INTO INPUT_SET (input_set_id,name,description,problem_id) VALUES (1,'testInputSet1','basic set of inputs', 1);
 INSERT INTO INPUT_SET (input_set_id,name,description,problem_id) VALUES (2,'testInputSet2','set to test delete', 2);

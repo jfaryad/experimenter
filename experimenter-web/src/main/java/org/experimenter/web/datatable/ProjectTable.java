@@ -10,6 +10,7 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.experimenter.repository.entity.InputSet;
 import org.experimenter.repository.entity.Project;
 import org.experimenter.repository.service.EntityService;
 import org.experimenter.repository.service.ProjectService;
@@ -96,5 +97,10 @@ public class ProjectTable extends DataTablePanel<Project> {
     @Override
     protected String[] cloneIgnoredProperties() {
         return new String[] { "programs", "inputSets" };
+    }
+
+    @Override
+    protected void afterPropertiesCloned(Project source, Project target) {
+        target.setInputSets(new ArrayList<InputSet>(source.getInputSets()));
     }
 }

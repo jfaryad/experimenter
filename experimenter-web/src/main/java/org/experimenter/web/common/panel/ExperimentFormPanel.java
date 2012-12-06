@@ -14,6 +14,7 @@ import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.markup.html.form.IChoiceRenderer;
 import org.apache.wicket.markup.html.form.ListMultipleChoice;
 import org.apache.wicket.markup.html.form.RequiredTextField;
+import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.form.validation.AbstractFormValidator;
 import org.apache.wicket.model.IModel;
@@ -89,6 +90,8 @@ public class ExperimentFormPanel extends EntityFormPanel<Experiment> {
         form.add(new ListMultipleChoice<ConnectionFarm>("connectionFarms",
                 new ConnectionFarmsForExperimentPropertyModel(getDefaultModel()),
                 PropertyChoiceRenderer.CONNECTION_FARM_RENDERER).setMaxRows(5).setRequired(true));
+
+        form.add(new TextArea<String>("command").setRequired(true));
 
         form.add(new FutureScheduleTimeValidator(timeSchedulePanel.getFormComponents()));
     }

@@ -82,6 +82,7 @@ public class ResultServiceImpl extends AbstractService<Result, ResultDao> implem
         checkIdNotNull(experiment);
         List<Result> resultList = baseDao.findResultsForExperiment(experiment);
         Set<String> sortedParams = new TreeSet<String>();
+        // build map of actual results
         SortedMap<Input, Map<String, BigDecimal>> resultsByInput =
                 new TreeMap<Input, Map<String, BigDecimal>>(Input.COMPARATOR_BY_NAME);
         for (Result result : resultList) {
