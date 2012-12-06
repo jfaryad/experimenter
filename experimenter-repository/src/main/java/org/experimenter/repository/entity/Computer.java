@@ -9,6 +9,9 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.NamedQueries;
+import org.hibernate.annotations.NamedQuery;
+
 /**
  * Entity for database table COMPUTER
  * 
@@ -17,9 +20,25 @@ import javax.persistence.Table;
  */
 @javax.persistence.Entity
 @Table(name = "COMPUTER")
+@NamedQueries({
+        @NamedQuery(
+                name = Computer.Q_GET_LEAST_LOADED,
+                query = "select com from Connection c " +
+                        "inner join  c.computer as com " +
+                        "inner join c.connectionFarm as f " +
+                        "where f.id in (:farmIds) " +
+                        "and com.numberOfRunningJobs < :maxJobs " +
+                        "and com.numberOfRunningJobs = " +
+                        "(select min(comp.numberOfRunningJobs) from Connection conn " +
+                        "inner join conn.connectionFarm as farm " +
+                        "inner join conn.computer as comp " +
+                        "where farm.id in (:farmIds)) " +
+                        "order by c.id",
+                readOnly = false) })
 public class Computer implements Entity {
 
     private static final long serialVersionUID = 1L;
+    public static final String Q_GET_LEAST_LOADED = "Computer.Q_GET_LEAST_LOADED";
 
     @Column(name = "computer_id")
     @Id
@@ -89,7 +108,22 @@ public class Computer implements Entity {
     }
 
     @Override
+    public int hashCode() {
+        return id.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof Computer)) {
+            return false;
+        }
+        final Computer other = (Computer) o;
+        return other.getId() == id;
+    }
+
+    @Override
     public String toString() {
-        return "Computer[id: " + getId() + ", address: " + address + ", description: " + description + "]";
+        return "Computer[id: " + getId() + ", address: " + address + ", description: " + description
+                + ", runningJobs: " + numberOfRunningJobs + "]";
     }
 }

@@ -28,6 +28,8 @@
     <commons-io.version>1.4</commons-io.version>
     <jfreechart.version>1.0.14</jfreechart.version>
     <itext.version>5.3.4</itext.version>
+    <xmlgraphics.version>1.5</xmlgraphics.version>
+    <batik.version>1.7</batik.version>
   </properties>
 
   <modules>
@@ -294,6 +296,21 @@
           <groupId>com.itextpdf</groupId>
           <artifactId>itextpdf</artifactId>
           <version>${itext.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.xmlgraphics</groupId>
+        <artifactId>xmlgraphics-commons</artifactId>
+        <version>${xmlgraphics.version}</version>
+      </dependency>
+      <dependency>
+          <groupId>org.apache.xmlgraphics</groupId>
+          <artifactId>batik-svggen</artifactId>
+          <version>${batik.version}</version>
+      </dependency>
+      <dependency>
+          <groupId>org.apache.xmlgraphics</groupId>
+          <artifactId>batik-dom</artifactId>
+          <version>${batik.version}</version>
       </dependency>
 
       <!-- TESTS -->

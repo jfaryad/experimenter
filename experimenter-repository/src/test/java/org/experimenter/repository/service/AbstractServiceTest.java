@@ -1,5 +1,7 @@
 package org.experimenter.repository.service;
 
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -48,5 +50,17 @@ public abstract class AbstractServiceTest {
 
     @Autowired
     protected UserService userService;
+
+    @Autowired
+    protected StorageService storageService;
+    @Autowired
+    protected ResultService resultService;
+
+    @Autowired
+    protected SessionFactory sessionFactory;
+
+    protected Session getSession() {
+        return this.sessionFactory.getCurrentSession();
+    }
 
 }

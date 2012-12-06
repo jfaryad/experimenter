@@ -32,7 +32,7 @@ import org.hibernate.annotations.NamedQuery;
                 name = Input.Q_GET_BY_CHECKSUM,
                 query = "select i from Input i " +
                         "where i.checksum = :checksum ",
-                readOnly = true) })
+                readOnly = false) })
 public class Input implements Entity {
 
     private static final long serialVersionUID = 1L;

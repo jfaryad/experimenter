@@ -1,15 +1,21 @@
 package org.experimenter.repository.util;
 
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
 import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.apache.batik.dom.GenericDOMImplementation;
+import org.apache.batik.svggen.SVGGraphics2D;
 import org.experimenter.repository.dto.ChartSettings;
 import org.experimenter.repository.dto.ChartSettings.ChartSize;
 import org.jfree.chart.ChartFactory;
@@ -23,6 +29,9 @@ import org.jfree.chart.title.LegendTitle;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 import org.jfree.ui.RectangleEdge;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.w3c.dom.DOMImplementation;
 
 import com.itextpdf.text.Document;
 import com.itextpdf.text.Image;
@@ -36,6 +45,8 @@ import com.itextpdf.text.pdf.PdfWriter;
  * 
  */
 public class ChartUtil {
+
+    private static final Logger LOG = LoggerFactory.getLogger(ChartUtil.class);
 
     /**
      * Creates the chart and returns it as a {@link BufferedImage}, so that it doesn't have to be saved to the
@@ -134,6 +145,30 @@ public class ChartUtil {
         ((XYLineAndShapeRenderer) chart.getXYPlot().getRenderer()).setBaseShapesVisible(true);
 
         return chart;
+    }
+
+    private void saveSvg(File outputFile, JFreeChart chart, int width, int height) {
+        DOMImplementation domImpl =
+                GenericDOMImplementation.getDOMImplementation();
+        org.w3c.dom.Document document = domImpl.createDocument(null, "svg", null);
+
+        // Create an instance of the SVG Generator
+        SVGGraphics2D svgGenerator = new SVGGraphics2D(document);
+
+        // draw the chart in the SVG generator
+        chart.draw(svgGenerator, new Rectangle(width, height));
+
+        // Write svg file
+        try {
+            OutputStream outputStream = new FileOutputStream(outputFile);
+            Writer out = new OutputStreamWriter(outputStream, "UTF-8");
+            svgGenerator.stream(out, true /* use css */);
+            outputStream.flush();
+            outputStream.close();
+        } catch (Exception e) {
+            LOG.error("Error creating the svg image of the chart.", e);
+            throw new RuntimeException("Error creating the svg image of the chart.", e);
+        }
     }
 
     private static void saveChart(File outputFile, JFreeChart chart, int width, int height) {

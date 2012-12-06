@@ -271,7 +271,7 @@ CREATE TABLE RESULT (
   experiment_id INTEGER NOT NULL,
   input_id INTEGER NOT NULL,
   param VARCHAR(60) NOT NULL,
-  value DECIMAL DEFAULT NULL,
+  value DECIMAL(128,5) DEFAULT NULL,
 );
 
 -- ---

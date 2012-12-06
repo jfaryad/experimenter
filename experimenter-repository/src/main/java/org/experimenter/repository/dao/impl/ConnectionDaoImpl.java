@@ -4,9 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.experimenter.repository.dao.ConnectionDao;
+import org.experimenter.repository.entity.Computer;
 import org.experimenter.repository.entity.Connection;
 import org.experimenter.repository.entity.ConnectionFarm;
 import org.experimenter.repository.entity.User;
+import org.hibernate.LockOptions;
 
 public class ConnectionDaoImpl extends AbstractBaseDaoImpl<Connection> implements ConnectionDao {
 
@@ -43,9 +45,26 @@ public class ConnectionDaoImpl extends AbstractBaseDaoImpl<Connection> implement
                 .setParameterList("farmIds", farmIds)
                 .setInteger("maxJobs", maxRunningJobs)
                 .setMaxResults(1)
+                .setLockOptions(LockOptions.UPGRADE)
                 .uniqueResult();
         logger.debug("<< findLeastLoadedConnection: found: " + connection);
         return connection;
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<Connection> findByComputerAndConnectionFarms(List<ConnectionFarm> connectionFarms, Computer computer) {
+        logger.debug(">> findByComputerAndConnectionFarms: " + computer);
+        List<Integer> farmIds = new ArrayList<Integer>();
+        for (ConnectionFarm farm : connectionFarms) {
+            farmIds.add(farm.getId());
+        }
+        List<Connection> list = getSession().getNamedQuery(Connection.Q_GET_BY_COMPUTER_AND_FARMS)
+                .setEntity("computer", computer)
+                .setParameterList("farmIds", farmIds)
+                .list();
+        logger.debug("<< findByComputerAndConnectionFarms: number found:" + list.size());
+        return list;
     }
 
 }

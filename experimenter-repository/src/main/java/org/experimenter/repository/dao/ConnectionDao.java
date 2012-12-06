@@ -2,6 +2,7 @@ package org.experimenter.repository.dao;
 
 import java.util.List;
 
+import org.experimenter.repository.entity.Computer;
 import org.experimenter.repository.entity.Connection;
 import org.experimenter.repository.entity.ConnectionFarm;
 import org.experimenter.repository.entity.User;
@@ -28,5 +29,14 @@ public interface ConnectionDao extends BaseDao<Connection> {
      * @return the first found connection with the lowest number of jobs or null, if no connection was found
      */
     public Connection findLeastLoadedConnection(List<ConnectionFarm> connectionFarms, Integer maxRunningJobs);
+
+    /**
+     * Finds all connections with the specified computer and farm
+     * 
+     * @param connectionFarms
+     * @param computer
+     * @return a non null list
+     */
+    public List<Connection> findByComputerAndConnectionFarms(List<ConnectionFarm> connectionFarms, Computer computer);
 
 }

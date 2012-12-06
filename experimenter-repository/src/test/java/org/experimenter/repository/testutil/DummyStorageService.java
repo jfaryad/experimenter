@@ -47,7 +47,7 @@ public class DummyStorageService implements StorageService {
     @Override
     public String storeResult(Integer experimentId, Integer inputId, File tmpFile) {
         // TODO Auto-generated method stub
-        return null;
+        return tmpFile.getAbsolutePath();
     }
 
     @Override

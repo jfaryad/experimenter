@@ -30,14 +30,14 @@ import org.hibernate.annotations.NamedQuery;
         @NamedQuery(
                 name = ConnectionFarm.Q_GET_BY_USERGROUP,
                 query = "from ConnectionFarm where userGroup = :userGroup order by name",
-                readOnly = true),
+                readOnly = false),
         @NamedQuery(
                 name = ConnectionFarm.Q_DELETE_BY_USERGROUP,
                 query = "delete from ConnectionFarm  where userGroup = :userGroup order by name"),
         @NamedQuery(
                 name = ConnectionFarm.Q_GET_BY_EXPERIMENT,
                 query = "select c from ConnectionFarm c join c.experiments e where e = :experiment order by name",
-                readOnly = true),
+                readOnly = false),
         @NamedQuery(
                 name = ConnectionFarm.Q_GET_BY_USER,
                 query = "select c from ConnectionFarm c " +
@@ -45,7 +45,7 @@ import org.hibernate.annotations.NamedQuery;
                         "inner join g.users as u " +
                         "where u = :user " +
                         "order by c.name",
-                readOnly = true) })
+                readOnly = false) })
 public class ConnectionFarm implements Entity {
 
     private static final long serialVersionUID = 1L;

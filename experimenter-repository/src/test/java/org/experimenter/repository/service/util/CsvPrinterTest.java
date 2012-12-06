@@ -36,9 +36,9 @@ public class CsvPrinterTest {
 
     private static final String RESULT = "" +
             "Input data;param1;param2;param3\n" +
-            "input1;0.46;4.468;0.3\n" +
-            "input2;2.12;;0.781\n" +
-            "input3;0;14.347;1\n";
+            "input1;0.46;4.4678;0.3\n" +
+            "input2;2.12;;0.7809\n" +
+            "input3;0;14.3468;1\n";
 
     static {
         input1.setName("input1");
@@ -48,7 +48,7 @@ public class CsvPrinterTest {
         resultsByInput.put(input2, input2Map);
         resultsByInput.put(input3, input3Map);
         input1Map.put("param1", new BigDecimal("0.460"));
-        input1Map.put("param2", new BigDecimal("4.4678"));
+        input1Map.put("param2", new BigDecimal("4.46784"));
         input1Map.put("param3", new BigDecimal("0.3"));
         input2Map.put("param1", new BigDecimal("2.12"));
         input2Map.put("param3", new BigDecimal("0.7809"));

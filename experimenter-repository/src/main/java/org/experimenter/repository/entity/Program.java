@@ -34,7 +34,7 @@ import org.hibernate.annotations.NamedQuery;
                         "inner join g.users as u " +
                         "where u = :user " +
                         "order by proj.name, p.name",
-                readOnly = true) })
+                readOnly = false) })
 public class Program implements Entity {
 
     private static final long serialVersionUID = 1L;

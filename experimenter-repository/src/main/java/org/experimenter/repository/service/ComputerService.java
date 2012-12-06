@@ -3,6 +3,7 @@ package org.experimenter.repository.service;
 import java.util.List;
 
 import org.experimenter.repository.entity.Computer;
+import org.experimenter.repository.entity.ConnectionFarm;
 import org.experimenter.repository.form.CriteriaForm;
 
 public interface ComputerService extends EntityService<Computer> {
@@ -64,5 +65,16 @@ public interface ComputerService extends EntityService<Computer> {
      */
     @Override
     public void delete(List<Computer> computers);
+
+    /**
+     * Finds the computer belonging to any of the given farms that have the lowest number of running jobs on
+     * 
+     * @param connectionFarms
+     *            the farms that will be searched
+     * @param maxRunningJobs
+     *            find only computers with maxRunningJobs running
+     * @return the first found computer with the lowest number of jobs or null, if no such computer was found
+     */
+    Computer findLeastLoadedComputer(List<ConnectionFarm> connectionFarms, int maxRunningJobs);
 
 }

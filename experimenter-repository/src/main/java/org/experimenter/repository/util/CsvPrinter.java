@@ -25,6 +25,18 @@ public class CsvPrinter {
     protected final static Logger LOG = LoggerFactory.getLogger(CsvPrinter.class);
     private static final String NEWLINE = "\n";
 
+    /**
+     * Prints the data into the writer in csv format.
+     * 
+     * @param writer
+     *            the output writer
+     * @param sortedParams
+     *            names of parameters in the order, they will appear on one line
+     * @param resultsByInput
+     *            map of results per input. The results themselves are held in a map param name -> value
+     * @param separator
+     *            the separator between values to use in the output
+     */
     public static void printResultDataToCsv(Writer writer, List<String> sortedParams,
             SortedMap<Input, Map<String, BigDecimal>> resultsByInput,
             String separator) {
@@ -57,10 +69,10 @@ public class CsvPrinter {
         if (value == null) {
             return "";
         }
-        value = value.setScale(3, RoundingMode.HALF_UP);
+        value = value.setScale(4, RoundingMode.HALF_UP);
 
         DecimalFormat df = new DecimalFormat();
-        df.setMaximumFractionDigits(3);
+        df.setMaximumFractionDigits(4);
         df.setMinimumFractionDigits(0);
         df.setGroupingUsed(false);
         try {

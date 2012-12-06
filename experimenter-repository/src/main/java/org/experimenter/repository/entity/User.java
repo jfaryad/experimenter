@@ -27,11 +27,11 @@ import org.hibernate.annotations.NamedQuery;
         @NamedQuery(
                 name = User.Q_GET_BY_USERGROUP,
                 query = "select u from User u join u.userGroups ug where ug = :userGroup order by u.surname, u.name",
-                readOnly = true),
+                readOnly = false),
         @NamedQuery(
                 name = User.Q_GET_BY_LOGIN_AND_PASSWORD,
                 query = "from User where login = :userGroup and password = :password",
-                readOnly = true) })
+                readOnly = false) })
 public class User implements Entity {
 
     private static final long serialVersionUID = 1L;

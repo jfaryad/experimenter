@@ -40,12 +40,12 @@ import org.springframework.beans.BeanUtils;
                         "inner join g.users as u " +
                         "where u = :user " +
                         "order by prog.name, a.version, e.name",
-                readOnly = true),
+                readOnly = false),
         @NamedQuery(
                 name = Experiment.Q_GET_SCHEDULED,
                 query = "select e from Experiment e " +
                         "where e.scheduledTime > current_timestamp()",
-                readOnly = true) })
+                readOnly = false) })
 public class Experiment implements Entity {
 
     private static final long serialVersionUID = 1L;

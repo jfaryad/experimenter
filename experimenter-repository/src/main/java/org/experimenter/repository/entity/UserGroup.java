@@ -24,7 +24,7 @@ import org.hibernate.annotations.NamedQuery;
 @NamedQueries({ @NamedQuery(
         name = UserGroup.Q_GET_BY_USER,
         query = "select ug from UserGroup ug join ug.users u where u = :user order by ug.name",
-        readOnly = true) })
+        readOnly = false) })
 public class UserGroup implements Entity {
 
     private static final long serialVersionUID = 1L;

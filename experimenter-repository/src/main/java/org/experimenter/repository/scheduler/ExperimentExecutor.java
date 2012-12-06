@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.RejectedExecutionException;
 import java.util.concurrent.TimeUnit;
 
 import org.experimenter.repository.entity.Connection;
@@ -24,7 +25,7 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 /**
  * The actual executor of the experiment. It holds references to the experimenterService and the taskExecutor and when
  * the {@link #execute()} method is called, it prepares the input files, the executable and starts multiple background
- * threads for runnint the experiment on multiple machines in parallel.
+ * threads for running the experiment on multiple machines in parallel.
  * 
  * @author jfaryad
  * 
@@ -32,9 +33,6 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 public class ExperimentExecutor {
 
     private static final Logger LOG = LoggerFactory.getLogger(ExperimentExecutor.class);
-
-    private static final String DEST_DIR_BASE = "/tmp/expwork";
-    private static final String FILE_SEPARATOR = System.getProperty("file.separator");
 
     private Integer experimentId;
 
@@ -52,8 +50,14 @@ public class ExperimentExecutor {
     @Value("${experiment-timeout-seconds}")
     private Integer maxWaitTimeForExperiments;
 
-    @Value("${overloaded-connection-pool.retry.interval.millis}")
-    private Integer overloadWaitInterval;
+    @Value("${overloaded-connection-pool.retry.interval.seconds}")
+    private Integer overloadedConnectionPoolWaitInterval;
+
+    @Value("${task.executor.rejected.retry.interval.seconds}")
+    private Integer overloadedTaskExecutorWaitInterval;
+
+    @Value("${task.executor.rejected.retry.time.seconds}")
+    private Integer overloadedTaskExecutorWaitTime;
 
     private CountDownLatch doneSignal;
 
@@ -90,6 +94,16 @@ public class ExperimentExecutor {
 
     }
 
+    /**
+     * Iterates through the inputs and every time tries to acquire a free connection from the connection pool. If it
+     * succeeds, a new job is submitted to the task executor.
+     * <p>
+     * The acquiring of a free connection and also of a free thread in the thread pool are themselves wrapped in an
+     * iteration that tries to execute the operation regularly, until it succeeds or the specified time runs out.
+     * 
+     * @param experiment
+     * @return
+     */
     private int loadBalanceJobs(Experiment experiment) {
         List<ConnectionFarm> availableFarms = experiment.getConnectionFarms();
         Integer maximumAllowedRunningJobsPerMachine = experiment.getMaxRunningJobs();
@@ -100,14 +114,28 @@ public class ExperimentExecutor {
             while ((leastLoadedConnection = connectionService.addJobToLeastLoadedConnection(availableFarms,
                     maximumAllowedRunningJobsPerMachine)) == null) {
                 try {
-                    Thread.sleep(overloadWaitInterval);
+                    Thread.sleep(1000 * overloadedConnectionPoolWaitInterval);
                 } catch (InterruptedException e) {
                     LOG.warn("Interrupted while waiting for connection pool to unload", e);
                 }
             }
             ExperimentJob job = createJob(experiment, input, leastLoadedConnection);
             job.setDoneSignal(doneSignal);
-            taskExecutor.submit(job);
+            for (long stop = System.nanoTime() + TimeUnit.SECONDS.toNanos(overloadedTaskExecutorWaitTime); stop > System
+                    .nanoTime();) {
+                try {
+                    taskExecutor.submit(job);
+                    break;
+                } catch (RejectedExecutionException e) {
+                    LOG.warn("Job rejected by the taskExecutor, waiting and retrying.", e);
+                    try {
+                        Thread.sleep(1000 * overloadedTaskExecutorWaitInterval);
+                    } catch (InterruptedException e1) {
+                        LOG.warn("Interrupted while waiting for the thead manager to unload", e);
+                    }
+                }
+            }
+
         }
         return availableInputs.size();
     }
@@ -122,7 +150,8 @@ public class ExperimentExecutor {
         String password = connection.getPassword();
         String pathToFile = input.getData();
         String command = experiment.getApplication().getProgram().getCommand();
-        ExperimentJob job = new ExperimentJob(experimentId, computerId, inputId, hostname, port, login, password,
+        ExperimentJob job = new ExperimentJob(experimentId, computerId, inputId, connection.getId(), hostname, port,
+                login, password,
                 pathToFile, command, executable);
         beanFactory.autowireBean(job);
         return job;

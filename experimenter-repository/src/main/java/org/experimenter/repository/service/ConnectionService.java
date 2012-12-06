@@ -108,7 +108,7 @@ public interface ConnectionService extends EntityService<Connection> {
      * @param maxRunningJobs
      *            find only computers with maxRunningJobs running. If maxRunningJobs is null or negative, it will be
      *            ignored
-     * @return the selected connection
+     * @return the selected connection or null, no such connection exists
      */
     public Connection addJobToLeastLoadedConnection(List<ConnectionFarm> connectionFarms, Integer maxRunningJobs);
 

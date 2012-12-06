@@ -30,7 +30,7 @@ import org.hibernate.annotations.NamedQuery;
                         "inner join f.userGroup as g " +
                         "inner join g.users as u " +
                         "where u = :user",
-                readOnly = true),
+                readOnly = false),
         @NamedQuery(
                 name = Connection.Q_GET_LEAST_LOADED,
                 query = "select c from Connection c " +
@@ -44,12 +44,19 @@ import org.hibernate.annotations.NamedQuery;
                         "inner join conn.computer as comp " +
                         "where farm.id in (:farmIds)) " +
                         "order by c.id",
-                readOnly = true) })
+                readOnly = false),
+        @NamedQuery(
+                name = Connection.Q_GET_BY_COMPUTER_AND_FARMS,
+                query = "select c from Connection c " +
+                        "where c.connectionFarm.id in (:farmIds) " +
+                        "and c.computer = :computer ",
+                readOnly = false) })
 public class Connection implements Entity {
 
     private static final long serialVersionUID = 1L;
     public static final String Q_GET_BY_USER = "Connection.Q_GET_BY_USER";
     public static final String Q_GET_LEAST_LOADED = "Connection.Q_GET_LEAST_LOADED";
+    public static final String Q_GET_BY_COMPUTER_AND_FARMS = "Connection.Q_GET_BY_COMPUTER_AND_FARMS";
 
     @Column(name = "connection_id")
     @Id
@@ -157,7 +164,7 @@ public class Connection implements Entity {
 
     @Override
     public String toString() {
-        return "Connection[id: " + getId() + ", name: " + name + ", login: " + login + ", password: " + password
+        return "Connection[id: " + getId() + ", name: " + name + ", login: " + login
                 + ", description: " + description + ", port: " + port + ", computer: " + computer
                 + ", connectionFarm: " + connectionFarm + "]";
     }

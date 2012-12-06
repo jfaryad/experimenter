@@ -33,27 +33,27 @@ import org.hibernate.annotations.NamedQuery;
                         "where ex.id = :experimentId " +
                         "and i.id = :inputId " +
                         "and r.param = :param",
-                readOnly = true),
+                readOnly = false),
         @NamedQuery(
                 name = Result.Q_GET_BY_EXPERIMENT,
                 query = "select r from Result r " +
                         "inner join r.experiment as ex " +
                         "inner join fetch r.input as i " +
                         "where ex = :experiment",
-                readOnly = true),
+                readOnly = false),
         @NamedQuery(
                 name = Result.Q_GET_PARAMS_BY_EXPERIMENT_LIST,
                 query = "select distinct r.param from Result r " +
                         "inner join r.experiment as ex " +
                         "where ex.id in (:experimentIds)",
-                readOnly = true),
+                readOnly = false),
         @NamedQuery(
                 name = Result.Q_GET_RESULTS_FOR_PARAM,
                 query = "select r from Result r " +
                         "inner join r.experiment as ex " +
                         "where ex.id in (:experimentIds) " +
                         "and r.param = :param",
-                readOnly = true) })
+                readOnly = false) })
 public class Result implements Entity {
 
     private static final long serialVersionUID = 1L;
@@ -138,6 +138,20 @@ public class Result implements Entity {
 
     public void setValue(BigDecimal value) {
         this.value = value;
+    }
+
+    @Override
+    public int hashCode() {
+        return id.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof Result)) {
+            return false;
+        }
+        final Result other = (Result) o;
+        return other.getId() == id;
     }
 
     @Override

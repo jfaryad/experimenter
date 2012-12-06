@@ -11,6 +11,7 @@ import java.util.UUID;
 import java.util.concurrent.CountDownLatch;
 
 import org.apache.commons.io.IOUtils;
+import org.experimenter.repository.service.ConnectionService;
 import org.experimenter.repository.service.ResultService;
 import org.experimenter.repository.service.StorageService;
 import org.slf4j.Logger;
@@ -40,8 +41,16 @@ public class ExperimentJob extends Thread {
     @Value("${localTmpDir}")
     private String localTemporaryDir;
 
+    @Value("${experiment.connection.retry.number}")
+    private int experimentConnectionRetryNumber;
+
+    @Value("${experiment.connection.retry.interval.seconds}")
+    private int experimentConnectionRetryInterval;
+
     @Autowired
     private StorageService storageService;
+    @Autowired
+    private ConnectionService connectionService;
 
     @Autowired
     private ResultService resultService;
@@ -49,6 +58,7 @@ public class ExperimentJob extends Thread {
     private final Integer experimentId;
     private final Integer computerId;
     private final Integer inputId;
+    private final Integer connectionId;
     private final String hostname;
     private final Short port;
     private final String login;
@@ -60,11 +70,13 @@ public class ExperimentJob extends Thread {
     private CountDownLatch doneSignal;
     private File resultFile;
 
-    public ExperimentJob(Integer experimentId, Integer computerId, Integer inputId, String hostname, Short port,
+    public ExperimentJob(Integer experimentId, Integer computerId, Integer inputId, Integer connectionId,
+            String hostname, Short port,
             String login, String password, String pathToFile, String command, String executable) {
         this.experimentId = experimentId;
         this.computerId = computerId;
         this.inputId = inputId;
+        this.connectionId = connectionId;
         this.hostname = hostname;
         this.port = port;
         this.login = login;
@@ -77,13 +89,25 @@ public class ExperimentJob extends Thread {
 
     @Override
     public void run() {
-        if (executeJob() && resultFile != null && resultFile.exists()) {
-            try {
-                resultService.saveResultsFromFile(experimentId, inputId, resultFile);
-            } catch (Exception e) {
-                LOG.error("Failed saving job for experiment: " + experimentId + " and input: " + inputId);
+        while (experimentConnectionRetryNumber > 0) {
+
+            if (executeJob() && resultFile != null && resultFile.exists()) {
+                try {
+                    resultService.saveResultsFromFile(experimentId, inputId, resultFile);
+                } catch (Exception e) {
+                    LOG.error("Failed saving job for experiment: " + experimentId + " and input: " + inputId, e);
+                }
+                break;
+            } else {
+                experimentConnectionRetryNumber--;
+                try {
+                    Thread.sleep(1000 * experimentConnectionRetryInterval);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         }
+        connectionService.removeJobFromConnection(connectionService.findById(connectionId));
         doneSignal.countDown();
         LOG.debug("Exiting job for experiment: " + experimentId + " and input: " + inputId + ", remaining: "
                 + doneSignal.getCount());
@@ -155,7 +179,10 @@ public class ExperimentJob extends Thread {
             executeExecChannel(execChannel);
 
         } catch (Exception e) {
-            LOG.error("Experiment " + experimentId + " execution failed: ", e);
+            LOG.error(
+                    "Experiment " + experimentId + " for input " + inputId + "on the machine " + hostname
+                            + ", execution failed: ",
+                    e);
             return false;
         } finally {
             session.disconnect();
