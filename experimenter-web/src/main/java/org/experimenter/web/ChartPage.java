@@ -2,7 +2,6 @@ package org.experimenter.web;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -41,7 +40,6 @@ import org.experimenter.web.component.AjaxDropDownChoice;
 import org.experimenter.web.component.DynamicChartImage;
 import org.experimenter.web.component.ResetFiltersLink;
 import org.experimenter.web.model.ApplicationModel;
-import org.experimenter.web.model.FirstChoiceProxyModel;
 import org.experimenter.web.model.ProgramModel;
 import org.experimenter.web.model.ProjectModel;
 import org.experimenter.web.model.aggregate.AvailableApplications;
@@ -76,7 +74,6 @@ public class ChartPage extends AbstractExperimenterPage {
     private TextField<String> yAxisLabel;
     private TextField<String> xAxisLabel;
     private TextField<String> title;
-    private DropDownChoice<ChartSize> size;
     private AjaxButton previewButton;
     private AjaxButton generateButton;
     private DynamicChartImage chartPreview;
@@ -122,7 +119,6 @@ public class ChartPage extends AbstractExperimenterPage {
 
         addParamFilter(form);
         addTitleTextField(form);
-        // addSizeDropDown(form);
         addAxisLabelTextFields(form);
         addPreviewButton(form);
 
@@ -138,7 +134,7 @@ public class ChartPage extends AbstractExperimenterPage {
     }
 
     private void addResetSettingsLink(Form<ChartSettings> form) {
-        form.add(new ResetFiltersLink("reset-settings", paramFilter, title, size, xAxisLabel, yAxisLabel)
+        form.add(new ResetFiltersLink("reset-settings", paramFilter, title, xAxisLabel, yAxisLabel)
                 .addTargetComponents(chartConfigPanel));
     }
 
@@ -233,23 +229,6 @@ public class ChartPage extends AbstractExperimenterPage {
 
         form.add(yAxisLabel = new TextField<String>("ylabel", new PropertyModel<String>(settings, "yAxisLabel")));
         yAxisLabel.setOutputMarkupId(true);
-    }
-
-    private void addSizeDropDown(Form<ChartSettings> form) {
-        IModel<List<? extends ChartSize>> sizeValues = Model.ofList(Arrays.asList(ChartSize.getSelectableValues()));
-        form.add(size = new AjaxDropDownChoice<ChartSize>("size", new FirstChoiceProxyModel<ChartSize>(
-                new PropertyModel<ChartSize>(settings, "size"), sizeValues),
-                sizeValues) {
-
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            public void onChange(AjaxRequestTarget target) {
-                target.add(generateButton);
-            }
-
-        });
-        size.setOutputMarkupId(true);
     }
 
     private void addTitleTextField(Form<ChartSettings> form) {

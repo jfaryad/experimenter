@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
+<wicket:head>
+  <script type="text/javascript" src="insertable.js"></script>
+</wicket:head>
 </head>
 <body>
   <wicket:extend>
-    <div style="float:left; width:450px">
-      <table class="formTable" style="width:100%">
+    <div style="float: left; width: 450px">
+      <table class="formTable" style="width: 100%">
         <tr>
           <td>Program version:</td>
           <td><select wicket:id="application"></select></td>
@@ -40,17 +43,22 @@
         </tr>
       </table>
     </div>
-    <div style="width:500px">
-      <table class="formTable" style="width:90%">
+    <div style="width: 500px">
+      <table class="formTable" style="width: 90%">
         <tr>
           <td>Launch command/script:</td>
         </tr>
         <tr>
-          <td><textarea rows="18" style="width: 100%" wicket:id="command" /></td>
+          <td><textarea rows="18" style="width: 100%" wicket:id="command" id="command" /></td>
         </tr>
         <tr>
-          <td><span style="font-size: 10pt">* use ${PROGRAM} to refer to the executable program file and
-              ${DATA} to refer to the input data file</span></td>
+          <td><span style="font-size: 10pt">* use <a
+              title="Click to insert at the current cursor position in the text" style="font-size: 10pt" href="#"
+              onclick="insert(document.getElementById('command'),'${PROGRAM}')">${PROGRAM}</a> to refer to the
+              executable program file and <a title="Click to insert at the current cursor position in the text"
+              style="font-size: 10pt" href="#" onclick="insert(document.getElementById('command'),'${DATA}')">${DATA}</a>
+              to refer to the input data file
+          </span></td>
         </tr>
       </table>
     </div>
