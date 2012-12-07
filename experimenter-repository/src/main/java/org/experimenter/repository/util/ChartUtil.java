@@ -147,16 +147,28 @@ public class ChartUtil {
         return chart;
     }
 
-    private void saveSvg(File outputFile, JFreeChart chart, int width, int height) {
-        DOMImplementation domImpl =
-                GenericDOMImplementation.getDOMImplementation();
+    /**
+     * Creates the chart and writes it as an SVG image into the provided file
+     * 
+     * @param settings
+     *            chart settings
+     * @param experimentResults
+     *            chart data
+     * @param outputFile
+     *            the svg file to write to. It has to exist already.
+     */
+    public static void writeChartToSvg(ChartSettings settings, Map<String, List<BigDecimal>> experimentResults,
+            File outputFile) {
+        JFreeChart chart = generateChart(settings, experimentResults);
+
+        DOMImplementation domImpl = GenericDOMImplementation.getDOMImplementation();
         org.w3c.dom.Document document = domImpl.createDocument(null, "svg", null);
 
         // Create an instance of the SVG Generator
         SVGGraphics2D svgGenerator = new SVGGraphics2D(document);
 
         // draw the chart in the SVG generator
-        chart.draw(svgGenerator, new Rectangle(width, height));
+        chart.draw(svgGenerator, new Rectangle(1400, 990));
 
         // Write svg file
         try {
@@ -177,10 +189,6 @@ public class ChartUtil {
         } catch (IOException e) {
             System.err.println("Problem occurred creating chart.");
         }
-    }
-
-    public static void main(String[] args) {
-        System.out.println("balblabla; ; ;    sdfs sdf; s; ;;;sdf   ;;     ;dd ;".replaceAll(";+[;\\s]*;+", ";"));
     }
 
 }

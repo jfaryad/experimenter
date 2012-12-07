@@ -18,7 +18,6 @@ import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.markup.repeater.data.IDataProvider;
 import org.apache.wicket.model.IModel;
-import org.experimenter.repository.DeleteDependentException;
 import org.experimenter.repository.entity.Entity;
 import org.experimenter.repository.service.EntityService;
 import org.experimenter.web.ExperimenterSession;
@@ -236,10 +235,10 @@ public abstract class DataTablePanel<T extends Entity> extends Panel {
             @Override
             protected void onClick(AjaxRequestTarget target, IModel<T> rowModel) {
                 try {
-                    getEntityService().tryDelete(rowModel.getObject());
-                } catch (DeleteDependentException ex) {
-                    LOG.error("Error deleting the item. Other objects are still bound to it.", ex);
-                    error("Error deleting the item. Other objects are still bound to it.");
+                    getEntityService().delete(rowModel.getObject());
+                } catch (Exception ex) {
+                    LOG.error("Error deleting the item.", ex);
+                    error("Error deleting the item.");
                 }
                 target.add(DataTablePanel.this);
             }
@@ -258,11 +257,21 @@ public abstract class DataTablePanel<T extends Entity> extends Panel {
             public void onClose(AjaxRequestTarget target) {
                 target.add(DataTablePanel.this);
                 entityForm.setDefaultModelObject(null);
+                modalDialogClosed(target);
             }
         });
         modal.setInitialHeight(getInitialModalWindowHeight());
         modal.setInitialWidth(getInitialModalWindowWidth());
         return modal;
+    }
+
+    /**
+     * Callback for custom action after the modal window has been closed
+     * 
+     * @param target
+     */
+    protected void modalDialogClosed(AjaxRequestTarget target) {
+
     }
 
     protected void showEditDialog(AjaxRequestTarget target, T object) {

@@ -8,6 +8,7 @@ import java.util.List;
 import org.apache.commons.lang.time.DateUtils;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.form.AjaxCheckBox;
+import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.FormComponent;
@@ -45,6 +46,9 @@ import org.experimenter.web.renderer.PropertyChoiceRenderer;
 public class ExperimentFormPanel extends EntityFormPanel<Experiment> {
 
     private static final long serialVersionUID = 1L;
+    // private static final JavaScriptResourceReference INSERTABLE_JS = new JavaScriptResourceReference(
+    // ExperimentPage.class,
+    // "insertable.js");
 
     @SpringBean
     private ExperimentService experimentService;
@@ -57,6 +61,12 @@ public class ExperimentFormPanel extends EntityFormPanel<Experiment> {
 
     public ExperimentFormPanel(String id, ExperimentModel experimentModel) {
         super(id, experimentModel);
+    }
+
+    @Override
+    public void renderHead(IHeaderResponse response) {
+        super.renderHead(response);
+        // response.render(JavaScriptReferenceHeaderItem.forReference(INSERTABLE_JS));
     }
 
     @Override

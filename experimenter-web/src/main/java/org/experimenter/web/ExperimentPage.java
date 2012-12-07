@@ -18,6 +18,8 @@ import org.experimenter.web.model.aggregate.AvailablePrograms;
 import org.experimenter.web.model.aggregate.AvailableProjects;
 import org.experimenter.web.provider.ExperimentProvider;
 import org.experimenter.web.renderer.PropertyChoiceRenderer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Page for experiment administration.
@@ -29,6 +31,7 @@ import org.experimenter.web.renderer.PropertyChoiceRenderer;
 public class ExperimentPage extends AbstractExperimenterPage {
     private static final long serialVersionUID = 1L;
 
+    private static final Logger LOG = LoggerFactory.getLogger(ExperimentPage.class);
     public static final String PRESELECT_APPLICATION_ID = "applicationId";
     private final ExperimentTable dataTable;
 
@@ -44,7 +47,7 @@ public class ExperimentPage extends AbstractExperimenterPage {
 
             @Override
             public void onChange(AjaxRequestTarget target) {
-                target.add(ExperimentPage.this);
+                target.add(dataTable);
             }
         };
         add(projectFilter.setNullValid(true));
@@ -58,7 +61,7 @@ public class ExperimentPage extends AbstractExperimenterPage {
 
             @Override
             public void onChange(AjaxRequestTarget target) {
-                target.add(ExperimentPage.this);
+                target.add(dataTable);
             }
         };
         add(programFilter.setNullValid(true));
@@ -75,7 +78,7 @@ public class ExperimentPage extends AbstractExperimenterPage {
 
             @Override
             public void onChange(AjaxRequestTarget target) {
-                target.add(ExperimentPage.this);
+                target.add(dataTable);
             }
         };
         add(applicationFilter.setNullValid(true));
@@ -94,8 +97,8 @@ public class ExperimentPage extends AbstractExperimenterPage {
                 return experiment;
             }
         });
-
         add(new ResetFiltersLink("reset-filters", projectFilter, programFilter, applicationFilter)
                 .addTargetComponents(dataTable));
+        // this.add(new AjaxTimerBehavior(dataTable, 5));
     }
 }

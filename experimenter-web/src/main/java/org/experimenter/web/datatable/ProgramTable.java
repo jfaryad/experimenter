@@ -72,16 +72,6 @@ public class ProgramTable extends DataTablePanel<Program> {
     }
 
     @Override
-    protected int getInitialModalWindowHeight() {
-        return 620;
-    }
-
-    @Override
-    protected int getInitialModalWindowWidth() {
-        return 830;
-    }
-
-    @Override
     protected boolean isCloneable() {
         return true;
     }

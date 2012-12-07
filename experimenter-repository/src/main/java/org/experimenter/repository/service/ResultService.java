@@ -93,4 +93,13 @@ public interface ResultService extends EntityService<Result> {
      */
     public File downloadChartAsPdf(ChartSettings settings);
 
+    /**
+     * Fetches the data for the given experiments, generates the chart and returns it as a svg image
+     * 
+     * @param settings
+     *            chart configuration
+     * @return a new svg file containing the chart.
+     */
+    public File downloadChartAsSvg(ChartSettings settings);
+
 }

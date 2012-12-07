@@ -30,7 +30,7 @@
           <tr>
             <td>Measured parameter: <select wicket:id="param" />
             </td>
-            <td>Size: <select wicket:id="size" />
+            <td>Title: <input style="width: 160px;" type="text" wicket:id="title" />
             </td>
             <td>y-axis label: <input style="width: 120px;" type="text" wicket:id="ylabel" />
             </td>
@@ -39,13 +39,13 @@
           </tr>
           <tr>
             <td></td>
-            <td>Title: <input style="width: 160px;" type="text" wicket:id="title" />
+            <td>
             </td>
             <td>x-axis label: <input style="width: 120px;" type="text" wicket:id="xlabel" />
             </td>
 
             <td><button type="submit" wicket:id="preview" title="Preview">Preview</button>
-              <button type="submit" wicket:id="generate" title="Generate">Generate</button></td>
+              <button type="submit" wicket:id="generate" title="Generate SVG">Generate</button></td>
           </tr>
         </table>
       </form>

@@ -31,6 +31,8 @@ public class AjaxTimerBehavior extends AbstractAjaxTimerBehavior {
     protected void updateAjaxAttributes(AjaxRequestAttributes attributes) {
         super.updateAjaxAttributes(attributes);
         attributes.getAjaxCallListeners().add(new AjaxCallListener() {
+            private static final long serialVersionUID = 1L;
+
             @Override
             public CharSequence getBeforeHandler(Component component) {
                 return "ajaxHourglassDisableForNextRequest = true; ";

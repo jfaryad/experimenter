@@ -3,6 +3,7 @@ package org.experimenter.web.datatable;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.AjaxSelfUpdatingTimerBehavior;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.PropertyColumn;
@@ -24,6 +25,8 @@ import org.experimenter.web.datatable.column.DatePropertyColumn;
 import org.experimenter.web.datatable.column.LinkColumn;
 import org.experimenter.web.datatable.column.ResultColumn;
 import org.experimenter.web.model.ExperimentModel;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Table listing {@link Experiment} entities.
@@ -35,19 +38,15 @@ public class ExperimentTable extends DataTablePanel<Experiment> {
 
     private static final long serialVersionUID = 1L;
 
+    private static final Logger LOG = LoggerFactory.getLogger(ExperimentTable.class);
+
     @SpringBean
     private ExperimentService experimentService;
+    private AjaxSelfUpdatingTimerBehavior timer;
 
     public ExperimentTable(String id, IDataProvider<Experiment> dataProvider) {
         super(id, dataProvider);
-        add(new AjaxSelfUpdatingTimerBehavior(Duration.seconds(10)) {
-
-            @Override
-            protected String findIndicatorId() {
-                return null;
-            }
-
-        });
+        table.add(timer = new AjaxSelfUpdatingTimerBehavior(Duration.seconds(10)));
     }
 
     @Override
@@ -70,6 +69,8 @@ public class ExperimentTable extends DataTablePanel<Experiment> {
             }
         });
         columns.add(new ResultColumn(new Model<String>("Results"), feedback));
+
+        // final AjaxTimerBehavior timer = new AjaxTimerBehavior(this, 5);
 
         return columns;
     }
@@ -113,6 +114,17 @@ public class ExperimentTable extends DataTablePanel<Experiment> {
     protected void afterPropertiesCloned(Experiment source, Experiment target) {
         target.setConnectionFarms(new ArrayList<ConnectionFarm>(source.getConnectionFarms()));
         target.setInputSets(new ArrayList<InputSet>(source.getInputSets()));
+    }
+
+    @Override
+    protected void showEditDialog(AjaxRequestTarget target, Experiment object) {
+        timer.stop(target);
+        super.showEditDialog(target, object);
+    }
+
+    @Override
+    protected void modalDialogClosed(AjaxRequestTarget target) {
+        timer.restart(target);
     }
 
 }

@@ -119,6 +119,19 @@ public class ResultServiceImpl extends AbstractService<Result, ResultDao> implem
     }
 
     @Override
+    public File downloadChartAsSvg(ChartSettings settings) {
+        Map<String, List<BigDecimal>> valuesByExperimentName = prepareValuesForChart(settings);
+        File svgFile;
+        try {
+            svgFile = storageService.createUniqueTemporaryFile();
+            ChartUtil.writeChartToSvg(settings, valuesByExperimentName, svgFile);
+        } catch (Exception e) {
+            throw new RuntimeException("Error writing to the svg file.", e);
+        }
+        return svgFile;
+    }
+
+    @Override
     public File downloadRawResultsAsZip(Experiment experiment) {
         checkIdNotNull(experiment);
         List<File> resultList = storageService.getResultFilesForExperiment(experiment.getId());

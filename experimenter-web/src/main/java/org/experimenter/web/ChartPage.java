@@ -122,12 +122,12 @@ public class ChartPage extends AbstractExperimenterPage {
 
         addParamFilter(form);
         addTitleTextField(form);
-        addSizeDropDown(form);
+        // addSizeDropDown(form);
         addAxisLabelTextFields(form);
         addPreviewButton(form);
 
         final IModel<File> pdfModel = new Model<File>((File) null);
-        final IModel<String> fileNameModel = new Model<String>("chart-export.pdf");
+        final IModel<String> fileNameModel = new Model<String>("chart-export.svg");
         final AjaxDownload download = createAjaxDownload(pdfModel, fileNameModel);
         add(download);
         addGenerateButton(form, pdfModel, download);
@@ -163,12 +163,12 @@ public class ChartPage extends AbstractExperimenterPage {
                 previewSettings.getExperimentIds().addAll(selectedExperiments.getObject());
 
                 try {
-                    File pdf = resultService.downloadChartAsPdf(previewSettings);
-                    pdfModel.setObject(pdf);
+                    File svg = resultService.downloadChartAsSvg(previewSettings);
+                    pdfModel.setObject(svg);
                     download.initiate(target);
                 } catch (Exception e) {
-                    Log.error("Unable to retrieve the pdf", e);
-                    error("Error retrieveing the chart pdf");
+                    Log.error("Unable to retrieve the generated file", e);
+                    error("Error retrieveing the generated file ");
                 }
 
             }
