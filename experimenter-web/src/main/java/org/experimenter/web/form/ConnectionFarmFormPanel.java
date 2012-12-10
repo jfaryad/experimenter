@@ -1,4 +1,4 @@
-package org.experimenter.web.common.panel;
+package org.experimenter.web.form;
 
 import static org.experimenter.web.renderer.PropertyChoiceRenderer.USERGROUP_RENDERER;
 

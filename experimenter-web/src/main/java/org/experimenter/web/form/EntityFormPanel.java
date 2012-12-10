@@ -1,4 +1,4 @@
-package org.experimenter.web.common.panel;
+package org.experimenter.web.form;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;

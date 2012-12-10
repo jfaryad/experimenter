@@ -9,6 +9,12 @@ import org.experimenter.repository.service.ExperimentService;
 import org.experimenter.web.ExperimenterSession;
 import org.experimenter.web.model.FilteredListModel;
 
+/**
+ * Model of all experiments a user can see.
+ * 
+ * @author jfaryad
+ * 
+ */
 public class AvailableExperiments extends FilteredListModel<Experiment> {
 
     private static final long serialVersionUID = 1L;

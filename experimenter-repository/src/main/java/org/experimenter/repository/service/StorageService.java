@@ -7,6 +7,11 @@ import java.util.List;
 import org.experimenter.repository.entity.Application;
 import org.experimenter.repository.entity.Input;
 
+/**
+ * The service managing interaction with the storage, saving and reading input files, executables and result files.
+ * 
+ * @author jfaryad
+ */
 public interface StorageService {
 
     /**

@@ -11,6 +11,12 @@ import org.experimenter.repository.entity.Input;
 import org.experimenter.repository.entity.InputSet;
 import org.experimenter.repository.service.InputService;
 
+/**
+ * Model of all inputs of an input set
+ * 
+ * @author jfaryad
+ * 
+ */
 public class InputsByInputSet extends LoadableDetachableModel<List<Input>> {
 
     private static final long serialVersionUID = 1L;

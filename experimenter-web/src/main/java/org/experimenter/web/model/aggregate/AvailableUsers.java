@@ -8,6 +8,12 @@ import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.experimenter.repository.entity.User;
 import org.experimenter.repository.service.UserService;
 
+/**
+ * Model of all users.
+ * 
+ * @author jfaryad
+ * 
+ */
 public class AvailableUsers extends LoadableDetachableModel<List<User>> {
 
     private static final long serialVersionUID = 1L;

@@ -5,6 +5,12 @@ import java.util.List;
 import org.experimenter.repository.entity.Program;
 import org.experimenter.repository.entity.User;
 
+/**
+ * The data access object for the Program entity. Extends {@link BaseDao}.
+ * 
+ * @author jfaryad
+ * 
+ */
 public interface ProgramDao extends BaseDao<Program> {
 
     /**

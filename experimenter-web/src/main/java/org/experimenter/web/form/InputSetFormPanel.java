@@ -1,4 +1,4 @@
-package org.experimenter.web.common.panel;
+package org.experimenter.web.form;
 
 import java.io.File;
 import java.util.Collection;

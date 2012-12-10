@@ -15,9 +15,9 @@ import org.experimenter.repository.service.EntityService;
 import org.experimenter.repository.service.ProblemTypeService;
 import org.experimenter.web.InputSetPage;
 import org.experimenter.web.ProjectPage;
-import org.experimenter.web.common.panel.EntityFormPanel;
-import org.experimenter.web.common.panel.ProblemTypeFormPanel;
 import org.experimenter.web.datatable.column.LinkColumn;
+import org.experimenter.web.form.EntityFormPanel;
+import org.experimenter.web.form.ProblemTypeFormPanel;
 import org.experimenter.web.model.ProblemTypeModel;
 
 /**

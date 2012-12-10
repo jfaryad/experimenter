@@ -9,6 +9,11 @@ import org.experimenter.repository.entity.ProblemType;
 import org.experimenter.repository.entity.Project;
 import org.experimenter.repository.form.CriteriaForm;
 
+/**
+ * The service taking care of {@link InputSet} related operations.
+ * 
+ * @author jfaryad
+ */
 public interface InputSetService extends EntityService<InputSet> {
 
     /**

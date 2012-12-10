@@ -13,10 +13,10 @@ import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.experimenter.repository.entity.Input;
 import org.experimenter.repository.service.EntityService;
 import org.experimenter.repository.service.InputService;
-import org.experimenter.web.common.panel.EntityFormPanel;
-import org.experimenter.web.common.panel.InputFormPanel;
 import org.experimenter.web.datatable.column.DownloadLinkPropertyColumn;
 import org.experimenter.web.datatable.column.FileNamePropertyColumn;
+import org.experimenter.web.form.EntityFormPanel;
+import org.experimenter.web.form.InputFormPanel;
 import org.experimenter.web.model.FileNameModel;
 import org.experimenter.web.model.InputModel;
 

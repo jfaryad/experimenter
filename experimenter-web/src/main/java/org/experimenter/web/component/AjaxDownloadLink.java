@@ -10,6 +10,12 @@ import org.apache.wicket.util.file.Files;
 import org.apache.wicket.util.resource.FileResourceStream;
 import org.apache.wicket.util.resource.IResourceStream;
 
+/**
+ * A link containing a download behavior.
+ * 
+ * @author jfaryad
+ * 
+ */
 public class AjaxDownloadLink extends AjaxLink<Void> {
 
     private static final long serialVersionUID = 1L;
@@ -18,6 +24,18 @@ public class AjaxDownloadLink extends AjaxLink<Void> {
     private final IModel<File> fileModel;
     private boolean deleteAfter = false;
 
+    /**
+     * Creates the link.
+     * 
+     * @param id
+     *            wicket id
+     * @param fileModel
+     *            model of the file to download
+     * @param fileName
+     *            name of the file to download
+     * @param feedbackComponent
+     *            to feedback panel to update, if anything goes wrong.
+     */
     public AjaxDownloadLink(String id, final IModel<File> fileModel, final IModel<String> fileName,
             final Component feedbackComponent) {
         super(id);

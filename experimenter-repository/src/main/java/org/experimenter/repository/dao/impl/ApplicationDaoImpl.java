@@ -7,6 +7,12 @@ import org.experimenter.repository.entity.Application;
 import org.experimenter.repository.entity.Program;
 import org.experimenter.repository.entity.User;
 
+/**
+ * Default implementation of {@link ApplicationDao}
+ * 
+ * @author jfaryad
+ * 
+ */
 public class ApplicationDaoImpl extends AbstractBaseDaoImpl<Application> implements ApplicationDao {
 
     @Override

@@ -12,6 +12,12 @@ import org.experimenter.repository.entity.User;
 import org.experimenter.repository.service.UserService;
 import org.springframework.util.DigestUtils;
 
+/**
+ * Custom implementation of {@link AuthenticatedWebSession} to work with our user databse.
+ * 
+ * @author jfaryad
+ * 
+ */
 public class ExperimenterSession extends AuthenticatedWebSession {
 
     private static final long serialVersionUID = 1L;

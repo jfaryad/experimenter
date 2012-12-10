@@ -11,6 +11,12 @@ import org.experimenter.repository.entity.InputSet;
 import org.experimenter.repository.entity.ProblemType;
 import org.experimenter.repository.service.InputSetService;
 
+/**
+ * Model of all input sets of a problem
+ * 
+ * @author jfaryad
+ * 
+ */
 public class AllInputSetsByProblem extends LoadableDetachableModel<List<InputSet>> {
 
     private static final long serialVersionUID = 1L;

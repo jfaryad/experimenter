@@ -5,6 +5,14 @@ import java.util.List;
 
 import org.hibernate.criterion.Order;
 
+/**
+ * A dto containing an entity, that specifies what properties to filter by. Moreover, it enables to specify the first
+ * result to return and the number of results.
+ * 
+ * @author jfaryad
+ * 
+ * @param <T>
+ */
 public class CriteriaForm<T> {
 
     private T entity;

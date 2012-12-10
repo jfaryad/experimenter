@@ -2,6 +2,12 @@ package org.experimenter.repository.dao;
 
 import org.experimenter.repository.entity.InputSet;
 
+/**
+ * The data access object for the InpuSet entity. Extends {@link BaseDao}.
+ * 
+ * @author jfaryad
+ * 
+ */
 public interface InputSetDao extends BaseDao<InputSet> {
 
     // /**

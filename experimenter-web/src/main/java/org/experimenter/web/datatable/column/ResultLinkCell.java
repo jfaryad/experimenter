@@ -32,6 +32,16 @@ public class ResultLinkCell extends Panel {
     private final Label scheduledLabel;
     private final Label runningLabel;
 
+    /**
+     * constructor.
+     * 
+     * @param id
+     *            wicket id
+     * @param experiment
+     *            experiment model (the current row)
+     * @param feedbackPanel
+     *            feedback panel to update on error
+     */
     public ResultLinkCell(String id, final IModel<Experiment> experiment, Component feedbackPanel) {
         super(id);
         this.experiment = experiment;

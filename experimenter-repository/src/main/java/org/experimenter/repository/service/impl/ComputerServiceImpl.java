@@ -7,6 +7,11 @@ import org.experimenter.repository.entity.Computer;
 import org.experimenter.repository.entity.ConnectionFarm;
 import org.experimenter.repository.service.ComputerService;
 
+/**
+ * Default implementation of the related service interface.
+ * 
+ * @author jfaryad
+ */
 public class ComputerServiceImpl extends AbstractService<Computer, ComputerDao> implements ComputerService {
 
     @Override

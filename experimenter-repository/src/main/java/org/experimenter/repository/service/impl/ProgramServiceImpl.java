@@ -8,6 +8,11 @@ import org.experimenter.repository.entity.Project;
 import org.experimenter.repository.entity.User;
 import org.experimenter.repository.service.ProgramService;
 
+/**
+ * Default implementation of the related service interface.
+ * 
+ * @author jfaryad
+ */
 public class ProgramServiceImpl extends AbstractService<Program, ProgramDao> implements ProgramService {
 
     @Override

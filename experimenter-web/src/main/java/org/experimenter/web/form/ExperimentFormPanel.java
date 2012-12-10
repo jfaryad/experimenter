@@ -1,4 +1,4 @@
-package org.experimenter.web.common.panel;
+package org.experimenter.web.form;
 
 import java.util.Calendar;
 import java.util.Collections;

@@ -10,6 +10,11 @@ import org.experimenter.repository.entity.ProblemType;
 import org.experimenter.repository.entity.Project;
 import org.experimenter.repository.service.InputSetService;
 
+/**
+ * Default implementation of the related service interface.
+ * 
+ * @author jfaryad
+ */
 public class InputSetServiceImpl extends AbstractService<InputSet, InputSetDao> implements InputSetService {
 
     @Override

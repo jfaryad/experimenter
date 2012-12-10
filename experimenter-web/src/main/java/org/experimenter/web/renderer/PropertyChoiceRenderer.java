@@ -14,6 +14,14 @@ import org.experimenter.repository.entity.Project;
 import org.experimenter.repository.entity.User;
 import org.experimenter.repository.entity.UserGroup;
 
+/**
+ * A helper class that holds choice renderers for all entities and knows what property to display, when they are to be
+ * rendered.
+ * 
+ * @author jfaryad
+ * 
+ * @param <T>
+ */
 public class PropertyChoiceRenderer<T extends Entity> implements IChoiceRenderer<T> {
 
     private static final long serialVersionUID = 1L;

@@ -1,4 +1,4 @@
-package org.experimenter.web.common.panel;
+package org.experimenter.web.form;
 
 import static org.experimenter.web.renderer.PropertyChoiceRenderer.COMPUTER_RENDERER;
 import static org.experimenter.web.renderer.PropertyChoiceRenderer.CONNECTION_FARM_RENDERER;

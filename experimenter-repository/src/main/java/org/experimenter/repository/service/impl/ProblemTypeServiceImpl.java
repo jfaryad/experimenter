@@ -4,6 +4,11 @@ import org.experimenter.repository.dao.ProblemTypeDao;
 import org.experimenter.repository.entity.ProblemType;
 import org.experimenter.repository.service.ProblemTypeService;
 
+/**
+ * Default implementation of the related service interface.
+ * 
+ * @author jfaryad
+ */
 public class ProblemTypeServiceImpl extends AbstractService<ProblemType, ProblemTypeDao> implements ProblemTypeService {
 
     @Override

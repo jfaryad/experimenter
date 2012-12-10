@@ -6,6 +6,12 @@ import org.experimenter.repository.entity.Computer;
 import org.experimenter.repository.entity.ConnectionFarm;
 import org.experimenter.repository.form.CriteriaForm;
 
+/**
+ * The service taking care of {@link Computer} related operations.
+ * 
+ * @author jfaryad
+ * 
+ */
 public interface ComputerService extends EntityService<Computer> {
 
     /**

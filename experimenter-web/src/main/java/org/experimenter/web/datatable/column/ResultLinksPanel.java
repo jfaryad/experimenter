@@ -32,6 +32,16 @@ public class ResultLinksPanel extends Panel {
 
     private final IModel<Experiment> experiment;
 
+    /**
+     * constructor.
+     * 
+     * @param id
+     *            wicket id
+     * @param experiment
+     *            experiment model (the current row)
+     * @param feedbackPanel
+     *            feedback panel to update on error
+     */
     public ResultLinksPanel(String id, final IModel<Experiment> experiment, Component feedbackPanel) {
         super(id);
         this.experiment = experiment;

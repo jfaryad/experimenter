@@ -17,6 +17,16 @@ public abstract class LinkCell<T extends Entity> extends Panel {
 
     private static final long serialVersionUID = 1L;
 
+    /**
+     * Constructor
+     * 
+     * @param id
+     *            wicket id
+     * @param rowModel
+     *            model of the entity represented by the current row
+     * @param linkText
+     *            text of the link
+     */
     public LinkCell(String id, final IModel<T> rowModel, final IModel<String> linkText) {
         super(id);
         Link<String> link = new Link<String>("link") {

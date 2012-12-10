@@ -21,10 +21,10 @@ import org.apache.wicket.model.IModel;
 import org.experimenter.repository.entity.Entity;
 import org.experimenter.repository.service.EntityService;
 import org.experimenter.web.ExperimenterSession;
-import org.experimenter.web.common.panel.EntityFormPanel;
 import org.experimenter.web.datatable.column.TableRowCloneColumn;
 import org.experimenter.web.datatable.column.TableRowDeleteColumn;
 import org.experimenter.web.datatable.column.TableRowEditColumn;
+import org.experimenter.web.form.EntityFormPanel;
 import org.experimenter.web.model.EntityModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -79,7 +79,7 @@ public abstract class DataTablePanel<T extends Entity> extends Panel {
             columns.add(createCloneColumn());
         }
 
-        if (ExperimenterSession.get().getCurrentUser().getIsAdmin()) {
+        if (ExperimenterSession.get().getCurrentUser().getIsAdmin() || isUserDeletable()) {
             columns.add(createDeleteColumn());
         }
 
@@ -128,6 +128,15 @@ public abstract class DataTablePanel<T extends Entity> extends Panel {
      * @return
      */
     protected boolean isEditable() {
+        return true;
+    }
+
+    /**
+     * Determines whether there should be a delete column if the current user is not an admin.
+     * 
+     * @return
+     */
+    protected boolean isUserDeletable() {
         return true;
     }
 

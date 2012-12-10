@@ -5,6 +5,12 @@ import java.util.List;
 import org.experimenter.repository.entity.User;
 import org.experimenter.repository.entity.UserGroup;
 
+/**
+ * The data access object for the UserGroup entity. Extends {@link BaseDao}.
+ * 
+ * @author jfaryad
+ * 
+ */
 public interface UserGroupDao extends BaseDao<UserGroup> {
 
     /**

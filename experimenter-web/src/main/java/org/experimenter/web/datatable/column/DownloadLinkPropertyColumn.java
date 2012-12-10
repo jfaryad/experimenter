@@ -21,6 +21,16 @@ public abstract class DownloadLinkPropertyColumn<T> extends PropertyColumn<T, St
 
     private final Component feedbackPanel;
 
+    /**
+     * Constructor.
+     * 
+     * @param headerModel
+     *            column name
+     * @param propertyExpression
+     *            property expression
+     * @param feedbackPanel
+     *            feedback panel to update on error
+     */
     public DownloadLinkPropertyColumn(IModel<String> headerModel, String propertyExpression, Component feedbackPanel) {
         super(headerModel, propertyExpression);
         this.feedbackPanel = feedbackPanel;

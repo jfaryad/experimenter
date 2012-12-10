@@ -6,6 +6,11 @@ import org.experimenter.repository.entity.User;
 import org.experimenter.repository.entity.UserGroup;
 import org.experimenter.repository.form.CriteriaForm;
 
+/**
+ * The service taking care of {@link UserGroup} related operations.
+ * 
+ * @author jfaryad
+ */
 public interface UserGroupService extends EntityService<UserGroup> {
 
     /**

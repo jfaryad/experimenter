@@ -10,6 +10,13 @@ import org.experimenter.repository.entity.Result;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Default implementation of {@link ResultDao}
+ * 
+ * 
+ * @author jfaryad
+ * 
+ */
 public class ResultDaoImpl extends AbstractBaseDaoImpl<Result> implements ResultDao {
 
     protected final static Logger LOG = LoggerFactory.getLogger(ResultDaoImpl.class);

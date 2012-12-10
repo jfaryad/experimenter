@@ -7,6 +7,11 @@ import org.experimenter.repository.entity.User;
 import org.experimenter.repository.entity.UserGroup;
 import org.experimenter.repository.service.UserGroupService;
 
+/**
+ * Default implementation of the related service interface.
+ * 
+ * @author jfaryad
+ */
 public class UserGroupServiceImpl extends AbstractService<UserGroup, UserGroupDao> implements UserGroupService {
 
     @Override

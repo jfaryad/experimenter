@@ -43,6 +43,12 @@ public class ResultParser {
 
     private static final Logger LOG = LoggerFactory.getLogger(ResultParser.class);
 
+    /**
+     * Parses the result file and returns a map of parameters and their values.
+     * 
+     * @param file
+     * @return
+     */
     public static Map<String, BigDecimal> parseResultFile(File file) {
         BufferedReader reader = null;
         try {

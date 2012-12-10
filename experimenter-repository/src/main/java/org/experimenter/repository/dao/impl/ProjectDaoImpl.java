@@ -7,6 +7,12 @@ import org.experimenter.repository.entity.InputSet;
 import org.experimenter.repository.entity.Project;
 import org.experimenter.repository.entity.User;
 
+/**
+ * Default implementation of {@link ProjectDao}
+ * 
+ * @author jfaryad
+ * 
+ */
 public class ProjectDaoImpl extends AbstractBaseDaoImpl<Project> implements ProjectDao {
 
     @Override

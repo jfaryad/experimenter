@@ -14,9 +14,9 @@ import org.experimenter.repository.entity.Computer;
 import org.experimenter.repository.service.ComputerService;
 import org.experimenter.repository.service.EntityService;
 import org.experimenter.web.ConnectionPage;
-import org.experimenter.web.common.panel.ComputerFormPanel;
-import org.experimenter.web.common.panel.EntityFormPanel;
 import org.experimenter.web.datatable.column.LinkColumn;
+import org.experimenter.web.form.ComputerFormPanel;
+import org.experimenter.web.form.EntityFormPanel;
 import org.experimenter.web.model.ComputerModel;
 
 /**

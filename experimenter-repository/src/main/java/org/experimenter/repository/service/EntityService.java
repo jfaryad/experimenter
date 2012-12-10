@@ -6,6 +6,13 @@ import org.experimenter.repository.DeleteDependentException;
 import org.experimenter.repository.entity.Entity;
 import org.experimenter.repository.form.CriteriaForm;
 
+/**
+ * Base interface for all entity services.
+ * 
+ * @author jfaryad
+ * 
+ * @param <T>
+ */
 public interface EntityService<T extends Entity> {
 
     /**

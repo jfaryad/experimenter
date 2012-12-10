@@ -7,6 +7,12 @@ import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.markup.html.panel.Panel;
 
+/**
+ * The left-hand menu panel. Adds authorization to the links, so that standard user don't see links to admin pages.
+ * 
+ * @author jfaryad
+ * 
+ */
 public class Menu extends Panel {
 
     private static final long serialVersionUID = 1L;

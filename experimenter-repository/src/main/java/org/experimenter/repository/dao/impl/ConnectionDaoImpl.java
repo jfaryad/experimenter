@@ -10,6 +10,12 @@ import org.experimenter.repository.entity.ConnectionFarm;
 import org.experimenter.repository.entity.User;
 import org.hibernate.LockOptions;
 
+/**
+ * Default implementation of {@link ConnectionDao}
+ * 
+ * @author jfaryad
+ * 
+ */
 public class ConnectionDaoImpl extends AbstractBaseDaoImpl<Connection> implements ConnectionDao {
 
     @Override

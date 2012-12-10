@@ -14,10 +14,10 @@ import org.experimenter.repository.entity.Application;
 import org.experimenter.repository.service.ApplicationService;
 import org.experimenter.repository.service.EntityService;
 import org.experimenter.web.ExperimentPage;
-import org.experimenter.web.common.panel.ApplicationFormPanel;
-import org.experimenter.web.common.panel.EntityFormPanel;
 import org.experimenter.web.datatable.column.FileNamePropertyColumn;
 import org.experimenter.web.datatable.column.LinkColumn;
+import org.experimenter.web.form.ApplicationFormPanel;
+import org.experimenter.web.form.EntityFormPanel;
 import org.experimenter.web.model.ApplicationModel;
 
 /**

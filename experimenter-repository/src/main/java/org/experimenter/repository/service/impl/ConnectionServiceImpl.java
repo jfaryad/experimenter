@@ -15,6 +15,11 @@ import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.Session;
 
+/**
+ * Default implementation of the related service interface.
+ * 
+ * @author jfaryad
+ */
 public class ConnectionServiceImpl extends AbstractService<Connection, ConnectionDao> implements ConnectionService {
     private static final Logger LOG = LoggerFactory.getLogger(ConnectionServiceImpl.class);
 

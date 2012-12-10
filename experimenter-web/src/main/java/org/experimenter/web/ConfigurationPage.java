@@ -1,7 +1,7 @@
 package org.experimenter.web;
 
 import org.apache.wicket.request.mapper.parameter.PageParameters;
-import org.experimenter.web.common.panel.UserFormPanel;
+import org.experimenter.web.form.UserFormPanel;
 import org.experimenter.web.model.CurrentUserModel;
 
 /**

@@ -8,6 +8,12 @@ import org.experimenter.repository.entity.Program;
 import org.experimenter.repository.entity.User;
 import org.experimenter.repository.form.CriteriaForm;
 
+/**
+ * The service taking care of {@link Application} related operations.
+ * 
+ * @author jfaryad
+ * 
+ */
 public interface ApplicationService extends EntityService<Application> {
 
     /**

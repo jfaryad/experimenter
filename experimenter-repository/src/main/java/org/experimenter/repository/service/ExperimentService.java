@@ -10,6 +10,11 @@ import org.experimenter.repository.entity.InputSet;
 import org.experimenter.repository.entity.User;
 import org.experimenter.repository.form.CriteriaForm;
 
+/**
+ * The service taking care of {@link Experiment} related operations.
+ * 
+ * @author jfaryad
+ */
 public interface ExperimentService extends EntityService<Experiment> {
 
     /**

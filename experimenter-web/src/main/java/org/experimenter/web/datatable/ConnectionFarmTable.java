@@ -14,9 +14,9 @@ import org.experimenter.repository.entity.ConnectionFarm;
 import org.experimenter.repository.service.ConnectionFarmService;
 import org.experimenter.repository.service.EntityService;
 import org.experimenter.web.ConnectionPage;
-import org.experimenter.web.common.panel.ConnectionFarmFormPanel;
-import org.experimenter.web.common.panel.EntityFormPanel;
 import org.experimenter.web.datatable.column.LinkColumn;
+import org.experimenter.web.form.ConnectionFarmFormPanel;
+import org.experimenter.web.form.EntityFormPanel;
 import org.experimenter.web.model.ConnectionFarmModel;
 
 /**

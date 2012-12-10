@@ -11,6 +11,12 @@ import org.experimenter.repository.entity.Project;
 import org.experimenter.repository.service.InputSetService;
 import org.experimenter.web.model.FilteredListModel;
 
+/**
+ * Model of all input sets of a project.
+ * 
+ * @author jfaryad
+ * 
+ */
 public class AvailableInputSetsByProject extends FilteredListModel<InputSet> {
 
     private static final long serialVersionUID = 1L;

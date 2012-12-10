@@ -9,6 +9,11 @@ import org.experimenter.repository.entity.User;
 import org.experimenter.repository.entity.UserGroup;
 import org.experimenter.repository.service.ConnectionFarmService;
 
+/**
+ * Default implementation of the related service interface.
+ * 
+ * @author jfaryad
+ */
 public class ConnectionFarmServiceImpl extends AbstractService<ConnectionFarm, ConnectionFarmDao> implements
         ConnectionFarmService {
 

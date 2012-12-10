@@ -18,6 +18,18 @@ public class DownloadLinkCell extends Panel {
 
     private static final long serialVersionUID = 1L;
 
+    /**
+     * Constructor.
+     * 
+     * @param id
+     *            wicket id
+     * @param fileModel
+     *            model of the file to download
+     * @param feedbackPanel
+     *            feedback panel to update if anything goes wrong
+     * @param fileName
+     *            name of the file download
+     */
     public DownloadLinkCell(String id, final IModel<File> fileModel, Component feedbackPanel, IModel<String> fileName) {
         super(id);
 

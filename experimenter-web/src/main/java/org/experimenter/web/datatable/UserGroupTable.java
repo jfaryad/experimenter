@@ -11,8 +11,8 @@ import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.experimenter.repository.entity.UserGroup;
 import org.experimenter.repository.service.EntityService;
 import org.experimenter.repository.service.UserGroupService;
-import org.experimenter.web.common.panel.EntityFormPanel;
-import org.experimenter.web.common.panel.UserGroupFormPanel;
+import org.experimenter.web.form.EntityFormPanel;
+import org.experimenter.web.form.UserGroupFormPanel;
 import org.experimenter.web.model.UserGroupModel;
 
 /**

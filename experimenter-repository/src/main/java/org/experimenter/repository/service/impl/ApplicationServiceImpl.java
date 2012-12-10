@@ -9,6 +9,11 @@ import org.experimenter.repository.entity.Program;
 import org.experimenter.repository.entity.User;
 import org.experimenter.repository.service.ApplicationService;
 
+/**
+ * Default implementation of the related service interface.
+ * 
+ * @author jfaryad
+ */
 public class ApplicationServiceImpl extends AbstractService<Application, ApplicationDao> implements ApplicationService {
 
     @Override

@@ -5,6 +5,12 @@ import java.util.List;
 import org.experimenter.repository.entity.Computer;
 import org.experimenter.repository.entity.ConnectionFarm;
 
+/**
+ * The data access object for the Computer entity. Extends {@link BaseDao}.
+ * 
+ * @author jfaryad
+ * 
+ */
 public interface ComputerDao extends BaseDao<Computer> {
 
     /**

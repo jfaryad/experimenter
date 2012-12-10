@@ -5,6 +5,12 @@ import java.util.List;
 import org.experimenter.repository.entity.Experiment;
 import org.experimenter.repository.entity.Input;
 
+/**
+ * The data access object for the Input entity. Extends {@link BaseDao}.
+ * 
+ * @author jfaryad
+ * 
+ */
 public interface InputDao extends BaseDao<Input> {
 
     /**

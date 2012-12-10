@@ -5,6 +5,11 @@ import java.util.List;
 import org.experimenter.repository.entity.ProblemType;
 import org.experimenter.repository.form.CriteriaForm;
 
+/**
+ * The service taking care of {@link ProblemType} related operations.
+ * 
+ * @author jfaryad
+ */
 public interface ProblemTypeService extends EntityService<ProblemType> {
 
     /**

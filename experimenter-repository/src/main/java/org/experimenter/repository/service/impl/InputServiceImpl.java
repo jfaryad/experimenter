@@ -14,6 +14,11 @@ import org.experimenter.repository.util.CheckSumUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Default implementation of the related service interface.
+ * 
+ * @author jfaryad
+ */
 public class InputServiceImpl extends AbstractService<Input, InputDao> implements InputService {
 
     private static final Logger LOG = LoggerFactory.getLogger(InputServiceImpl.class);

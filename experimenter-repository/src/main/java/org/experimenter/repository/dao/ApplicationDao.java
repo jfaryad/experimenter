@@ -6,6 +6,12 @@ import org.experimenter.repository.entity.Application;
 import org.experimenter.repository.entity.Program;
 import org.experimenter.repository.entity.User;
 
+/**
+ * The data access object for the Application entity. Extends {@link BaseDao}.
+ * 
+ * @author jfaryad
+ * 
+ */
 public interface ApplicationDao extends BaseDao<Application> {
 
     /**

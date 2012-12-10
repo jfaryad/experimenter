@@ -11,9 +11,9 @@ import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.experimenter.repository.entity.Connection;
 import org.experimenter.repository.service.ConnectionService;
 import org.experimenter.repository.service.EntityService;
-import org.experimenter.web.common.panel.ConnectionFormPanel;
-import org.experimenter.web.common.panel.EntityFormPanel;
 import org.experimenter.web.datatable.column.AddressPortColumn;
+import org.experimenter.web.form.ConnectionFormPanel;
+import org.experimenter.web.form.EntityFormPanel;
 import org.experimenter.web.model.ConnectionModel;
 
 /**

@@ -4,7 +4,7 @@
   <groupId>org.experimenter</groupId>
   <artifactId>experimenter-web</artifactId>
   <packaging>war</packaging>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>1.0.0</version>
   <!-- TODO project name -->
   <name>experimenter-web</name>
   <description></description>
@@ -12,7 +12,7 @@
   <parent>
     <groupId>org.experimenter</groupId>
     <artifactId>experimenter</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0.0</version>
     <relativePath>..</relativePath>
   </parent>
 

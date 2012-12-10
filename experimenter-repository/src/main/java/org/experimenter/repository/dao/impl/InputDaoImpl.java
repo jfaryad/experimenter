@@ -7,6 +7,13 @@ import org.experimenter.repository.entity.Experiment;
 import org.experimenter.repository.entity.Input;
 import org.experimenter.repository.entity.InputSet;
 
+/**
+ * Default implementation of InputDao
+ * 
+ * @author jfaryad
+ * 
+ */
+
 public class InputDaoImpl extends AbstractBaseDaoImpl<Input> implements InputDao {
 
     @Override

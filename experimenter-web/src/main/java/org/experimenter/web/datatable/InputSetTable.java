@@ -14,9 +14,9 @@ import org.experimenter.repository.entity.InputSet;
 import org.experimenter.repository.service.EntityService;
 import org.experimenter.repository.service.InputSetService;
 import org.experimenter.web.InputPage;
-import org.experimenter.web.common.panel.EntityFormPanel;
-import org.experimenter.web.common.panel.InputSetFormPanel;
 import org.experimenter.web.datatable.column.LinkColumn;
+import org.experimenter.web.form.EntityFormPanel;
+import org.experimenter.web.form.InputSetFormPanel;
 import org.experimenter.web.model.InputSetModel;
 
 /**

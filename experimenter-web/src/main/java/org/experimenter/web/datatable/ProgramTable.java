@@ -14,9 +14,9 @@ import org.experimenter.repository.entity.Program;
 import org.experimenter.repository.service.EntityService;
 import org.experimenter.repository.service.ProgramService;
 import org.experimenter.web.ApplicationPage;
-import org.experimenter.web.common.panel.EntityFormPanel;
-import org.experimenter.web.common.panel.ProgramFormPanel;
 import org.experimenter.web.datatable.column.LinkColumn;
+import org.experimenter.web.form.EntityFormPanel;
+import org.experimenter.web.form.ProgramFormPanel;
 import org.experimenter.web.model.ProgramModel;
 
 /**

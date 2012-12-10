@@ -5,6 +5,13 @@ import java.util.List;
 import org.experimenter.repository.entity.Entity;
 import org.experimenter.repository.form.CriteriaForm;
 
+/**
+ * The parent class for all entity daos. Contains the commono methods.
+ * 
+ * @author jfaryad
+ * 
+ * @param <T>
+ */
 public interface BaseDao<T extends Entity> {
 
     /**

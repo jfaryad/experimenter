@@ -7,6 +7,12 @@ import org.experimenter.repository.entity.Experiment;
 import org.experimenter.repository.entity.User;
 import org.experimenter.repository.entity.UserGroup;
 
+/**
+ * The data access object for the ConnectionFarm entity. Extends {@link BaseDao}.
+ * 
+ * @author jfaryad
+ * 
+ */
 public interface ConnectionFarmDao extends BaseDao<ConnectionFarm> {
 
     /**

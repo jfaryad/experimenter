@@ -8,6 +8,12 @@ import org.experimenter.repository.entity.Computer;
 import org.experimenter.repository.entity.ConnectionFarm;
 import org.hibernate.CacheMode;
 
+/**
+ * Default implementation of {@link ComputerDao}
+ * 
+ * @author jfaryad
+ * 
+ */
 public class ComputerDaoImpl extends AbstractBaseDaoImpl<Computer> implements ComputerDao {
 
     @Override

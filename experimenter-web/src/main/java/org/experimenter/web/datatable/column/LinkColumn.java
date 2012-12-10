@@ -19,6 +19,14 @@ public abstract class LinkColumn<T extends Entity> extends AbstractColumn<T, Str
 
     private final IModel<String> linkText;
 
+    /**
+     * Constructor
+     * 
+     * @param headerModel
+     *            column name
+     * @param linkText
+     *            link text
+     */
     public LinkColumn(IModel<String> headerModel, final IModel<String> linkText) {
         super(headerModel);
         this.linkText = linkText;

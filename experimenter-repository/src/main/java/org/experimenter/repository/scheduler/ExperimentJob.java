@@ -70,6 +70,21 @@ public class ExperimentJob extends Thread {
     private CountDownLatch doneSignal;
     private File resultFile;
 
+    /**
+     * Constructor. Adds all he required parameters.
+     * 
+     * @param experimentId
+     * @param computerId
+     * @param inputId
+     * @param connectionId
+     * @param hostname
+     * @param port
+     * @param login
+     * @param password
+     * @param pathToFile
+     * @param command
+     * @param executable
+     */
     public ExperimentJob(Integer experimentId, Integer computerId, Integer inputId, Integer connectionId,
             String hostname, Short port,
             String login, String password, String pathToFile, String command, String executable) {

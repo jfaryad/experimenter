@@ -8,6 +8,12 @@ import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.experimenter.repository.entity.ProblemType;
 import org.experimenter.repository.service.ProblemTypeService;
 
+/**
+ * Model of all problem types.
+ * 
+ * @author jfaryad
+ * 
+ */
 public class AvailableProblemTypes extends LoadableDetachableModel<List<ProblemType>> {
 
     private static final long serialVersionUID = 1L;

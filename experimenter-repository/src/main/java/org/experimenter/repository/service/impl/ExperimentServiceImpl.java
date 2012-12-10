@@ -15,6 +15,11 @@ import org.experimenter.repository.entity.InputSet;
 import org.experimenter.repository.entity.User;
 import org.experimenter.repository.service.ExperimentService;
 
+/**
+ * Default implementation of the related service interface.
+ * 
+ * @author jfaryad
+ */
 public class ExperimentServiceImpl extends AbstractService<Experiment, ExperimentDao> implements ExperimentService {
 
     @Override

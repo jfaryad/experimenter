@@ -11,6 +11,12 @@ import org.experimenter.repository.service.ProgramService;
 import org.experimenter.web.ExperimenterSession;
 import org.experimenter.web.model.FilteredListModel;
 
+/**
+ * Model of all programs that a user can see.
+ * 
+ * @author jfaryad
+ * 
+ */
 public class AvailablePrograms extends FilteredListModel<Program> {
 
     private static final long serialVersionUID = 1L;

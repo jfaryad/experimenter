@@ -8,6 +8,12 @@ import org.experimenter.repository.entity.Experiment;
 import org.experimenter.repository.entity.InputSet;
 import org.experimenter.repository.entity.User;
 
+/**
+ * Default implementation of {@link ExperimentDao}
+ * 
+ * @author jfaryad
+ * 
+ */
 public class ExperimentDaoImpl extends AbstractBaseDaoImpl<Experiment> implements ExperimentDao {
 
     @Override

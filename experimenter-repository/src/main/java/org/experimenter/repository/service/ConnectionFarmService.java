@@ -8,6 +8,11 @@ import org.experimenter.repository.entity.User;
 import org.experimenter.repository.entity.UserGroup;
 import org.experimenter.repository.form.CriteriaForm;
 
+/**
+ * The service taking care of {@link ConnectionFarm} related operations.
+ * 
+ * @author jfaryad
+ */
 public interface ConnectionFarmService extends EntityService<ConnectionFarm> {
 
     /**

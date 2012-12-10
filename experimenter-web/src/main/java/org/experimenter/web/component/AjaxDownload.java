@@ -6,6 +6,12 @@ import org.apache.wicket.request.IRequestCycle;
 import org.apache.wicket.request.handler.resource.ResourceStreamRequestHandler;
 import org.apache.wicket.util.resource.IResourceStream;
 
+/**
+ * Download behavior that triggers the download of the file provided by subclasses.
+ * 
+ * @author jfaryad
+ * 
+ */
 public abstract class AjaxDownload extends AbstractAjaxBehavior {
     private static final long serialVersionUID = -5987676238121182091L;
 

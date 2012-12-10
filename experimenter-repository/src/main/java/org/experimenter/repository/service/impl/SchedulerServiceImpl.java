@@ -19,6 +19,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.orm.hibernate3.HibernateInterceptor;
 
+/**
+ * Implementation of {@link SchedulerService}
+ * 
+ * @author jfaryad
+ */
 public class SchedulerServiceImpl implements SchedulerService {
 
     private static final Logger LOG = LoggerFactory.getLogger(SchedulerServiceImpl.class);

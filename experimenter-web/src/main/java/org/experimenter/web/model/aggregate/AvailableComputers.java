@@ -8,6 +8,12 @@ import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.experimenter.repository.entity.Computer;
 import org.experimenter.repository.service.ComputerService;
 
+/**
+ * Model of all computers.
+ * 
+ * @author jfaryad
+ * 
+ */
 public class AvailableComputers extends LoadableDetachableModel<List<Computer>> {
 
     private static final long serialVersionUID = 1L;

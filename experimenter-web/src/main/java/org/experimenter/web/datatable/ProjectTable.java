@@ -16,9 +16,9 @@ import org.experimenter.repository.service.EntityService;
 import org.experimenter.repository.service.ProjectService;
 import org.experimenter.web.InputSetPage;
 import org.experimenter.web.ProgramPage;
-import org.experimenter.web.common.panel.EntityFormPanel;
-import org.experimenter.web.common.panel.ProjectFormPanel;
 import org.experimenter.web.datatable.column.LinkColumn;
+import org.experimenter.web.form.EntityFormPanel;
+import org.experimenter.web.form.ProjectFormPanel;
 import org.experimenter.web.model.ProjectModel;
 
 /**
@@ -102,5 +102,10 @@ public class ProjectTable extends DataTablePanel<Project> {
     @Override
     protected void afterPropertiesCloned(Project source, Project target) {
         target.setInputSets(new ArrayList<InputSet>(source.getInputSets()));
+    }
+
+    @Override
+    protected boolean isUserDeletable() {
+        return false;
     }
 }

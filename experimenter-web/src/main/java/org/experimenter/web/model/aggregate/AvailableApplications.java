@@ -9,6 +9,12 @@ import org.experimenter.repository.service.ApplicationService;
 import org.experimenter.web.ExperimenterSession;
 import org.experimenter.web.model.FilteredListModel;
 
+/**
+ * Model of all applications that the current user can see.
+ * 
+ * @author jfaryad
+ * 
+ */
 public class AvailableApplications extends FilteredListModel<Application> {
 
     private static final long serialVersionUID = 1L;

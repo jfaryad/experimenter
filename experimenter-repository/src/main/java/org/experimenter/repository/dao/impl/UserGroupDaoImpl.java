@@ -6,6 +6,12 @@ import org.experimenter.repository.dao.UserGroupDao;
 import org.experimenter.repository.entity.User;
 import org.experimenter.repository.entity.UserGroup;
 
+/**
+ * Default implementation of {@link UserGroupDao}
+ * 
+ * @author jfaryad
+ * 
+ */
 public class UserGroupDaoImpl extends AbstractBaseDaoImpl<UserGroup> implements UserGroupDao {
 
     @Override

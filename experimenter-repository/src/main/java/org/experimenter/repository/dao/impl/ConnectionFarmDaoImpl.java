@@ -8,6 +8,12 @@ import org.experimenter.repository.entity.Experiment;
 import org.experimenter.repository.entity.User;
 import org.experimenter.repository.entity.UserGroup;
 
+/**
+ * Default implementation of {@link ConnectionFarmDao}
+ * 
+ * @author jfaryad
+ * 
+ */
 public class ConnectionFarmDaoImpl extends AbstractBaseDaoImpl<ConnectionFarm> implements ConnectionFarmDao {
 
     @Override
