@@ -1,6 +1,5 @@
 package org.experimenter.web;
 
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -202,14 +201,8 @@ public class ChartPage extends AbstractExperimenterPage {
                 }
                 previewSettings.getExperimentIds().addAll(selectedExperiments.getObject());
 
-                try {
-                    BufferedImage image = resultService.getResultChartAsBufferedImage(previewSettings);
-                    chartPreview.setImage(image);
-                    target.add(chartPreview);
-                } catch (Exception e) {
-                    Log.error("Unable to retrieve the buffered chart image", e);
-                    error("Error retrieveing the chart preview");
-                }
+                chartPreview.setImageSettings(previewSettings);
+                target.add(chartPreview);
             }
 
             @Override

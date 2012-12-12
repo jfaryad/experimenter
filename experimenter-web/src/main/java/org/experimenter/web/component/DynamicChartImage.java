@@ -2,16 +2,21 @@ package org.experimenter.web.component;
 
 import java.awt.image.BufferedImage;
 
+import org.apache.wicket.injection.Injector;
 import org.apache.wicket.markup.html.image.Image;
+import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.Model;
 import org.apache.wicket.request.http.WebResponse.CacheScope;
 import org.apache.wicket.request.resource.DynamicImageResource;
 import org.apache.wicket.request.resource.IResource;
-import org.apache.wicket.request.resource.ResourceReference;
-import org.apache.wicket.util.time.Duration;
-import org.experimenter.web.ChartPage;
+import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.experimenter.repository.dto.ChartSettings;
+import org.experimenter.repository.service.ResultService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
- * An image generated from a {@link BufferedImage} on the fly to display the char previews without having to save them
+ * An image generated from a {@link BufferedImage} on the fly to display the chart previews without having to save them
  * as files.
  * 
  * @author jfaryad
@@ -20,47 +25,46 @@ import org.experimenter.web.ChartPage;
 public class DynamicChartImage extends Image {
 
     private static final long serialVersionUID = 1L;
+    private static final Logger LOG = LoggerFactory.getLogger(DynamicChartImage.class);
 
-    private transient BufferedImage image;
+    @SpringBean
+    private ResultService resultService;
+
+    private final IModel<ChartSettings> imageSettingsModel = Model.of((ChartSettings) null);
 
     public DynamicChartImage(String id) {
         super(id);
         setOutputMarkupId(true);
-        setImageResourceReference(new ResourceReference(ChartPage.class, "chart-preview") {
-
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            public IResource getResource() {
-                return getBufferedImageResource();
-            }
-        });
+        Injector.get().inject(this);
     }
 
-    private IResource getBufferedImageResource() {
+    @Override
+    protected IResource getImageResource() {
         DynamicImageResource resource = new DynamicImageResource() {
 
             private static final long serialVersionUID = 1L;
 
             @Override
             protected byte[] getImageData(final Attributes attributes) {
-                if (image == null) {
-                    return toImageData(new BufferedImage(1, 1, BufferedImage.TYPE_INT_RGB));
-                } else {
-                    byte[] imageData = toImageData(image);
-                    image = null;
-                    return imageData;
+                ChartSettings settings = imageSettingsModel.getObject();
+                if (settings != null) {
+                    try {
+                        BufferedImage image = resultService.getResultChartAsBufferedImage(settings);
+                        return toImageData(image);
+                    } catch (Exception e) {
+                        LOG.error("Unable to retrieve the buffered chart image", e);
+                        error("Error retrieveing the chart preview");
+
+                    }
                 }
+                return toImageData(new BufferedImage(1, 1, BufferedImage.TYPE_INT_RGB));
             }
 
             @Override
             protected void configureResponse(final ResourceResponse response, final Attributes attributes) {
                 super.configureResponse(response, attributes);
-
-                if (isCacheable() == false) {
-                    response.setCacheDuration(Duration.NONE);
-                    response.setCacheScope(CacheScope.PRIVATE);
-                }
+                response.disableCaching();
+                response.setCacheScope(CacheScope.PRIVATE);
             }
 
         };
@@ -68,15 +72,7 @@ public class DynamicChartImage extends Image {
         return resource;
     }
 
-    protected boolean isCacheable() {
-        return false;
-    }
-
-    public BufferedImage getImage() {
-        return image;
-    }
-
-    public void setImage(BufferedImage image) {
-        this.image = image;
+    public void setImageSettings(ChartSettings settings) {
+        this.imageSettingsModel.setObject(settings);
     }
 }
