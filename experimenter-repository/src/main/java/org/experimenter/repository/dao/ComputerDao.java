@@ -24,4 +24,10 @@ public interface ComputerDao extends BaseDao<Computer> {
      */
     Computer findLeastLoadedComputer(List<ConnectionFarm> connectionFarms, int maxRunningJobs);
 
+    /**
+     * Resets the counter of running jobs on all computers to 0. This is supposed to be called at the startup, when it
+     * is clear, that no jobs can possibly be running.
+     */
+    public void resetRunningJobs();
+
 }

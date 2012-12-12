@@ -34,11 +34,16 @@ import org.hibernate.annotations.NamedQuery;
                         "inner join conn.computer as comp " +
                         "where farm.id in (:farmIds)) " +
                         "order by c.id",
+                readOnly = false),
+        @NamedQuery(
+                name = Computer.Q_RESET_RUNNING_JOBS,
+                query = "update Computer set numberOfRunningJobs = 0",
                 readOnly = false) })
 public class Computer implements Entity {
 
     private static final long serialVersionUID = 1L;
     public static final String Q_GET_LEAST_LOADED = "Computer.Q_GET_LEAST_LOADED";
+    public static final String Q_RESET_RUNNING_JOBS = "Computer.Q_RESET_RUNNING_JOBS";
 
     @Column(name = "computer_id")
     @Id

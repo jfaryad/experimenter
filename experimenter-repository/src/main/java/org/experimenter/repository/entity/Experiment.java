@@ -60,6 +60,7 @@ public class Experiment implements Entity {
     public static final String NATIVE_FINISH_JOB = "update job_status set status = 2 where experiment_id = :experimentId";
     public static final String NATIVE_RESET_JOB = "update job_status set status = 0 where experiment_id = :experimentId";
     public static final String NATIVE_DELETE_JOB = "delete from job_status where experiment_id = :experimentId";
+    public static final String NATIVE_SET_RUNNING_JOBS_FAILED = "update job_status set status = 3 where status = 1";
 
     public static enum Status {
         NEW(0), RUNNING(1), FINISHED(2), FAILED(3);

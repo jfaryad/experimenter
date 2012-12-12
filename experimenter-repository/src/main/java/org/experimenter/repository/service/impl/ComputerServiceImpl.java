@@ -30,4 +30,9 @@ public class ComputerServiceImpl extends AbstractService<Computer, ComputerDao> 
         return baseDao.findLeastLoadedComputer(connectionFarms, maxRunningJobs);
     }
 
+    @Override
+    public void resetRunningJobs() {
+        baseDao.resetRunningJobs();
+    }
+
 }

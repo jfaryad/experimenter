@@ -157,4 +157,10 @@ public class ExperimentServiceImpl extends AbstractService<Experiment, Experimen
                 .executeUpdate();
     }
 
+    @Override
+    public synchronized void setAllRunningExperimentsFailed() {
+        getSession().createSQLQuery(Experiment.NATIVE_SET_RUNNING_JOBS_FAILED)
+                .executeUpdate();
+    }
+
 }

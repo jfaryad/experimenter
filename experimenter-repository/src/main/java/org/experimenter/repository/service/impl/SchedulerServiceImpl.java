@@ -7,6 +7,7 @@ import org.experimenter.repository.entity.Experiment;
 import org.experimenter.repository.scheduler.ExperimentExecutor;
 import org.experimenter.repository.scheduler.ScheduledJob;
 import org.experimenter.repository.scheduler.SessionAdvisor;
+import org.experimenter.repository.service.ComputerService;
 import org.experimenter.repository.service.ExperimentService;
 import org.experimenter.repository.service.SchedulerService;
 import org.quartz.CronTrigger;
@@ -32,6 +33,8 @@ public class SchedulerServiceImpl implements SchedulerService {
     private Scheduler scheduler;
     @Autowired
     private ExperimentService experimentService;
+    @Autowired
+    private ComputerService computerService;
     @Autowired
     private HibernateInterceptor hibernateInterceptor;
     @Autowired
@@ -102,6 +105,8 @@ public class SchedulerServiceImpl implements SchedulerService {
      * Is run at the start of the application to register all jobs from the database.
      */
     public void initializeAllActiveJobs() {
+        experimentService.setAllRunningExperimentsFailed();
+        computerService.resetRunningJobs();
         List<Experiment> experiments = experimentService.findScheduledExperiments();
         for (Experiment experiment : experiments) {
             LOG.debug("Initializing experiment " + experiment.getId());

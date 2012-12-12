@@ -31,6 +31,7 @@ public class ResultLinkCell extends Panel {
     private Component actualContent;
     private final Label scheduledLabel;
     private final Label runningLabel;
+    private final Label failedLabel;
 
     /**
      * constructor.
@@ -50,6 +51,8 @@ public class ResultLinkCell extends Panel {
         results = new ResultLinksPanel("content", experiment, feedbackPanel);
         scheduledLabel = new Label("content", "scheduled");
         runningLabel = new Label("content", "running");
+        failedLabel = new Label("content", "failed");
+
         actualContent = scheduledLabel;
         add(actualContent);
     }
@@ -67,6 +70,9 @@ public class ResultLinkCell extends Panel {
         } else if (Status.RUNNING.equals(status)) {
             actualContent.replaceWith(runningLabel);
             actualContent = runningLabel;
+        } else if (Status.FAILED.equals(status)) {
+            actualContent.replaceWith(failedLabel);
+            actualContent = failedLabel;
         }
     }
 

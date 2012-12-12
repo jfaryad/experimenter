@@ -43,4 +43,12 @@ public class ComputerDaoImpl extends AbstractBaseDaoImpl<Computer> implements Co
         // do nothing
     }
 
+    @Override
+    public void resetRunningJobs() {
+        logger.debug(">> resetRunningJobs");
+        getSession().getNamedQuery(Computer.Q_RESET_RUNNING_JOBS)
+                .executeUpdate();
+        logger.debug("<< resetRunningJobs");
+    }
+
 }

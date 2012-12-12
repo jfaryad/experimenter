@@ -170,4 +170,10 @@ public interface ExperimentService extends EntityService<Experiment> {
      * @return a list of experiments
      */
     public List<Experiment> findFinishedExperimentsByUser(User user);
+
+    /**
+     * Sets the failed status to all currently running jobs. This is supposed to be called at the startup, when it is
+     * clear, that no jobs can possible be running.
+     */
+    public void setAllRunningExperimentsFailed();
 }
